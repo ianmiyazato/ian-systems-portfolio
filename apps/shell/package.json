@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@portfolio/ai-sim": "workspace:*",
+    "@portfolio/chrome": "workspace:*",
     "@portfolio/events": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@supabase/supabase-js": "2.117.2",

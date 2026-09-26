@@ -7,8 +7,8 @@
     "node": ">=22 <25"
   },
   "scripts": {
-    "dev": "turbo dev --filter=@portfolio/shell",
-    "dev:all": "turbo dev",
+    "dev": "turbo dev --filter=./apps/*",
+    "dev:all": "turbo dev --filter=./apps/*",
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
@@ -16,7 +16,9 @@
     "check": "corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
     "screenshots": "playwright test --project=screenshots",
     "e2e": "playwright test --project=chromium",
-    "deploy:all": "bash scripts/deploy-all.sh"
+    "deploy:all": "bash scripts/deploy-all.sh",
+    "dev:shell": "turbo dev --filter=@portfolio/shell",
+    "deploy:prod": "bash scripts/deploy-all.sh --prod"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

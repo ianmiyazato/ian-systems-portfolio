@@ -4,7 +4,7 @@
   "applications": {
     "ian-portfolio-shell": {
       "packageName": "@portfolio/shell",
-      "development": { "local": 3000, "fallback": "deployment-pending.invalid" }
+      "development": { "local": 3000, "fallback": "ian-portfolio-shell.vercel.app" }
     },
     "ian-portfolio-mare-ops": {
       "packageName": "@portfolio/mare-ops",
