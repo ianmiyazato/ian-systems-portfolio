@@ -1,0 +1,24 @@
+/* Pay — credit operations: Sora, navy side nav, gold fills, soft 16px cards, slow sweeps. */
+.remote-pay { font-size: 14px; }
+.py-app { display: grid; grid-template-columns: 232px 1fr; min-height: 100%; }
+.py-side { position: sticky; top: 88px; align-self: start; display: flex; flex-direction: column; gap: 24px; height: calc(100vh - 88px); padding: 24px 16px; background: var(--ink); color: var(--surface); }
+.py-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -.02em; }
+.py-logo span { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--accent-2), color-mix(in srgb, var(--accent-2) 55%, var(--surface))); }
+.py-side nav { display: grid; gap: 2px; }
+.py-side nav a { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 10px; color: color-mix(in srgb, var(--surface) 72%, transparent); font-weight: 500; }
+.py-side nav a[aria-current='page'] { background: color-mix(in srgb, var(--surface) 12%, transparent); color: var(--surface); box-shadow: inset 3px 0 var(--accent-2); }
+.py-side-foot { margin-top: auto; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 8%, transparent); }
+.py-side-foot span { display: block; font: 500 12px var(--font-mono); }
+.py-side-foot small { color: color-mix(in srgb, var(--surface) 65%, transparent); font-size: 11px; }
+.py-main { padding: 28px 32px 48px; }
+
+.py-tile { position: relative; height: 100%; padding: 18px; overflow: hidden; background: linear-gradient(160deg, var(--surface), var(--ground)); }
+.py-tile small { color: var(--muted); }
+.py-tile strong { display: block; margin-top: 6px; font-size: 36px; font-weight: 300; letter-spacing: -.03em; }
+.py-tile-cards { position: absolute; right: 18px; bottom: 18px; left: 18px; height: 180px; }
+.py-card { position: absolute; display: flex; flex-direction: column; justify-content: space-between; width: 62%; aspect-ratio: 1.586; padding: 14px; overflow: hidden; border-radius: 14px; box-shadow: var(--elevation); animation: float 6s ease-in-out infinite; }
+.py-card b { font-weight: 600; font-size: 12px; }
+.py-card span { font-size: 18px; font-weight: 300; }
+.py-card i { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--surface) 35%, transparent) 50%, transparent 70%); animation: shine 4.5s ease-in-out infinite; }
+.py-card.credito { left: 0; bottom: 0; background: var(--ink); color: var(--surface); --float-rotate: -2deg; }
+.py-card.loja { right: 0; top: 0; background: color-mix(in srgb, var(--accent-2) 28%, var(--surface)); color: var(--ink); animation-delay: -3s; --float-rotate: 2deg; }

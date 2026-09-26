@@ -1,0 +1,19 @@
+/* Circle — creator program: Unbounded display, DM Sans/Mono, 24px radii, pills, rotated stickers, bounce. */
+.remote-circle { font-size: 14px; }
+.cc-app { display: flex; flex-direction: column; min-height: 100%; }
+.cc-nav { position: sticky; top: 88px; z-index: 50; display: flex; align-items: center; gap: 20px; padding: 12px 24px; background: color-mix(in srgb, var(--ground) 92%, transparent); backdrop-filter: blur(10px); }
+.cc-logo { font: 700 24px var(--font-display); color: var(--accent-text); letter-spacing: -.04em; }
+.cc-logo sup { color: var(--accent-2); font-size: 14px; }
+.cc-nav nav { display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: var(--surface); box-shadow: 0 1px 0 var(--line), 0 8px 24px color-mix(in srgb, var(--accent) 8%, transparent); }
+.cc-nav nav a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; color: var(--muted); font-weight: 600; }
+.cc-nav nav a[aria-current='page'] { background: var(--ink); color: var(--surface); }
+.cc-user { display: grid; place-items: center; width: 40px; height: 40px; margin-left: auto; border-radius: 50%; background: var(--accent-2); color: var(--surface); font-weight: 700; font-size: 12px; }
+.cc-main { padding: 24px; }
+
+.cc-tile { position: relative; height: 100%; padding: 18px; overflow: hidden; background: radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--sun) 35%, transparent) 0 18%, transparent 18.5%), var(--ground); }
+.cc-tile small { color: var(--muted); }
+.cc-tile strong { display: block; max-width: 72%; margin-top: 8px; font: 700 24px/1.1 var(--font-display); letter-spacing: -.04em; }
+.cc-tile strong em { color: var(--accent-text); font-style: normal; }
+.cc-sticker { position: absolute; top: 18px; right: 18px; padding: 8px 12px; border-radius: 999px; background: var(--sun); color: var(--ink); font: 700 12px var(--font-display); --sticker-rotate: 8deg; transform: rotate(8deg); animation: wiggle 2.8s ease-in-out infinite; }
+.cc-tile-avatars { position: absolute; bottom: 18px; left: 18px; display: flex; }
+.cc-tile-avatars i { display: grid; place-items: center; width: 52px; height: 52px; margin-right: -12px; border: 3px solid var(--ground); border-radius: 50%; background: color-mix(in srgb, var(--accent) calc(40% + var(--i) * 12%), var(--accent-2)); color: var(--surface); font: 700 13px var(--font-ui); font-style: normal; animation: pop .5s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
