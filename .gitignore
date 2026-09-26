@@ -1,0 +1,16 @@
+.env*
+!.env.example
+.next/
+.turbo/
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.vercel/
+.DS_Store
+.ai-jail
+.pnpm-store/
+.astro/
+.svelte-kit/
+

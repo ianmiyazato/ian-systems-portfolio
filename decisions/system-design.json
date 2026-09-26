@@ -1,0 +1,7 @@
+[
+  { "tag": "Frontend", "decision": "Scenario replay controls the diagram", "why": "Animation is meaningful when it answers a failure question.", "alternative": "Continuous decorative packets.", "value": "Reviewers understand sequence and recovery." },
+  { "tag": "Backend", "decision": "A command writes once and releases the client", "why": "Slow consumers should not extend user latency.", "alternative": "A synchronous service chain.", "value": "Independent scaling and safer degradation." },
+  { "tag": "Data", "decision": "Read models declare convergence", "why": "Eventual consistency needs visible freshness.", "alternative": "Pretend every projection is immediate.", "value": "Operators can distinguish stale from missing." },
+  { "tag": "AI", "decision": "Model release is another gated scenario", "why": "Evaluation belongs in the delivery architecture.", "alternative": "Manual notebook comparison.", "value": "Repeatable evidence before traffic moves." }
+]
+

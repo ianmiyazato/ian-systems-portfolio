@@ -1,0 +1,25 @@
+{
+  "name": "@portfolio/shell",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "lint": "eslint app components lib --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@portfolio/ai-sim": "workspace:*",
+    "@portfolio/events": "workspace:*",
+    "@portfolio/tokens": "workspace:*",
+    "next": "15.5.26",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9"
+  }
+}

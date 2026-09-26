@@ -1,0 +1,20 @@
+---
+const products = [
+  { name: 'Linen overshirt', price: 'R$ 249', note: 'Pick up today' },
+  { name: 'Coast trousers', price: 'R$ 289', note: '2 left nearby' },
+  { name: 'Salt knit', price: 'R$ 199', note: 'Creator pick' }
+];
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>Maré · Linen, sun and salt.</title></head>
+  <body>
+    <header><a href="/">maré</a><nav>New in　Women　Men　Stories　Stores</nav><button>Bag · 2</button></header>
+    <main><section class="hero"><span>Summer 27 · editorial edit</span><h1>Linen, sun and salt.</h1><p>Quiet layers for bright days, with local stock and Maré Pay built into every choice.</p><button class="search">✦ Describe a look… <small>Simulated AI</small></button></section><section class="picked"><div><span>Picked for you</span><h2>Grounded in your words, size and nearby stock.</h2></div><div class="grid">{products.map((product,index)=><article><div class={`shape s${index}`}></div><small>{product.note}</small><h3>{product.name}</h3><p>{product.price} · 3× no interest</p></article>)}</div></section></main>
+    <footer>All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+  </body>
+</html>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#f7f4f0;color:#0e1f24;font-family:Figtree,system-ui,sans-serif}header{height:70px;display:flex;align-items:center;padding:0 5vw;border-bottom:1px solid #ded8d0;gap:40px}header a{font-family:Georgia,serif;font-size:28px;font-weight:700;text-decoration:none;color:inherit}nav{margin:auto;font-size:13px}button{border:1px solid #0e1f24;background:transparent;border-radius:999px;padding:10px 16px}.hero{min-height:690px;padding:110px 6vw;position:relative;overflow:hidden;background:radial-gradient(circle at 80% 20%,#e8c7b8 0 8%,transparent 8.2%),radial-gradient(circle at 72% 62%,#c9dde0 0 14%,transparent 14.2%),radial-gradient(circle at 92% 75%,#d8c3a5 0 10%,transparent 10.2%)}.hero>span{font-size:11px;text-transform:uppercase;letter-spacing:.15em}.hero h1{max-width:850px;margin:18px 0;font:500 clamp(70px,10vw,150px)/.84 Georgia,serif;letter-spacing:-.065em}.hero p{max-width:520px;font-size:18px;line-height:1.6}.search{margin-top:28px;background:white;border-color:#ded8d0;font-size:16px;padding:16px 22px;box-shadow:0 18px 50px #0e1f2418}.search small{margin-left:20px;color:#5b4bd6}.picked{padding:90px 6vw}.picked>div:first-child{display:grid;grid-template-columns:.35fr 1fr}.picked h2{max-width:700px;margin:0;font:500 50px/1 Georgia,serif}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:45px}.grid article{padding:14px;border:1px solid #ded8d0;background:#fffefa;border-radius:22px}.shape{height:350px;border-radius:16px;background:#d8c3a5}.s1{background:#e8c7b8}.s2{background:#c9dde0}.grid small{display:block;margin-top:16px;color:#5b4bd6}.grid h3{font:500 24px Georgia,serif;margin:8px 0}.grid p{color:#697377}footer{padding:30px;text-align:center;border-top:1px solid #ded8d0;color:#697377;font-size:12px}@media(max-width:700px){nav{display:none}.hero{min-height:600px}.hero h1{font-size:72px}.picked>div:first-child,.grid{grid-template-columns:1fr}.grid{gap:22px}.shape{height:300px}}
+</style>
+

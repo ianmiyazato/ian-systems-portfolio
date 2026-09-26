@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/microfrontends.json",
+  "version": "1",
+  "applications": {
+    "ian-portfolio-shell": {
+      "packageName": "@portfolio/shell",
+      "development": { "local": 3000, "fallback": "deployment-pending.invalid" }
+    },
+    "ian-portfolio-mare-ops": {
+      "packageName": "@portfolio/mare-ops",
+      "routing": [{ "group": "mare-ops", "paths": ["/mare/ops/:path*"] }],
+      "development": { "local": 3001 }
+    },
+    "ian-portfolio-mare-shop": {
+      "packageName": "@portfolio/mare-shop",
+      "routing": [{ "group": "mare-consumer", "paths": ["/mare/shop/:path*", "/mare/apps/:path*"] }],
+      "development": { "local": 3002 }
+    },
+    "ian-portfolio-pulse": {
+      "packageName": "@portfolio/pulse",
+      "routing": [{ "group": "pulse", "paths": ["/pulse/:path*"] }],
+      "development": { "local": 3003 }
+    }
+  },
+  "options": { "localProxyPort": 3024 }
+}

@@ -1,0 +1,7 @@
+[
+  { "tag": "Frontend", "decision": "Lead with one operating thesis", "why": "The interview needs a memorable point of view before feature detail.", "alternative": "A grid of technologies and logos.", "value": "Frames every later screen as product judgment." },
+  { "tag": "Backend", "decision": "Metrics connect to architecture case studies", "why": "Outcomes are only credible when the system change is inspectable.", "alternative": "Decorative KPI counters.", "value": "Reviewers can trace claim to mechanism." },
+  { "tag": "Data", "decision": "Separate real allowed metrics from synthetic UI data", "why": "Portfolio truthfulness is a product requirement.", "alternative": "Blend examples and outcomes.", "value": "No accidental overclaiming." },
+  { "tag": "AI", "decision": "Show AI as one capability, not the entire identity", "why": "The portfolio is about whole-system engineering.", "alternative": "An AI-first landing page.", "value": "Keeps the product and architecture range visible." }
+]
+

@@ -1,0 +1,14 @@
+{
+  "name": "@portfolio/mare-shop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 3002",
+    "build": "astro check && astro build",
+    "lint": "astro check",
+    "typecheck": "astro check",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": { "@astrojs/check": "0.9.5", "astro": "5.14.1" }
+}
