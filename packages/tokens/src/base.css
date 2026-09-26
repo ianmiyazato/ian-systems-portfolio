@@ -1,0 +1,53 @@
+/* Shared base for every zone. Colors, type and motion come only from theme tokens. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { background: var(--ground); -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100vh; background: var(--ground); color: var(--ink); font-family: var(--font-ui); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); font-stretch: var(--display-stretch); line-height: 1.05; margin: 0; }
+p { margin: 0; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+code, kbd, samp, .mono { font-family: var(--font-mono); }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 65%, var(--ink)); outline-offset: 2px; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+/* Cross-stack chrome placeholders keep layout stable before custom elements upgrade. */
+im-portfolio-bar { display: block; min-height: 48px; }
+im-decision-lens, im-command-palette { display: contents; }
+
+.im-footer { display: grid; place-items: center; min-height: 64px; padding: 20px 16px; border-top: 1px solid var(--line); color: var(--muted); font-family: var(--font-ui); font-size: 12px; text-align: center; }
+
+/* Motion vocabulary: transform + opacity only. */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(.6); } 70% { opacity: 1; transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes draw { from { stroke-dashoffset: var(--path-length, 1000); } to { stroke-dashoffset: 0; } }
+@keyframes scan { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(var(--scan-distance, 120px)); } }
+@keyframes float { 50% { transform: translateY(-10px) rotate(var(--float-rotate, 1deg)); } }
+@keyframes breathe { 50% { transform: scale(1.12); opacity: .7; } }
+@keyframes pulse-ring { 0% { transform: scale(.8); opacity: .8; } 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(var(--sticker-rotate, -6deg)); } 50% { transform: rotate(calc(var(--sticker-rotate, -6deg) * -1)) scale(1.04); } }
+@keyframes flash { 0% { opacity: 0; transform: translateX(-12px); } 30% { opacity: 1; transform: none; } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: none; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes shine { 0%, 60% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+
+.skeleton { position: relative; overflow: hidden; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--line) 55%, var(--surface)); color: transparent !important; }
+.skeleton::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, color-mix(in srgb, var(--surface) 60%, transparent) 50%, transparent 80%); animation: shimmer 1.2s infinite; }
+.caret::after { content: '▍'; margin-left: 1px; color: var(--ai); animation: blink 1s steps(1) infinite; }
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: fade 180ms ease reverse both; }
+::view-transition-new(root) { animation: rise 260ms var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
