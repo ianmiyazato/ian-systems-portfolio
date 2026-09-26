@@ -11,7 +11,7 @@ export interface AIProvider {
   runEval(scenarios: string[]): Promise<EvalResult[]>;
 }
 
-const corpus: Chunk[] = [
+export const defaultCorpus: Chunk[] = [
   { id: 'carrier-cutoff', text: 'Rota Sul Express closes store collection at 17:00.', score: 0, source: 'carrier SLA · rev 12' },
   { id: 'stock-0412', text: 'Store 0412 has three pickup orders inside the risk window.', score: 0, source: 'ATP snapshot · 16:18' },
   { id: 'pulse-seoul', text: 'Seoul short-form completion rose after the chorus moment.', score: 0, source: 'market signal · Seoul' },
@@ -21,9 +21,11 @@ const corpus: Chunk[] = [
 const tokenise = (text: string) => new Set(text.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean));
 
 export class SimulatedProvider implements AIProvider {
+  constructor(private readonly corpus: Chunk[] = defaultCorpus, private readonly answers: Record<string, string> = {}) {}
+
   async retrieve(query: string, topK = 3): Promise<Chunk[]> {
     const terms = tokenise(query);
-    return corpus
+    return this.corpus
       .map((chunk) => {
         const words = tokenise(chunk.text + ' ' + chunk.source);
         const overlap = [...terms].filter((term) => words.has(term)).length;
@@ -39,7 +41,7 @@ export class SimulatedProvider implements AIProvider {
   }
 
   async *generateStream(prompt: string): AsyncIterable<string> {
-    const response = `Based on retrieved evidence, ${prompt.trim()} can proceed with a guarded human approval.`;
+    const response = this.answers[prompt.trim()] ?? `Based on retrieved evidence, ${prompt.trim()} can proceed with a guarded human approval.`;
     for (const token of response.split(' ')) yield `${token} `;
   }
 
