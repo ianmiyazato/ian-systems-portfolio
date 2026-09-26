@@ -90,6 +90,9 @@ Database mode is optional. When Supabase is present: `supabase db push` and `sup
 | `DATA_MODE` | `.env.agent`, Vercel | server-only | `local` or `supabase` |
 | `NEXT_PUBLIC_AI_MODE` | Vercel | client-safe | badge/telemetry mode only |
 | `NEXT_PUBLIC_DATA_MODE` | Vercel | client-safe | transport selection only |
+| `PUBLIC_DATA_MODE`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Vercel (mare-ops, mare-shop, pulse) | client-safe (publishable key only) | Realtime Broadcast in Vite/Astro/SvelteKit zones (`envPrefix: 'PUBLIC_'`); Maré Ops passes them to remotes through `ctx.data` |
+| `MARE_OPS_URL`, `MARE_SHOP_URL`, `PULSE_URL` | Vercel (shell), `--build-env` for previews | server/build only | multi-zone rewrite targets; default to localhost ports off Vercel |
+| `ENABLE_EXPERIMENTAL_COREPACK` | Vercel (all four) | build only | use `packageManager` pnpm@10.17.1 |
 | `VERCEL_TOKEN` | `.env.agent`, GitHub secret | secret | scripted deploys |
 | `SUPABASE_*` | `.env.agent`, GitHub/Vercel | secret except public URL/anon key | optional migrations/data |
 | `GROQ_API_KEY`, `GEMINI_API_KEY` | Vercel server env | secret | v0.2 LiveProvider only |
@@ -112,7 +115,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 
 ## 7. AI simulation
 
-`packages/ai-sim` exports `AIProvider` with `retrieve`, `rerank`, `generateStream`, `runAgent`, `judge`, and `runEval`. `SimulatedProvider` is deterministic and scenario-driven. `LiveProvider` deliberately throws until it is instantiated inside a server-only route with both live provider keys. Never import provider keys into a client component.
+`packages/ai-sim` exports `AIProvider` with `retrieve`, `rerank`, `generateStream`, `runAgent`, `judge`, and `runEval`. `SimulatedProvider` is deterministic and scenario-driven; it accepts a domain corpus and grounded canned answers (`new SimulatedProvider(corpus, answers)`), which Pulse uses for Ask Pulse and the harness. Remotes use the same trust pattern through `AiSurface` (`@portfolio/remote-runtime`) and the shell through `components/overlay.tsx`. `LiveProvider` deliberately throws until it is instantiated inside a server-only route with both live provider keys. Never import provider keys into a client component.
 
 ## 8. Workflow
 
@@ -120,7 +123,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - `develop`: integration; preview deployment.
 - Work: `feat/<area>-<short-desc>`, `fix/...`, `docs/...`, or `chore/...` from `develop`.
 - Conventional commits with scope; one concern per commit.
-- PR checklist: lint, strict typecheck, unit tests, build, Playwright smoke, axe, screenshots where visual, AGENTS decision/changelog update.
+- PR checklist: `pnpm check`, `pnpm build && pnpm e2e` (flows, lens anchors, axe), screenshots where visual, AGENTS decision/changelog/parity update. CI runs `quality` (required) and `e2e`.
 
 ## 9. Milestones
 
