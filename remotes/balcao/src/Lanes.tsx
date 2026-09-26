@@ -47,7 +47,7 @@ export function Lanes({ board, act, feedStatus, emit }: Props) {
         <LiveFeed status={feedStatus} emit={emit} />
       </section>
 
-      <div class="bc-lanes" data-anchor="bc-lanes">
+      <div class="bc-lanes" data-anchor="bc-lanes" aria-hidden={state === 'locked' ? true : undefined} inert={state === 'locked'}>
         {lanes.map((lane) => {
           const cards = state === 'loading' ? [] : board.orders.filter((order) => order.lane === lane.id && visible(order));
           const empty = state === 'empty' && lane.id === 'to-pick';
@@ -166,7 +166,7 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act }: CardProps) {
       <p class="bc-customer">
         {order.customer} · {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
       </p>
-      <div class="bc-stack" aria-label={order.items.map((item) => item.name).join(', ')}>
+      <div class="bc-stack" role="img" aria-label={order.items.map((item) => item.name).join(', ')}>
         {order.items.map((item, index) => (
           <span key={`${item.sku}-${index}`} class={`swatch ${item.scanned ? 'done' : ''}`} data-swatch={item.swatch} style={{ '--i': index }} />
         ))}

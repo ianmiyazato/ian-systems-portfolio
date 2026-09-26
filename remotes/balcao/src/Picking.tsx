@@ -46,7 +46,7 @@ export function Picking({ orderId, board, act }: Props) {
                   <p>Size {item.size} · Aisle {item.aisle}</p>
                   <code>{item.sku}</code>
                 </div>
-                {isDone ? <span class="bc-check" aria-label="Scanned">✓</span> : <span class="bc-todo" aria-label={isNext ? 'Next to scan' : 'To scan'} />}
+                {isDone ? <span class="bc-check" role="img" aria-label="Scanned">✓</span> : <span class="bc-todo" role="img" aria-label={isNext ? 'Next to scan' : 'To scan'} />}
               </li>
             );
           })}

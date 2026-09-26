@@ -61,8 +61,8 @@
 .at-kpis strong { display: block; margin-top: 6px; font: 700 32px var(--font-display); }
 .at-kpis small { color: var(--accent); font-size: 14px; }
 .at-funnel { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.at-funnel li { display: flex; justify-content: space-between; gap: 12px; width: var(--w); min-width: 120px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--accent) calc(90% - var(--i) * 18%), var(--surface-2)); color: var(--accent-ink); font-weight: 700; transform-origin: left; animation: grow .8s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
-.at-funnel li:nth-child(n + 4) { color: var(--ink); }
+.at-funnel li { display: flex; justify-content: space-between; gap: 12px; width: var(--w); min-width: 120px; padding: 12px 14px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 700; transform-origin: left; animation: grow .8s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
+
 @keyframes grow { from { transform: scaleX(.2); opacity: 0; } }
 .at-week { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .at-week li { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); }
@@ -140,7 +140,7 @@
 .at-loop div { display: grid; gap: 4px; padding: 14px; border-radius: 12px; background: var(--surface-2); }
 .at-loop span { color: var(--muted); font-size: 12px; }
 .at-loop b { color: var(--accent); font-family: var(--font-mono); }
-.at-locked:not(.unlocked) .at-loop { filter: blur(6px); opacity: .6; user-select: none; }
+.at-locked:not(.unlocked) .at-loop { filter: blur(6px); user-select: none; }
 .at-lock { position: absolute; inset: 50px 0 0; display: grid; place-content: center; justify-items: center; gap: 10px; text-align: center; }
 .at-lock svg { width: 34px; height: 34px; fill: none; stroke: var(--ai); stroke-width: 2; }
 .at-members { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
@@ -181,6 +181,7 @@
 .at-transcript.full { max-height: none; }
 .at-transcript.full li { grid-template-columns: 50px 90px 1fr; align-items: start; }
 .at-transcript li.cited { outline: 2px solid var(--warn); }
+.at-transcript li.cited time, .at-transcript li.weak time { color: var(--ink); }
 .at-transcript li.weak { background: color-mix(in srgb, var(--warn) 18%, var(--surface-2)); }
 .at-canvas header { display: flex; justify-content: space-between; align-items: center; }
 .at-wb { position: relative; min-height: 380px; border-radius: 12px; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 18px 18px; }

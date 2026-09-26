@@ -109,7 +109,7 @@ export function ArenaSession() {
           <section className="at-card at-interviewer" data-anchor="at-interviewer" aria-labelledby="int-title">
             <div className="at-voice" aria-hidden="true">{Array.from({ length: 12 }, (_, index) => <i key={index} style={{ '--i': index } as React.CSSProperties} />)}</div>
             <h2 id="int-title">Interviewer <span className="ai-badge">Simulated AI</span></h2>
-            <ol className="at-transcript" ref={logRef} aria-live="polite">
+            <ol className="at-transcript" ref={logRef} aria-live="polite" tabIndex={0} aria-label="Session transcript">
               {lines.map((line, index) => <li key={index} className={line.who === 'You' ? 'you' : ''}><time>{line.t}</time><p>{line.text}</p></li>)}
               {streaming && <li><time>{clock(elapsed)}</time><p className="caret">{streaming}</p></li>}
             </ol>

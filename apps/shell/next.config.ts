@@ -12,7 +12,7 @@ const zone = (name: string, port: number) => process.env[name] || (onVercel ? un
 // rootSlash: zones whose framework serves the prefix root as a directory index (SvelteKit
 // base path) are proxied straight to "<prefix>/" so their redirect never reaches the browser.
 const zones = [
-  { url: zone('MARE_OPS_URL', 3001), prefixes: ['/mare/ops'], rootSlash: false },
+  { url: zone('MARE_OPS_URL', 3001), prefixes: ['/mare/ops'], rootSlash: true },
   { url: zone('MARE_SHOP_URL', 3002), prefixes: ['/mare/shop', '/mare/apps', '/mare/_astro'], rootSlash: false },
   { url: zone('PULSE_URL', 3003), prefixes: ['/pulse'], rootSlash: true }
 ];

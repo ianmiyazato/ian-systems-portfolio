@@ -48,7 +48,7 @@ function Replay({ onDone }: { onDone: (message: string) => void }) {
           <div class="skip"><strong>{counts.skip}</strong><span>skipped · key already applied</span></div>
         </div>
         <p class="ms-muted small">idempotency check: each event's key is looked up in the consumer's applied-keys table before replay.</p>
-        <ol class="ms-dry-rows" data-anchor="ms-dry-rows">
+        <ol class="ms-dry-rows" data-anchor="ms-dry-rows" tabIndex={0} aria-label="Dry-run results per message">
           {dlq.slice(0, shown).map((message) => (
             <li key={message.id} class={`dry-${message.dry}`}><span>{message.id}</span><span>{message.partner}</span><span>{message.error}</span><b>{message.dry === 'ok' ? '✓ ok' : message.dry === 'fail' ? '✕ fail' : '↷ skip'}</b></li>
           ))}

@@ -94,7 +94,7 @@ export function Topology({ ctx }: { ctx: RemoteContext }) {
 
         <section class="ms-panel" aria-labelledby="log-title" data-anchor="ms-log">
           <header><h2 id="log-title">log tail</h2><span class="ms-live"><i />streaming</span></header>
-          <ol class="ms-log" aria-live="polite">
+          <ol class="ms-log" aria-live="polite" tabIndex={0} aria-label="Log tail">
             {state === 'empty' ? <li class="ms-muted">no events in the last 5 min · the bus is idle, not broken</li> : lines.map((line, index) => (
               <li key={`${line.t}-${index}`} class={`lvl-${line.level}`}><time>{line.t}</time><b>{line.level}</b><span>{line.source}</span><p>{line.text}</p></li>
             ))}

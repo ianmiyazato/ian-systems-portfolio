@@ -57,7 +57,7 @@
 .py-table a:hover b { text-decoration: underline; }
 .py-score { display: inline-block; min-width: 48px; padding: 3px 10px; border-radius: 999px; font: 600 13px var(--font-mono); text-align: center; }
 .py-score.ok { background: var(--success-soft); color: var(--success); }
-.py-score.review { background: color-mix(in srgb, var(--accent-2) 25%, var(--surface)); color: var(--gold-text); }
+.py-score.review { background: color-mix(in srgb, var(--accent-2) 25%, var(--surface)); color: color-mix(in srgb, var(--gold-text) 70%, var(--ink)); }
 .py-score.decline { background: var(--risk-soft); color: var(--risk); }
 .py-sk { display: block; height: 12px; }
 .py-empty { padding: 32px 12px; text-align: center; }
