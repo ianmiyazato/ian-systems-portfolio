@@ -11,7 +11,12 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@portfolio/ai-sim": "workspace:*",
+    "@portfolio/ai-surface": "workspace:*",
     "@portfolio/chrome": "workspace:*",
+    "@portfolio/mocks": "workspace:*",
+    "@portfolio/overlays": "workspace:*",
+    "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@sveltejs/adapter-vercel": "6.3.4",
     "@sveltejs/kit": "2.43.1",

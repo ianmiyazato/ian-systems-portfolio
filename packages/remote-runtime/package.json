@@ -10,7 +10,8 @@
       "types": "./vite.remote.d.mts",
       "default": "./vite.remote.mjs"
     },
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts",
+    "./realtime": "./src/realtime.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",

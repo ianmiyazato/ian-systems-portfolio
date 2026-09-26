@@ -117,9 +117,24 @@ importers:
 
   apps/pulse:
     dependencies:
+      '@portfolio/ai-sim':
+        specifier: workspace:*
+        version: link:../../packages/ai-sim
+      '@portfolio/ai-surface':
+        specifier: workspace:*
+        version: link:../../packages/ai-surface
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
+      '@portfolio/mocks':
+        specifier: workspace:*
+        version: link:../../packages/mocks
+      '@portfolio/overlays':
+        specifier: workspace:*
+        version: link:../../packages/overlays
+      '@portfolio/remote-runtime':
+        specifier: workspace:*
+        version: link:../../packages/remote-runtime
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
