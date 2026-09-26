@@ -22,12 +22,14 @@ ian-systems-portfolio (pnpm + Turborepo)
 ├── apps/mare-ops    Vite/React boundary · port 3001 · /mare/ops/*
 ├── apps/mare-shop   Astro boundary · port 3002 · /mare/shop/* + /mare/apps/*
 ├── apps/pulse       SvelteKit boundary · port 3003 · /pulse/*
-├── remotes/*        Balcão, Product Hub, Pay, Circle, Mesh runtime bundles
+├── remotes/*        Balcão, Product Hub, Pay, Circle, Mesh: independent Preact builds with their own
+│                    theme + fonts + chrome, each emitting remote-[hash].js, CSS and mf-manifest.json
 ├── packages
 │   ├── tokens       themes.json → generated themes.css + TS; nine themes; self-hosted fonts per theme
 │   ├── chrome       <im-portfolio-bar>, <im-decision-lens>, <im-command-palette> + parity route registry
 │   ├── overlays     URL-addressable layer stack (Esc closes top-most, focus trap/restore) + overlay CSS
 │   ├── ai-surface   the one shared AI suggestion CSS contract (sparkle, badge, sources, approve)
+│   ├── remote-runtime  defineRemote(), URL router, overlay Layer, AiSurface, hooks, realtime feed, remote Vite config
 │   ├── mocks        seeded deterministic generators (pt-BR Maré, EN/KR/JP Pulse)
 │   ├── ai-sim       deterministic retrieval, streaming, tools, judge, eval
 │   └── events       Zod contracts + BroadcastChannel local transport
@@ -47,7 +49,14 @@ Zone prefixes and outputs:
 
 `apps/shell/next.config.ts` rewrites each prefix in `beforeFiles` to `MARE_OPS_URL`, `MARE_SHOP_URL` and `PULSE_URL`. Production reads the zones' production domains from the Vercel env; previews get the matching preview URLs through `vercel deploy --build-env` from `scripts/deploy-all.sh`; locally they default to ports 3001–3003. `microfrontends.json` records the equivalent platform-native grouping.
 
-Maré Ops remotes expose `mount(el, ctx) → unmount`. On Hobby, their independent artifacts are served by the Maré Ops project rather than five additional Vercel projects. This preserves runtime isolation but couples deployment rollback at the hosting-project level.
+Maré Ops runtime federation:
+
+1. The host (`apps/mare-ops`, React) fetches `remotes.config.json`, which maps each remote to a manifest URL with a per-environment base (`development`/`production`: same-origin `/mare/ops/remotes`; `preview`: that deployment's own URL).
+2. For the active route it fetches `remotes/<name>/mf-manifest.json`, loads the manifest's CSS, then `import()`s the hashed entry and calls `mount(el, ctx) → unmount`. `ctx` carries `basePath`, `mode` (`page` or `tile`), environment, locale and data-mode config.
+3. Each remote renders its own chrome and theme. `/mare/ops` mounts all five in `tile` mode side by side.
+4. Every slot sits in a React error boundary with a designed fallback card and a retry; the switcher shows per-remote health from the manifests.
+
+On Hobby the five remotes are built independently and staged into the Maré Ops output (`scripts/stage-remotes.mjs`) as separate static bundles rather than five more Vercel projects. Runtime isolation and independent builds are preserved; the trade-off is that hosting-level rollback is shared by all five.
 
 ## 3. Commands
 
@@ -113,7 +122,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - [x] M1 · repository, operating manual, CI skeleton, local shell
 - [x] M2 · token contract, AI simulation, event contracts, decision lens behavior
 - [x] M3 · shell home and route-based case study experience
-- [ ] M4 · extract Maré Ops host and all five production remote bundles
+- [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §14)
 - [ ] M5 · extract Astro Maré consumer zone and language board
 - [ ] M6 · extract Atlas flows from shell route fallback
 - [ ] M7 · extract SvelteKit Pulse zone with full i18n
@@ -149,11 +158,16 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Proxy `/pulse` to `/pulse/` | Let the SvelteKit redirect pass through | SvelteKit serves the base root as a directory index; its 308 would bounce against Next's trailing-slash redirect | No redirect loop at the zone root |
 | 2026-09-26 | Disable Vercel Authentication on all four projects | Keep SSO protection | The shell proxies server-side to zone domains and previews; protected zones would return 401; the content is public synthetic data | Previews and production compose correctly |
 | 2026-09-26 | Build through the root `build` script, not `pnpm turbo` | `pnpm turbo run build` | Turbo 2.8 could not spawn the package manager when not launched from a package script (locally and on Vercel) | Reliable builds everywhere |
+| 2026-09-26 | Remotes are Preact apps behind `mount(el, ctx) → unmount`, loaded from `mf-manifest.json` | Module Federation 2 with shared React singletons; React inside every remote | A plain ES-module contract has no shared-singleton coupling, so each remote can upgrade its runtime alone; Preact keeps each remote ≈7 kB gzipped | True runtime isolation with a small per-page cost |
+| 2026-09-26 | Remote builds use an app build with a JS entry, not Vite library mode | Vite `build.lib` | Library mode inlines every font file as base64 into the CSS | Fonts stay separate, cacheable and subset-loaded |
+| 2026-09-26 | Stage all five remotes inside the Maré Ops project on Hobby | Five additional Vercel projects | Stays within Hobby limits while keeping independent builds and manifests | Shared hosting-level rollback is the documented trade-off |
+| 2026-09-26 | Per-remote error boundary with a designed fallback and retry | One page-level error screen | A remote failing is a normal distributed-systems event, so it gets a designed state | Four systems keep working when one is down (covered by Playwright) |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
@@ -162,6 +176,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: JSON token contract with AA contrast test and self-hosted fonts; chrome web components (bar, Decision Lens, ⌘K) with the 40-screen parity registry; overlay stack; AI surface contract; seeded mocks.
 

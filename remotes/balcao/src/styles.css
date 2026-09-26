@@ -1,0 +1,29 @@
+/* Balcão — store counter, tablet-first: black bar, signal yellow, condensed Archivo, 56px targets. */
+.remote-balcao { --touch: 56px; font-size: 15px; }
+.bc-app { display: flex; flex-direction: column; min-height: 100%; }
+.bc-bar { position: sticky; top: 88px; z-index: 50; display: flex; align-items: center; gap: 20px; min-height: 64px; padding: 0 20px; background: var(--ink); color: var(--ground); }
+.bc-wordmark { color: var(--accent); font: 800 30px/1 var(--font-display); font-stretch: 75%; letter-spacing: -.01em; }
+.bc-store { color: color-mix(in srgb, var(--ground) 75%, transparent); font-size: 13px; white-space: nowrap; }
+.bc-tabs { display: flex; gap: 4px; margin-left: 12px; }
+.bc-tabs a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--radius-sm); color: color-mix(in srgb, var(--ground) 78%, transparent); font-weight: 600; white-space: nowrap; }
+.bc-tabs a[aria-current='page'] { background: var(--accent); color: var(--accent-ink); }
+.bc-cutoff { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 8px 12px; border-radius: 999px; background: var(--risk); color: var(--surface); font-weight: 800; font-size: 13px; white-space: nowrap; }
+.bc-cutoff i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--surface); }
+.bc-cutoff i::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--surface); animation: pulse-ring 1.6s ease-out infinite; }
+.bc-staff { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 800; font-size: 13px; }
+.bc-main { padding: 24px 20px 40px; }
+.bc-title { font-size: 56px; font-stretch: 75%; }
+
+.bc-tile { display: flex; flex-direction: column; height: 100%; }
+.bc-tile-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--ink); color: var(--accent); }
+.bc-tile-bar b { font: 800 22px var(--font-display); font-stretch: 75%; }
+.bc-tile-bar span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; background: var(--risk); color: var(--surface); font-weight: 800; font-size: 11px; }
+.bc-tile-bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--surface); animation: breathe 1.4s infinite; }
+.bc-tile-body { flex: 1; padding: 16px; }
+.bc-tile-body small { color: var(--muted); font-weight: 600; }
+.bc-tile-body strong { display: block; margin: 4px 0 14px; font: 800 40px/1 var(--font-display); font-stretch: 75%; }
+.bc-tile-lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bc-tile-lanes div { display: grid; gap: 5px; align-content: start; min-height: 120px; padding: 8px; border-radius: var(--radius-sm); background: var(--surface-2); }
+.bc-tile-lanes em { color: var(--muted); font-style: normal; font-size: 11px; font-weight: 700; }
+.bc-tile-lanes span { padding: 10px 8px; border-radius: 6px; background: var(--surface); border-left: 4px solid var(--info); font-weight: 800; font-size: 12px; }
+.bc-tile-lanes span.dl { border-left-color: var(--accent); }

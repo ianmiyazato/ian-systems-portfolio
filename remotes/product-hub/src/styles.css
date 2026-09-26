@@ -1,0 +1,29 @@
+/* Product Hub — HQ merchandising: IBM Plex, 13px tables, hairlines, underline tabs, almost no motion. */
+.remote-product-hub { font-size: 13px; }
+.ph-app { display: flex; flex-direction: column; min-height: 100%; }
+.ph-nav { position: sticky; top: 88px; z-index: 50; display: flex; align-items: center; gap: 24px; height: 48px; padding: 0 20px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.ph-logo { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+.ph-logo span { color: var(--accent); font-size: 18px; }
+.ph-nav nav { display: flex; align-self: stretch; gap: 2px; }
+.ph-nav nav a { display: inline-flex; align-items: center; padding: 0 12px; border-bottom: 2px solid transparent; color: var(--muted); font-weight: 500; }
+.ph-nav nav a[aria-current='page'] { border-bottom-color: var(--accent); color: var(--ink); font-weight: 600; }
+.ph-search { display: flex; align-items: center; gap: 6px; margin-left: auto; width: 280px; height: 32px; padding: 0 8px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); }
+.ph-search input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font-size: 13px; }
+.ph-search kbd { padding: 0 5px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 11px; }
+.ph-user { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-text); font-weight: 600; font-size: 11px; }
+.ph-main { padding: 20px; }
+
+.ph-tile { display: flex; flex-direction: column; height: 100%; }
+.ph-tile-nav { display: flex; gap: 14px; align-items: center; height: 40px; padding: 0 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+.ph-tile-nav b { color: var(--ink); font-weight: 600; }
+.ph-tile-nav span:first-of-type { color: var(--ink); box-shadow: inset 0 -2px var(--accent); padding: 12px 0; }
+.ph-tile-body { padding: 14px; }
+.ph-tile-body small { color: var(--muted); }
+.ph-tile-body strong { display: block; margin: 4px 0 10px; font-size: 22px; font-weight: 600; }
+.ph-tile table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ph-tile td { padding: 7px 4px; border-top: 1px solid var(--line); white-space: nowrap; }
+.ph-tile td:first-child { display: flex; align-items: center; gap: 8px; }
+.ph-tile td em { padding: 2px 6px; border-radius: 4px; font-style: normal; font-size: 11px; }
+.ph-tile em.ok { background: var(--success-soft); color: var(--success); }
+.ph-tile em.warn { background: var(--warn-soft); color: var(--warn); }
+.sw { display: inline-block; flex: none; width: 14px; height: 14px; border-radius: 3px; background: var(--line); }

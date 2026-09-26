@@ -1,0 +1,26 @@
+/* Mesh — integrations console: dark, Chivo + Chivo Mono, lowercase technical labels, packets on paths. */
+.remote-mesh { font-size: 13px; }
+.ms-app { display: flex; flex-direction: column; min-height: 100%; }
+.ms-nav { position: sticky; top: 88px; z-index: 50; display: flex; align-items: center; gap: 20px; height: 44px; padding: 0 16px; border-bottom: 1px solid var(--line); background: var(--surface); font-family: var(--font-mono); }
+.ms-logo { color: var(--ink); font-weight: 600; font-size: 13px; }
+.ms-nav nav { display: flex; align-self: stretch; }
+.ms-nav nav a { display: inline-flex; align-items: center; padding: 0 12px; color: var(--muted); font-size: 12px; border-bottom: 2px solid transparent; }
+.ms-nav nav a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--accent); }
+.ms-counters { display: flex; gap: 16px; margin: 0 0 0 auto; }
+.ms-counters div { display: flex; gap: 6px; align-items: baseline; }
+.ms-counters dt { color: var(--muted); font-size: 11px; }
+.ms-counters dd { margin: 0; color: var(--success); font-size: 12px; font-weight: 600; }
+.ms-counters .warn dd { color: var(--warn); }
+.ms-main { padding: 16px; }
+.ms-main h1 { font-family: var(--font-mono); font-size: 22px; font-weight: 500; }
+
+.ms-tile { height: 100%; padding: 16px; background: var(--ground); font-family: var(--font-mono); }
+.ms-tile small { color: var(--muted); font-size: 11px; }
+.ms-tile strong { display: block; margin: 6px 0 12px; color: var(--warn); font-size: 20px; font-weight: 500; }
+.ms-tile svg { width: 100%; height: auto; }
+.ms-tile path { fill: none; stroke: var(--line); stroke-width: 2; }
+.ms-tile path.warn { stroke: color-mix(in srgb, var(--warn) 60%, var(--line)); stroke-dasharray: 5 5; }
+.ms-tile circle { fill: var(--accent); }
+.ms-tile circle.warn { fill: var(--warn); }
+.ms-tile rect { fill: var(--surface-2); stroke: var(--accent); }
+.ms-tile rect.warn { stroke: var(--warn); }

@@ -4,14 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3001",
-    "build": "vite build",
+    "dev": "vite",
+    "build": "vite build && node ../../scripts/stage-remotes.mjs",
     "lint": "eslint src --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@portfolio/chrome": "workspace:*",
+    "@portfolio/remote-balcao": "workspace:*",
+    "@portfolio/remote-circle": "workspace:*",
+    "@portfolio/remote-mesh": "workspace:*",
+    "@portfolio/remote-pay": "workspace:*",
+    "@portfolio/remote-product-hub": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@vitejs/plugin-react": "5.0.4",
     "react": "19.1.1",
@@ -20,6 +26,7 @@
   },
   "devDependencies": {
     "@types/react": "19.1.16",
-    "@types/react-dom": "19.1.9"
+    "@types/react-dom": "19.1.9",
+    "@portfolio/remote-runtime": "workspace:*"
   }
 }
