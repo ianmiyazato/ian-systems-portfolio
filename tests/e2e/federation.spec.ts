@@ -20,7 +20,7 @@ for (const blocked of remotes) {
     const fallback = page.locator(`.remote-fallback[data-remote="${blocked}"]`);
     await expect(fallback).toBeVisible();
     await expect(fallback.getByRole('button', { name: /Retry/ })).toBeVisible();
-    await expect(page.locator('footer')).toContainText('All names are fictitious');
+    await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
   });
 }
 

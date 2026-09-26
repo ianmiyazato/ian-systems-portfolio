@@ -1,6 +1,34 @@
 ---
+import '@portfolio/tokens/fonts/consumer';
+import '../../styles/apps.css';
+import '../../styles/shop.css';
 import Zone from '../../layouts/Zone.astro';
+import Phone from '../../components/Phone.astro';
+import Screens from '../../components/apps/ShopScreens.astro';
+const phones = [['Home', 0], ['Product', 1], ['Order tracking', 2]] as const;
+const current: string = 'shop';
+const anchors = ['app-shop-0', 'app-shop-1', 'app-shop-2'];
 ---
-<Zone title="Maré apps · shop" description="Phone-frame prototype for the Maré shop app." context="Maré · Apps">
-  <main style="padding:10vh 6vw"><h1>Maré shop app</h1></main>
+<Zone title="Shopping app · Maré" description="AI search that types, a product page that knows your store, and a courier you can watch." context="Maré · Apps" theme="consumer">
+  <main class="apps">
+    <header class="apps-head" data-anchor="app-head">
+      <div><span class="cs-kicker">Maré apps · three interactive screens</span><h1>Shopping app</h1><p>AI search that types, a product page that knows your store, and a courier you can watch. Swipe inside any phone, or use the dots.</p></div>
+      <nav class="apps-switch" aria-label="Maré apps" data-anchor="app-switch">
+        <a href="/mare/apps/shop" aria-current={current === 'shop' ? 'page' : undefined}>Shopping</a>
+        <a href="/mare/apps/pay" aria-current={current === 'pay' ? 'page' : undefined}>Pay</a>
+        <a href="/mare/apps/circle" aria-current={current === 'circle' ? 'page' : undefined}>Circle</a>
+      </nav>
+    </header>
+    <div class="phones">
+      {phones.map(([label, start], index) => (
+        <div class="phone-wrap">
+          <Phone label={`${label} screen`} anchor={anchors[index]}><Screens start={start} /></Phone>
+          <p class="phone-caption">{label}</p>
+        </div>
+      ))}
+    </div>
+  </main>
+  <script>
+    import '../../scripts/phones';
+  </script>
 </Zone>
