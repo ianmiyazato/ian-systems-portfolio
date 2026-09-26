@@ -25,7 +25,7 @@ export function useTween(target: number, duration = 900) {
     const origin = from.current;
     let frame = 0;
     const step = (now: number) => {
-      const progress = Math.min(1, (now - start) / duration);
+      const progress = Math.min(1, Math.max(0, (now - start) / duration));
       const eased = 1 - (1 - progress) ** 3;
       const next = origin + (target - origin) * eased;
       from.current = next;

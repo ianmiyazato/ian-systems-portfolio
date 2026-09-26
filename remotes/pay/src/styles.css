@@ -1,24 +1,173 @@
-/* Pay — credit operations: Sora, navy side nav, gold fills, soft 16px cards, slow sweeps. */
+/* Pay — credit operations: Sora (300 for numbers, 600 for headings), navy side nav, gold fills, soft 16px cards, slow sweeps. */
 .remote-pay { font-size: 14px; }
-.py-app { display: grid; grid-template-columns: 232px 1fr; min-height: 100%; }
+.remote-pay h1, .remote-pay h2 { font-weight: 600; letter-spacing: -.02em; }
+.py-app { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100%; }
 .py-side { position: sticky; top: 88px; align-self: start; display: flex; flex-direction: column; gap: 24px; height: calc(100vh - 88px); padding: 24px 16px; background: var(--ink); color: var(--surface); }
 .py-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -.02em; }
 .py-logo span { width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(135deg, var(--accent-2), color-mix(in srgb, var(--accent-2) 55%, var(--surface))); }
 .py-side nav { display: grid; gap: 2px; }
-.py-side nav a { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 10px; color: color-mix(in srgb, var(--surface) 72%, transparent); font-weight: 500; }
+.py-side nav a { display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 0 12px; border-radius: 10px; color: color-mix(in srgb, var(--surface) 72%, transparent); font-weight: 500; }
 .py-side nav a[aria-current='page'] { background: color-mix(in srgb, var(--surface) 12%, transparent); color: var(--surface); box-shadow: inset 3px 0 var(--accent-2); }
+.py-side nav b { padding: 1px 8px; border-radius: 999px; background: var(--accent-2); color: var(--ink); font-size: 11px; }
 .py-side-foot { margin-top: auto; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 8%, transparent); }
 .py-side-foot span { display: block; font: 500 12px var(--font-mono); }
 .py-side-foot small { color: color-mix(in srgb, var(--surface) 65%, transparent); font-size: 11px; }
-.py-main { padding: 28px 32px 48px; }
 
+.py-main { display: flex; flex-direction: column; gap: 18px; min-width: 0; padding: 28px 32px 48px; }
+.py-eyebrow { color: var(--gold-text); font-weight: 600; font-size: 12px; letter-spacing: .04em; }
+.py-muted { color: var(--muted); font-size: 12px; }
+.py-muted.small { margin-top: 12px; }
+.py-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font-weight: 600; transition: transform .4s var(--ease); }
+.py-btn.primary { border-color: var(--ink); background: var(--ink); color: var(--surface); }
+.py-btn.gold { border-color: var(--accent-2); background: var(--accent-2); color: var(--ink); }
+.py-btn:disabled { opacity: .5; }
+.py-btn.wide { width: 100%; }
+
+.py-hero { position: relative; display: grid; grid-template-columns: 1fr 380px; align-items: center; min-height: 220px; padding: 28px 32px; overflow: hidden; border-radius: var(--radius); background: linear-gradient(120deg, var(--surface), color-mix(in srgb, var(--accent-2) 12%, var(--surface))); box-shadow: 0 1px 0 var(--line); }
+.py-hero h1 { margin: 6px 0 8px; font-size: 44px; font-weight: 300; }
+.py-hero p { max-width: 520px; color: var(--muted); line-height: 1.55; }
+.py-hero-cards { position: relative; height: 190px; }
+.py-card { position: absolute; display: flex; flex-direction: column; justify-content: space-between; width: 250px; aspect-ratio: 1.586; padding: 16px 18px; overflow: hidden; border-radius: 16px; box-shadow: 0 24px 50px color-mix(in srgb, var(--ink) 25%, transparent); animation: float 7s ease-in-out infinite; }
+.py-card-top { display: flex; justify-content: space-between; align-items: baseline; }
+.py-card-top b { font-weight: 600; letter-spacing: -.02em; }
+.py-card-top span { font-weight: 300; font-size: 18px; }
+.py-chip { width: 36px; height: 26px; border-radius: 6px; background: linear-gradient(135deg, var(--accent-2), color-mix(in srgb, var(--accent-2) 50%, var(--surface))); }
+.py-card-bottom { display: flex; justify-content: space-between; align-items: baseline; font: 400 13px var(--font-mono); }
+.py-card-bottom small { font-family: var(--font-ui); font-size: 10px; letter-spacing: .1em; opacity: .8; }
+.py-shine { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, color-mix(in srgb, var(--surface) 38%, transparent) 50%, transparent 65%); animation: shine 5s ease-in-out infinite; pointer-events: none; }
+.py-card.credito { right: 110px; top: 30px; background: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--info) 60%, var(--ink)), var(--ink) 60%); color: var(--surface); --float-rotate: -3deg; transform: rotate(-6deg); }
+.py-card.loja { right: 0; top: 0; background: linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 30%, var(--surface)), color-mix(in srgb, var(--accent-2) 55%, var(--surface))); color: var(--ink); animation-delay: -3.5s; --float-rotate: 3deg; }
+.py-card.loja .py-shine { animation-delay: -2s; }
+
+.py-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.py-kpis div { display: grid; gap: 4px; padding: 18px; border-radius: var(--radius); background: var(--surface); box-shadow: 0 1px 0 var(--line), 0 12px 30px color-mix(in srgb, var(--ink) 5%, transparent); }
+.py-kpis span, .py-kpis small { color: var(--muted); font-size: 12px; }
+.py-kpis strong { font-size: 34px; font-weight: 300; letter-spacing: -.03em; }
+.py-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.py-panel { display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: var(--radius); background: var(--surface); box-shadow: 0 1px 0 var(--line), 0 12px 30px color-mix(in srgb, var(--ink) 5%, transparent); }
+.py-panel.span-2 { grid-column: span 2; }
+.py-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.py-panel h2 { font-size: 16px; }
+.py-grid .ai-surface { border-radius: var(--radius); }
+.py-table { width: 100%; border-collapse: collapse; }
+.py-table th { padding: 8px 10px; color: var(--muted); font-weight: 500; font-size: 12px; text-align: left; }
+.py-table td { height: 52px; padding: 0 10px; border-top: 1px solid var(--line); white-space: nowrap; }
+.py-table tr.highlight td { background: color-mix(in srgb, var(--accent-2) 16%, var(--surface)); }
+.py-table tr.highlight td:first-child { box-shadow: inset 3px 0 var(--accent-2); }
+.py-table a:hover b { text-decoration: underline; }
+.py-score { display: inline-block; min-width: 48px; padding: 3px 10px; border-radius: 999px; font: 600 13px var(--font-mono); text-align: center; }
+.py-score.ok { background: var(--success-soft); color: var(--success); }
+.py-score.review { background: color-mix(in srgb, var(--accent-2) 25%, var(--surface)); color: var(--gold-text); }
+.py-score.decline { background: var(--risk-soft); color: var(--risk); }
+.py-sk { display: block; height: 12px; }
+.py-empty { padding: 32px 12px; text-align: center; }
+.py-empty p { max-width: 380px; margin: 6px auto 0; color: var(--muted); }
+.py-hist { width: 100%; height: auto; }
+.py-hist .band { fill: color-mix(in srgb, var(--accent-2) 20%, transparent); }
+.py-hist .bar { fill: color-mix(in srgb, var(--ink) 22%, var(--surface)); }
+.py-hist .bar.in-band { fill: var(--accent-2); }
+.py-hist text { fill: var(--muted); font: 10px var(--font-mono); }
+.py-hist .band-label { fill: var(--gold-text); font-weight: 600; }
+.py-pill { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.py-pill.ok { background: var(--success-soft); color: var(--success); }
+.py-pill.decline { background: var(--risk-soft); color: var(--risk); }
+.py-model { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; }
+.py-model dt { color: var(--muted); font-size: 12px; }
+.py-model dd { margin: 2px 0 0; font-size: 20px; font-weight: 300; }
+.py-model .warn { color: var(--warn); font-weight: 600; }
+
+/* Detail */
+.py-back { align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); font-weight: 600; }
+.py-detail-head { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 24px; }
+.py-detail-head h1 { margin-top: 6px; font-size: 34px; font-weight: 300; }
+.py-gauge { position: relative; display: grid; justify-items: center; width: 150px; }
+.py-gauge svg { width: 150px; }
+.py-gauge path { fill: none; stroke-width: 10; stroke-linecap: round; }
+.py-gauge .track { stroke: var(--surface-2); }
+.py-gauge .fill { stroke: var(--accent-2); stroke-dasharray: 157; }
+.py-gauge strong { position: absolute; top: 34px; font-size: 32px; font-weight: 300; }
+.py-gauge small { color: var(--muted); font-size: 11px; }
+.py-head-actions { display: flex; gap: 8px; }
+.py-factors { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.py-factors li { display: grid; grid-template-columns: 220px 1fr 48px; align-items: center; gap: 14px; min-height: 56px; border-bottom: 1px solid var(--line); }
+.py-factors li:last-child { border: 0; }
+.py-factor-label small { display: block; color: var(--muted); font-size: 12px; }
+.py-diverge { position: relative; height: 18px; }
+.py-diverge .axis { position: absolute; left: 50%; top: -8px; bottom: -8px; width: 1px; background: var(--line); }
+.py-diverge .bar { position: absolute; top: 0; height: 18px; border-radius: 6px; }
+.py-diverge .bar.pos { background: var(--success); border-radius: 0 6px 6px 0; }
+.py-diverge .bar.neg { background: var(--risk); border-radius: 6px 0 0 6px; }
+.py-factors b { font: 600 15px var(--font-mono); text-align: right; }
+.py-factors b.pos { color: var(--success); }
+.py-factors b.neg { color: var(--risk); }
+.py-suggest { margin-top: 8px; font-weight: 600; }
+.py-timeline { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.py-timeline li { position: relative; padding: 0 0 14px 22px; font-size: 13px; }
+.py-timeline li::before { content: ''; position: absolute; left: 4px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--success); }
+.py-timeline li::after { content: ''; position: absolute; left: 8px; top: 16px; bottom: 0; width: 1px; background: var(--line); }
+.py-timeline li:last-child::after { display: none; }
+.py-timeline li.warn::before { background: var(--warn); }
+.py-timeline li.now::before { background: var(--accent-2); animation: breathe 2.4s ease-in-out infinite; }
+.py-timeline b { display: inline-block; min-width: 44px; margin-right: 6px; color: var(--muted); font: 500 12px var(--font-mono); }
+.py-docs { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.py-docs li { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: var(--surface-2); }
+.py-docs li > span { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 700; }
+.py-docs li.ok > span { background: var(--success); color: var(--surface); }
+.py-docs li.warn > span { background: var(--warn); color: var(--surface); }
+.py-docs small { display: block; color: var(--muted); font-size: 12px; }
+.py-letter { padding: 24px 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); animation: rise .6s var(--ease) both; }
+.py-letter header { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+.py-letter h2 { margin-bottom: 8px; font-size: 20px; }
+.py-letter p, .py-letter li { max-width: 680px; color: var(--ink); line-height: 1.6; }
+.py-letter ol { margin: 8px 0; }
+
+/* Decision overlays */
+.remote-pay .ov-title { font-size: 22px; font-weight: 600; }
+.py-radios { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; padding: 0; border: 0; }
+.py-radios label { position: relative; display: grid; gap: 4px; padding: 16px; border: 2px solid var(--line); border-radius: var(--radius); cursor: pointer; transition: border-color .5s var(--ease), background .5s var(--ease); }
+.py-radios label.checked { border-color: var(--ink); background: color-mix(in srgb, var(--ink) 4%, var(--surface)); }
+.py-radios input { position: absolute; top: 16px; right: 16px; width: 18px; height: 18px; accent-color: var(--ink); }
+.py-radios small { color: var(--muted); font-size: 12px; }
+.py-mini-card { width: 54px; height: 34px; margin-bottom: 6px; border-radius: 6px; }
+.py-mini-card.credito { background: var(--ink); }
+.py-mini-card.loja { background: color-mix(in srgb, var(--accent-2) 45%, var(--surface)); }
+.py-limit { margin-top: 18px; }
+.py-limit label { display: flex; justify-content: space-between; font-weight: 600; }
+.py-limit output { font-size: 24px; font-weight: 300; }
+.py-slider { position: relative; padding: 10px 0 30px; }
+.py-slider input { width: 100%; height: 8px; border-radius: 4px; appearance: none; background: linear-gradient(90deg, var(--ink) var(--fill), var(--surface-2) var(--fill)); cursor: pointer; }
+.py-slider input::-webkit-slider-thumb { width: 26px; height: 26px; border: 4px solid var(--surface); border-radius: 50%; appearance: none; background: var(--ink); box-shadow: 0 2px 8px color-mix(in srgb, var(--ink) 35%, transparent); }
+.py-slider input::-moz-range-thumb { width: 22px; height: 22px; border: 4px solid var(--surface); border-radius: 50%; background: var(--ink); }
+.py-marker { position: absolute; top: 2px; display: grid; justify-items: center; color: var(--gold-text); font-size: 11px; font-weight: 600; white-space: nowrap; transform: translateX(-50%); pointer-events: none; }
+.py-marker i { width: 3px; height: 24px; margin-bottom: 4px; border-radius: 2px; background: var(--accent-2); }
+.py-warning { display: flex; gap: 12px; padding: 14px; border: 1px solid color-mix(in srgb, var(--warn) 45%, var(--line)); border-radius: 12px; background: var(--warn-soft); animation: rise .5s var(--ease) both; }
+.py-warning b { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--warn); color: var(--surface); }
+.py-exception { display: inline-block; margin-bottom: 12px; padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent-2) 25%, var(--surface)); color: var(--gold-text); font-weight: 600; font-size: 12px; }
+.py-field { display: grid; gap: 6px; font-weight: 600; font-size: 13px; }
+.py-field textarea { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-weight: 400; resize: vertical; }
+.py-approver { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 12px; border-radius: 12px; background: var(--surface-2); }
+.py-avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--surface); font-weight: 600; font-size: 13px; }
+.py-approver small { display: block; color: var(--muted); font-size: 12px; }
+.py-online { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; color: var(--success); font-weight: 600; font-size: 12px; }
+.py-online i { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: breathe 2s infinite; }
+
+/* Tile */
 .py-tile { position: relative; height: 100%; padding: 18px; overflow: hidden; background: linear-gradient(160deg, var(--surface), var(--ground)); }
 .py-tile small { color: var(--muted); }
 .py-tile strong { display: block; margin-top: 6px; font-size: 36px; font-weight: 300; letter-spacing: -.03em; }
-.py-tile-cards { position: absolute; right: 18px; bottom: 18px; left: 18px; height: 180px; }
-.py-card { position: absolute; display: flex; flex-direction: column; justify-content: space-between; width: 62%; aspect-ratio: 1.586; padding: 14px; overflow: hidden; border-radius: 14px; box-shadow: var(--elevation); animation: float 6s ease-in-out infinite; }
-.py-card b { font-weight: 600; font-size: 12px; }
-.py-card span { font-size: 18px; font-weight: 300; }
-.py-card i { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--surface) 35%, transparent) 50%, transparent 70%); animation: shine 4.5s ease-in-out infinite; }
-.py-card.credito { left: 0; bottom: 0; background: var(--ink); color: var(--surface); --float-rotate: -2deg; }
-.py-card.loja { right: 0; top: 0; background: color-mix(in srgb, var(--accent-2) 28%, var(--surface)); color: var(--ink); animation-delay: -3s; --float-rotate: 2deg; }
+.py-tile-cards { position: absolute; right: 0; bottom: 18px; left: 18px; height: 190px; }
+.py-tile .py-card { width: 220px; }
+.py-tile .py-card.credito { left: 0; right: auto; top: 30px; }
+.py-tile .py-card.loja { right: 18px; top: 0; }
+
+@media (max-width: 1100px) {
+  .py-app { grid-template-columns: 1fr; }
+  .py-side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .py-side nav { display: flex; overflow-x: auto; }
+  .py-side-foot { display: none; }
+  .py-hero, .py-grid, .py-detail-head { grid-template-columns: 1fr; }
+  .py-panel.span-2 { grid-column: auto; }
+  .py-kpis { grid-template-columns: repeat(2, 1fr); }
+  .py-factors li { grid-template-columns: 1fr 60px; }
+  .py-diverge { grid-column: 1 / -1; grid-row: 2; }
+}
