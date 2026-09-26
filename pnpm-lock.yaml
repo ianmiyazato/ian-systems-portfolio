@@ -99,9 +99,15 @@ importers:
       '@astrojs/check':
         specifier: 0.9.5
         version: 0.9.5(@emnapi/runtime@1.11.3)(prettier@3.9.9)(typescript@5.9.2)
+      '@portfolio/ai-surface':
+        specifier: workspace:*
+        version: link:../../packages/ai-surface
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
+      '@portfolio/overlays':
+        specifier: workspace:*
+        version: link:../../packages/overlays
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens

@@ -1,0 +1,49 @@
+---
+import '@portfolio/tokens/fonts/consumer';
+import '../../../styles/shop.css';
+import Zone from '../../../layouts/Zone.astro';
+import Garment from '../../../components/Garment.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import BagDrawer from '../../../components/BagDrawer.astro';
+import { brl, installments, products, type Product } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+const { product } = Astro.props as { product: Product };
+const stores = [['Shopping Vila Nova', '2 left · pickup today by 18:00'], ['Centro', '5 in stock · pickup tomorrow'], ['Online', 'Ships tomorrow · Rota Sul Express']];
+---
+<Zone title={`${product.name} · Maré`} description={`${product.name} in ${product.colorName}. ${product.fabric}.`} context="Maré · Site">
+  <main class="cs">
+    <SiteHeader />
+    <article class="cs-pdp">
+      <div class="cs-pdp-media" data-anchor="cs-pdp-media">
+        <Garment garment={product.garment} swatch={product.swatch} label={`${product.name}, ${product.colorName}`} transitionName={`product-${product.slug}`} class="big" />
+      </div>
+      <div class="cs-pdp-info">
+        <a class="cs-back" href="/mare/shop#picked">← Picked for you</a>
+        <span class="cs-kicker">{product.colorName} · {product.fabric}</span>
+        <h1>{product.name}</h1>
+        <p class="cs-price big"><b>{brl(product.price)}</b><span>{installments(product.price)} com Maré Pay</span></p>
+        <fieldset class="cs-sizes" data-anchor="cs-sizes">
+          <legend>Size</legend>
+          {product.sizes.map((size, index) => (
+            <label class={product.soldOut?.includes(size) ? 'sold-out' : ''}>
+              <input type="radio" name="size" value={size} checked={index === Math.min(2, product.sizes.length - 1)} disabled={product.soldOut?.includes(size)} />
+              <span>{size}</span>
+            </label>
+          ))}
+        </fieldset>
+        <ul class="cs-stores" data-anchor="cs-store-stock">
+          {stores.map(([store, note], index) => <li class={index === 0 ? 'near' : ''}><b>{store}</b><span>{note}</span></li>)}
+        </ul>
+        <button class="cs-btn primary wide" type="button" data-open="drawer=bag">Add to bag</button>
+        <aside class="ai-surface ai-inline" data-anchor="cs-complete-look">
+          <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span><span class="ai-meta">co-purchase 0.83</span></header>
+          <p class="ai-body">Complete the look with the Calça costa pedra; 38% of people who kept this shirt kept both.</p>
+        </aside>
+      </div>
+    </article>
+    <BagDrawer />
+  </main>
+</Zone>

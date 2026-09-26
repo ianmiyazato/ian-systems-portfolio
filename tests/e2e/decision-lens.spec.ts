@@ -10,7 +10,7 @@ const covered = screens.filter((screen) => existsSync(`decisions/${screen.id}.js
 for (const screen of covered) {
   test(`Decision Lens · ${screen.id} · every anchor resolves`, async ({ page }) => {
     await page.goto(screen.href);
-    await expect(page.locator('footer')).toContainText('All names are fictitious');
+    await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
     await page.waitForLoadState('networkidle');
     await page.keyboard.press('d');
     const lens = page.locator('im-decision-lens');

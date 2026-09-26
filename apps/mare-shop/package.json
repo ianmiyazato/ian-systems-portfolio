@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.5",
+    "@portfolio/ai-surface": "workspace:*",
     "@portfolio/chrome": "workspace:*",
+    "@portfolio/overlays": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "astro": "5.14.1"
   }

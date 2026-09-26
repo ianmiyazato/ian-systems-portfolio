@@ -1,0 +1,11 @@
+---
+const nav = ['New in', 'Women', 'Men', 'Stories', 'Stores'];
+---
+<header class="cs-header" data-anchor="cs-header">
+  <a class="cs-logo" href="/mare/shop">maré</a>
+  <nav aria-label="Shop">{nav.map((item, index) => <a href="/mare/shop#picked" aria-current={index === 0 ? 'page' : undefined}>{item}</a>)}</nav>
+  <a class="cs-search" href="/mare/shop?ask=easy%20layers%20for%20a%20humid%20weekend#stylist" data-open="ask=easy layers for a humid weekend" data-anchor="cs-search">
+    <span class="ai-spark" aria-hidden="true"></span><span>Describe a look…</span><small>Simulated AI</small>
+  </a>
+  <a class="cs-bag" href="/mare/shop?drawer=bag" data-open="drawer=bag" data-anchor="cs-bag-button">Bag <b>2</b></a>
+</header>

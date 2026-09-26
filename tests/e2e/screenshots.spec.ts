@@ -12,7 +12,7 @@ const mainScreen: Record<string, string> = {
 const mobile = ['home', 'balcao-lanes', 'balcao-picking', 'consumer-site', 'consumer-app', 'pay-customer-app', 'atlas-board', 'pulse-intelligence'];
 
 async function settle(page: Page) {
-  await expect(page.locator('footer')).toContainText('All names are fictitious');
+  await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
   await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
   // Let entrance motion finish so screenshots show the resting design.
@@ -38,6 +38,9 @@ for (const area of areas) {
       const target = state === 'picked' ? '/mare/ops/balcao/pick/MR-904117' : screen.href;
       await page.goto(withState(target, state));
       await settle(page);
+      // Static zones render every variation in place; bring the active one into view.
+      await page.evaluate((active) => document.querySelector(`[data-state-only~="${active}"]`)?.scrollIntoView({ block: 'center' }), state);
+      await page.waitForTimeout(300);
       await page.screenshot({ path: `docs/screenshots/${area.id}/${state === 'picked' ? 'balcao-picking' : id}--${state}.png` });
     });
   }

@@ -1,0 +1,45 @@
+---
+import Garment from '../Garment.astro';
+import Track from './Track.astro';
+import { brl, installments, productBySlug, products } from '../../lib/data';
+interface Props { start: number }
+const { start } = Astro.props;
+const shirt = productBySlug('camisa-linho-natural');
+---
+<Track start={start} labels={['home', 'product', 'order tracking']}>
+  <div class="screen">
+    <div class="sa-top"><b>maré</b><span>Bag · 2</span></div>
+    <div class="sa-search"><span class="ai-spark" aria-hidden="true"></span><span class="sa-typed" data-typing="easy layers for a humid weekend|linen that won't wrinkle on a flight|something for a beach dinner">easy layers for a humid weekend</span></div>
+    <div class="sa-hero"><i></i><i></i><h2>Linen, sun and salt.</h2></div>
+    <div class="sa-tiles">
+      {products.slice(0, 4).map((product) => (
+        <a href={`/mare/shop/p/${product.slug}`}><Garment garment={product.garment} swatch={product.swatch} label={product.name} /><b>{product.name}</b><span>{brl(product.price)}</span></a>
+      ))}
+    </div>
+  </div>
+  <div class="screen sa-product">
+    <Garment garment={shirt.garment} swatch={shirt.swatch} label={shirt.name} />
+    <h2>{shirt.name}</h2>
+    <p><b>{brl(shirt.price)}</b> · {installments(shirt.price)}</p>
+    <div class="sa-chips"><span>PP</span><span>P</span><span class="on">M</span><span>G</span><span>GG</span></div>
+    <span class="sa-pill"><i></i>Pick up today · 2 left</span>
+    <button class="sa-cta" type="button">Add to bag</button>
+  </div>
+  <div class="screen">
+    <div class="sa-map">
+      <svg viewBox="0 0 290 230" aria-hidden="true">
+        <path class="road" d="M0,210 H290 M40,0 V230 M0,120 H290 M200,0 V230" />
+        <path class="route" d="M30,200 C80,190 90,120 150,120 S220,60 260,40" />
+        <circle class="home" cx="260" cy="40" r="8" />
+        <circle class="courier" r="9" />
+      </svg>
+    </div>
+    <div class="sa-eta"><b>Arriving 16:40</b><span>Rota Sul Express · 2 stops away</span></div>
+    <ol class="sa-steps">
+      <li class="done">Order confirmed<small>MR-904133 · 14:02</small></li>
+      <li class="done">Picked at Vila Nova<small>15:18 · Luiza</small></li>
+      <li class="now">With the courier<small>2 stops away</small></li>
+      <li>Delivered</li>
+    </ol>
+  </div>
+</Track>

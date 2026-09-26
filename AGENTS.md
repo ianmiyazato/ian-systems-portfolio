@@ -123,7 +123,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - [x] M2 · token contract, AI simulation, event contracts, decision lens behavior
 - [x] M3 · shell home and route-based case study experience
 - [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §14)
-- [ ] M5 · extract Astro Maré consumer zone and language board
+- [x] M5 · Astro Maré consumer zone (site + three apps); language board ships with the shell (M6 row)
 - [ ] M6 · extract Atlas flows from shell route fallback
 - [ ] M7 · extract SvelteKit Pulse zone with full i18n
 - [x] M8 · interactive system-design scenario player
@@ -168,11 +168,14 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | One guardrail function shared by the agent trace, the edit form and the tests | Validate only in the form | The approval path must enforce exactly what the agent claims to have checked | Save stays disabled until the same four rules pass |
 | 2026-09-26 | Commission confirms after the 30-day return window, one rule per item by priority | Pay on order and claw back; stack matching rules | Clawbacks create negative balances and distrust; stacked rules are unauditable | Receipts are final and the math is deterministic (unit-tested) |
 | 2026-09-26 | Packets move with CSS `offset-path` on the same SVG path strings as the edges | SMIL `animateMotion`; a canvas renderer | Transform-only motion that the reduced-motion rule stops, with zero JS per frame | Topology stays animated at 60 fps without a graph library |
+| 2026-09-26 | Astro pages use vanilla island scripts instead of React islands | React islands | Interactions are small (layers, typing, flips); vanilla keeps the consumer pages near-zero JS and reuses the shared overlay stack directly | HTML-first pages with the same URL-addressable layers as every zone |
+| 2026-09-26 | Products are drawn as SVG garment silhouettes in their swatch colours | Stock photography | No real-brand imagery, no licensing, tiny payloads, and the product colour is the hero | Editorial look that stays fictitious and fast |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
 - 2026-09-26 · `feat(mesh)`: live topology with packets on offset-path edges, partner table, Broadcast log tail and AI triage; partner adapter with circuit state machine, field mapping, payload and request log; DLQ dry-run replay + sandboxed transform drawer; invoice chain with NCM triage; calm, down and replayed variations.
 - 2026-09-26 · `feat(circle)`: program dashboard with wiggling sticker, creator cards, campaign week, leak AI card and summary tiles; rule builder with condition chips and a live receipt driven by unit-tested commission math; leak modal + rotate-code sub-modal; no-sales, contract-pending and payout-failed variations.
 - 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
@@ -187,6 +190,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
 - 2026-09-26 · `feat(mesh)`: live topology with packets on offset-path edges, partner table, Broadcast log tail and AI triage; partner adapter with circuit state machine, field mapping, payload and request log; DLQ dry-run replay + sandboxed transform drawer; invoice chain with NCM triage; calm, down and replayed variations.
 - 2026-09-26 · `feat(circle)`: program dashboard with wiggling sticker, creator cards, campaign week, leak AI card and summary tiles; rule builder with condition chips and a live receipt driven by unit-tested commission math; leak modal + rotate-code sub-modal; no-sales, contract-pending and payout-failed variations.
 - 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
@@ -238,17 +242,17 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 12 | `/mare/ops/pay` | ✅ | ✅ | `docs/screenshots/pay/pay-applications.png` |
 | 13 | `/mare/ops/pay/applications/AP-77118` | ✅ | ✅ | `docs/screenshots/pay/pay-application-detail.png` |
 | 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | ✅ | ✅ | `docs/screenshots/pay/pay-decision.png` |
-| 15 | `/mare/apps/pay` | — | — | — |
+| 15 | `/mare/apps/pay` | ✅ | ✅ | `docs/screenshots/pay/pay-customer-app.png` |
 | 16 | `/mare/ops/circle` | ✅ | ✅ | `docs/screenshots/circle/circle-program.png` |
 | 17 | `/mare/ops/circle/rules/summer-swim` | ✅ | ✅ | `docs/screenshots/circle/circle-rule-builder.png` |
 | 18 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | ✅ | ✅ | `docs/screenshots/circle/circle-leak.png` |
-| 19 | `/mare/apps/circle` | — | — | — |
+| 19 | `/mare/apps/circle` | ✅ | ✅ | `docs/screenshots/circle/circle-creator-app.png` |
 | 20 | `/mare/ops/mesh` | ✅ | ✅ | `docs/screenshots/mesh/mesh-topology.png` |
 | 21 | `/mare/ops/mesh/partners/ligeiro-log` | ✅ | ✅ | `docs/screenshots/mesh/mesh-partner.png` |
 | 22 | `/mare/ops/mesh/dlq?modal=replay&sub=transform` | ✅ | ✅ | `docs/screenshots/mesh/mesh-dlq-replay.png` |
 | 23 | `/mare/ops/mesh/invoices/MR-904117` | ✅ | ✅ | `docs/screenshots/mesh/mesh-invoice-chain.png` |
-| 24 | `/mare/apps/shop` | — | — | — |
-| 25 | `/mare/shop` | — | — | — |
+| 24 | `/mare/apps/shop` | ✅ | ✅ | `docs/screenshots/consumer/consumer-app.png` |
+| 25 | `/mare/shop` | ✅ | ✅ | `docs/screenshots/consumer/consumer-site.png` |
 | 26 | `/atlas/welcome?step=2` | — | — | — |
 | 27 | `/atlas/pipeline` | — | — | — |
 | 28 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | — | — | — |
@@ -265,4 +269,4 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 39 | `/pulse/harness` | — | — | — |
 | 40 | `/system-design/pulse` | — | — | — |
 
-Parity: **18/40**.
+Parity: **22/40**.

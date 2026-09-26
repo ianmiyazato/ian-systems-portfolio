@@ -1,6 +1,34 @@
 ---
+import '@portfolio/tokens/fonts/pay';
+import '../../styles/apps.css';
+import '../../styles/shop.css';
 import Zone from '../../layouts/Zone.astro';
+import Phone from '../../components/Phone.astro';
+import Screens from '../../components/apps/PayScreens.astro';
+const phones = [['Home', 0], ['Installments', 1], ['Virtual card', 2]] as const;
+const current: string = 'pay';
+const anchors = ['app-pay-0', 'app-pay-1', 'app-pay-2'];
 ---
-<Zone title="Maré apps · pay" description="Phone-frame prototype for the Maré pay app." context="Maré · Apps">
-  <main style="padding:10vh 6vw"><h1>Maré pay app</h1></main>
+<Zone title="Maré Pay app · Maré" description="The customer side of Pay: a card that flips, installments that show the real cost, and a step-up before revealing a card number." context="Maré · Apps" theme="pay">
+  <main class="apps">
+    <header class="apps-head" data-anchor="app-head">
+      <div><span class="cs-kicker">Maré apps · three interactive screens</span><h1>Maré Pay app</h1><p>The customer side of Pay: a card that flips, installments that show the real cost, and a step-up before revealing a card number. Swipe inside any phone, or use the dots.</p></div>
+      <nav class="apps-switch" aria-label="Maré apps" data-anchor="app-switch">
+        <a href="/mare/apps/shop" aria-current={current === 'shop' ? 'page' : undefined}>Shopping</a>
+        <a href="/mare/apps/pay" aria-current={current === 'pay' ? 'page' : undefined}>Pay</a>
+        <a href="/mare/apps/circle" aria-current={current === 'circle' ? 'page' : undefined}>Circle</a>
+      </nav>
+    </header>
+    <div class="phones">
+      {phones.map(([label, start], index) => (
+        <div class="phone-wrap">
+          <Phone label={`${label} screen`} anchor={anchors[index]}><Screens start={start} /></Phone>
+          <p class="phone-caption">{label}</p>
+        </div>
+      ))}
+    </div>
+  </main>
+  <script>
+    import '../../scripts/phones';
+  </script>
 </Zone>

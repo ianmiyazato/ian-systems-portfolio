@@ -13,6 +13,7 @@ a { color: inherit; text-decoration: none; }
 img, svg { display: block; max-width: 100%; }
 code, kbd, samp, .mono { font-family: var(--font-mono); }
 :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 65%, var(--ink)); outline-offset: 2px; }
+[hidden] { display: none !important; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
 /* Product catalog colours are content shared by every Maré surface (swatches, not UI roles). */

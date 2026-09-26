@@ -6,7 +6,7 @@ const routes = ['/', '/mare/ops/balcao', '/mare/ops/product-hub', '/mare/ops/pay
 for (const route of routes) {
   test(`${route} loads, opens decisions, and has no serious axe violations`, async ({ page }) => {
     await page.goto(route);
-    await expect(page.locator('footer')).toContainText('All names are fictitious');
+    await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
     await page.getByRole('button', { name: /Show decisions/ }).click();
     await expect(page.locator('.hotspot')).toHaveCount(4);
     const results = await new AxeBuilder({ page }).analyze();

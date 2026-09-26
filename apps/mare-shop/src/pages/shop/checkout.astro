@@ -1,0 +1,34 @@
+---
+import '@portfolio/tokens/fonts/consumer';
+import '../../styles/shop.css';
+import Zone from '../../layouts/Zone.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { brl, installments } from '../../lib/data';
+const total = 538;
+---
+<Zone title="Checkout · Maré" description="Choose pickup or delivery and pay with Maré Pay." context="Maré · Site">
+  <main class="cs">
+    <SiteHeader />
+    <section class="cs-checkout" data-anchor="cs-checkout">
+      <h1>Checkout</h1>
+      <form class="cs-checkout-form" id="checkout">
+        <fieldset class="cs-choice">
+          <legend>How do you want it?</legend>
+          <label><input type="radio" name="fulfil" value="pickup" checked /><span><b>Pick up today</b><small>Shopping Vila Nova · ready by 18:00 · free</small></span></label>
+          <label><input type="radio" name="fulfil" value="delivery" /><span><b>Delivery tomorrow</b><small>Rota Sul Express · R$ 14,90</small></span></label>
+        </fieldset>
+        <fieldset class="cs-choice">
+          <legend>Pay with</legend>
+          <label><input type="radio" name="pay" value="mare" checked /><span><b>Maré Pay Loja</b><small>{installments(total)}</small></span></label>
+          <label><input type="radio" name="pay" value="pix" /><span><b>Pix</b><small>{brl(total)} · instant</small></span></label>
+        </fieldset>
+        <button class="cs-btn primary wide" type="submit">Place order · {brl(total)}</button>
+        <p class="cs-done" hidden role="status">Order MR-904133 placed · we'll message you when it's ready at Vila Nova.</p>
+      </form>
+    </section>
+  </main>
+  <script>
+    const form = document.getElementById('checkout') as HTMLFormElement;
+    form.addEventListener('submit', (event) => { event.preventDefault(); (form.querySelector('.cs-done') as HTMLElement).hidden = false; });
+  </script>
+</Zone>

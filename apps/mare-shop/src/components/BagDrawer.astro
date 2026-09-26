@@ -1,0 +1,25 @@
+---
+import Garment from './Garment.astro';
+import { brl, installments, productBySlug } from '../lib/data';
+const items = [productBySlug('camisa-linho-natural'), productBySlug('calca-costa-pedra')];
+const total = items.reduce((sum, item) => sum + item.price, 0);
+---
+<div class="cs-layer" data-layer="drawer=bag" data-closes="drawer" hidden>
+  <div class="ov-scrim" data-close="drawer"></div>
+  <section class="ov-drawer cs-bag-drawer" role="dialog" aria-modal="true" aria-labelledby="bag-title" data-anchor="cs-bag">
+    <header class="ov-head"><div><span class="ov-eyebrow">2 items · reserved 20 min</span><h2 id="bag-title" class="ov-title">Your bag</h2></div><button class="ov-close" type="button" data-close="drawer" aria-label="Close bag">×</button></header>
+    <div class="ov-body">
+      <ul class="cs-bag-items">
+        {items.map((item) => (
+          <li><Garment garment={item.garment} swatch={item.swatch} label={item.name} /><div><strong>{item.name}</strong><small>{item.colorName} · M · {item.stock}</small></div><b>{brl(item.price)}</b></li>
+        ))}
+      </ul>
+      <div class="cs-fulfil" data-anchor="cs-fulfilment">
+        <p><b>Pick up today</b> at Shopping Vila Nova · ready by 18:00</p>
+        <p class="muted">or delivery by Rota Sul Express · tomorrow</p>
+      </div>
+      <dl class="cs-summary"><div><dt>Subtotal</dt><dd>{brl(total)}</dd></div><div><dt>Maré Pay</dt><dd>{installments(total)}</dd></div></dl>
+    </div>
+    <footer class="ov-foot"><a class="cs-btn primary wide" href="/mare/shop/checkout">Continue to checkout</a></footer>
+  </section>
+</div>
