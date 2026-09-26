@@ -129,6 +129,7 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
 - 2026-09-26 · `feat(zones)`: add deployable Vite/React, Astro, and SvelteKit child boundaries.
 - 2026-09-26 · `test(browser)`: verify 10 key routes, keyboard lens, nested overlays, i18n control, screenshots, and zero serious/critical axe violations.
+- 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 
 ## 12. Known gaps / next steps
 
