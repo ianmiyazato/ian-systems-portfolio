@@ -1,0 +1,6 @@
+[
+  { "id": "list-not-grid", "anchor": "[data-anchor=\"work-list\"]", "tag": "Frontend", "decision": "Case studies as a numbered list with one pitch each", "why": "Three products don't need a masonry grid; the pitch is the content.", "alternative": "Thumbnail grid.", "value": "Scannable in five seconds." },
+  { "id": "live-not-mock", "anchor": "[data-anchor=\"work-head\"]", "tag": "Backend", "decision": "Every case study links to running software, not images", "why": "Interaction and failure handling are the work; screenshots hide both.", "alternative": "Static mockups.", "value": "Reviewers can break things and see the designed response." },
+  { "id": "synthetic-data", "anchor": "[data-anchor=\"work-list\"] .work-row", "tag": "Data", "decision": "Seeded synthetic data shared by UI, tests and the database", "why": "Demos, screenshots and tests must show the same numbers every time.", "alternative": "Random fixtures per page.", "value": "Deterministic screenshots and reproducible bugs." },
+  { "id": "simulated-ai", "anchor": "[data-anchor=\"work-head\"] p", "tag": "AI", "decision": "AI is simulated behind the same provider interface a live model would use", "why": "The trust UX can be judged without API keys or cost.", "alternative": "Wait for live models.", "value": "Switching to live is configuration, not a rewrite." }
+]
