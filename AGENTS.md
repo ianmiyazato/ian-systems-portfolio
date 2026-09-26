@@ -24,13 +24,13 @@ ian-systems-portfolio (pnpm + Turborepo)
 ├── apps/pulse       SvelteKit boundary · port 3003 · /pulse/*
 ├── remotes/*        Balcão, Product Hub, Pay, Circle, Mesh runtime bundles
 ├── packages
-│   ├── tokens       semantic token contract and nine themes
+│   ├── tokens       themes.json → generated themes.css + TS; nine themes; self-hosted fonts per theme
+│   ├── chrome       <im-portfolio-bar>, <im-decision-lens>, <im-command-palette> + parity route registry
+│   ├── overlays     URL-addressable layer stack (Esc closes top-most, focus trap/restore) + overlay CSS
+│   ├── ai-surface   the one shared AI suggestion CSS contract (sparkle, badge, sources, approve)
+│   ├── mocks        seeded deterministic generators (pt-BR Maré, EN/KR/JP Pulse)
 │   ├── ai-sim       deterministic retrieval, streaming, tools, judge, eval
-│   ├── events       Zod contracts + BroadcastChannel local transport
-│   ├── headless     accessible behavior contracts
-│   ├── overlays     URL-addressable modal stack
-│   ├── ai-surface   one cross-system trust pattern
-│   └── web components / motion / mocks / React adapters
+│   └── events       Zod contracts + BroadcastChannel local transport
 └── microfrontends.json · current Vercel microfrontend routing contract
 ```
 
@@ -71,7 +71,9 @@ Never commit `.env.agent`; `.gitignore` excludes every `.env*` except `.env.exam
 
 ## 5. Design system
 
-All colors are semantic CSS variables emitted by `@portfolio/tokens`: `ground`, `surface`, `ink`, `muted`, `line`, `accent`, `risk`, `success`, and `ai`. Themes: portfolio, balcao, product-hub, pay, circle, mesh, consumer, atlas, pulse. Do not add component-level color literals. New values belong in the token package.
+All colors are semantic CSS variables emitted by `@portfolio/tokens` from `packages/tokens/src/themes.json` (run `node packages/tokens/scripts/emit-css.mjs` after editing; a unit test fails if `themes.css` drifts). Contract: `ground`, `surface`, `surface-2`, `ink`, `muted`, `line`, `accent`, `accent-ink`, `accent-text`, `accent-2`, `risk`, `warn`, `success`, `info`, `ai`, `ai-ink`, derived `*-soft`, `shade`, `scrim`, `elevation`; plus `font-display/ui/mono`, `radius`, `radius-sm`, `display-weight/tracking/stretch`, `overlay-in`, `drawer-in`, `ease`, `duration`. Themes: portfolio, balcao, product-hub, pay, circle, mesh, consumer, atlas, pulse. A contrast test enforces WCAG AA for every text pair in every theme. Do not add component-level color literals. New values belong in the token package.
+
+Fonts are self-hosted through Fontsource and imported per theme with `import '@portfolio/tokens/fonts/<theme>'`; Pulse CJK faces load lazily via `fonts/pulse-cjk`.
 
 Motion uses `rise`, `draw`, `scan`, `float`, `breathe`, and route/view-transition-friendly transform/opacity only. Every animation must stop under `prefers-reduced-motion`. Touch targets are at least 44px globally and 56px for Balcão primary tasks.
 
@@ -79,7 +81,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 
 ## 6. Decision lens
 
-The lens is framework-agnostic in behavior: press `D` or use **Show decisions**. A screen needs at least four annotations covering Frontend, Backend, Data, and AI. Content is authored in `decisions/<screen>.json` and must include `decision`, `why`, `alternative`, `value`, and `tag`. The shell currently supplies a safe four-item fallback so unfinished routes never lose the lens.
+`<im-decision-lens>` (packages/chrome) is one web component used by all four stacks: press `D` or use **Show decisions** in `<im-portfolio-bar>`. It resolves the current screen from `packages/chrome/src/routes.ts` (path + `modal`/`drawer`/`sub` params), lazy-loads `decisions/<screen>.json`, and pins numbered hotspots to each decision's `anchor` (a `[data-anchor="…"]` selector). Each file needs at least four decisions mixing Frontend and Backend and spanning three of Frontend/Backend/Data/AI; every entry has `id`, `anchor`, `tag`, `decision`, `why`, `alternative`, `value`. To add one: add a `data-anchor` attribute to the element, then append the entry to that screen's JSON. `?lens=on` opens the lens on load (used by screenshots).
 
 ## 7. AI simulation
 
@@ -122,6 +124,13 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 | 2026-09-26 | Add `microfrontends.json` beside rewrites | Rewrites only | Installed Vercel guidance describes platform-native grouping | Clear production evolution without blocking local work |
 | 2026-09-26 | Local mode and simulated AI | Wait for missing Supabase/API credentials | The prompt defines both as supported fallbacks | Deterministic, zero-secret demo |
 | 2026-09-26 | Solo-maintainer branch protection | Require an independent approval | One maintainer cannot approve their own PR, while PRs and green CI still provide the intended gate | PRs and `quality` stay required; add reviewer approval when a second maintainer joins |
+| 2026-09-26 | Token contract as JSON → generated CSS + TS, with a contrast test | Hand-written CSS per theme; Style Dictionary | One source feeds CSS, TypeScript and tests without another build dependency; drift fails CI | Nine themes stay AA-compliant by construction |
+| 2026-09-26 | Self-host every typeface with Fontsource, imported per theme | Google Fonts `<link>` per zone | No third-party render-blocking request; each zone ships only its families; CJK loads on demand | Better Lighthouse performance and privacy |
+| 2026-09-26 | Web Components with shadow DOM for bar, lens and palette | Lit; one implementation per framework | Zero-dependency custom elements run unchanged in Next, Vite, Astro and SvelteKit; lens/palette take the portfolio identity from tokens so reviewers recognise them in every theme | One behaviour, four stacks |
+| 2026-09-26 | One parity registry (`packages/chrome/src/routes.ts`) drives ⌘K, lens resolution, tests and screenshots | Separate lists per consumer | 40 artboards must stay in sync across four stacks | Adding a screen updates every consumer at once |
+| 2026-09-26 | Overlays as URL state + a shared layer stack + CSS contract | A React-only headless dialog package | Remotes (Preact), shell (React), Astro and Svelte need the same Esc/focus/deep-link behaviour | `?modal=…&sub=…` reproduces nested states in any zone |
+| 2026-09-26 | AI surface as one CSS contract with a CSS-mask sparkle | A component per framework | Markup is trivially portable; trust visuals (colour, badge, sources, approve) cannot drift | Recognisable AI pattern in all nine themes |
+| 2026-09-26 | Visual checks use Playwright Chromium when Chrome DevTools MCP cannot launch | Block on installing Chrome | The sandbox has no sudo to install Chrome stable | Screens are still verified at 1440 × 900 with screenshots |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
@@ -134,13 +143,21 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(platform)`: JSON token contract with AA contrast test and self-hosted fonts; chrome web components (bar, Decision Lens, ⌘K) with the 40-screen parity registry; overlay stack; AI surface contract; seeded mocks.
 
 ## 12. Session tool availability
 
-- GitHub CLI: authenticated as `ianmiyazato` with `repo` and `workflow`; PR and branch-protection operations work.
-- Vercel MCP: OAuth authenticated; project creation, settings, and environment writes work. Git linking is blocked because the Vercel GitHub App is not installed, and the default-team read scope returns 403. The Vercel CLI is not installed.
-- Supabase MCP: OAuth authenticated; project creation, migrations, SQL, keys, advisors, and logs work. The local CLI is not installed, so migration scaffolding used a transient pinned-by-command CLI download.
-- Chrome DevTools MCP: configured but cannot start because Google Chrome stable is absent at `/opt/google/chrome/chrome`; Playwright Chromium is available and is the visual/browser fallback.
+Recorded 2026-09-26 (session 2, Claude Code):
+
+| Tool | Status | Notes |
+|---|---|---|
+| GitHub CLI | ✅ `ianmiyazato`, scopes `repo`, `workflow`, `read:org` | PRs, merges, protection, releases |
+| Vercel CLI 60.1.3 | ✅ logged in as `ianmiyazato`, team `miyazato` (Hobby) | used for linking and deploys |
+| Vercel MCP | ✅ OAuth | project/env inspection and settings |
+| Supabase CLI | ✅ with `SUPABASE_ACCESS_TOKEN`; needs `HOME` pointed at a writable dir because `~/.supabase` is read-only in the sandbox | `supabase projects list` shows `ian-portfolio` (sa-east-1, healthy) |
+| Supabase MCP | ✅ OAuth | migrations, SQL, keys, advisors |
+| `codex mcp list` | chrome-devtools, playwright, supabase, vercel configured for Codex | informational |
+| Chrome DevTools MCP | ❌ cannot start: Chrome stable missing at `/opt/google/chrome/chrome`, and the sandbox has no sudo | Playwright Chromium (`~/.cache/ms-playwright`) is the visual-check fallback |
 
 ## 13. Known gaps / next steps
 
