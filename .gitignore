@@ -13,4 +13,4 @@ test-results/
 .pnpm-store/
 .astro/
 .svelte-kit/
-
+*.tsbuildinfo
