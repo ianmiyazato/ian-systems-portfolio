@@ -1,12 +1,13 @@
+/* Layers sit above every zone's sticky chrome (portfolio bar is 1000). */
 /* Overlay skeleton: every theme skins it only through tokens (--overlay-in, --drawer-in, radius, scrim). */
-.ov-scrim { position: fixed; inset: 0; z-index: 900; background: var(--scrim); animation: ov-fade 180ms ease both; }
-.ov-scrim[data-level='2'] { z-index: 920; background: var(--scrim-light); }
-.ov-modal, .ov-sheet, .ov-drawer, .ov-sub { position: fixed; z-index: 910; display: flex; flex-direction: column; max-height: calc(100vh - 32px); overflow: auto; border: 1px solid var(--line); background: var(--surface); color: var(--ink); box-shadow: var(--elevation); }
+.ov-scrim { position: fixed; inset: 0; z-index: 1100; background: var(--scrim); animation: ov-fade 180ms ease both; }
+.ov-scrim[data-level='2'] { z-index: 1120; background: var(--scrim-light); }
+.ov-modal, .ov-sheet, .ov-drawer, .ov-sub { position: fixed; z-index: 1110; display: flex; flex-direction: column; max-height: calc(100vh - 32px); overflow: auto; border: 1px solid var(--line); background: var(--surface); color: var(--ink); box-shadow: var(--elevation); }
 .ov-modal { top: 50%; left: 50%; width: min(var(--ov-width, 560px), calc(100vw - 32px)); border-radius: var(--radius); transform: translate(-50%, -50%); animation: var(--overlay-in) var(--duration) var(--ease) both; }
 .ov-sheet { left: 50%; bottom: 0; width: min(var(--ov-width, 760px), 100vw); max-height: min(88vh, 860px); border-radius: var(--radius) var(--radius) 0 0; transform: translateX(-50%); animation: ov-sheet-up var(--duration) var(--ease) both; }
 .ov-drawer { top: 0; right: 0; bottom: 0; width: min(var(--ov-width, 480px), 100vw); max-height: none; border-radius: var(--radius) 0 0 var(--radius); animation: var(--drawer-in) var(--duration) var(--ease) both; }
 /* The sub-layer is offset so its parent stays visible underneath. */
-.ov-sub { z-index: 930; top: 50%; left: 50%; width: min(var(--ov-sub-width, 440px), calc(100vw - 32px)); border-radius: var(--radius); transform: translate(calc(-50% + var(--ov-offset-x, 150px)), calc(-50% + var(--ov-offset-y, 36px))); animation: var(--overlay-in) var(--duration) var(--ease) both; }
+.ov-sub { z-index: 1130; top: 50%; left: 50%; width: min(var(--ov-sub-width, 440px), calc(100vw - 32px)); border-radius: var(--radius); transform: translate(calc(-50% + var(--ov-offset-x, 150px)), calc(-50% + var(--ov-offset-y, 36px))); animation: var(--overlay-in) var(--duration) var(--ease) both; }
 .ov-sub.ov-sub-drawer { top: 0; right: 0; bottom: 0; left: auto; width: min(var(--ov-sub-width, 420px), 100vw); max-height: none; border-radius: var(--radius) 0 0 var(--radius); transform: none; animation: var(--drawer-in) var(--duration) var(--ease) both; }
 .ov-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 22px 0; }
 .ov-body { padding: 16px 22px 22px; }

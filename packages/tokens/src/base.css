@@ -15,6 +15,12 @@ code, kbd, samp, .mono { font-family: var(--font-mono); }
 :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 65%, var(--ink)); outline-offset: 2px; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
+/* Product catalog colours are content shared by every Maré surface (swatches, not UI roles). */
+:root { --swatch-linen: #E9DFCC; --swatch-sand: #D8C3A5; --swatch-sea: #9FB7BF; --swatch-clay: #C98F6E; --swatch-ink: #26323A; --swatch-slate: #7D8B93; --swatch-rose: #E8C7B8; --swatch-mist: #C9DDE0; }
+.swatch { display: inline-block; flex: none; width: 18px; height: 18px; border-radius: 5px; background: var(--swatch-sand); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--shade) 12%, transparent); }
+.swatch[data-swatch='linen'] { background: var(--swatch-linen); } .swatch[data-swatch='sand'] { background: var(--swatch-sand); } .swatch[data-swatch='sea'] { background: var(--swatch-sea); } .swatch[data-swatch='clay'] { background: var(--swatch-clay); }
+.swatch[data-swatch='ink'] { background: var(--swatch-ink); } .swatch[data-swatch='slate'] { background: var(--swatch-slate); } .swatch[data-swatch='rose'] { background: var(--swatch-rose); } .swatch[data-swatch='mist'] { background: var(--swatch-mist); }
+
 /* Cross-stack chrome placeholders keep layout stable before custom elements upgrade. */
 im-portfolio-bar { display: block; min-height: 48px; }
 im-decision-lens, im-command-palette { display: contents; }

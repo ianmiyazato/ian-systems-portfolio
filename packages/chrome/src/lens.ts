@@ -18,6 +18,8 @@ const styles = `
 .legend header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
 .legend strong{font:800 13px var(--lens-display);letter-spacing:-.01em}
 .legend small{display:block;color:var(--lens-muted);font:500 11px var(--lens-mono)}
+.legend-actions{display:flex;gap:6px}
+.legend.collapsed{width:auto}.legend.collapsed ol{display:none}.legend.collapsed header{margin:0}
 .legend ol{display:grid;gap:4px;margin:0;padding:0;list-style:none}
 .legend li button{display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:start;width:100%;min-height:44px;padding:8px;border:0;border-radius:10px;background:transparent;color:var(--lens-ink);text-align:left;cursor:pointer;font:500 12px/1.35 var(--lens-font)}
 .legend li button:hover,.legend li button:focus-visible{background:var(--lens-surface-2)}
@@ -56,6 +58,7 @@ export class DecisionLens extends HTMLElement {
   private observer: MutationObserver | null = null;
   private returnFocus: HTMLElement | null = null;
   private loadToken = 0;
+  private collapsed = false;
 
   constructor() {
     super();
@@ -190,9 +193,9 @@ export class DecisionLens extends HTMLElement {
         </section></div>`
       : '';
     this.root.innerHTML = `<style>${styles}</style><div class="layer" aria-label="Decision lens">
-      <div class="tint"></div><div class="outline"></div>${hotspots}
-      <aside class="legend" aria-label="Decisions on this screen"><header><div><strong>Decision lens · ${this.decisions.length}</strong><small>${escapeHtml(this.screen?.label ?? 'This screen')} · press D to hide</small></div><button type="button" class="close" data-hide>Hide</button></header><ol>${items}</ol></aside>
-      ${card}</div>`;
+      <div class="tint"></div><div class="outline"></div>
+      <aside class="legend ${this.collapsed ? 'collapsed' : ''}" aria-label="Decisions on this screen"><header><div><strong>Decision lens · ${this.decisions.length}</strong><small>${escapeHtml(this.screen?.label ?? 'This screen')} · press D to hide</small></div><div class="legend-actions"><button type="button" class="close" data-collapse aria-expanded="${!this.collapsed}">${this.collapsed ? 'List' : 'Fold'}</button><button type="button" class="close" data-hide>Hide</button></div></header><ol>${items}</ol></aside>
+      ${hotspots}${card}</div>`;
     this.root.querySelectorAll<HTMLButtonElement>('[data-index]').forEach((button) => {
       const index = Number(button.dataset.index);
       button.addEventListener('click', () => this.openCard(index));
@@ -202,6 +205,10 @@ export class DecisionLens extends HTMLElement {
       button.addEventListener('blur', () => this.highlight(null));
     });
     this.root.querySelector('[data-hide]')?.addEventListener('click', () => void this.toggle(false));
+    this.root.querySelector('[data-collapse]')?.addEventListener('click', () => {
+      this.collapsed = !this.collapsed;
+      this.render();
+    });
     this.root.querySelector('.card .close')?.addEventListener('click', () => this.closeCard());
     this.root.querySelector('[data-scrim]')?.addEventListener('mousedown', (event) => {
       if (event.target === event.currentTarget) this.closeCard();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { balcaoOrders, rng, series } from './index';
+import { balcaoOrders, liveOrder, rng, series } from './index';
 
 describe('seeded mocks', () => {
   it('are deterministic across calls', () => {
@@ -10,6 +10,7 @@ describe('seeded mocks', () => {
 
   it('keep the artboard ids stable', () => {
     const ids = balcaoOrders().map((order) => order.id);
+    expect(liveOrder(3)).toEqual(liveOrder(3));
     expect(ids).toContain('MR-904117');
     expect(ids).toContain('MR-904112');
   });
