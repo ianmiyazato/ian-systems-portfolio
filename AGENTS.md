@@ -78,7 +78,7 @@ pnpm deploy:prod                 # production deploy (zones first, shell last)
 APPS="pulse shell" pnpm deploy:all   # only some zones
 ```
 
-Database mode is optional. When Supabase is present: `supabase db push` and `supabase db reset`. No database command is needed for local mode.
+Database mode is optional. When Supabase is present: `supabase db push` and `supabase db reset`. No database command is needed for local mode. `supabase/seed.sql` is generated from `@portfolio/mocks` (`WRITE_SEED=1 pnpm --filter @portfolio/mocks test`; a test fails if it drifts) and was applied to `ian-portfolio` through the Supabase MCP.
 
 ## 4. Environments and secrets
 
@@ -186,6 +186,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
@@ -200,6 +201,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
+- 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
@@ -209,6 +211,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
