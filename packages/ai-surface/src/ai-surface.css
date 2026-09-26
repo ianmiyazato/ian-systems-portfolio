@@ -10,7 +10,7 @@
  *   <div class="ai-actions"><button class="ai-approve">Approve…</button><button class="ai-explain">Why?</button></div>
  * </section>
  */
-.ai-surface { position: relative; display: grid; gap: 10px; padding: 16px; border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); border-radius: var(--radius); background: var(--ai-soft); color: var(--ink); font-family: var(--font-ui); }
+.ai-surface { position: relative; display: grid; align-content: start; gap: 10px; padding: 16px; border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); border-radius: var(--radius); background: var(--ai-soft); color: var(--ink); font-family: var(--font-ui); }
 .ai-surface.ai-inline { padding: 12px 14px; }
 .ai-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .ai-spark { position: relative; display: inline-grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: calc(var(--radius-sm) * .8); background: var(--ai); color: var(--ai-ink); }
