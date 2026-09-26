@@ -1,14 +1,75 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "globalEnv": ["AI_MODE", "DATA_MODE", "NEXT_PUBLIC_*", "PUBLIC_*", "MARE_OPS_URL", "MARE_SHOP_URL", "PULSE_URL", "SHELL_URL", "SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY", "VERCEL", "VERCEL_ENV", "VERCEL_URL"],
+  "globalEnv": [
+    "AI_MODE",
+    "DATA_MODE",
+    "NEXT_PUBLIC_*",
+    "PUBLIC_*",
+    "MARE_OPS_URL",
+    "MARE_SHOP_URL",
+    "PULSE_URL",
+    "SHELL_URL",
+    "SUPABASE_URL",
+    "SUPABASE_PUBLISHABLE_KEY",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL"
+  ],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", ".svelte-kit/output/**", ".vercel/output/**", "dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        ".svelte-kit/output/**",
+        ".vercel/output/**",
+        "dist/**"
+      ]
     },
-    "dev": { "cache": false, "persistent": true },
-    "lint": { "dependsOn": ["^build"] },
-    "typecheck": { "dependsOn": ["^build"] },
-    "test": { "dependsOn": ["^build"], "outputs": ["coverage/**"] }
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "@portfolio/chrome#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/decisions/**"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "@portfolio/chrome#test": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/decisions/**"
+      ]
+    }
   }
 }

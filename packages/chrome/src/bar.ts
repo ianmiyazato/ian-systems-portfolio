@@ -20,7 +20,7 @@ kbd{padding:1px 5px;border:1px solid currentColor;border-radius:4px;font:600 10p
 :focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 65%,var(--ink));outline-offset:2px}
 @keyframes breathe{50%{transform:scale(1.25);opacity:.7}}
 @media(max-width:900px){nav,.open{display:none}.context{display:none}}
-@media(max-width:520px){.id span:last-child{display:none}.bar{gap:10px;padding:0 12px}kbd{display:none}}
+@media(max-width:520px){.id span:last-child{display:none}.bar{gap:10px;padding:0 12px}[data-lens] kbd{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 `;
 

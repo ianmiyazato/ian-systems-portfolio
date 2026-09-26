@@ -86,7 +86,7 @@ export const screens: ScreenRoute[] = [
   { id: 'work-mare', area: 'mare', label: 'Maré case study', href: '/work/mare', zone: 'shell', parity: false },
   { id: 'work-atlas', area: 'atlas', label: 'Atlas case study', href: '/work/atlas', zone: 'shell', parity: false },
   { id: 'work-pulse', area: 'pulse', label: 'Pulse case study', href: '/work/pulse', zone: 'shell', parity: false },
-  { id: 'mare-ops-index', area: 'mare', label: 'Maré Ops remote index', href: '/mare/ops', zone: 'mare-ops', parity: false }
+  { id: 'mare-ops-index', area: 'mare', label: 'Maré Ops remote index', href: '/mare/ops/', zone: 'mare-ops', parity: false }
 ];
 
 export const parityScreens = screens.filter((screen) => screen.parity !== false);

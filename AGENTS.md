@@ -162,11 +162,15 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Remote builds use an app build with a JS entry, not Vite library mode | Vite `build.lib` | Library mode inlines every font file as base64 into the CSS | Fonts stay separate, cacheable and subset-loaded |
 | 2026-09-26 | Stage all five remotes inside the Maré Ops project on Hobby | Five additional Vercel projects | Stays within Hobby limits while keeping independent builds and manifests | Shared hosting-level rollback is the documented trade-off |
 | 2026-09-26 | Per-remote error boundary with a designed fallback and retry | One page-level error screen | A remote failing is a normal distributed-systems event, so it gets a designed state | Four systems keep working when one is down (covered by Playwright) |
+| 2026-09-26 | Realtime in remotes via `@supabase/realtime-js`, lazy-loaded only in Supabase mode, with BroadcastChannel as the local transport | Full `supabase-js` in every remote | The remote needs Broadcast only; the same `openFeed()` API works in both data modes | Two tabs update together in either mode; the local bundle stays small |
+| 2026-09-26 | Apply-plan motion uses the View Transitions API with a name per order card | A JS animation library | Cards glide between lanes with transform/opacity only and degrade to an instant update | Motion explains the change without adding a dependency |
+| 2026-09-26 | Screenshots, the lens anchor test and ⌘K all iterate the parity registry | Hand-maintained lists | New screens are covered automatically | No screen can silently miss a screenshot or decision check |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
@@ -176,6 +180,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: JSON token contract with AA contrast test and self-hosted fonts; chrome web components (bar, Decision Lens, ⌘K) with the 40-screen parity registry; overlay stack; AI surface contract; seeded mocks.
@@ -201,3 +206,52 @@ Recorded 2026-09-26 (session 2, Claude Code):
 - Host Node is 24; CI and `.nvmrc` pin Node 22, and Vercel projects use 22.x.
 - The Supabase project `ian-portfolio` is active in `sa-east-1`; five RLS tables, deterministic seeds, and three public Broadcast feeds are verified.
 - Never claim a Lighthouse score or deployed URL until the command has run and the URL has been opened successfully.
+
+## 14. Parity
+
+Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visual check" means the route was opened at 1440 × 900 in Chromium and compared against the original build prompt's *Pages and screens* and *Flows, overlays and variations* specs. Variations for each area are captured as `<main-screen>--<state>.png` in the same folder.
+
+| # | Route | Built | Visual check passed | Screenshot |
+|---|---|---|---|---|
+| 1 | `/` | — | — | — |
+| 2 | `/work/mare/languages` | — | — | — |
+| 3 | `/system-design/mare` | — | — | — |
+| 4 | `/mare/ops/balcao` | ✅ | ✅ | `docs/screenshots/balcao/balcao-lanes.png` |
+| 5 | `/mare/ops/balcao/pick/MR-904117` | ✅ | ✅ | `docs/screenshots/balcao/balcao-picking.png` |
+| 6 | `/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party` | ✅ | ✅ | `docs/screenshots/balcao/balcao-handover.png` |
+| 7 | `/mare/ops/balcao?modal=cutoff-plan&sub=why` | ✅ | ✅ | `docs/screenshots/balcao/balcao-cutoff-plan.png` |
+| 8 | `/mare/ops/product-hub` | — | — | — |
+| 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | — | — | — |
+| 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | — | — | — |
+| 11 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | — | — | — |
+| 12 | `/mare/ops/pay` | — | — | — |
+| 13 | `/mare/ops/pay/applications/AP-77118` | — | — | — |
+| 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | — | — | — |
+| 15 | `/mare/apps/pay` | — | — | — |
+| 16 | `/mare/ops/circle` | — | — | — |
+| 17 | `/mare/ops/circle/rules/summer-swim` | — | — | — |
+| 18 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | — | — | — |
+| 19 | `/mare/apps/circle` | — | — | — |
+| 20 | `/mare/ops/mesh` | — | — | — |
+| 21 | `/mare/ops/mesh/partners/ligeiro-log` | — | — | — |
+| 22 | `/mare/ops/mesh/dlq?modal=replay&sub=transform` | — | — | — |
+| 23 | `/mare/ops/mesh/invoices/MR-904117` | — | — | — |
+| 24 | `/mare/apps/shop` | — | — | — |
+| 25 | `/mare/shop` | — | — | — |
+| 26 | `/atlas/welcome?step=2` | — | — | — |
+| 27 | `/atlas/pipeline` | — | — | — |
+| 28 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | — | — | — |
+| 29 | `/atlas/companies/parallax-pay` | — | — | — |
+| 30 | `/atlas/arena?modal=setup&prompt=payments-ledger` | — | — | — |
+| 31 | `/atlas/arena/session/14` | — | — | — |
+| 32 | `/atlas/arena/sessions/14` | — | — | — |
+| 33 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | — | — | — |
+| 34 | `/atlas/academy/designing-for-10x` | — | — | — |
+| 35 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | — | — | — |
+| 36 | `/system-design/atlas` | — | — | — |
+| 37 | `/pulse` | — | — | — |
+| 38 | `/pulse/distribution` | — | — | — |
+| 39 | `/pulse/harness` | — | — | — |
+| 40 | `/system-design/pulse` | — | — | — |
+
+Parity: **4/40**.
