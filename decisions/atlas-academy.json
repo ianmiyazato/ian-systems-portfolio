@@ -1,0 +1,38 @@
+[
+  {
+    "id": "outline",
+    "anchor": "[data-anchor=\"at-outline\"]",
+    "tag": "Frontend",
+    "decision": "A course outline with Members lessons marked, not hidden",
+    "why": "Seeing what is next motivates; hiding it confuses.",
+    "alternative": "Show only free lessons.",
+    "value": "Clear path and honest upsell."
+  },
+  {
+    "id": "practice-this",
+    "anchor": "[data-anchor=\"at-practice-this\"]",
+    "tag": "AI",
+    "decision": "Each lesson links to a drill grounded in it and your weakest rubric line",
+    "why": "Learning sticks when practised immediately.",
+    "alternative": "Generic \"try Arena\" links.",
+    "value": "Lesson → practice → feedback loop."
+  },
+  {
+    "id": "static-lessons",
+    "anchor": "[data-anchor=\"at-lesson\"]",
+    "tag": "Backend",
+    "decision": "Lessons are static pages; progress is an event",
+    "why": "Content changes rarely; progress changes constantly.",
+    "alternative": "Server-render lessons per request.",
+    "value": "Fast pages and accurate progress."
+  },
+  {
+    "id": "progress",
+    "anchor": "[data-anchor=\"at-video\"]",
+    "tag": "Data",
+    "decision": "Video progress is tracked per member and resumes",
+    "why": "Most lessons are watched in two sittings.",
+    "alternative": "Restart from zero.",
+    "value": "Higher completion."
+  }
+]

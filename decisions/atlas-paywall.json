@@ -1,0 +1,38 @@
+[
+  {
+    "id": "three-plans",
+    "anchor": "[data-anchor=\"at-plans\"]",
+    "tag": "Frontend",
+    "decision": "Three plans side by side with Pro highlighted",
+    "why": "A comparison makes value concrete; a single price feels arbitrary.",
+    "alternative": "One upgrade button.",
+    "value": "Informed upgrades."
+  },
+  {
+    "id": "checkout-sub",
+    "anchor": "[data-anchor=\"at-checkout\"]",
+    "tag": "Frontend",
+    "decision": "Checkout is a sub-modal so the chosen plan stays visible",
+    "why": "Context reduces checkout abandonment.",
+    "alternative": "Redirect to a hosted checkout page.",
+    "value": "Fewer steps, same trust cues."
+  },
+  {
+    "id": "plan-broadcast",
+    "anchor": "[data-anchor=\"at-summary\"]",
+    "tag": "Backend",
+    "decision": "Confirmation emits plan.changed; every open tab and zone updates",
+    "why": "A member should not need to reload to use what they bought.",
+    "alternative": "Update on next login.",
+    "value": "Instant, consistent entitlements."
+  },
+  {
+    "id": "free-week",
+    "anchor": "[data-anchor=\"at-card-fields\"]",
+    "tag": "Data",
+    "decision": "A free first week with the first charge date stated",
+    "why": "Surprise charges create disputes.",
+    "alternative": "Charge immediately.",
+    "value": "Fewer refunds and chargebacks."
+  }
+]

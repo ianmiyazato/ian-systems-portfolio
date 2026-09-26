@@ -1,0 +1,38 @@
+[
+  {
+    "id": "velocity",
+    "anchor": "[data-anchor=\"at-velocity\"]",
+    "tag": "Data",
+    "decision": "Hiring velocity pairs hires with days-to-offer",
+    "why": "A company hiring fast but slowly deciding is a different bet.",
+    "alternative": "A single hires count.",
+    "value": "Candidates can plan their timelines."
+  },
+  {
+    "id": "pro-lock",
+    "anchor": "[data-anchor=\"at-loop-intel\"]",
+    "tag": "Frontend",
+    "decision": "Loop intelligence is blurred behind a lock that says exactly what Pro unlocks",
+    "why": "Hiding the section entirely hides the value; blurring shows its shape.",
+    "alternative": "Remove the section for free users.",
+    "value": "Upgrades are informed, not coerced."
+  },
+  {
+    "id": "entitlement-edge",
+    "anchor": "[data-anchor=\"at-lock\"]",
+    "tag": "Backend",
+    "decision": "Entitlements come from a signed plan claim checked at the edge",
+    "why": "Every zone must agree on what a member can open.",
+    "alternative": "Each page queries the billing database.",
+    "value": "Upgrades apply everywhere instantly."
+  },
+  {
+    "id": "members-hired",
+    "anchor": "[data-anchor=\"at-members\"]",
+    "tag": "AI",
+    "decision": "Members-hired data is aggregated and consented, never scraped profiles",
+    "why": "Community data must stay trustworthy.",
+    "alternative": "Infer hires from public profiles.",
+    "value": "Signals people are comfortable sharing."
+  }
+]

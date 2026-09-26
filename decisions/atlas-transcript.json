@@ -1,0 +1,38 @@
+[
+  {
+    "id": "scroll-to-cite",
+    "anchor": "[data-anchor=\"at-transcript\"]",
+    "tag": "Frontend",
+    "decision": "The drawer opens scrolled to the cited timestamp with the weak answer highlighted",
+    "why": "The evidence should be one click from the score.",
+    "alternative": "Open the full transcript at the top.",
+    "value": "Seconds from score to evidence."
+  },
+  {
+    "id": "model-answer",
+    "anchor": "[data-anchor=\"at-model-answer\"]",
+    "tag": "AI",
+    "decision": "A \"what a 4/4 answer does\" card describes the reasoning, not a script",
+    "why": "Memorised answers fail follow-ups.",
+    "alternative": "Show a full sample answer.",
+    "value": "People learn the pattern."
+  },
+  {
+    "id": "timestamps",
+    "anchor": "[data-anchor=\"at-feedback-head\"]",
+    "tag": "Data",
+    "decision": "Transcripts are stored with turn timestamps",
+    "why": "Citations need stable anchors.",
+    "alternative": "Unstructured text blobs.",
+    "value": "Deep links to any moment."
+  },
+  {
+    "id": "audio-replay",
+    "anchor": "[data-anchor=\"at-rubric\"]",
+    "tag": "Backend",
+    "decision": "Audio is stored per turn for replay",
+    "why": "Tone and pacing matter in interviews.",
+    "alternative": "Transcript only.",
+    "value": "People hear how they sounded."
+  }
+]
