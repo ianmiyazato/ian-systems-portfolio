@@ -1,6 +1,6 @@
 # Systems portfolio operating manual
 
-> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). Deploys run with the Vercel CLI via `pnpm deploy:prod`; CI deploys activate once the `VERCEL_TOKEN` secret exists.
+> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). Verified 2026-09-26: all 45 registry routes load in Chromium with zero console errors and zero failed requests. Deploys run with the Vercel CLI via `pnpm deploy:prod`; CI deploys activate once the `VERCEL_TOKEN` secret exists.
 
 ## 1. Purpose and content rules
 
@@ -74,6 +74,8 @@ BASE_URL=https://ian-portfolio-shell.vercel.app pnpm e2e   # the same suite agai
 node scripts/browser-probe.mjs   # console errors + failed requests (BASE, PATHS, SHOTS env)
 node scripts/axe-probe.mjs <url> [rule]
 pnpm deploy:all                  # preview deploy of every zone; shell previews rewrite to zone previews
+pnpm lighthouse                  # Lighthouse (mobile) on 5 production pages, median of 3 → .lighthouseci/summary.json
+pnpm lighthouse:ci               # the same through @lhci/cli (Linux CI; fails on WSL, see Known gaps)
 pnpm deploy:prod                 # production deploy (zones first, shell last)
 APPS="pulse shell" pnpm deploy:all   # only some zones
 ```
@@ -125,13 +127,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - [x] M1 · repository, operating manual, CI skeleton, local shell
 - [x] M2 · token contract, AI simulation, event contracts, decision lens behavior
 - [x] M3 · shell home, /work case studies and the design-languages board
-- [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §14)
+- [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §15)
 - [x] M5 · Astro Maré consumer zone (site + three apps); language board ships with the shell (M6 row)
 - [x] M6 · Atlas flows as real shell routes (10 artboards)
 - [x] M7 · SvelteKit Pulse zone with EN/KR/JP
 - [x] M8 · interactive system-design pages (React Flow, eight scenarios, node decisions, before/after)
 - [x] M9 · Supabase data mode and server-only live adapter wiring
-- [ ] M10 · exhaustive visual QA, screenshots, Lighthouse, production release
+- [x] M10 · visual QA (40/40 parity), 107 screenshots, axe on every route, Lighthouse on production, v0.1.0 release
 
 ## 10. Decision log
 
@@ -181,11 +183,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Atlas plan changes broadcast over BroadcastChannel + storage events | Poll the plan; reload after checkout | "Its confirmation updates the plan in every zone" without a backend round-trip in the demo; mirrors a plan.changed event | Every open tab flips to Pro immediately (Playwright-tested) |
 | 2026-09-26 | E2E runs against production builds of every zone behind the shell | Dev servers; one zone at a time | Tests should exercise the same rewrites, base paths and bundles as Vercel | Failures reproduce what reviewers would see |
 | 2026-09-26 | Dimmed/blocked states use blur, saturation or muted colours, never opacity on text | Opacity for "disabled-looking" regions | Opacity lowers text contrast below AA and axe flags it | Variations stay accessible |
+| 2026-09-26 | Measure Lighthouse with the Node API when LHCI can't launch Chrome | Skip Lighthouse; estimate scores | The rules forbid estimated scores; the Node API is the engine LHCI wraps | Real, reproducible numbers (`.lighthouseci/summary.json`) |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `chore(release)`: production deploy of all zones, adapter-vercel override fix for Pulse subpages, deploy script parses JSON CLI output, Lighthouse scripts and measured scores, Maré Ops meta description, v0.1.0 notes.
 - 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
@@ -201,6 +205,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
+- 2026-09-26 · `chore(release)`: production deploy of all zones, adapter-vercel override fix for Pulse subpages, deploy script parses JSON CLI output, Lighthouse scripts and measured scores, Maré Ops meta description, v0.1.0 notes.
 - 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
@@ -211,6 +216,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `chore(release)`: production deploy of all zones, adapter-vercel override fix for Pulse subpages, deploy script parses JSON CLI output, Lighthouse scripts and measured scores, Maré Ops meta description, v0.1.0 notes.
 - 2026-09-26 · `feat(supabase)`: generate `supabase/seed.sql` from the same mocks the UI renders (drift test) and upsert 15 orders into the live project.
 - 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
@@ -243,13 +249,34 @@ Recorded 2026-09-26 (session 2, Claude Code):
 
 ## 13. Known gaps / next steps
 
-- **CI deploys need `VERCEL_TOKEN`.** `vercel tokens add` is refused for the CLI's OAuth app and `vercel git connect` fails because the Vercel GitHub App is not installed. Fix either way: create a token at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`, or install the Vercel GitHub App for this repo and run `vercel git connect` in each `apps/<app>`. Until then, deploy with `pnpm deploy:prod` from an authenticated session.
-- **Chrome DevTools MCP** needs Chrome stable. Fix: install Google Chrome, or re-register the server with Playwright's Chromium: `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath ~/.cache/ms-playwright/chromium-1187/chrome-linux/chrome`.
-- Host Node is 24; CI and `.nvmrc` pin Node 22, and Vercel projects use 22.x.
-- The Supabase project `ian-portfolio` is active in `sa-east-1`; five RLS tables, deterministic seeds, and three public Broadcast feeds are verified.
+- **CI deploys need `VERCEL_TOKEN`.** `vercel tokens add` is refused for the CLI's OAuth app and `vercel git connect` fails because the Vercel GitHub App is not installed. Fix either way: create a token at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`, or install the Vercel GitHub App for this repo and run `vercel git connect` in each `apps/<app>`. Until then, production is deployed from an authenticated session with `pnpm deploy:prod`, and the CI `preview`/`production` jobs skip.
+- **Chrome DevTools MCP** needs Chrome stable (absent; no sudo in the sandbox). Visual checks used Playwright's Chromium. Fix: install Google Chrome, or `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath ~/.cache/ms-playwright/chromium-1187/chrome-linux/chrome`.
+- **`@lhci/cli` on WSL**: chrome-launcher detects WSL and tries to create its profile under the Windows temp directory (EACCES). Scores were measured with the Lighthouse Node API that LHCI wraps (`scripts/lighthouse.mjs`), driving Playwright's Chromium over its debugging port. `pnpm lighthouse:ci` works on a plain Linux runner.
+- **adapter-vercel + `paths.base`** writes prerender overrides without the base prefix, so `/pulse/distribution` 404'd on Vercel. `apps/pulse/scripts/fix-vercel-overrides.mjs` re-keys them after build; remove it once the adapter is fixed upstream.
+- **Deployment protection is off** on all four projects so the shell can proxy zones server-side; turn on a bypass token if previews ever need to be private.
+- **Remotes on Hobby** share the Maré Ops project, so hosting-level rollback is shared (runtime isolation and independent builds are not).
+- **Browser-only anchor checks**: decision anchors resolve in the rendered DOM, so their test is Playwright-based; the unit test covers counts, fields and selector shape.
+- Host Node is 24; CI, `.nvmrc` and the Vercel projects use Node 22.
 - Never claim a Lighthouse score or deployed URL until the command has run and the URL has been opened successfully.
 
-## 14. Parity
+## 14. Quality results (measured, not estimated)
+
+Lighthouse 12.6.1, default mobile config with simulated throttling, median of 3 runs against production on 2026-09-26 (`pnpm lighthouse`):
+
+| Page | Performance | Accessibility | Best practices | SEO | LCP |
+|---|---|---|---|---|---|
+| `/` | 98 | 100 | 100 | 100 | 2.1 s |
+| `/work/mare` | 100 | 100 | 100 | 100 | 1.6 s |
+| `/mare/shop` | 99 | 100 | 100 | 100 | 1.4 s |
+| `/mare/ops/balcao` | 95 | 100 | 100 | 90 → meta description added after this run | 2.5 s |
+| `/pulse` | 100 | 100 | 100 | 100 | 1.4 s |
+
+- **axe** (`tests/e2e/a11y.spec.ts`, WCAG 2.1 A/AA): 99 targets (45 screens incl. every deep link + 54 variations), zero serious or critical violations, locally and against production.
+- **Playwright**: 186 tests (flows, federation with each remote blocked, Decision Lens anchors on all 45 screens, system-design replays, Pulse i18n, Supabase two-tab live orders, axe). Local run 186/186; production run 185/186 on the first attempt with the one failure passing on rerun (a toast mid-animation during the live demo driver), 99/99 axe on the rerun.
+- **Unit**: token contrast (19), registry (45), decision coverage (48), overlays, pricing guardrails, commission math, score contributions, ai-sim, events, mocks/seed drift.
+- **Supabase**: production Balcão in two tabs both reported "Live · Supabase Broadcast" and tab B received the order emitted from tab A.
+
+## 15. Parity
 
 Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visual check" means the route was opened at 1440 × 900 in Chromium and compared against the original build prompt's *Pages and screens* and *Flows, overlays and variations* specs. Variations for each area are captured as `<main-screen>--<state>.png` in the same folder.
 

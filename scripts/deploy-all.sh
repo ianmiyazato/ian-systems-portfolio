@@ -37,7 +37,9 @@ deploy() {
   local args=(deploy --yes "${TOKEN_ARGS[@]}")
   $PROD && args+=(--prod)
   [[ "$app" == "shell" ]] && args+=("${BUILD_ENV[@]}")
-  VERCEL_ORG_ID="$ORG_ID" VERCEL_PROJECT_ID="${PROJECT_IDS[$app]}" vercel "${args[@]}" 2>/dev/null
+  # Non-interactive CLI output is JSON; keep only the deployment URL.
+  VERCEL_ORG_ID="$ORG_ID" VERCEL_PROJECT_ID="${PROJECT_IDS[$app]}" vercel "${args[@]}" 2>/dev/null \
+    | node -e 'let s="";process.stdin.on("data",(d)=>(s+=d)).on("end",()=>{try{console.log(JSON.parse(s).deployment.url)}catch{console.log(s.trim().split("\n").pop())}})'
 }
 
 for app in $APPS; do
