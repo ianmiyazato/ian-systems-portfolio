@@ -126,7 +126,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - [x] M5 · Astro Maré consumer zone (site + three apps); language board ships with the shell (M6 row)
 - [ ] M6 · extract Atlas flows from shell route fallback
 - [x] M7 · SvelteKit Pulse zone with EN/KR/JP
-- [x] M8 · interactive system-design scenario player
+- [x] M8 · interactive system-design pages (React Flow, eight scenarios, node decisions, before/after)
 - [x] M9 · Supabase data mode and server-only live adapter wiring
 - [ ] M10 · exhaustive visual QA, screenshots, Lighthouse, production release
 
@@ -174,11 +174,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | CJK faces load after first paint, relying on unicode-range subsets | Load Noto KR/JP up front; system fonts only | ~190 kB of @font-face CSS would block the first paint; system CJK fonts are missing on many machines | Fast EN first paint with correct KR/JP glyphs a moment later |
 | 2026-09-26 | Cross-zone links are plain anchors; in-zone Next links don't prefetch | Next `<Link>` everywhere | The Next router would try an RSC fetch against another zone, and aborted prefetches show up as failed requests | Clean navigations and zero failed requests in the browser probe |
 | 2026-09-26 | Case-study outcomes are labelled "measured on the real systems this fictitious case is modelled on" | Attribute metrics to Maré/Atlas/Pulse | The products are fictitious; the outcomes are real and must not be re-attributed | Credible numbers without pretending |
+| 2026-09-26 | React Flow for system design with custom packet edges | Hand-drawn SVG; a static diagram | Nodes, handles and fit-to-view come for free; custom edges keep the packet motion on the same path strings as the rest of the portfolio | Interactive diagrams in ~55 kB for the only route that needs them |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
 - 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
@@ -190,12 +192,14 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
+- 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
 - 2026-09-26 · `feat(zones)`: add deployable Vite/React, Astro, and SvelteKit child boundaries.
 - 2026-09-26 · `test(browser)`: verify 10 key routes, keyboard lens, nested overlays, i18n control, screenshots, and zero serious/critical axe violations.
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
 - 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
@@ -238,7 +242,7 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 |---|---|---|---|---|
 | 1 | `/` | ✅ | ✅ | `docs/screenshots/overview/home.png` |
 | 2 | `/work/mare/languages` | ✅ | ✅ | `docs/screenshots/mare/mare-languages.png` |
-| 3 | `/system-design/mare` | — | — | — |
+| 3 | `/system-design/mare` | ✅ | ✅ | `docs/screenshots/mare/system-design-mare.png` |
 | 4 | `/mare/ops/balcao` | ✅ | ✅ | `docs/screenshots/balcao/balcao-lanes.png` |
 | 5 | `/mare/ops/balcao/pick/MR-904117` | ✅ | ✅ | `docs/screenshots/balcao/balcao-picking.png` |
 | 6 | `/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party` | ✅ | ✅ | `docs/screenshots/balcao/balcao-handover.png` |
@@ -271,10 +275,10 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 33 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | — | — | — |
 | 34 | `/atlas/academy/designing-for-10x` | — | — | — |
 | 35 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | — | — | — |
-| 36 | `/system-design/atlas` | — | — | — |
+| 36 | `/system-design/atlas` | ✅ | ✅ | `docs/screenshots/atlas/system-design-atlas.png` |
 | 37 | `/pulse` | ✅ | ✅ | `docs/screenshots/pulse/pulse-intelligence.png` |
 | 38 | `/pulse/distribution` | ✅ | ✅ | `docs/screenshots/pulse/pulse-distribution.png` |
 | 39 | `/pulse/harness` | ✅ | ✅ | `docs/screenshots/pulse/pulse-harness.png` |
-| 40 | `/system-design/pulse` | — | — | — |
+| 40 | `/system-design/pulse` | ✅ | ✅ | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **27/40**.
+Parity: **30/40**.
