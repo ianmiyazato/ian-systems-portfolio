@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { defineChrome } from '@portfolio/chrome';
 import '@portfolio/tokens/styles.css';
+import '@portfolio/tokens/fonts/portfolio';
 import './style.css';
 
 const systems = [
@@ -12,8 +14,9 @@ const systems = [
 ] as const;
 
 function App() {
-  return <main><header><a href="/">IM</a><span>Maré Ops · runtime remote index</span><kbd>⌘K</kbd></header><section><span className="eyebrow">Five systems · five design languages</span><h1>One operating platform, built around five different jobs.</h1><p>The production shell composes these surfaces through a manifest. This direct zone entry remains a health and recovery index.</p><div className="systems">{systems.map(([name,title,copy])=><a key={name} href={`/mare/ops/${name.replace('ã','a').replace(' ','-')}`}><small>{name}</small><strong>{title}</strong><span>{copy}</span><b>Open remote →</b></a>)}</div></section><footer>All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer></main>;
+  return <><im-portfolio-bar context="Maré Ops" /><main><section><span className="eyebrow">Five systems · five design languages</span><h1>One operating platform, built around five different jobs.</h1><p>The production shell composes these surfaces through a manifest. This direct zone entry remains a health and recovery index.</p><div className="systems">{systems.map(([name,title,copy])=><a key={name} href={`/mare/ops/${name.replace('ã','a').replace(' ','-')}`}><small>{name}</small><strong>{title}</strong><span>{copy}</span><b>Open remote →</b></a>)}</div></section></main><footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer><im-decision-lens /><im-command-palette /></>;
 }
 
+defineChrome();
 createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>);
 

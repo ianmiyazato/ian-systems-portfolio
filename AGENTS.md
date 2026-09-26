@@ -1,6 +1,6 @@
 # Systems portfolio operating manual
 
-> **Deployment pending:** four Vercel projects and their environment contracts exist; source deployment still needs either the Vercel GitHub App or an authenticated CLI/token.
+> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). Deploys run with the Vercel CLI via `pnpm deploy:prod`; CI deploys activate once the `VERCEL_TOKEN` secret exists.
 
 ## 1. Purpose and content rules
 
@@ -34,7 +34,18 @@ ian-systems-portfolio (pnpm + Turborepo)
 └── microfrontends.json · current Vercel microfrontend routing contract
 ```
 
-Vercel projects: `ian-portfolio-shell`, `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`. The requested Next rewrites remain in `apps/shell/next.config.ts`; `microfrontends.json` records the current platform-native grouping route. Until those projects exist, the shell renders all routes so the reviewer tour remains coherent.
+Vercel projects (team `miyazato`, Hobby): `ian-portfolio-shell`, `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`, each with Root Directory `apps/<app>` and an `apps/<app>/vercel.json` that installs and builds from the monorepo root (`pnpm run build --filter=<pkg>...`).
+
+Zone prefixes and outputs:
+
+| Zone | Prefix(es) | Base config | Output |
+|---|---|---|---|
+| shell (Next 15) | `/`, `/work/*`, `/system-design/*`, `/atlas/*` | — | `.next` |
+| mare-ops (Vite) | `/mare/ops/*` | `base: '/mare/ops/'`, `outDir: dist/mare/ops`, SPA rewrite in `vercel.json` | `dist` |
+| mare-shop (Astro) | `/mare/shop/*`, `/mare/apps/*`, assets `/mare/_astro/*` | `base: '/mare'`, `outDir: dist/mare` | `dist` |
+| pulse (SvelteKit) | `/pulse/*` | `paths.base: '/pulse'`, prerendered | `.vercel/output` |
+
+`apps/shell/next.config.ts` rewrites each prefix in `beforeFiles` to `MARE_OPS_URL`, `MARE_SHOP_URL` and `PULSE_URL`. Production reads the zones' production domains from the Vercel env; previews get the matching preview URLs through `vercel deploy --build-env` from `scripts/deploy-all.sh`; locally they default to ports 3001–3003. `microfrontends.json` records the equivalent platform-native grouping.
 
 Maré Ops remotes expose `mount(el, ctx) → unmount`. On Hobby, their independent artifacts are served by the Maré Ops project rather than five additional Vercel projects. This preserves runtime isolation but couples deployment rollback at the hosting-project level.
 
@@ -43,14 +54,16 @@ Maré Ops remotes expose `mount(el, ctx) → unmount`. On Hobby, their independe
 ```bash
 corepack enable && corepack prepare pnpm@10.17.1 --activate
 pnpm install
-pnpm dev                         # shell on :3000
-pnpm dev:all                     # every implemented workspace dev server
+pnpm dev                         # all four zones; open the shell on :3000 (it proxies the others)
+pnpm dev:shell                   # shell only
 pnpm --filter @portfolio/shell dev
 pnpm build
 pnpm lint && pnpm typecheck && pnpm test
 pnpm e2e
 pnpm screenshots
-pnpm deploy:all                  # preview without --prod; CI owns production
+pnpm deploy:all                  # preview deploy of every zone; shell previews rewrite to zone previews
+pnpm deploy:prod                 # production deploy (zones first, shell last)
+APPS="pulse shell" pnpm deploy:all   # only some zones
 ```
 
 Database mode is optional. When Supabase is present: `supabase db push` and `supabase db reset`. No database command is needed for local mode.
@@ -131,11 +144,17 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Overlays as URL state + a shared layer stack + CSS contract | A React-only headless dialog package | Remotes (Preact), shell (React), Astro and Svelte need the same Esc/focus/deep-link behaviour | `?modal=…&sub=…` reproduces nested states in any zone |
 | 2026-09-26 | AI surface as one CSS contract with a CSS-mask sparkle | A component per framework | Markup is trivially portable; trust visuals (colour, badge, sources, approve) cannot drift | Recognisable AI pattern in all nine themes |
 | 2026-09-26 | Visual checks use Playwright Chromium when Chrome DevTools MCP cannot launch | Block on installing Chrome | The sandbox has no sudo to install Chrome stable | Screens are still verified at 1440 × 900 with screenshots |
+| 2026-09-26 | Deploy with the Vercel CLI from the monorepo root using `VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` | Git-linked projects; `vercel link --repo` | The Vercel GitHub App is not installed (`vercel git connect` fails) and `--repo` needs a Git link; deploying from `apps/<app>` uploads only that folder | Every zone deploys reproducibly from this session and from CI with one script |
+| 2026-09-26 | Nest each static zone's build output under its URL prefix | Vercel rewrites that strip the prefix | Static files then resolve at the same path through the shell proxy and on the zone's own domain | No path translation layer; assets and SPA fallback just work |
+| 2026-09-26 | Proxy `/pulse` to `/pulse/` | Let the SvelteKit redirect pass through | SvelteKit serves the base root as a directory index; its 308 would bounce against Next's trailing-slash redirect | No redirect loop at the zone root |
+| 2026-09-26 | Disable Vercel Authentication on all four projects | Keep SSO protection | The shell proxies server-side to zone domains and previews; protected zones would return 401; the content is public synthetic data | Previews and production compose correctly |
+| 2026-09-26 | Build through the root `build` script, not `pnpm turbo` | `pnpm turbo run build` | Turbo 2.8 could not spawn the package manager when not launched from a package script (locally and on Vercel) | Reliable builds everywhere |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
 - 2026-09-26 · `feat(zones)`: add deployable Vite/React, Astro, and SvelteKit child boundaries.
@@ -143,6 +162,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: JSON token contract with AA contrast test and self-hosted fonts; chrome web components (bar, Decision Lens, ⌘K) with the 40-screen parity registry; overlay stack; AI surface contract; seeded mocks.
 
 ## 12. Session tool availability
@@ -161,10 +181,8 @@ Recorded 2026-09-26 (session 2, Claude Code):
 
 ## 13. Known gaps / next steps
 
-- No `.env.agent` or `VERCEL_TOKEN` was supplied; Vercel environment variables were configured through MCP and no secret was committed.
-- Host Node is 24; CI and `.nvmrc` pin the requested Node 22.
-- Vercel and Supabase CLIs were not installed at preflight. The exact Vercel unblock is: install the Vercel GitHub App for `ianmiyazato/ian-systems-portfolio`, or run `npm i -g vercel && vercel login` and supply `VERCEL_TOKEN` for CI.
-- Full runtime-federated Maré remote extraction, approved-artboard parity for every subpage/variation, exhaustive per-screen JSON, mobile screenshot expansion, Lighthouse, and production URLs remain before v0.1.0.
-- The Supabase project `ian-portfolio` is active in `sa-east-1`; five RLS tables, deterministic seeds, and three public Broadcast feeds are verified. No database blocker remains.
-- The browser suite passes 13/13 interaction/accessibility checks and screenshot generation passes 10/10. Lighthouse was not run, so no score is claimed.
+- **CI deploys need `VERCEL_TOKEN`.** `vercel tokens add` is refused for the CLI's OAuth app and `vercel git connect` fails because the Vercel GitHub App is not installed. Fix either way: create a token at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`, or install the Vercel GitHub App for this repo and run `vercel git connect` in each `apps/<app>`. Until then, deploy with `pnpm deploy:prod` from an authenticated session.
+- **Chrome DevTools MCP** needs Chrome stable. Fix: install Google Chrome, or re-register the server with Playwright's Chromium: `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath ~/.cache/ms-playwright/chromium-1187/chrome-linux/chrome`.
+- Host Node is 24; CI and `.nvmrc` pin Node 22, and Vercel projects use 22.x.
+- The Supabase project `ian-portfolio` is active in `sa-east-1`; five RLS tables, deterministic seeds, and three public Broadcast feeds are verified.
 - Never claim a Lighthouse score or deployed URL until the command has run and the URL has been opened successfully.

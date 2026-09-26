@@ -10,5 +10,10 @@
     "typecheck": "astro check",
     "test": "vitest run --passWithNoTests"
   },
-  "dependencies": { "@astrojs/check": "0.9.5", "astro": "5.14.1" }
+  "dependencies": {
+    "@astrojs/check": "0.9.5",
+    "@portfolio/chrome": "workspace:*",
+    "@portfolio/tokens": "workspace:*",
+    "astro": "5.14.1"
+  }
 }
