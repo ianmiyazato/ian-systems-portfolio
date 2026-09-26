@@ -171,6 +171,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
 - 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
@@ -182,6 +183,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
 - 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
@@ -227,9 +229,9 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-detail.png` |
 | 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-agent-run.png` |
 | 11 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-onboarding.png` |
-| 12 | `/mare/ops/pay` | — | — | — |
-| 13 | `/mare/ops/pay/applications/AP-77118` | — | — | — |
-| 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | — | — | — |
+| 12 | `/mare/ops/pay` | ✅ | ✅ | `docs/screenshots/pay/pay-applications.png` |
+| 13 | `/mare/ops/pay/applications/AP-77118` | ✅ | ✅ | `docs/screenshots/pay/pay-application-detail.png` |
+| 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | ✅ | ✅ | `docs/screenshots/pay/pay-decision.png` |
 | 15 | `/mare/apps/pay` | — | — | — |
 | 16 | `/mare/ops/circle` | — | — | — |
 | 17 | `/mare/ops/circle/rules/summer-swim` | — | — | — |
@@ -257,4 +259,4 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 39 | `/pulse/harness` | — | — | — |
 | 40 | `/system-design/pulse` | — | — | — |
 
-Parity: **8/40**.
+Parity: **11/40**.
