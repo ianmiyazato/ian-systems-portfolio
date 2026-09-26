@@ -1,24 +1,2 @@
-:root {
-  --ground: #edf0f4;
-  --surface: #ffffff;
-  --surface-2: #f6f8fb;
-  --ink: #0d1b2a;
-  --muted: #4e5b6b;
-  --line: #d3dae3;
-  --accent: #2f5bff;
-  --accent-ink: #ffffff;
-  --risk: #e8622c;
-  --success: #1d7a45;
-  --ai: #5b4bd6;
-  --radius: 18px;
-  --shadow: 0 24px 70px rgba(13, 27, 42, 0.12);
-}
-
-[data-theme='balcao'] { --ground:#f2f2ee;--surface:#fff;--ink:#121212;--muted:#5d5d55;--line:#d8d8cf;--accent:#ffd23f;--accent-ink:#121212;--risk:#c8331f;--success:#1d7a45;--ai:#5b4bd6;--radius:4px; }
-[data-theme='product-hub'] { --ground:#f7f8fa;--surface:#fff;--ink:#151a26;--muted:#5f6674;--line:#e3e6ec;--accent:#3a4be0;--risk:#c0362c;--success:#1b7f4e;--ai:#5b4bd6;--radius:7px; }
-[data-theme='pay'] { --ground:#f4f5f9;--surface:#fff;--ink:#0f1e45;--muted:#5a6278;--line:#dde1eb;--accent:#c9a24a;--accent-ink:#0f1e45;--risk:#b3261e;--success:#1c7a52;--ai:#5b4bd6;--radius:16px; }
-[data-theme='circle'] { --ground:#fff6fa;--surface:#fff;--ink:#2a1033;--muted:#745a79;--line:#f0dce6;--accent:#c2185b;--risk:#c2185b;--success:#5a47e0;--ai:#5b4bd6;--radius:24px; }
-[data-theme='mesh'] { --ground:#0b0f14;--surface:#121820;--surface-2:#19212c;--ink:#edf6ff;--muted:#aab9c7;--line:#263241;--accent:#4c9aff;--accent-ink:#07111b;--risk:#f2555a;--success:#3ccb7f;--ai:#a78bfa;--radius:5px;--shadow:0 24px 80px rgba(0,0,0,.45); }
-[data-theme='consumer'] { --ground:#f7f4f0;--surface:#fffefa;--ink:#0e1f24;--muted:#536166;--line:#ded8d0;--accent:#9fb7bf;--accent-ink:#0e1f24;--risk:#a11f18;--success:#15683a;--ai:#5141c6;--radius:20px; }
-[data-theme='atlas'] { --ground:#0a0c10;--surface:#12161d;--surface-2:#1a1f28;--ink:#f4f7f9;--muted:#929aa7;--line:#262c37;--accent:#3ddc97;--accent-ink:#07110d;--risk:#f5b454;--success:#3ddc97;--ai:#8b9cff;--radius:14px;--shadow:0 30px 90px rgba(0,0,0,.4); }
-[data-theme='pulse'] { --ground:#110d1c;--surface:#1a1528;--surface-2:#241d36;--ink:#f9f5ff;--muted:#b8aec6;--line:#352c4b;--accent:#ff4f9a;--accent-ink:#110d1c;--risk:#ffc857;--success:#45d6f5;--ai:#45d6f5;--radius:18px;--shadow:0 30px 90px rgba(0,0,0,.45); }
+@import './themes.css';
+@import './base.css';

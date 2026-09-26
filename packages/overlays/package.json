@@ -1,0 +1,9 @@
+{
+  "name": "@portfolio/overlays",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts", "./overlays.css": "./src/overlays.css" },
+  "scripts": { "build": "tsc --noEmit", "lint": "eslint src --max-warnings=0", "typecheck": "tsc --noEmit", "test": "vitest run" },
+  "devDependencies": { "happy-dom": "20.14.5", "typescript": "5.9.2", "vitest": "3.2.4" }
+}

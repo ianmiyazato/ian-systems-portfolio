@@ -5,6 +5,10 @@ on:
   push:
     branches: [main, develop]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -25,12 +29,9 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
-  preview:
-    if: github.event_name == 'pull_request'
+  e2e:
     needs: quality
     runs-on: ubuntu-latest
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -41,7 +42,60 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
+
+  # Vercel is deployed with the CLI (no Git integration). Both jobs no-op until the
+  # VERCEL_TOKEN repository secret exists; see AGENTS.md "Known gaps".
+  preview:
+    if: github.event_name == 'pull_request'
+    needs: quality
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - if: env.VERCEL_TOKEN != ''
-        run: npm i -g vercel
+        run: npm i -g vercel@60
       - if: env.VERCEL_TOKEN != ''
-        run: pnpm deploy:all
+        id: deploy
+        run: |
+          apps=$(scripts/changed-apps.sh "origin/${{ github.base_ref }}")
+          echo "apps=$apps" >> "$GITHUB_OUTPUT"
+          [ -z "$apps" ] && exit 0
+          APPS="$apps" DEPLOY_OUTPUT=deployments.txt scripts/deploy-all.sh
+      - if: env.VERCEL_TOKEN != '' && steps.deploy.outputs.apps != ''
+        run: |
+          {
+            echo "### Preview deployments"
+            echo
+            echo "| Zone | URL |"
+            echo "|---|---|"
+            while IFS='=' read -r app url; do echo "| $app | $url |"; done < deployments.txt
+            echo
+            echo "The shell preview rewrites to the zone previews above. Press **D** on any screen for the Decision Lens."
+          } > comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md --edit-last || gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+
+  production:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: quality
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - if: env.VERCEL_TOKEN != ''
+        run: npm i -g vercel@60
+      - if: env.VERCEL_TOKEN != ''
+        run: scripts/deploy-all.sh --prod

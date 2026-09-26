@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+**/.svelte-kit
+**/.vercel/output
+**/.astro
+playwright-report
+test-results
+.env*
+!.env.example

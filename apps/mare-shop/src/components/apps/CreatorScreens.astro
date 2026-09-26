@@ -1,0 +1,26 @@
+---
+import Track from './Track.astro';
+interface Props { start: number }
+const { start } = Astro.props;
+---
+<Track start={start} labels={['earnings', 'campaign brief', 'payouts']}>
+  <div class="screen">
+    <div class="cr-hero"><span>Nina · September</span><strong>R$ 8.412</strong><p>R$ 1.980 is still inside the 30-day return window. It confirms automatically, no clawbacks.</p></div>
+    <div class="cr-stats"><div><b>214</b><small>orders</small></div><div><b>3,1%</b><small>conversion</small></div><div><b>Linho</b><small>top item</small></div></div>
+    <div class="cr-code"><b>NINA10</b><button type="button">Copy & share</button></div>
+  </div>
+  <div class="screen">
+    <div class="cr-brief"><span class="shape a"></span><span class="shape b"></span><h3>Swim drop</h3><p>23–25 Sep · Summer 27 swim · 10% on every swim piece</p><span class="cr-sticker">new!</span></div>
+    <ul class="cr-list"><li><span>Deliverables</span><b>2 reels · 3 stories</b></li><li><span>Commission</span><b>10% · priority 20</b></li><li><span>Sample kit</span><b>ships Monday</b></li></ul>
+    <button class="cr-join" type="button">Join campaign</button>
+  </div>
+  <div class="screen">
+    <p class="pa-title">How money flows</p>
+    <div class="cr-flow"><div class="done"><i>R$</i>Sale</div><div class="done"><i>30</i>30 days</div><div class="now"><i>✓</i>Confirmed</div><div><i>→</i>Paid</div></div>
+    <ul class="cr-list cr-history">
+      <li><span>06 Oct · scheduled</span><b class="scheduled">R$ 8.412</b></li>
+      <li><span>06 Sep · Pix</span><b>R$ 6.210</b></li>
+      <li><span>06 Aug · Pix</span><b>R$ 5.880</b></li>
+    </ul>
+  </div>
+</Track>

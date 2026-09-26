@@ -1,0 +1,7 @@
+{
+  "name": "@portfolio/ai-surface",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { "./ai-surface.css": "./src/ai-surface.css" }
+}

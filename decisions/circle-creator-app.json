@@ -1,0 +1,6 @@
+[
+  { "id": "return-window", "anchor": "[data-anchor=\"app-circle-0\"]", "tag": "Frontend", "decision": "Earnings state how much is still inside the 30-day return window", "why": "Creators plan around money; showing unconfirmed amounts as earned creates disappointment.", "alternative": "One 'total earned' number.", "value": "No surprises on payout day." },
+  { "id": "brief-join", "anchor": "[data-anchor=\"app-circle-1\"]", "tag": "Backend", "decision": "Joining a campaign creates a rule-scoped enrollment, not a new code", "why": "Creators keep one code; campaign rules decide the rate per item.", "alternative": "A new code per campaign.", "value": "Audiences see one code and attribution stays clean." },
+  { "id": "money-flow", "anchor": "[data-anchor=\"app-circle-2\"]", "tag": "Data", "decision": "Payouts are explained as a four-step flow with dates", "why": "Most creator support tickets are 'where is my money'.", "alternative": "A transactions table only.", "value": "Creators can answer the question themselves." },
+  { "id": "ai-caption-help", "anchor": "[data-anchor=\"app-head\"]", "tag": "AI", "decision": "Caption suggestions are drafts the creator edits, never auto-posted", "why": "A creator's voice is their product.", "alternative": "Auto-generated posts.", "value": "Helpful drafts without losing authenticity." }
+]

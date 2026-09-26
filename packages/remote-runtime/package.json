@@ -1,0 +1,34 @@
+{
+  "name": "@portfolio/remote-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./runtime.css": "./src/runtime.css",
+    "./vite": {
+      "types": "./vite.remote.d.mts",
+      "default": "./vite.remote.mjs"
+    },
+    "./types": "./src/types.ts",
+    "./realtime": "./src/realtime.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint src --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@portfolio/ai-surface": "workspace:*",
+    "@portfolio/overlays": "workspace:*",
+    "@supabase/realtime-js": "2.117.2",
+    "preact": "10.29.8"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "2.10.6",
+    "typescript": "5.9.2",
+    "vite": "7.1.7",
+    "vitest": "3.2.4"
+  }
+}

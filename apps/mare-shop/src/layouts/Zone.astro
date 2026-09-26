@@ -1,0 +1,29 @@
+---
+import '@portfolio/tokens/styles.css';
+import '@portfolio/overlays/overlays.css';
+import '@portfolio/ai-surface/ai-surface.css';
+
+interface Props { title: string; description: string; context: string; theme?: string; lang?: string }
+const { title, description, context, theme = 'consumer', lang = 'pt-BR' } = Astro.props;
+---
+<!doctype html>
+<html lang={lang} data-theme={theme} data-state="live">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F4F0" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E1F24'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23F7F4F0' font-family='serif'%3Em%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <im-portfolio-bar context={context}></im-portfolio-bar>
+    <slot />
+    <footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+    <im-decision-lens></im-decision-lens>
+    <im-command-palette></im-command-palette>
+    <script>
+      import '../scripts/zone';
+    </script>
+  </body>
+</html>

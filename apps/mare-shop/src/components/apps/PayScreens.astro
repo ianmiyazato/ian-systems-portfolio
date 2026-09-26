@@ -1,0 +1,46 @@
+---
+import Track from './Track.astro';
+interface Props { start: number }
+const { start } = Astro.props;
+---
+<Track start={start} labels={['home', 'installments', 'virtual card']}>
+  <div class="screen">
+    <div class="pa-card-scene">
+      <button class="pa-flip" type="button" aria-pressed="false" aria-label="Flip card">
+        <span class="pa-face front"><b>maré pay · Crédito</b><span>•••• 4471</span><small>BRUNO S · 09/31</small><i class="py-shine"></i></span>
+        <span class="pa-face back"><span class="pa-strip"></span><span>CVV •••</span><small>Reveal the full number with Face ID in Virtual card</small></span>
+      </button>
+    </div>
+    <div class="pa-bill">
+      <span>Current bill · due 10 Oct</span>
+      <strong>R$ 1.284,50</strong>
+      <div class="pa-usage"><i></i></div>
+      <span>R$ 1.284 of R$ 4.000 limit used</span>
+    </div>
+    <div class="pa-actions"><span><i>R$</i>Pay bill</span><span><i>3×</i>Installments</span><span><i>▣</i>Virtual card</span><span><i>↑</i>Limit</span></div>
+  </div>
+  <div class="screen">
+    <p class="pa-title">Split this purchase</p>
+    <p class="pa-sub">Camisa linho natural + Calça costa pedra · R$ 538,00</p>
+    <div class="pa-options">
+      <label><span>1× R$ 538,00<small>pay in full</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+      <label><span>2× R$ 269,00<small>no interest</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+      <label><span>3× R$ 179,33 <em>no interest</em><small>Oct, Nov, Dec</small></span><input type="radio" name={`pa-inst-${start}`} checked /></label>
+      <label><span>6× R$ 94,61<small>1,99% a.m. · CET 26,7% a.a.</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+    </div>
+    <button class="pa-confirm" type="button">Confirm 3× R$ 179,33</button>
+  </div>
+  <div class="screen pa-sheet-screen">
+    <div class="pa-behind" aria-hidden="true">
+      <div class="pa-bill"><span>Virtual card</span><strong>•••• •••• •••• 4471</strong></div>
+    </div>
+    <div class="pa-sheet" role="dialog" aria-label="Confirm it's you">
+      <span class="pa-grab"></span>
+      <h3>Confirm it's you</h3>
+      <div class="pa-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 16V10a4 4 0 0 1 4-4h6M32 6h6a4 4 0 0 1 4 4v6M42 32v6a4 4 0 0 1-4 4h-6M16 42h-6a4 4 0 0 1-4-4v-6" /><circle cx="18" cy="20" r="1.5" /><circle cx="30" cy="20" r="1.5" /><path d="M24 20v7h-2M18 32q6 5 12 0" /></svg></div>
+      <p>Look at the camera to reveal the full card number for 60 seconds.</p>
+      <div class="pa-pin" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+      <button class="pa-link" type="button">Use PIN instead</button>
+    </div>
+  </div>
+</Track>

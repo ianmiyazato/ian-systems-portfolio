@@ -1,0 +1,38 @@
+[
+  {
+    "id": "countup",
+    "anchor": "[data-anchor=\"at-score\"]",
+    "tag": "Frontend",
+    "decision": "The overall score counts up; the rubric carries the detail",
+    "why": "One number is memorable; the rubric is actionable.",
+    "alternative": "A score alone.",
+    "value": "Motivation plus a clear next step."
+  },
+  {
+    "id": "cited-rubric",
+    "anchor": "[data-anchor=\"at-rubric\"]",
+    "tag": "AI",
+    "decision": "Every rubric line cites the transcript timestamp behind it",
+    "why": "Feedback people can verify is feedback they act on.",
+    "alternative": "Uncited grader comments.",
+    "value": "Trust in grading."
+  },
+  {
+    "id": "grader-async",
+    "anchor": "[data-anchor=\"at-grader\"]",
+    "tag": "Backend",
+    "decision": "Grading runs asynchronously after the session and streams in",
+    "why": "Grading a 45-minute transcript takes longer than a page load.",
+    "alternative": "Block the report until grading finishes.",
+    "value": "The report opens immediately and fills in."
+  },
+  {
+    "id": "rubric-history",
+    "anchor": "[data-anchor=\"at-feedback-head\"]",
+    "tag": "Data",
+    "decision": "Rubric scores are stored per line to track progress",
+    "why": "Improvement shows up in lines, not overall scores.",
+    "alternative": "Store only the total.",
+    "value": "Targeted practice and visible progress."
+  }
+]

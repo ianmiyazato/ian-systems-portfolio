@@ -1,0 +1,38 @@
+[
+  {
+    "id": "whiteboard",
+    "anchor": "[data-anchor=\"at-whiteboard\"]",
+    "tag": "Frontend",
+    "decision": "A lightweight whiteboard where adding a node is one click",
+    "why": "Speed matters more than drawing tools in a timed interview.",
+    "alternative": "A full diagramming app.",
+    "value": "Candidates spend time on reasoning, not tooling."
+  },
+  {
+    "id": "interviewer-stream",
+    "anchor": "[data-anchor=\"at-interviewer\"]",
+    "tag": "AI",
+    "decision": "The simulated interviewer reacts to diagram changes with a streamed follow-up",
+    "why": "Real interviewers probe the thing you just added.",
+    "alternative": "A fixed question script.",
+    "value": "Practice feels like a conversation."
+  },
+  {
+    "id": "resumable",
+    "anchor": "[data-anchor=\"at-session-head\"]",
+    "tag": "Backend",
+    "decision": "Sessions stream both ways with resumable state",
+    "why": "A dropped connection must not lose a 45-minute session.",
+    "alternative": "Stateless request/response turns.",
+    "value": "Practice survives flaky networks."
+  },
+  {
+    "id": "live-rubric",
+    "anchor": "[data-anchor=\"at-live-rubric\"]",
+    "tag": "Data",
+    "decision": "A live rubric shows which lines have evidence so far",
+    "why": "Candidates can steer toward what they have not covered.",
+    "alternative": "Rubric only after the session.",
+    "value": "Better coverage of the rubric."
+  }
+]

@@ -1,18 +1,124 @@
 <script lang="ts">
-  let language: 'EN' | 'KR' | 'JP' = 'EN';
-  const signals = [
-    { market: 'Seoul', artist: 'AERA', moment: 'chorus lift · 00:42', score: '.91' },
-    { market: 'Tokyo', artist: 'NAMI', moment: 'bridge replay · 01:18', score: '.86' },
-    { market: 'LA', artist: 'Lumen', moment: 'hook share · 00:19', score: '.82' }
+  import { base } from '$app/paths';
+  import { i18n } from '$lib/i18n.svelte';
+  import { view } from '$lib/view.svelte';
+  import { completion, MOMENT_HOUR, providerFor, questionsFor, talent } from '$lib/data';
+  import type { Chunk } from '@portfolio/ai-sim';
+
+  const W = 720;
+  const H = 260;
+  const x = (hour: number) => 40 + (hour / 23) * (W - 60);
+  const y = (value: number) => H - 30 - ((value - 25) / 45) * (H - 60);
+  const path = (values: number[]) => values.map((value, hour) => `${hour ? 'L' : 'M'}${x(hour).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
+  const lines = [
+    { id: 'LA', values: completion.LA, cls: 'la' },
+    { id: 'Seoul', values: completion.Seoul, cls: 'seoul' },
+    { id: 'Tokyo', values: completion.Tokyo, cls: 'tokyo' }
   ];
+
+  const questions = $derived(questionsFor(i18n.lang));
+  let question = $state<string>(questionsFor('EN')[0]);
+  $effect(() => { question = questions[0]; });
+  let answer = $state('');
+  let sources = $state<Chunk[]>([]);
+  let streaming = $state(false);
+  let asked = $state<string | null>(null);
+
+  async function ask(text = question) {
+    if (!text.trim() || streaming) return;
+    asked = text;
+    streaming = true;
+    answer = '';
+    const provider = providerFor(i18n.lang);
+    sources = await provider.rerank(text, await provider.retrieve(text, 3));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    for await (const token of provider.generateStream(text)) {
+      answer += token;
+      if (!reduce) await new Promise((resolve) => setTimeout(resolve, 24));
+    }
+    streaming = false;
+  }
 </script>
 
-<svelte:head><title>Pulse · Performance intelligence</title><meta name="description" content="Synthetic entertainment performance intelligence."/></svelte:head>
-<header><a href="/">IM</a><strong>Pulse</strong><nav>Intelligence　Distribution　AI harness</nav><div>{#each ['EN','KR','JP'] as item}<button class:active={language===item} onclick={()=>language=item as typeof language}>{item}</button>{/each}</div></header>
-<main><section class="intro"><span>LA 09:18 · Seoul 01:18 · Tokyo 01:18</span><h1>See the moment.<br/><em>Prove the signal.</em></h1><p>Market intelligence, distribution actions, and the model release share one evidence trail.</p></section><section class="content"><div class="chart"><div><span>Cross-market completion</span><strong>live synthetic signal</strong></div><svg viewBox="0 0 900 300"><path class="grid" d="M0 60H900M0 150H900M0 240H900"/><path class="line" d="M0 245 C120 220 180 250 260 175 S390 125 470 150 S610 190 680 85 S810 55 900 70"/><circle cx="680" cy="85" r="7"/></svg></div><aside><span>✦ Simulated AI</span><h2>Ask Pulse</h2><p>“Why is Seoul moving before LA?”</p><button>Stream grounded answer →</button><small>3 sources · trace available</small></aside></section><section class="signals">{#each signals as signal}<article><small>{signal.market}</small><h3>{signal.artist}</h3><p>{signal.moment}</p><strong>{signal.score}</strong></article>{/each}</section></main>
-<footer>All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+<svelte:head>
+  <title>Pulse · Performance intelligence</title>
+  <meta name="description" content="Synthetic entertainment performance intelligence across LA, Seoul and Tokyo." />
+</svelte:head>
 
-<style>
-  :global(*){box-sizing:border-box}:global(body){margin:0;background:#110d1c;color:#f9f5ff;font-family:Geist,system-ui,sans-serif}header{height:64px;display:flex;align-items:center;gap:14px;padding:0 4vw;border-bottom:1px solid #352c4b;background:#110d1cee;position:sticky;top:0;z-index:3}header>a{display:grid;width:32px;height:32px;place-items:center;border-radius:9px;background:#ff4f9a;color:#110d1c;text-decoration:none;font-weight:900;font-size:11px}nav{margin:auto;color:#a79bb8;font-size:12px}header div{display:flex;padding:3px;border:1px solid #352c4b;border-radius:9px}header button{border:0;background:transparent;color:#a79bb8;padding:6px 8px;border-radius:6px}.active{background:#45d6f5!important;color:#110d1c!important}.intro{padding:10vh 6vw 8vh}.intro>span{color:#45d6f5;font:700 11px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em}.intro h1{margin:20px 0;font-size:clamp(60px,9vw,130px);line-height:.85;letter-spacing:-.065em}.intro em{font-style:normal;color:#ff4f9a}.intro p{max-width:670px;color:#a79bb8;font-size:18px;line-height:1.6}.content{display:grid;grid-template-columns:1fr 320px;gap:12px;padding:0 6vw}.chart,aside,.signals article{border:1px solid #352c4b;border-radius:18px;background:#1a1528}.chart{padding:25px}.chart>div{display:flex;justify-content:space-between}.chart strong{color:#45d6f5;font:700 10px ui-monospace,monospace}.chart svg{width:100%;margin-top:25px}.grid{fill:none;stroke:#352c4b}.line{fill:none;stroke:#ff4f9a;stroke-width:5;stroke-linecap:round;stroke-dasharray:1200;animation:draw 2s ease both}.chart circle{fill:#45d6f5}aside{padding:24px;background:#45d6f510;border-color:#45d6f5}aside>span{color:#45d6f5;font-size:12px;font-weight:800}aside h2{font-size:32px;margin:22px 0 12px}aside p{color:#a79bb8}aside button{width:100%;margin-top:30px;padding:13px;border:0;border-radius:11px;background:#45d6f5;color:#110d1c;font-weight:800}aside small{display:block;margin-top:14px;color:#a79bb8}.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 6vw 90px}.signals article{position:relative;padding:22px}.signals small{color:#45d6f5}.signals h3{font-size:30px;margin:18px 0 5px}.signals p{color:#a79bb8}.signals strong{position:absolute;right:22px;top:22px;color:#ff4f9a;font-size:22px}footer{padding:30px;text-align:center;border-top:1px solid #352c4b;color:#a79bb8;font-size:12px}@keyframes draw{from{stroke-dashoffset:1200}to{stroke-dashoffset:0}}@media(max-width:750px){nav{display:none}.content,.signals{grid-template-columns:1fr}.intro h1{font-size:65px}}
-</style>
+<main class="pl-main">
+  <section class="pl-hero" data-anchor="pl-hero">
+    <span class="pl-kicker">Pulse · LA · Seoul · Tokyo</span>
+    <h1>{i18n.t('headline')}</h1>
+    <p>{i18n.t('sub')}</p>
+  </section>
 
+  {#if view.state === 'offline'}<p class="pl-banner warn" data-anchor="pl-offline">Offline · showing the 16:10 snapshot. Ask Pulse queues questions until you reconnect.</p>{/if}
+  {#if view.state === 'error'}<p class="pl-banner risk" data-anchor="pl-error">Tokyo signal feed delayed 12 min · Tokyo lines are dashed until it catches up.</p>{/if}
+  {#if view.state === 'locked'}<p class="pl-banner info" data-anchor="pl-locked">Tokyo data is embargoed until the label's release at 00:00 JST · request early access.</p>{/if}
+
+  <div class="pl-kpis" data-anchor="pl-kpis">
+    <div><span>{i18n.t('reach')}</span><strong>18.4M</strong><small>+24% Seoul</small></div>
+    <div><span>{i18n.t('moment')}</span><strong>0.91</strong><small>chorus · 00:42–00:57</small></div>
+    <div><span>{i18n.t('pages')}</span><strong>18</strong><small>6 per market</small></div>
+    <div><span>{i18n.t('gate')}</span><strong class="ok">{i18n.t('pass')}</strong><small>ft-analyst-v2</small></div>
+  </div>
+
+  <div class="pl-grid">
+    <section class="pl-panel span-2" aria-labelledby="chart-title" data-anchor="pl-chart">
+      <header><h2 id="chart-title">{i18n.t('chart')}</h2><ul class="pl-legend">{#each lines as line}<li class={line.cls}>{line.id}</li>{/each}</ul></header>
+      {#if view.state === 'loading'}
+        <div class="skeleton pl-chart-sk" aria-hidden="true"></div>
+      {:else if view.state === 'empty'}
+        <div class="pl-empty"><strong>No signal yet for this release</strong><p>Pulse needs about 2 hours of plays per market before a comparison means anything.</p></div>
+      {:else}
+        <svg class="pl-chart" viewBox="0 0 {W} {H}" role="img" aria-label="Completion rate over 24 hours; Seoul rises sharply at the chorus moment">
+          {#each [0, 1, 2, 3] as row}<line class="grid" x1="40" x2={W - 20} y1={30 + row * 67} y2={30 + row * 67} />{/each}
+          <rect class="moment-band" x={x(MOMENT_HOUR) - 6} y="20" width={x(MOMENT_HOUR + 3) - x(MOMENT_HOUR) + 12} height={H - 50} rx="6" />
+          {#each lines as line, index}
+            <path class="line {line.cls}" class:delayed={view.state === 'error' && line.id === 'Tokyo'} d={path(line.values)} style="animation-delay:{index * 180}ms" />
+          {/each}
+          <line class="moment" x1={x(MOMENT_HOUR)} x2={x(MOMENT_HOUR)} y1="16" y2={H - 26} />
+          <circle class="moment-dot" cx={x(MOMENT_HOUR)} cy={y(completion.Seoul[MOMENT_HOUR]!)} r="6" />
+          <text class="moment-label" x={x(MOMENT_HOUR) + 10} y="32">moment · chorus lift 0.91</text>
+          <text class="axis" x="40" y={H - 8}>00:00</text><text class="axis" x={x(12) - 14} y={H - 8}>12:00</text><text class="axis" x={W - 60} y={H - 8}>23:00</text>
+        </svg>
+      {/if}
+    </section>
+
+    <section class="pl-panel pl-ask ai-surface" aria-labelledby="ask-title" data-anchor="pl-ask">
+      <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span><span class="ai-meta">retrieve → rerank → generate</span></header>
+      <h2 id="ask-title" class="ai-title">{i18n.t('ask')}</h2>
+      <form onsubmit={(event) => { event.preventDefault(); void ask(); }}>
+        <label class="visually-hidden" for="pl-q">{i18n.t('askPlaceholder')}</label>
+        <input id="pl-q" bind:value={question} placeholder={i18n.t('askPlaceholder')} />
+        <button type="submit" class="ai-approve" disabled={streaming}>{i18n.t('send')}</button>
+      </form>
+      <div class="pl-suggest">
+        {#each questions as suggestion}<button type="button" onclick={() => { question = suggestion; void ask(suggestion); }}>{suggestion}</button>{/each}
+      </div>
+      {#if asked}
+        <p class="ai-stream" class:caret={streaming} aria-live="polite">{answer}</p>
+        {#if sources.length}
+          <ul class="ai-sources">{#each sources as source, index}<li class="ai-source">[{index + 1}] {source.source}<b>{source.score.toFixed(2)}</b></li>{/each}</ul>
+        {/if}
+        {#if !streaming}<a class="pl-trace" href="{base}/harness?q={encodeURIComponent(asked)}" data-anchor="pl-show-trace">{i18n.t('trace')} →</a>{/if}
+      {/if}
+    </section>
+
+    <section class="pl-panel span-3" aria-labelledby="lb-title" data-anchor="pl-leaderboard">
+      <header><h2 id="lb-title">{i18n.t('leaderboard')}</h2><span class="pl-muted">entity resolution v12 · EN / 한국어 / 日本語</span></header>
+      <table class="pl-table">
+        <thead><tr><th>#</th><th>Artist</th><th>Also known as</th><th>Platforms</th><th>7-day momentum</th><th>Markets</th></tr></thead>
+        <tbody>
+          {#each talent as artist}
+            <tr>
+              <td>{artist.rank}</td><td><b>{artist.name}</b></td><td class="cjk">{artist.local}</td><td>{artist.platforms} identities</td>
+              <td><span class="pl-bar" style="--v:{Math.max(artist.momentum, 0) / 24}"><i></i></span><span class:neg={artist.momentum < 0}>{artist.momentum > 0 ? '+' : ''}{artist.momentum}%</span></td>
+              <td>{artist.markets}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>

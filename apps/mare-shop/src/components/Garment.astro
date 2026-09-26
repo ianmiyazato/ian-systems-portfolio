@@ -1,0 +1,21 @@
+---
+// Product illustration: an editorial silhouette filled with the product's swatch colour.
+import type { Garment } from '../lib/data';
+interface Props { garment: Garment; swatch: string; label: string; class?: string; transitionName?: string }
+const { garment, swatch, label, class: className = '', transitionName } = Astro.props;
+const paths: Record<Garment, string> = {
+  shirt: 'M70 40 L100 28 Q120 44 140 28 L170 40 L196 92 L170 104 L162 86 L162 200 L78 200 L78 86 L70 104 L44 92 Z M120 44 L120 200',
+  trousers: 'M78 30 L162 30 L170 200 L130 200 L120 90 L110 200 L70 200 Z',
+  knit: 'M66 46 Q120 20 174 46 L200 110 L176 118 L168 92 L168 196 L72 196 L72 92 L64 118 L40 110 Z',
+  dress: 'M96 26 L144 26 L150 70 L184 200 L56 200 L90 70 Z',
+  bag: 'M58 88 L182 88 L172 196 L68 196 Z M92 88 Q92 40 120 40 Q148 40 148 88',
+  sneaker: 'M36 150 Q40 110 84 108 L120 96 Q150 120 196 128 Q214 132 212 156 L212 170 L36 170 Z',
+  shorts: 'M70 50 L170 50 L182 150 L132 158 L120 100 L108 158 L58 150 Z',
+  hat: 'M40 140 Q120 170 200 140 Q190 128 160 124 Q156 70 120 70 Q84 70 80 124 Q50 128 40 140 Z'
+};
+---
+<figure class={`garment ${className}`} data-swatch={swatch} style={transitionName ? `view-transition-name:${transitionName}` : undefined}>
+  <svg viewBox="0 0 240 230" role="img" aria-label={label}>
+    <path class="garment-shape" d={paths[garment]} />
+  </svg>
+</figure>

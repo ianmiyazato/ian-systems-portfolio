@@ -1,0 +1,31 @@
+/*
+ * The one shared AI surface. Every system renders the same structure; themes change only
+ * radius and type through tokens. AI always uses --ai, a sparkle, the "Simulated AI" badge,
+ * source chips with scores, and an explicit human approval action.
+ *
+ * <section class="ai-surface">
+ *   <header class="ai-head"><span class="ai-spark"></span><span class="ai-badge">Simulated AI</span><span class="ai-meta">…</span></header>
+ *   <h3 class="ai-title">…</h3><p class="ai-body">…</p>
+ *   <ul class="ai-sources"><li class="ai-source">source <b>0.94</b></li></ul>
+ *   <div class="ai-actions"><button class="ai-approve">Approve…</button><button class="ai-explain">Why?</button></div>
+ * </section>
+ */
+.ai-surface { position: relative; display: grid; align-content: start; gap: 10px; padding: 16px; border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); border-radius: var(--radius); background: var(--ai-soft); color: var(--ink); font-family: var(--font-ui); }
+.ai-surface.ai-inline { padding: 12px 14px; }
+.ai-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ai-spark { position: relative; display: inline-grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: calc(var(--radius-sm) * .8); background: var(--ai); color: var(--ai-ink); }
+.ai-spark::before { content: ''; width: 14px; height: 14px; background: currentColor; -webkit-mask: var(--ai-sparkle) center / contain no-repeat; mask: var(--ai-sparkle) center / contain no-repeat; animation: breathe 2.6s ease-in-out infinite; }
+.ai-badge { padding: 3px 8px; border: 1px solid color-mix(in srgb, var(--ai) 55%, transparent); border-radius: 999px; color: var(--ink); font: 700 10px/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+.ai-meta { margin-left: auto; color: var(--muted); font: 500 11px var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-title { margin: 2px 0 0; font-family: var(--font-display); font-size: 17px; line-height: 1.2; }
+.ai-body { margin: 0; color: var(--ink); font-size: 13px; line-height: 1.5; }
+.ai-sources { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ai-source { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid color-mix(in srgb, var(--ai) 40%, var(--line)); border-radius: 999px; background: var(--surface); color: var(--ink); font: 500 11px var(--font-mono); }
+.ai-source b { color: var(--muted); font-weight: 600; }
+.ai-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.ai-approve, .ai-explain, .ai-reject { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; border-radius: var(--radius-sm); font: 700 13px var(--font-ui); }
+.ai-approve { border: 1px solid var(--ai); background: var(--ai); color: var(--ai-ink); }
+.ai-explain, .ai-reject { border: 1px solid color-mix(in srgb, var(--ai) 45%, var(--line)); background: transparent; color: var(--ink); }
+.ai-approve:disabled { opacity: .45; }
+.ai-stream { font-size: 13px; line-height: 1.55; white-space: pre-wrap; }
+:root { --ai-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.5c.5 4.6 2.2 7.6 5.1 9.1 1.4.7 3.2 1.2 5.4 1.4-2.2.2-4 .7-5.4 1.4-2.9 1.5-4.6 4.5-5.1 9.1-.5-4.6-2.2-7.6-5.1-9.1C5.5 12.7 3.7 12.2 1.5 12c2.2-.2 4-.7 5.4-1.4 2.9-1.5 4.6-4.5 5.1-9.1Z'/%3E%3C/svg%3E"); }

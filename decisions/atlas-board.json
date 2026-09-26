@@ -1,0 +1,47 @@
+[
+  {
+    "id": "kanban",
+    "anchor": "[data-anchor=\"at-board\"]",
+    "tag": "Frontend",
+    "decision": "A five-column board with drag and drop, and a drop zone that shows where a card lands",
+    "why": "Moving applications is spatial; forms hide the flow.",
+    "alternative": "Status dropdowns in a table.",
+    "value": "Updating the pipeline takes one gesture."
+  },
+  {
+    "id": "drawer-sub",
+    "anchor": "[data-anchor=\"at-log-outcome\"]",
+    "tag": "Frontend",
+    "decision": "Outcome logging is a sub-modal over the application drawer",
+    "why": "The outcome depends on the application context the drawer shows.",
+    "alternative": "A separate outcome page.",
+    "value": "Context stays visible; the URL reproduces both layers."
+  },
+  {
+    "id": "outcome-event",
+    "anchor": "[data-anchor=\"at-drawer\"]",
+    "tag": "Backend",
+    "decision": "Saving an outcome emits one event that moves the card and schedules practice",
+    "why": "Several products react to an outcome; they should not each be called directly.",
+    "alternative": "Update the card and call Arena synchronously.",
+    "value": "Reliable, replayable side effects."
+  },
+  {
+    "id": "prompt-from-outcome",
+    "anchor": "[data-anchor=\"at-outcome-ai\"]",
+    "tag": "AI",
+    "decision": "The AI turns what they asked into a matching Arena prompt",
+    "why": "The best practice question is the one you were just asked.",
+    "alternative": "Generic prompt recommendations.",
+    "value": "Practice targets the real gap."
+  },
+  {
+    "id": "prep-link",
+    "anchor": "[data-anchor=\"at-prep-link\"]",
+    "tag": "Data",
+    "decision": "Each application links to its prep prompt and last score",
+    "why": "Readiness is per role, not global.",
+    "alternative": "One global readiness score.",
+    "value": "People prepare for the interview in front of them."
+  }
+]

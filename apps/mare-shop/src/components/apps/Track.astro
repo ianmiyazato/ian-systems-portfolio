@@ -1,0 +1,11 @@
+---
+// A swipeable screen track inside a phone: scroll-snap, dots, and a start index.
+interface Props { start: number; labels: string[] }
+const { start, labels } = Astro.props;
+---
+<div class="phone-track" data-start={start}>
+  <slot />
+</div>
+<div class="phone-dots" role="group" aria-label="Screens">
+  {labels.map((label, index) => <button type="button" data-go={index} aria-label={`Show ${label}`} aria-current={index === start ? 'true' : 'false'}></button>)}
+</div>

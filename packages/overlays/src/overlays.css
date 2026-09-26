@@ -1,0 +1,44 @@
+/* Layers sit above every zone's sticky chrome (portfolio bar is 1000). */
+/* Overlay skeleton: every theme skins it only through tokens (--overlay-in, --drawer-in, radius, scrim). */
+.ov-scrim { position: fixed; inset: 0; z-index: 1100; background: var(--scrim); animation: ov-fade 180ms ease both; }
+.ov-scrim[data-level='2'] { z-index: 1120; background: var(--scrim-light); }
+.ov-modal, .ov-sheet, .ov-drawer, .ov-sub { position: fixed; z-index: 1110; display: flex; flex-direction: column; max-height: calc(100vh - 32px); overflow: auto; border: 1px solid var(--line); background: var(--surface); color: var(--ink); box-shadow: var(--elevation); }
+.ov-modal { top: 50%; left: 50%; width: min(var(--ov-width, 560px), calc(100vw - 32px)); border-radius: var(--radius); transform: translate(-50%, -50%); animation: var(--overlay-in) var(--duration) var(--ease) both; }
+.ov-sheet { left: 50%; bottom: 0; width: min(var(--ov-width, 760px), 100vw); max-height: min(88vh, 860px); border-radius: var(--radius) var(--radius) 0 0; transform: translateX(-50%); animation: ov-sheet-up var(--duration) var(--ease) both; }
+.ov-drawer { top: 0; right: 0; bottom: 0; width: min(var(--ov-width, 480px), 100vw); max-height: none; border-radius: var(--radius) 0 0 var(--radius); animation: var(--drawer-in) var(--duration) var(--ease) both; }
+/* The sub-layer is offset so its parent stays visible underneath. */
+.ov-sub { z-index: 1130; top: 50%; left: 50%; width: min(var(--ov-sub-width, 440px), calc(100vw - 32px)); border-radius: var(--radius); transform: translate(calc(-50% + var(--ov-offset-x, 150px)), calc(-50% + var(--ov-offset-y, 36px))); animation: var(--overlay-in) var(--duration) var(--ease) both; }
+.ov-sub.ov-sub-drawer { top: 0; right: 0; bottom: 0; left: auto; width: min(var(--ov-sub-width, 420px), 100vw); max-height: none; border-radius: var(--radius) 0 0 var(--radius); transform: none; animation: var(--drawer-in) var(--duration) var(--ease) both; }
+.ov-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 22px 0; }
+.ov-body { padding: 16px 22px 22px; }
+.ov-foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding: 16px 22px; border-top: 1px solid var(--line); margin-top: auto; }
+.ov-eyebrow { display: block; margin-bottom: 4px; color: var(--muted); font: 600 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.ov-title { font-size: 24px; }
+.ov-close { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--ink); font-size: 20px; line-height: 1; }
+.ov-close:hover { background: var(--surface-2); }
+
+@media (max-width: 720px) {
+  .ov-sub { top: auto; bottom: 0; left: 0; width: 100vw; border-radius: var(--radius) var(--radius) 0 0; transform: none; animation: ov-sheet-plain var(--duration) var(--ease) both; }
+  .ov-modal { top: auto; bottom: 0; left: 0; width: 100vw; border-radius: var(--radius) var(--radius) 0 0; transform: none; animation: ov-sheet-plain var(--duration) var(--ease) both; }
+}
+
+/* Theme motion: Balcão pops, Product Hub fades, Pay sweeps, Circle bounces, Mesh slides, Atlas springs. */
+@keyframes ov-fade { from { opacity: 0; } }
+@keyframes ov-rise { from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)); } }
+@keyframes ov-pop { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.85); } 65% { opacity: 1; transform: translate(-50%, -50%) scale(1.03); } }
+@keyframes ov-sweep { from { opacity: 0; transform: translate(calc(-50% - 40px), -50%); } }
+@keyframes ov-bounce { 0% { opacity: 0; transform: translate(-50%, calc(-50% + 40px)) scale(.9); } 60% { opacity: 1; transform: translate(-50%, calc(-50% - 8px)) scale(1.02); } 80% { transform: translate(-50%, calc(-50% + 3px)); } }
+@keyframes ov-slide { from { opacity: 0; transform: translate(-50%, calc(-50% + 12px)); } }
+@keyframes ov-spring { 0% { opacity: 0; transform: translate(-50%, calc(-50% + 30px)) scale(.97); } 70% { opacity: 1; transform: translate(-50%, calc(-50% - 4px)); } }
+@keyframes ov-sheet-up { from { opacity: 0; transform: translate(-50%, 60px); } }
+@keyframes ov-sheet-plain { from { opacity: 0; transform: translateY(60px); } }
+@keyframes ov-drawer-slide { from { transform: translateX(100%); } }
+@keyframes ov-drawer-pop { 0% { transform: translateX(100%); } 75% { transform: translateX(-10px); } }
+@keyframes ov-drawer-fade { from { opacity: 0; transform: translateX(20px); } }
+@keyframes ov-drawer-sweep { from { opacity: 0; transform: translateX(60%); } }
+@keyframes ov-drawer-bounce { 0% { transform: translateX(100%); } 60% { transform: translateX(-18px); } 80% { transform: translateX(6px); } }
+@keyframes ov-drawer-spring { 0% { transform: translateX(100%); } 70% { transform: translateX(-8px); } }
+
+/* Sub-layers reuse the theme keyframe but keep their offset transform. */
+.ov-sub { animation-name: ov-sub-in; }
+@keyframes ov-sub-in { from { opacity: 0; transform: translate(calc(-50% + var(--ov-offset-x, 150px) + 40px), calc(-50% + var(--ov-offset-y, 36px) + 24px)) scale(.96); } }
