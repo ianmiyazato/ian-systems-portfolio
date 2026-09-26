@@ -165,11 +165,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Realtime in remotes via `@supabase/realtime-js`, lazy-loaded only in Supabase mode, with BroadcastChannel as the local transport | Full `supabase-js` in every remote | The remote needs Broadcast only; the same `openFeed()` API works in both data modes | Two tabs update together in either mode; the local bundle stays small |
 | 2026-09-26 | Apply-plan motion uses the View Transitions API with a name per order card | A JS animation library | Cards glide between lanes with transform/opacity only and degrade to an instant update | Motion explains the change without adding a dependency |
 | 2026-09-26 | Screenshots, the lens anchor test and ⌘K all iterate the parity registry | Hand-maintained lists | New screens are covered automatically | No screen can silently miss a screenshot or decision check |
+| 2026-09-26 | One guardrail function shared by the agent trace, the edit form and the tests | Validate only in the form | The approval path must enforce exactly what the agent claims to have checked | Save stays disabled until the same four rules pass |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
@@ -180,6 +182,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
@@ -220,10 +223,10 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 5 | `/mare/ops/balcao/pick/MR-904117` | ✅ | ✅ | `docs/screenshots/balcao/balcao-picking.png` |
 | 6 | `/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party` | ✅ | ✅ | `docs/screenshots/balcao/balcao-handover.png` |
 | 7 | `/mare/ops/balcao?modal=cutoff-plan&sub=why` | ✅ | ✅ | `docs/screenshots/balcao/balcao-cutoff-plan.png` |
-| 8 | `/mare/ops/product-hub` | — | — | — |
-| 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | — | — | — |
-| 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | — | — | — |
-| 11 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | — | — | — |
+| 8 | `/mare/ops/product-hub` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-catalog.png` |
+| 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-detail.png` |
+| 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-agent-run.png` |
+| 11 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | ✅ | ✅ | `docs/screenshots/product-hub/product-hub-onboarding.png` |
 | 12 | `/mare/ops/pay` | — | — | — |
 | 13 | `/mare/ops/pay/applications/AP-77118` | — | — | — |
 | 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | — | — | — |
@@ -254,4 +257,4 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 39 | `/pulse/harness` | — | — | — |
 | 40 | `/system-design/pulse` | — | — | — |
 
-Parity: **4/40**.
+Parity: **8/40**.
