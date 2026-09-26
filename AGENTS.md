@@ -1,6 +1,6 @@
 # Systems portfolio operating manual
 
-> **Deployment pending:** add `VERCEL_TOKEN` to `.env.agent`, install the Vercel CLI, and run `pnpm deploy:all`.
+> **Deployment pending:** four Vercel projects and their environment contracts exist; source deployment still needs either the Vercel GitHub App or an authenticated CLI/token.
 
 ## 1. Purpose and content rules
 
@@ -103,7 +103,7 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 - [ ] M6 · extract Atlas flows from shell route fallback
 - [ ] M7 · extract SvelteKit Pulse zone with full i18n
 - [x] M8 · interactive system-design scenario player
-- [ ] M9 · Supabase data mode and server-only live adapter wiring
+- [x] M9 · Supabase data mode and server-only live adapter wiring
 - [ ] M10 · exhaustive visual QA, screenshots, Lighthouse, production release
 
 ## 10. Decision log
@@ -121,6 +121,8 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 | 2026-09-26 | Shell renders child routes in local mode | Broken routes until every zone exists | Credentials and package tools were absent in preflight | Reviewer tour stays usable while extraction proceeds |
 | 2026-09-26 | Add `microfrontends.json` beside rewrites | Rewrites only | Installed Vercel guidance describes platform-native grouping | Clear production evolution without blocking local work |
 | 2026-09-26 | Local mode and simulated AI | Wait for missing Supabase/API credentials | The prompt defines both as supported fallbacks | Deterministic, zero-secret demo |
+| 2026-09-26 | Solo-maintainer branch protection | Require an independent approval | One maintainer cannot approve their own PR, while PRs and green CI still provide the intended gate | PRs and `quality` stay required; add reviewer approval when a second maintainer joins |
+| 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
@@ -131,12 +133,21 @@ The lens is framework-agnostic in behavior: press `D` or use **Show decisions**.
 - 2026-09-26 · `test(browser)`: verify 10 key routes, keyboard lens, nested overlays, i18n control, screenshots, and zero serious/critical axe violations.
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
+- 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
 
-## 12. Known gaps / next steps
+## 12. Session tool availability
 
-- No `.env.agent` was supplied; Vercel/Supabase deployment and GitHub secrets are intentionally untouched.
+- GitHub CLI: authenticated as `ianmiyazato` with `repo` and `workflow`; PR and branch-protection operations work.
+- Vercel MCP: OAuth authenticated; project creation, settings, and environment writes work. Git linking is blocked because the Vercel GitHub App is not installed, and the default-team read scope returns 403. The Vercel CLI is not installed.
+- Supabase MCP: OAuth authenticated; project creation, migrations, SQL, keys, advisors, and logs work. The local CLI is not installed, so migration scaffolding used a transient pinned-by-command CLI download.
+- Chrome DevTools MCP: configured but cannot start because Google Chrome stable is absent at `/opt/google/chrome/chrome`; Playwright Chromium is available and is the visual/browser fallback.
+
+## 13. Known gaps / next steps
+
+- No `.env.agent` or `VERCEL_TOKEN` was supplied; Vercel environment variables were configured through MCP and no secret was committed.
 - Host Node is 24; CI and `.nvmrc` pin the requested Node 22.
-- Vercel and Supabase CLIs were not installed at preflight.
-- Full runtime-federated Maré remote extraction, approved-artboard parity for every subpage/variation, Supabase migrations, exhaustive per-screen JSON, mobile screenshot expansion, Lighthouse, and production URLs remain before v0.1.0.
+- Vercel and Supabase CLIs were not installed at preflight. The exact Vercel unblock is: install the Vercel GitHub App for `ianmiyazato/ian-systems-portfolio`, or run `npm i -g vercel && vercel login` and supply `VERCEL_TOKEN` for CI.
+- Full runtime-federated Maré remote extraction, approved-artboard parity for every subpage/variation, exhaustive per-screen JSON, mobile screenshot expansion, Lighthouse, and production URLs remain before v0.1.0.
+- The Supabase project `ian-portfolio` is active in `sa-east-1`; five RLS tables, deterministic seeds, and three public Broadcast feeds are verified. No database blocker remains.
 - The browser suite passes 13/13 interaction/accessibility checks and screenshot generation passes 10/10. Lighthouse was not run, so no score is claimed.
 - Never claim a Lighthouse score or deployed URL until the command has run and the URL has been opened successfully.

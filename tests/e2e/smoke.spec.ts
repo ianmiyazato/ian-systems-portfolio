@@ -33,3 +33,19 @@ test('decision lens keyboard shortcut works after hydration', async ({ page }) =
   await page.keyboard.press('d');
   await expect(page.locator('.hotspot')).toHaveCount(4);
 });
+
+test('Balcão Supabase Broadcast reaches two open tabs', async ({ context }) => {
+  test.skip(process.env.NEXT_PUBLIC_DATA_MODE !== 'supabase', 'Supabase mode is an opt-in integration check');
+  const first = await context.newPage();
+  const second = await context.newPage();
+  await Promise.all([first.goto('/mare/ops/balcao'), second.goto('/mare/ops/balcao')]);
+  await Promise.all([
+    expect(first.locator('[data-realtime-status="live"]')).toBeVisible(),
+    expect(second.locator('[data-realtime-status="live"]')).toBeVisible()
+  ]);
+  await first.getByRole('button', { name: 'Emit demo event' }).click();
+  await Promise.all([
+    expect(first.locator('.realtime-feed')).toContainText('New pickup'),
+    expect(second.locator('.realtime-feed')).toContainText('New pickup')
+  ]);
+});
