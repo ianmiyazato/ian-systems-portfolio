@@ -166,11 +166,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Apply-plan motion uses the View Transitions API with a name per order card | A JS animation library | Cards glide between lanes with transform/opacity only and degrade to an instant update | Motion explains the change without adding a dependency |
 | 2026-09-26 | Screenshots, the lens anchor test and ⌘K all iterate the parity registry | Hand-maintained lists | New screens are covered automatically | No screen can silently miss a screenshot or decision check |
 | 2026-09-26 | One guardrail function shared by the agent trace, the edit form and the tests | Validate only in the form | The approval path must enforce exactly what the agent claims to have checked | Save stays disabled until the same four rules pass |
+| 2026-09-26 | Commission confirms after the 30-day return window, one rule per item by priority | Pay on order and claw back; stack matching rules | Clawbacks create negative balances and distrust; stacked rules are unauditable | Receipts are final and the math is deterministic (unit-tested) |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(circle)`: program dashboard with wiggling sticker, creator cards, campaign week, leak AI card and summary tiles; rule builder with condition chips and a live receipt driven by unit-tested commission math; leak modal + rotate-code sub-modal; no-sales, contract-pending and payout-failed variations.
 - 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
 - 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
@@ -183,6 +185,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(circle)`: program dashboard with wiggling sticker, creator cards, campaign week, leak AI card and summary tiles; rule builder with condition chips and a live receipt driven by unit-tested commission math; leak modal + rotate-code sub-modal; no-sales, contract-pending and payout-failed variations.
 - 2026-09-26 · `feat(pay)`: applications with floating shining cards, highlighted review band, score histogram and model card; application detail with diverging contribution bars (unit-tested to sum to 588), explanation, timeline and documents; decision modal with policy-max slider + policy override sub-modal; approved, declined-letter and drift variations.
 - 2026-09-26 · `feat(product-hub)`: catalog workspace with facets, dense table and bulk agent bar; pricing detail with self-drawing chart, heat grid, offers and rules; agent run + edit proposal with live guardrails (unit-tested); seller onboarding with confidence-gated mapping; variations and decisions.
 - 2026-09-26 · `feat(balcao)`: order lanes, picking mode with scan-to-success, handover + third-party sub-modal, cutoff plan sheet + why drawer, seven variations, live orders over Supabase Broadcast with a client-side demo driver, Decision Lens content and registry-driven screenshots.
@@ -233,9 +236,9 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 13 | `/mare/ops/pay/applications/AP-77118` | ✅ | ✅ | `docs/screenshots/pay/pay-application-detail.png` |
 | 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | ✅ | ✅ | `docs/screenshots/pay/pay-decision.png` |
 | 15 | `/mare/apps/pay` | — | — | — |
-| 16 | `/mare/ops/circle` | — | — | — |
-| 17 | `/mare/ops/circle/rules/summer-swim` | — | — | — |
-| 18 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | — | — | — |
+| 16 | `/mare/ops/circle` | ✅ | ✅ | `docs/screenshots/circle/circle-program.png` |
+| 17 | `/mare/ops/circle/rules/summer-swim` | ✅ | ✅ | `docs/screenshots/circle/circle-rule-builder.png` |
+| 18 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | ✅ | ✅ | `docs/screenshots/circle/circle-leak.png` |
 | 19 | `/mare/apps/circle` | — | — | — |
 | 20 | `/mare/ops/mesh` | — | — | — |
 | 21 | `/mare/ops/mesh/partners/ligeiro-log` | — | — | — |
@@ -259,4 +262,4 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 39 | `/pulse/harness` | — | — | — |
 | 40 | `/system-design/pulse` | — | — | — |
 
-Parity: **11/40**.
+Parity: **14/40**.
