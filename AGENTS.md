@@ -68,8 +68,11 @@ pnpm dev:shell                   # shell only
 pnpm --filter @portfolio/shell dev
 pnpm build
 pnpm lint && pnpm typecheck && pnpm test
-pnpm e2e
-pnpm screenshots
+pnpm build && pnpm e2e           # Playwright starts production previews of all four zones; :3000 proxies them
+pnpm build && pnpm screenshots   # docs/screenshots/<area>/<screen>[--<state>].png; then node scripts/readme-gallery.mjs
+BASE_URL=https://ian-portfolio-shell.vercel.app pnpm e2e   # the same suite against a deployment
+node scripts/browser-probe.mjs   # console errors + failed requests (BASE, PATHS, SHOTS env)
+node scripts/axe-probe.mjs <url> [rule]
 pnpm deploy:all                  # preview deploy of every zone; shell previews rewrite to zone previews
 pnpm deploy:prod                 # production deploy (zones first, shell last)
 APPS="pulse shell" pnpm deploy:all   # only some zones
@@ -176,11 +179,14 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Case-study outcomes are labelled "measured on the real systems this fictitious case is modelled on" | Attribute metrics to Maré/Atlas/Pulse | The products are fictitious; the outcomes are real and must not be re-attributed | Credible numbers without pretending |
 | 2026-09-26 | React Flow for system design with custom packet edges | Hand-drawn SVG; a static diagram | Nodes, handles and fit-to-view come for free; custom edges keep the packet motion on the same path strings as the rest of the portfolio | Interactive diagrams in ~55 kB for the only route that needs them |
 | 2026-09-26 | Atlas plan changes broadcast over BroadcastChannel + storage events | Poll the plan; reload after checkout | "Its confirmation updates the plan in every zone" without a backend round-trip in the demo; mirrors a plan.changed event | Every open tab flips to Pro immediately (Playwright-tested) |
+| 2026-09-26 | E2E runs against production builds of every zone behind the shell | Dev servers; one zone at a time | Tests should exercise the same rewrites, base paths and bundles as Vercel | Failures reproduce what reviewers would see |
+| 2026-09-26 | Dimmed/blocked states use blur, saturation or muted colours, never opacity on text | Opacity for "disabled-looking" regions | Opacity lowers text contrast below AA and axe flags it | Variations stay accessible |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
@@ -194,6 +200,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
+- 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
@@ -202,6 +209,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `chore(quality)`: axe (WCAG 2.1 A/AA) over all 45 screens, deep links and 54 variations with zero serious/critical findings after contrast/ARIA fixes; full e2e (186 tests) through the shell domain; CI e2e job on production previews; 107 regenerated screenshots and a generated README gallery with the reviewer tour.
 - 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.

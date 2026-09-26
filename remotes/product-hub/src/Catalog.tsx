@@ -21,7 +21,7 @@ export function Catalog() {
 
   return (
     <div class={`ph-workspace ${state === 'locked' ? 'is-locked' : ''}`}>
-      <aside class="ph-facets" aria-label="Filters" data-anchor="ph-facets">
+      <aside class="ph-facets" aria-label="Filters" data-anchor="ph-facets" tabIndex={0}>
         <section>
           <h2>Saved views</h2>
           {facets.views.map(([label, count], index) => (
@@ -67,7 +67,7 @@ export function Catalog() {
           <div><span>Sell-through · 28d</span><strong>61%</strong><small>target 65%</small></div>
         </div>
 
-        <div class="ph-table-wrap" data-anchor="ph-table">
+        <div class="ph-table-wrap" data-anchor="ph-table" tabIndex={0} role="region" aria-label="Products">
           <table class="ph-table">
             <thead>
               <tr>

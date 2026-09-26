@@ -76,7 +76,7 @@
 .bc-ai-strip .ai-title { font-stretch: 75%; font-size: 19px; }
 .bc-offline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 14px 16px; border: 2px solid var(--ink); border-radius: var(--radius-sm); background: var(--accent); color: var(--accent-ink); font-weight: 800; animation: pop .3s var(--ease) both; }
 .bc-offline small { flex-basis: 100%; font-weight: 500; }
-.is-locked .bc-lanes { filter: blur(3px); opacity: .5; pointer-events: none; }
+.is-locked .bc-lanes { filter: blur(3px) saturate(.3); pointer-events: none; }
 .bc-lock { position: absolute; top: 140px; left: 50%; z-index: 30; display: grid; justify-items: center; gap: 10px; width: min(460px, calc(100% - 32px)); padding: 28px; border: 2px solid var(--ink); border-radius: var(--radius); background: var(--surface); text-align: center; transform: translateX(-50%); box-shadow: var(--elevation); animation: pop .3s var(--ease) both; }
 .bc-lock-icon { width: 40px; height: 40px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
 .bc-lock h2 { font-size: 28px; font-stretch: 75%; }
@@ -89,7 +89,7 @@
 .bc-handover-items > div { display: flex; align-items: center; gap: 10px; }
 .bc-handover-items .swatch { width: 36px; height: 36px; border-radius: 8px; }
 .bc-handover-items small { display: block; color: var(--muted); font-size: 12px; }
-.bc-paid { display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--line); color: var(--success); font-weight: 700; font-size: 13px; }
+.bc-paid { display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--line); color: var(--ink); font-weight: 700; font-size: 13px; }
 .bc-paid b { color: var(--ink); }
 .bc-code-label { display: block; margin: 18px 0 8px; font-weight: 700; }
 .bc-code { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }

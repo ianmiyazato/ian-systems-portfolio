@@ -141,8 +141,8 @@
 .ms-doc.ok { border-color: var(--success); }
 .ms-doc.ok em { color: var(--success); }
 .ms-doc.bad { border-color: var(--risk); background: color-mix(in srgb, var(--risk) 10%, var(--surface-2)); }
-.ms-doc.bad em { color: var(--risk); }
-.ms-doc.muted { opacity: .6; border-style: dashed; }
+.ms-doc.bad em, .ms-doc.bad strong { color: color-mix(in srgb, var(--risk) 60%, var(--ink)); }
+.ms-doc.muted { border-style: dashed; color: var(--muted); }
 .ms-link { width: 120px; height: 20px; }
 .ms-link path { fill: none; stroke: var(--success); stroke-width: 2; }
 .ms-link.blocked path { stroke: var(--risk); stroke-dasharray: 3 5; }
