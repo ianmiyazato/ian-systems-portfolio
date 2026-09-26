@@ -26,9 +26,11 @@ jobs:
       - run: pnpm build
 
   preview:
-    if: github.event_name == 'pull_request' && secrets.VERCEL_TOKEN != ''
+    if: github.event_name == 'pull_request'
     needs: quality
     runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -39,8 +41,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: npm i -g vercel
-      - run: pnpm deploy:all
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
+      - if: env.VERCEL_TOKEN != ''
+        run: npm i -g vercel
+      - if: env.VERCEL_TOKEN != ''
+        run: pnpm deploy:all
