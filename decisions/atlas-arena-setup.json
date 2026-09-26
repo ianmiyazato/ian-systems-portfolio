@@ -1,0 +1,38 @@
+[
+  {
+    "id": "setup-modal",
+    "anchor": "[data-anchor=\"at-setup\"]",
+    "tag": "Frontend",
+    "decision": "Selecting a prompt opens a setup modal instead of starting immediately",
+    "why": "Style, mode and duration change the session enough to choose deliberately.",
+    "alternative": "Start with defaults.",
+    "value": "Sessions match the interview being prepared."
+  },
+  {
+    "id": "grounding",
+    "anchor": "[data-anchor=\"at-setup-grounding\"]",
+    "tag": "AI",
+    "decision": "A session can be grounded in an Academy lesson",
+    "why": "Practice tied to a lesson reinforces what was just learned.",
+    "alternative": "Ungrounded interviewer prompts.",
+    "value": "Learning and practice compound."
+  },
+  {
+    "id": "quota",
+    "anchor": "[data-anchor=\"at-quota\"]",
+    "tag": "Backend",
+    "decision": "Session quotas are enforced server-side and shown up front",
+    "why": "A limit discovered mid-session is a broken promise.",
+    "alternative": "Fail at session start.",
+    "value": "No surprises; upgrade prompts are honest."
+  },
+  {
+    "id": "last-score",
+    "anchor": "[data-anchor=\"at-prompts\"]",
+    "tag": "Data",
+    "decision": "Cards show last score per prompt",
+    "why": "Progress on a specific prompt motivates the next attempt.",
+    "alternative": "Scores only in history.",
+    "value": "People see where they improved."
+  }
+]

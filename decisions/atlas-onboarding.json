@@ -1,0 +1,38 @@
+[
+  {
+    "id": "live-plan",
+    "anchor": "[data-anchor=\"at-live-plan\"]",
+    "tag": "Frontend",
+    "decision": "The plan panel updates live as you answer",
+    "why": "Commitment grows when people see what their answers change.",
+    "alternative": "A summary page at the end of the wizard.",
+    "value": "Onboarding feels like building something, not filling a form."
+  },
+  {
+    "id": "step-in-url",
+    "anchor": "[data-anchor=\"at-steps\"]",
+    "tag": "Backend",
+    "decision": "The wizard step lives in the URL and answers autosave per step",
+    "why": "People abandon and return; support needs to deep-link to a step.",
+    "alternative": "Keep state in memory until the last step.",
+    "value": "Resumable onboarding with no lost answers."
+  },
+  {
+    "id": "salary-band",
+    "anchor": "[data-anchor=\"at-salary\"]",
+    "tag": "Data",
+    "decision": "Salary is a band with two thumbs, stored in USD",
+    "why": "Roles post ranges; matching on a single number excludes good fits.",
+    "alternative": "One target salary field.",
+    "value": "More honest matches across currencies."
+  },
+  {
+    "id": "ai-plan",
+    "anchor": "[data-anchor=\"at-live-plan\"] .ai-surface",
+    "tag": "AI",
+    "decision": "The AI note explains how answers shape practice, never picks roles for you",
+    "why": "Automation should explain its recommendations while the person keeps the choice.",
+    "alternative": "Auto-apply to matched roles.",
+    "value": "Trust in recommendations without losing agency."
+  }
+]

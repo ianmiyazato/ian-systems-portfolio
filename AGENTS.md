@@ -103,7 +103,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 
 ## 6. Decision lens
 
-`<im-decision-lens>` (packages/chrome) is one web component used by all four stacks: press `D` or use **Show decisions** in `<im-portfolio-bar>`. It resolves the current screen from `packages/chrome/src/routes.ts` (path + `modal`/`drawer`/`sub` params), lazy-loads `decisions/<screen>.json`, and pins numbered hotspots to each decision's `anchor` (a `[data-anchor="…"]` selector). Each file needs at least four decisions mixing Frontend and Backend and spanning three of Frontend/Backend/Data/AI; every entry has `id`, `anchor`, `tag`, `decision`, `why`, `alternative`, `value`. To add one: add a `data-anchor` attribute to the element, then append the entry to that screen's JSON. `?lens=on` opens the lens on load (used by screenshots).
+`<im-decision-lens>` (packages/chrome) is one web component used by all four stacks: press `D` or use **Show decisions** in `<im-portfolio-bar>`. It resolves the current screen from `packages/chrome/src/routes.ts` (path + `modal`/`drawer`/`sub` params), lazy-loads `decisions/<screen>.json`, and pins numbered hotspots to each decision's `anchor` (a `[data-anchor="…"]` selector). Each file needs at least four decisions mixing Frontend and Backend and spanning three of Frontend/Backend/Data/AI; every entry has `id`, `anchor`, `tag`, `decision`, `why`, `alternative`, `value`. To add one: add a `data-anchor` attribute to the element, then append the entry to that screen's JSON. `?lens=on` opens the lens on load (used by screenshots). `packages/chrome/src/decisions.test.ts` fails the build if any registry screen has fewer than four decisions, a missing field, an anchor that isn't a `[data-anchor]` selector, or an orphan file; `tests/e2e/decision-lens.spec.ts` opens every screen in Chromium and fails if any anchor doesn't resolve in the rendered DOM (anchors can only be resolved in a browser because they span four frameworks).
 
 ## 7. AI simulation
 
@@ -124,7 +124,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - [x] M3 · shell home, /work case studies and the design-languages board
 - [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §14)
 - [x] M5 · Astro Maré consumer zone (site + three apps); language board ships with the shell (M6 row)
-- [ ] M6 · extract Atlas flows from shell route fallback
+- [x] M6 · Atlas flows as real shell routes (10 artboards)
 - [x] M7 · SvelteKit Pulse zone with EN/KR/JP
 - [x] M8 · interactive system-design pages (React Flow, eight scenarios, node decisions, before/after)
 - [x] M9 · Supabase data mode and server-only live adapter wiring
@@ -175,11 +175,13 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Cross-zone links are plain anchors; in-zone Next links don't prefetch | Next `<Link>` everywhere | The Next router would try an RSC fetch against another zone, and aborted prefetches show up as failed requests | Clean navigations and zero failed requests in the browser probe |
 | 2026-09-26 | Case-study outcomes are labelled "measured on the real systems this fictitious case is modelled on" | Attribute metrics to Maré/Atlas/Pulse | The products are fictitious; the outcomes are real and must not be re-attributed | Credible numbers without pretending |
 | 2026-09-26 | React Flow for system design with custom packet edges | Hand-drawn SVG; a static diagram | Nodes, handles and fit-to-view come for free; custom edges keep the packet motion on the same path strings as the rest of the portfolio | Interactive diagrams in ~55 kB for the only route that needs them |
+| 2026-09-26 | Atlas plan changes broadcast over BroadcastChannel + storage events | Poll the plan; reload after checkout | "Its confirmation updates the plan in every zone" without a backend round-trip in the demo; mirrors a plan.changed event | Every open tab flips to Pro immediately (Playwright-tested) |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
@@ -192,6 +194,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `feat(mare-ops)`: runtime federation host, five independently built Preact remotes with manifests, per-remote boundaries and fallback, remote health, and the block-one-remote Playwright suite.
 - 2026-09-26 · `feat(deploy)`: zone base paths and nested outputs, env-driven multi-zone rewrites, CLI deploy script, CI preview/production jobs with PR comments; first production deploy of all four zones.
 - 2026-09-26 · `feat(platform)`: semantic themes, simulated AI provider, event contracts, and unit tests.
+- 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: responsive portfolio home, system workspaces, overlays, command palette, decisions, states, and scenario replay.
 - 2026-09-26 · `feat(zones)`: add deployable Vite/React, Astro, and SvelteKit child boundaries.
@@ -199,6 +202,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(atlas)`: onboarding with a live plan panel and dual-thumb salary range, pipeline overview, kanban board with drag/drop + application drawer + log-outcome sub-modal, company page with a Pro-locked loop panel, Arena library + setup modal, live session (add a cache node, streamed follow-up), feedback with count-up score and cited rubric, transcript drawer, Academy lesson with paywall + checkout; plan.changed propagates across tabs.
 - 2026-09-26 · `feat(system-design)`: React Flow architecture pages for Maré, Atlas and Pulse with custom packet edges, eight narrated scenario replays, clickable node decisions, a synchronous-before toggle and the real before/after metrics.
 - 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
@@ -265,20 +269,20 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 23 | `/mare/ops/mesh/invoices/MR-904117` | ✅ | ✅ | `docs/screenshots/mesh/mesh-invoice-chain.png` |
 | 24 | `/mare/apps/shop` | ✅ | ✅ | `docs/screenshots/consumer/consumer-app.png` |
 | 25 | `/mare/shop` | ✅ | ✅ | `docs/screenshots/consumer/consumer-site.png` |
-| 26 | `/atlas/welcome?step=2` | — | — | — |
-| 27 | `/atlas/pipeline` | — | — | — |
-| 28 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | — | — | — |
-| 29 | `/atlas/companies/parallax-pay` | — | — | — |
-| 30 | `/atlas/arena?modal=setup&prompt=payments-ledger` | — | — | — |
-| 31 | `/atlas/arena/session/14` | — | — | — |
-| 32 | `/atlas/arena/sessions/14` | — | — | — |
-| 33 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | — | — | — |
-| 34 | `/atlas/academy/designing-for-10x` | — | — | — |
-| 35 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | — | — | — |
+| 26 | `/atlas/welcome?step=2` | ✅ | ✅ | `docs/screenshots/atlas/atlas-onboarding.png` |
+| 27 | `/atlas/pipeline` | ✅ | ✅ | `docs/screenshots/atlas/atlas-pipeline.png` |
+| 28 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | ✅ | ✅ | `docs/screenshots/atlas/atlas-board.png` |
+| 29 | `/atlas/companies/parallax-pay` | ✅ | ✅ | `docs/screenshots/atlas/atlas-company.png` |
+| 30 | `/atlas/arena?modal=setup&prompt=payments-ledger` | ✅ | ✅ | `docs/screenshots/atlas/atlas-arena-setup.png` |
+| 31 | `/atlas/arena/session/14` | ✅ | ✅ | `docs/screenshots/atlas/atlas-arena-session.png` |
+| 32 | `/atlas/arena/sessions/14` | ✅ | ✅ | `docs/screenshots/atlas/atlas-feedback.png` |
+| 33 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | ✅ | ✅ | `docs/screenshots/atlas/atlas-transcript.png` |
+| 34 | `/atlas/academy/designing-for-10x` | ✅ | ✅ | `docs/screenshots/atlas/atlas-academy.png` |
+| 35 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | ✅ | ✅ | `docs/screenshots/atlas/atlas-paywall.png` |
 | 36 | `/system-design/atlas` | ✅ | ✅ | `docs/screenshots/atlas/system-design-atlas.png` |
 | 37 | `/pulse` | ✅ | ✅ | `docs/screenshots/pulse/pulse-intelligence.png` |
 | 38 | `/pulse/distribution` | ✅ | ✅ | `docs/screenshots/pulse/pulse-distribution.png` |
 | 39 | `/pulse/harness` | ✅ | ✅ | `docs/screenshots/pulse/pulse-harness.png` |
 | 40 | `/system-design/pulse` | ✅ | ✅ | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **30/40**.
+Parity: **40/40**.

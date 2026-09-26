@@ -1,0 +1,38 @@
+[
+  {
+    "id": "next-action",
+    "anchor": "[data-anchor=\"at-next-action\"]",
+    "tag": "AI",
+    "decision": "One next best action, grounded in rubric evidence",
+    "why": "A dashboard of ten nudges gets ignored; one cited action gets done.",
+    "alternative": "A list of generic tips.",
+    "value": "Practice lands before the interview that needs it."
+  },
+  {
+    "id": "funnel",
+    "anchor": "[data-anchor=\"at-funnel\"]",
+    "tag": "Frontend",
+    "decision": "The funnel is the first chart, not a table",
+    "why": "Conversion between stages is the question people actually ask.",
+    "alternative": "A table of applications.",
+    "value": "Bottlenecks are visible in one glance."
+  },
+  {
+    "id": "aggregates",
+    "anchor": "[data-anchor=\"at-kpis\"]",
+    "tag": "Data",
+    "decision": "KPIs read precomputed aggregates",
+    "why": "Funnel and readiness join many events; live queries were slow.",
+    "alternative": "Compute on page load.",
+    "value": "Dashboard load 2.8 s → 1.2 s."
+  },
+  {
+    "id": "events",
+    "anchor": "[data-anchor=\"at-week\"]",
+    "tag": "Backend",
+    "decision": "Interviews and outcomes are events that other products subscribe to",
+    "why": "Arena and Academy react to the pipeline without coupling to it.",
+    "alternative": "Shared database tables.",
+    "value": "Teams ship independently; features compose."
+  }
+]

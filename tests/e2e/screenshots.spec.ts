@@ -9,6 +9,13 @@ const mainScreen: Record<string, string> = {
   balcao: 'balcao-lanes', 'product-hub': 'product-hub-catalog', pay: 'pay-applications', circle: 'circle-program',
   mesh: 'mesh-topology', consumer: 'consumer-site', atlas: 'atlas-pipeline', pulse: 'pulse-intelligence'
 };
+// Some variations belong to a specific screen rather than the area's main screen.
+const stateScreen: Record<string, [string, string]> = {
+  picked: ['balcao-picking', '/mare/ops/balcao/pick/MR-904117'],
+  limit: ['atlas-arena', '/atlas/arena'],
+  generating: ['atlas-feedback', '/atlas/arena/sessions/14'],
+  'checkout-failed': ['atlas-paywall', '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout']
+};
 const mobile = ['home', 'balcao-lanes', 'balcao-picking', 'consumer-site', 'consumer-app', 'pay-customer-app', 'atlas-board', 'pulse-intelligence'];
 
 async function settle(page: Page) {
@@ -35,13 +42,13 @@ for (const area of areas) {
   if (!screen || !only(screen)) continue;
   for (const state of area.states) {
     test(`screenshot ${area.id}/${id}--${state}`, async ({ page }) => {
-      const target = state === 'picked' ? '/mare/ops/balcao/pick/MR-904117' : screen.href;
+      const [name, target] = stateScreen[state] ?? [id, screen.href];
       await page.goto(withState(target, state));
       await settle(page);
       // Static zones render every variation in place; bring the active one into view.
       await page.evaluate((active) => document.querySelector(`[data-state-only~="${active}"]`)?.scrollIntoView({ block: 'center' }), state);
       await page.waitForTimeout(300);
-      await page.screenshot({ path: `docs/screenshots/${area.id}/${state === 'picked' ? 'balcao-picking' : id}--${state}.png` });
+      await page.screenshot({ path: `docs/screenshots/${area.id}/${name}--${state}.png` });
     });
   }
 }
