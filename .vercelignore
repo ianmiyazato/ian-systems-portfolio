@@ -8,6 +8,5 @@ node_modules
 **/.astro
 playwright-report
 test-results
-docs/screenshots
 .env*
 !.env.example

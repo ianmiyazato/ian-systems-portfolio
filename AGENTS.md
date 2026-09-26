@@ -121,7 +121,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 
 - [x] M1 · repository, operating manual, CI skeleton, local shell
 - [x] M2 · token contract, AI simulation, event contracts, decision lens behavior
-- [x] M3 · shell home and route-based case study experience
+- [x] M3 · shell home, /work case studies and the design-languages board
 - [x] M4 · extract Maré Ops host and all five production remote bundles (runtime federation; parity per remote tracked in §14)
 - [x] M5 · Astro Maré consumer zone (site + three apps); language board ships with the shell (M6 row)
 - [ ] M6 · extract Atlas flows from shell route fallback
@@ -142,7 +142,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | URL-addressable overlay stack | Local component state only | Demos and tests must reproduce nested decisions directly | Shareable, deterministic deep links |
 | 2026-09-26 | Astro for the consumer boundary | Next.js everywhere | Content-first pages benefit from HTML-first delivery and islands | Strong SEO/performance story |
 | 2026-09-26 | SvelteKit for Pulse | React-only portfolio | Lightweight reactive primitives fit live market signals | Proves architecture skill beyond one ecosystem |
-| 2026-09-26 | Shell renders child routes in local mode | Broken routes until every zone exists | Credentials and package tools were absent in preflight | Reviewer tour stays usable while extraction proceeds |
+| 2026-09-26 | Shell renders child routes in local mode (superseded the same day) | Broken routes until every zone exists | Credentials and package tools were absent in preflight | Replaced by real zones behind env-driven rewrites once deploys worked |
 | 2026-09-26 | Add `microfrontends.json` beside rewrites | Rewrites only | Installed Vercel guidance describes platform-native grouping | Clear production evolution without blocking local work |
 | 2026-09-26 | Local mode and simulated AI | Wait for missing Supabase/API credentials | The prompt defines both as supported fallbacks | Deterministic, zero-secret demo |
 | 2026-09-26 | Solo-maintainer branch protection | Require an independent approval | One maintainer cannot approve their own PR, while PRs and green CI still provide the intended gate | PRs and `quality` stay required; add reviewer approval when a second maintainer joins |
@@ -172,11 +172,14 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 | 2026-09-26 | Products are drawn as SVG garment silhouettes in their swatch colours | Stock photography | No real-brand imagery, no licensing, tiny payloads, and the product colour is the hero | Editorial look that stays fictitious and fast |
 | 2026-09-26 | `SimulatedProvider` takes a domain corpus and grounded canned answers | A separate fake per product | Every AI surface goes through the same `AIProvider` interface the live adapter implements | Swapping to `LiveProvider` is configuration, not a rewrite |
 | 2026-09-26 | CJK faces load after first paint, relying on unicode-range subsets | Load Noto KR/JP up front; system fonts only | ~190 kB of @font-face CSS would block the first paint; system CJK fonts are missing on many machines | Fast EN first paint with correct KR/JP glyphs a moment later |
+| 2026-09-26 | Cross-zone links are plain anchors; in-zone Next links don't prefetch | Next `<Link>` everywhere | The Next router would try an RSC fetch against another zone, and aborted prefetches show up as failed requests | Clean navigations and zero failed requests in the browser probe |
+| 2026-09-26 | Case-study outcomes are labelled "measured on the real systems this fictitious case is modelled on" | Attribute metrics to Maré/Atlas/Pulse | The products are fictitious; the outcomes are real and must not be re-attributed | Credible numbers without pretending |
 | 2026-09-26 | Public Supabase Broadcast with read-only tables | Anonymous database writes or a permanent cron | The demo driver runs only while a reviewer is watching and broadcasts deterministic payloads without granting write access | Two tabs receive the same live event while RLS keeps synthetic records read-only |
 
 ## 11. Micro-task changelog
 
 - 2026-09-26 · `chore(repo)`: bootstrap repository, policy, workspace, and deployment fallback.
+- 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
 - 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
 - 2026-09-26 · `feat(mesh)`: live topology with packets on offset-path edges, partner table, Broadcast log tail and AI triage; partner adapter with circuit state machine, field mapping, payload and request log; DLQ dry-run replay + sandboxed transform drawer; invoice chain with NCM triage; calm, down and replayed variations.
@@ -193,6 +196,7 @@ Inventory: portfolio bar, system tabs, KPI tile, record row, status pill, AI sug
 - 2026-09-26 · `chore(ci)`: publish main/develop and require PR review plus the green `quality` check on main.
 - 2026-09-26 · `fix(ci)`: move the optional Vercel-secret guard to preview steps so GitHub can parse the workflow without deployment credentials.
 - 2026-09-26 · `feat(supabase)`: provision the free São Paulo project, apply five RLS migrations, and verify a two-tab Broadcast feed.
+- 2026-09-26 · `feat(shell)`: replace the catch-all fallback with real routes: home (staggered hero, metrics marquee, animated topology/funnel/equalizer previews, principles, founder table), /work and three case studies with a screenshot gallery, and the five-design-languages board with the AI surface re-skinned in five themes.
 - 2026-09-26 · `feat(pulse)`: SvelteKit intelligence (live market clocks, self-drawing comparison chart with moment marker, merged EN/KR/JP leaderboard, Ask Pulse streaming cited answers from the shared `AIProvider`), distribution (moment banner, equalizer asset card, draggable time-zone schedule, fit-weighted reach, Broadcast posting feed) and AI harness (stage-by-stage RAG trace, top-5 chunks, eval gate, running eval, canary split, failures); EN/KR/JP switch with lazy CJK fonts.
 - 2026-09-26 · `feat(mare-shop)`: Astro consumer site (editorial hero, AI stylist bubble and semantic results, picked-for-you grid, bag drawer, PDP with store stock, checkout) and three phone-frame apps (shopping, Pay customer, Circle creator) in their own design languages; global `[hidden]` rule.
 - 2026-09-26 · `feat(mesh)`: live topology with packets on offset-path edges, partner table, Broadcast log tail and AI triage; partner adapter with circuit state machine, field mapping, payload and request log; DLQ dry-run replay + sandboxed transform drawer; invoice chain with NCM triage; calm, down and replayed variations.
@@ -232,8 +236,8 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 
 | # | Route | Built | Visual check passed | Screenshot |
 |---|---|---|---|---|
-| 1 | `/` | — | — | — |
-| 2 | `/work/mare/languages` | — | — | — |
+| 1 | `/` | ✅ | ✅ | `docs/screenshots/overview/home.png` |
+| 2 | `/work/mare/languages` | ✅ | ✅ | `docs/screenshots/mare/mare-languages.png` |
 | 3 | `/system-design/mare` | — | — | — |
 | 4 | `/mare/ops/balcao` | ✅ | ✅ | `docs/screenshots/balcao/balcao-lanes.png` |
 | 5 | `/mare/ops/balcao/pick/MR-904117` | ✅ | ✅ | `docs/screenshots/balcao/balcao-picking.png` |
@@ -273,4 +277,4 @@ Source of truth: `packages/chrome/src/routes.ts` (40 approved artboards). "Visua
 | 39 | `/pulse/harness` | ✅ | ✅ | `docs/screenshots/pulse/pulse-harness.png` |
 | 40 | `/system-design/pulse` | — | — | — |
 
-Parity: **25/40**.
+Parity: **27/40**.

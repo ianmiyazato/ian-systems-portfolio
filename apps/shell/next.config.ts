@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays'],
+  experimental: { optimizePackageImports: ['@xyflow/react'] },
   async rewrites() {
     // beforeFiles: zone prefixes must win over the shell's own dynamic routes.
     const beforeFiles = zones.flatMap(({ url, prefixes, rootSlash }) =>
