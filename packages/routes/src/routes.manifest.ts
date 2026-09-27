@@ -41,6 +41,8 @@ export type RouteEntry = {
   mobile?: true;
   /** Date the rendered route was compared with its board at 1440 × 900 (v0.1 screens: 2026-09-26). */
   checked?: string;
+  /** Designed variations of this route (?state=…), screenshotted and audited like the system's. */
+  states?: string[];
 };
 
 const common = ['empty', 'loading', 'error', 'offline', 'locked'];
@@ -72,8 +74,8 @@ export const routes: RouteEntry[] = [
   { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
   { id: 'counter-handover', system: 'counter', title: 'Handover + third party', href: '/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party', zone: 'mare-ops', owner: remote('counter'), board: 'BA-handover', heading: 'open orders', release: '0.1' },
   { id: 'counter-cutoff-plan', system: 'counter', title: 'Cutoff plan + why', href: '/mare/ops/counter?modal=cutoff-plan&sub=why', zone: 'mare-ops', owner: remote('counter'), board: 'BA-cutoff', heading: 'open orders', release: '0.1' },
-  { id: 'counter-returns', system: 'counter', title: 'Returns', href: '/mare/ops/counter/returns', zone: 'mare-ops', owner: remote('counter'), board: 'BA-returns', heading: 'Returns', release: '0.2', checked: '2026-09-27' },
-  { id: 'counter-stock', system: 'counter', title: 'Stock lookup', href: '/mare/ops/counter/stock', zone: 'mare-ops', owner: remote('counter'), board: 'BA-stock', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27' },
+  { id: 'counter-returns', system: 'counter', title: 'Returns', href: '/mare/ops/counter/returns', zone: 'mare-ops', owner: remote('counter'), board: 'BA-returns', heading: 'Returns', release: '0.2', checked: '2026-09-27', states: ['empty', 'error'] },
+  { id: 'counter-stock', system: 'counter', title: 'Stock lookup', href: '/mare/ops/counter/stock', zone: 'mare-ops', owner: remote('counter'), board: 'BA-stock', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27', states: ['empty', 'offline'] },
 
   { id: 'product-hub-catalog', system: 'product-hub', title: 'Catalog workspace', href: '/mare/ops/product-hub', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-catalog', heading: 'needs action', release: '0.1' },
   { id: 'product-hub-detail', system: 'product-hub', title: 'Product detail · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-detail', heading: 'linho', release: '0.1' },
@@ -83,6 +85,12 @@ export const routes: RouteEntry[] = [
   { id: 'pay-applications', system: 'pay', title: 'Applications', href: '/mare/ops/pay', zone: 'mare-ops', owner: remote('pay'), board: 'PY-applications', heading: 'Applications', release: '0.1' },
   { id: 'pay-application-detail', system: 'pay', title: 'Application detail', href: '/mare/ops/pay/applications/AP-77118', zone: 'mare-ops', owner: remote('pay'), board: 'PY-detail', heading: 'Bruno S.', release: '0.1' },
   { id: 'pay-decision', system: 'pay', title: 'Decision + override', href: '/mare/ops/pay/applications/AP-77118?modal=decision&sub=override', zone: 'mare-ops', owner: remote('pay'), board: 'PY-decision', heading: 'Bruno S.', release: '0.1' },
+  { id: 'pay-accounts', system: 'pay', title: 'Accounts', href: '/mare/ops/pay/accounts', zone: 'mare-ops', owner: remote('pay'), board: 'PY-accounts', heading: 'Accounts', release: '0.2', checked: '2026-09-27', states: ['frozen', 'empty', 'error'] },
+  { id: 'pay-disputes', system: 'pay', title: 'Disputes', href: '/mare/ops/pay/disputes', zone: 'mare-ops', owner: remote('pay'), board: 'PY-disputes', heading: 'Disputes', release: '0.2', checked: '2026-09-27', states: ['empty', 'error'] },
+  { id: 'pay-collections', system: 'pay', title: 'Collections', href: '/mare/ops/pay/collections', zone: 'mare-ops', owner: remote('pay'), board: 'PY-collections', heading: 'Collections', release: '0.2', checked: '2026-09-27', states: ['promise-broken'] },
+  { id: 'pay-fraud', system: 'pay', title: 'Fraud', href: '/mare/ops/pay/fraud', zone: 'mare-ops', owner: remote('pay'), board: 'PY-fraud', heading: 'Fraud', release: '0.2', checked: '2026-09-27', states: ['degraded', 'loading'] },
+  { id: 'pay-models', system: 'pay', title: 'Models', href: '/mare/ops/pay/models', zone: 'mare-ops', owner: remote('pay'), board: 'PY-models', heading: 'Models', release: '0.2', checked: '2026-09-27', states: ['drift'] },
+  { id: 'pay-policies', system: 'pay', title: 'Policies', href: '/mare/ops/pay/policies', zone: 'mare-ops', owner: remote('pay'), board: 'PY-policies', heading: 'Policies', release: '0.2', checked: '2026-09-27', states: ['conflict'] },
   { id: 'pay-customer-app', system: 'pay', title: 'Pay customer app', href: '/mare/apps/pay', zone: 'mare-shop', owner: shop, board: 'PY-app', heading: 'Pay app', release: '0.1', mobile: true },
 
   { id: 'circle-program', system: 'circle', title: 'Program dashboard', href: '/mare/ops/circle', zone: 'mare-ops', owner: remote('circle'), board: 'CI-program', heading: 'creators sold', release: '0.1' },

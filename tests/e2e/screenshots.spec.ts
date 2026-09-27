@@ -51,6 +51,17 @@ for (const area of areas) {
   }
 }
 
+// Route-level variations (v0.2 views): <route-id>--<state>.png next to the route's screenshot.
+for (const screen of screens.filter(only)) {
+  for (const state of screen.states ?? []) {
+    test(`screenshot ${screen.system}/${screen.id}--${state}`, async ({ page }) => {
+      await page.goto(withState(screen.href, state));
+      await settle(page);
+      await page.screenshot({ path: `docs/screenshots/${screen.system}/${screen.id}--${state}.png` });
+    });
+  }
+}
+
 for (const id of mobile) {
   const screen = screens.find((item) => item.id === id);
   if (!screen || !only(screen)) continue;

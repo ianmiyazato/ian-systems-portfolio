@@ -63,7 +63,7 @@ export function Stock() {
           <input id="ct-stock-q" value={query} placeholder="Search product, SKU or color…" autoComplete="off" onInput={(event) => setQuery(event.currentTarget.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(() => setFocused(false), 150)} />
           <button type="button" class="ct-primary ct-scan-button" onClick={() => openLayer({ modal: 'scan-item' })}><span aria-hidden="true">▣</span> Scan</button>
           {(focused || noResults) && query && (
-            <ul class="ct-results" role="listbox" aria-label="Products">
+            <ul class="ct-results" aria-label="Matching products">
               {results.map((result) => (
                 <li key={result.sku}><button type="button" onClick={() => choose(result.sku)}><span class="swatch" data-swatch={result.swatch} />{result.name}<small>{result.sku}</small></button></li>
               ))}
