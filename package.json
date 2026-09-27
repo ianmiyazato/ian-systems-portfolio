@@ -20,7 +20,10 @@
     "dev:shell": "turbo dev --filter=@portfolio/shell",
     "deploy:prod": "bash scripts/deploy-all.sh --prod",
     "lighthouse": "node scripts/lighthouse.mjs",
-    "lighthouse:ci": "lhci autorun --config=lighthouserc.cjs"
+    "lighthouse:ci": "lhci autorun --config=lighthouserc.cjs",
+    "verify:route": "node scripts/verify-route.mjs",
+    "shots": "node scripts/shots.mjs",
+    "budget": "node scripts/budget.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

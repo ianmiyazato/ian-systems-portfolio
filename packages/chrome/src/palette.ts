@@ -1,4 +1,4 @@
-import { areaOf, areas, resolveScreen, screens } from './routes';
+import { resolveScreen, routes, systemOf, systems } from './routes';
 import { chromeVars, escapeHtml } from './shared';
 
 const styles = `
@@ -73,7 +73,7 @@ export class CommandPalette extends HTMLElement {
 
   private filtered() {
     const query = this.query.trim().toLowerCase();
-    return screens.filter((screen) => !query || `${screen.label} ${screen.href} ${areaOf(screen.area).label}`.toLowerCase().includes(query));
+    return routes.filter((screen) => !query || `${screen.title} ${screen.href} ${systemOf(screen.system).title}`.toLowerCase().includes(query));
   }
 
   private render() {
@@ -82,18 +82,18 @@ export class CommandPalette extends HTMLElement {
       return;
     }
     const current = resolveScreen(location.pathname, location.search);
-    const area = current ? areaOf(current.area) : undefined;
+    const area = current ? systemOf(current.system) : undefined;
     const activeState = new URLSearchParams(location.search).get('state') ?? 'live';
     const results = this.filtered();
     let flatIndex = -1;
-    const groups = areas
+    const groups = systems
       .map((group) => {
-        const items = results.filter((screen) => screen.area === group.id);
+        const items = results.filter((screen) => screen.system === group.id);
         if (!items.length) return '';
-        return `<h3>${escapeHtml(group.label)}</h3>${items
+        return `<h3>${escapeHtml(group.title)}</h3>${items
           .map((screen) => {
             flatIndex += 1;
-            return `<a role="option" href="${escapeHtml(screen.href)}" data-flat="${flatIndex}" aria-selected="${flatIndex === this.selected}" ${current?.id === screen.id ? 'aria-current="page"' : ''}><span>${escapeHtml(screen.label)}</span><small>${escapeHtml(screen.href)}</small></a>`;
+            return `<a role="option" href="${escapeHtml(screen.href)}" data-flat="${flatIndex}" aria-selected="${flatIndex === this.selected}" ${current?.id === screen.id ? 'aria-current="page"' : ''}><span>${escapeHtml(screen.title)}</span><small>${escapeHtml(screen.href)}</small></a>`;
           })
           .join('')}`;
       })
@@ -104,7 +104,7 @@ export class CommandPalette extends HTMLElement {
           .join('')}</div>`
       : `<div class="states"><span>Open a product screen to preview its empty, loading, error, offline and locked states.</span></div>`;
     this.root.innerHTML = `<style>${styles}</style><div class="scrim" data-scrim><section class="panel" role="dialog" aria-modal="true" aria-label="Command palette">
-      <div><label for="q">Jump to a screen</label><input id="q" autocomplete="off" placeholder="Search 40 artboards, routes and states…" value="${escapeHtml(this.query)}" role="combobox" aria-expanded="true" aria-controls="results"></div>
+      <div><label for="q">Jump to a screen</label><input id="q" autocomplete="off" placeholder="Search every screen, route and state…" value="${escapeHtml(this.query)}" role="combobox" aria-expanded="true" aria-controls="results"></div>
       <div class="list" id="results" role="listbox" aria-label="Screens">${groups || '<p class="empty">No screen matches that search.</p>'}</div>${states}</section></div>`;
     const input = this.root.querySelector('input')!;
     input.addEventListener('input', () => {

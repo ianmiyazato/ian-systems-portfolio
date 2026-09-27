@@ -1,14 +1,12 @@
 import { expect, test, type Page } from '@playwright/test';
-import { areas, screens, type ScreenRoute } from '../../packages/chrome/src/routes';
+import { routes as screens, systems as areas, type RouteEntry as ScreenRoute } from '../../packages/routes/src/index';
 
 // Generates docs/screenshots/<area>/<screen>.png for every registry screen (1440 × 900),
 // one image per designed variation of each area's main screen, and key mobile views at 390.
 const zone = process.env.SHOT_ZONE;
-const only = (screen: ScreenRoute) => !zone || screen.zone === zone;
-const mainScreen: Record<string, string> = {
-  balcao: 'balcao-lanes', 'product-hub': 'product-hub-catalog', pay: 'pay-applications', circle: 'circle-program',
-  mesh: 'mesh-topology', consumer: 'consumer-site', atlas: 'atlas-pipeline', pulse: 'pulse-intelligence'
-};
+const only = (screen: ScreenRoute) => (!zone || screen.zone === zone) && selected(screen);
+const picked = process.env.SHOT_ONLY?.split(',').filter(Boolean);
+const selected = (screen: ScreenRoute) => !picked || picked.some((item) => screen.id === item || screen.system === item || screen.href === item);
 // Some variations belong to a specific screen rather than the area's main screen.
 const stateScreen: Record<string, [string, string]> = {
   picked: ['balcao-picking', '/mare/ops/balcao/pick/MR-904117'],
@@ -16,7 +14,7 @@ const stateScreen: Record<string, [string, string]> = {
   generating: ['atlas-feedback', '/atlas/arena/sessions/14'],
   'checkout-failed': ['atlas-paywall', '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout']
 };
-const mobile = ['home', 'balcao-lanes', 'balcao-picking', 'consumer-site', 'consumer-app', 'pay-customer-app', 'atlas-board', 'pulse-intelligence'];
+const mobile = screens.filter((screen) => screen.mobile).map((screen) => screen.id);
 
 async function settle(page: Page) {
   await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
@@ -29,15 +27,15 @@ async function settle(page: Page) {
 const withState = (href: string, state: string) => `${href}${href.includes('?') ? '&' : '?'}state=${state}`;
 
 for (const screen of screens.filter(only)) {
-  test(`screenshot ${screen.area}/${screen.id}`, async ({ page }) => {
+  test(`screenshot ${screen.system}/${screen.id}`, async ({ page }) => {
     await page.goto(screen.href);
     await settle(page);
-    await page.screenshot({ path: `docs/screenshots/${screen.area}/${screen.id}.png` });
+    await page.screenshot({ path: `docs/screenshots/${screen.system}/${screen.id}.png` });
   });
 }
 
 for (const area of areas) {
-  const id = mainScreen[area.id];
+  const id = area.home;
   const screen = screens.find((item) => item.id === id);
   if (!screen || !only(screen)) continue;
   for (const state of area.states) {

@@ -1,12 +1,16 @@
-// Lighthouse (default mobile config, simulated throttling) against production, median of N runs.
+// Lighthouse (default mobile config, simulated throttling), median of N runs. Free tier: it runs
+// against the local production build (all four zones behind the shell on :3000), never previews.
 // Chromium comes from Playwright and is driven over its debugging port, which also works on WSL
 // where chrome-launcher would try to use a Windows temp directory.
-//   LHCI_BASE=https://… RUNS=3 node scripts/lighthouse.mjs
+//   pnpm build && pnpm lighthouse          # local production build
+//   LHCI_BASE=https://… RUNS=3 node scripts/lighthouse.mjs   # an existing deployment
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 import lighthouse from 'lighthouse';
+import { ensureServers } from './lib/servers.mjs';
 
-const base = process.env.LHCI_BASE ?? 'https://ian-portfolio-shell.vercel.app';
+const base = process.env.LHCI_BASE ?? 'http://127.0.0.1:3000';
+const stopServers = process.env.LHCI_BASE ? () => {} : await ensureServers();
 const runs = Number(process.env.RUNS ?? 3);
 const paths = (process.env.PATHS ?? '/ /work/mare /mare/shop /mare/ops/balcao /pulse').split(' ');
 const port = 9333;
@@ -31,3 +35,4 @@ for (const path of paths) {
 }
 await browser.close();
 writeFileSync('.lighthouseci/summary.json', JSON.stringify({ base, runs, measuredAt: new Date().toISOString(), results }, null, 2));
+stopServers();
