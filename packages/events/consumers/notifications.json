@@ -1,0 +1,5 @@
+{ "consumer": "notifications", "owner": "notifications service (Redis streams)", "reads": {
+  "delivery.updated": ["orderId", "status", "etaMinutes"],
+  "orders.placed": ["orderId", "customer"],
+  "returns.refunded": ["returnId", "method", "amountCents"]
+} }

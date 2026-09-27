@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@portfolio/events": "workspace:*",
     "@portfolio/mocks": "workspace:*",
     "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",

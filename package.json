@@ -23,7 +23,8 @@
     "lighthouse:ci": "lhci autorun --config=lighthouserc.cjs",
     "verify:route": "node scripts/verify-route.mjs",
     "shots": "node scripts/shots.mjs",
-    "budget": "node scripts/budget.mjs"
+    "budget": "node scripts/budget.mjs",
+    "contracts": "WRITE_CONTRACTS=${WRITE_CONTRACTS:-} corepack pnpm --filter @portfolio/events exec vitest run src/compat.test.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

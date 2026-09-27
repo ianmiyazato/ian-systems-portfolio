@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/payments.captured",
+  "title": "payments.captured",
+  "description": "A payment was captured.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "payments.captured"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "orderId",
+        "method",
+        "amountCents",
+        "installments"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "orderId": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "pix",
+            "card",
+            "pay-credit",
+            "pay-store"
+          ]
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installments": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/delivery.updated",
+  "title": "delivery.updated",
+  "description": "PROPOSED (PR #212): ETA as a delivery window, carrier as a stable id. Removes etaMinutes and carrier.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "delivery.updated"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "orderId",
+        "carrierId",
+        "status",
+        "eta"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "orderId": {
+          "type": "string"
+        },
+        "carrierId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "label-created",
+            "picked-up",
+            "in-transit",
+            "out-for-delivery",
+            "delivered",
+            "exception"
+          ]
+        },
+        "eta": {
+          "type": "object",
+          "required": [
+            "earliest",
+            "latest"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "earliest": {
+              "type": "string"
+            },
+            "latest": {
+              "type": "string"
+            }
+          }
+        },
+        "trackingNumber": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

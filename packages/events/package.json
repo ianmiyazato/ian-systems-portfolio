@@ -5,7 +5,10 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./domain": "./src/domain.ts"
+    "./domain": "./src/domain.ts",
+    "./compat": "./src/compat.ts",
+    "./contracts-report.json": "./contracts-report.json",
+    "./schemas/*": "./schemas/*"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -17,6 +20,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "@types/node": "22.18.6"
   }
 }

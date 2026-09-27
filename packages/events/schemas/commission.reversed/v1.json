@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/commission.reversed",
+  "title": "commission.reversed",
+  "description": "Unconfirmed commission reversed (return, fraud or coupon leak).",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "commission.reversed"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "code",
+        "creator",
+        "orderId",
+        "amountCents",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string"
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "return",
+            "fraud",
+            "leak"
+          ]
+        }
+      }
+    }
+  }
+}

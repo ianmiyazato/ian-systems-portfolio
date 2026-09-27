@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/commission.confirmed",
+  "title": "commission.confirmed",
+  "description": "Creator commission confirmed after the 30-day return window.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "commission.confirmed"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "creator",
+        "code",
+        "orderId",
+        "amountCents",
+        "reversed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "creator": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string"
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reversed": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
