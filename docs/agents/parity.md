@@ -1,0 +1,50 @@
+# Parity
+
+<!-- Generated from packages/routes/src/routes.manifest.ts. Regenerate: WRITE_PARITY=1 pnpm --filter @portfolio/routes test -->
+
+Every approved screen, the design board it is checked against, and its screenshot. "Checked" means the route was opened at 1440 × 900 in Chromium and compared with the board; the crawler (`tests/e2e/crawler.spec.ts`) separately proves every route renders its heading with zero console errors.
+
+| # | Route | Board | System | Release | Overlays | Checked | Screenshot |
+|---|---|---|---|---|---|---|---|
+| 1 | `/` | OV-home | Overview | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/overview/home.png` |
+| 2 | `/work/mare/languages` | OV-languages | Maré | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mare/mare-languages.png` |
+| 3 | `/system-design/mare` | SD-mare | Maré | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mare/system-design-mare.png` |
+| 4 | `/mare/ops/balcao` | BA-lanes | Balcão | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-lanes.png` |
+| 5 | `/mare/ops/balcao/pick/MR-904117` | BA-picking | Balcão | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-picking.png` |
+| 6 | `/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party` | BA-handover | Balcão | 0.1 | modal=handover sub=third-party | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-handover.png` |
+| 7 | `/mare/ops/balcao?modal=cutoff-plan&sub=why` | BA-cutoff | Balcão | 0.1 | modal=cutoff-plan sub=why | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-cutoff-plan.png` |
+| 8 | `/mare/ops/product-hub` | PH-catalog | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-catalog.png` |
+| 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | PH-detail | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-detail.png` |
+| 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | PH-agent-run | Product Hub | 0.1 | modal=agent-run sub=edit | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-agent-run.png` |
+| 11 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | PH-onboarding | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-onboarding.png` |
+| 12 | `/mare/ops/pay` | PY-applications | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-applications.png` |
+| 13 | `/mare/ops/pay/applications/AP-77118` | PY-detail | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-application-detail.png` |
+| 14 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | PY-decision | Pay | 0.1 | modal=decision sub=override | ✅ 2026-09-26 | `docs/screenshots/pay/pay-decision.png` |
+| 15 | `/mare/apps/pay` | PY-app | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-customer-app.png` |
+| 16 | `/mare/ops/circle` | CI-program | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-program.png` |
+| 17 | `/mare/ops/circle/rules/summer-swim` | CI-rules | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-rule-builder.png` |
+| 18 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | CI-leak | Circle | 0.1 | modal=leak sub=rotate | ✅ 2026-09-26 | `docs/screenshots/circle/circle-leak.png` |
+| 19 | `/mare/apps/circle` | CI-app | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-creator-app.png` |
+| 20 | `/mare/ops/mesh` | MS-topology | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-topology.png` |
+| 21 | `/mare/ops/mesh/partners/ligeiro-log` | MS-partner | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-partner.png` |
+| 22 | `/mare/ops/mesh/dlq?modal=replay&sub=transform` | MS-dlq | Mesh | 0.1 | modal=replay sub=transform | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-dlq-replay.png` |
+| 23 | `/mare/ops/mesh/invoices/MR-904117` | MS-invoices | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-invoice-chain.png` |
+| 24 | `/mare/apps/shop` | CS-app | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-app.png` |
+| 25 | `/mare/shop` | CS-site | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-site.png` |
+| 26 | `/atlas/welcome?step=2` | AT-onboarding | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-onboarding.png` |
+| 27 | `/atlas/pipeline` | AT-pipeline | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-pipeline.png` |
+| 28 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | AT-board | Atlas | 0.1 | drawer=parallax-pay sub=log-outcome | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-board.png` |
+| 29 | `/atlas/companies/parallax-pay` | AT-company | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-company.png` |
+| 30 | `/atlas/arena?modal=setup&prompt=payments-ledger` | AT-arena | Atlas | 0.1 | modal=setup | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-setup.png` |
+| 31 | `/atlas/arena/session/14` | AT-session | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-session.png` |
+| 32 | `/atlas/arena/sessions/14` | AT-feedback | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-feedback.png` |
+| 33 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | AT-transcript | Atlas | 0.1 | drawer=transcript | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-transcript.png` |
+| 34 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
+| 35 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
+| 36 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
+| 37 | `/pulse` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
+| 38 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
+| 39 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 40 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
+
+Parity: **40/40**.
