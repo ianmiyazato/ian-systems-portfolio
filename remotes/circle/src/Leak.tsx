@@ -1,4 +1,4 @@
-import { Banner, Layer, closeLayers, openLayer, useParam, useTween } from '@portfolio/remote-runtime';
+import { Banner, Layer, TraceLink, closeLayers, openLayer, recordAction, useParam, useTween } from '@portfolio/remote-runtime';
 import { useState } from 'preact/hooks';
 import { LEAK_BASELINE, leakUsage } from './data';
 
@@ -6,6 +6,7 @@ export function Leak({ code }: { code: string }) {
   const sub = useParam('sub');
   const grow = useTween(1, 900);
   const [done, setDone] = useState<string | null>(null);
+  const [trace, setTrace] = useState<string | null>(null);
   const [cap, setCap] = useState(25);
   const max = Math.max(...leakUsage);
   const newCode = `${code}-SOL`;
@@ -27,7 +28,7 @@ export function Leak({ code }: { code: string }) {
           </>
         }
       >
-        {done && <Banner tone="success" icon="✓" title="Done">{done}</Banner>}
+        {done && <Banner tone="success" icon="✓" title="Done" action={trace ? <TraceLink href={trace} /> : undefined}>{done}</Banner>}
         <figure class="cc-usage" data-anchor="cc-usage">
           <svg viewBox="0 0 420 150" role="img" aria-label={`Daily ${code} uses over 14 days; baseline about ${LEAK_BASELINE}, today ${leakUsage.at(-1)}`}>
             <line class="baseline" x1="0" x2="420" y1={130 - (LEAK_BASELINE / max) * 116} y2={130 - (LEAK_BASELINE / max) * 116} />
@@ -59,7 +60,7 @@ export function Leak({ code }: { code: string }) {
           onClose={() => closeLayers(['sub'])}
           width={460}
           anchor="cc-rotate"
-          footer={<button type="button" class="cc-btn primary wide" onClick={() => { closeLayers(['sub']); setDone(`${code} retired · ${newCode} is live with a cap of ${cap} uses a day. Mariana was notified.`); }}>Send and rotate</button>}
+          footer={<button type="button" class="cc-btn primary wide" onClick={() => { closeLayers(['sub']); setDone(`${code} retired · ${newCode} is live with a cap of ${cap} uses a day. Mariana was notified.`); setTrace(recordAction('circle', 'rotate code', `${code} → ${newCode} · cap ${cap}/day`, 'Bia')); }}>Send and rotate</button>}
         >
           <div class="cc-swap" data-anchor="cc-code-swap">
             <s>{code}</s><span aria-hidden="true">→</span><b>{newCode}</b>

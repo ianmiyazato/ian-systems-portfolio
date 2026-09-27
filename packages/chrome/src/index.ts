@@ -6,6 +6,7 @@ export { PortfolioBar, CommandPalette, DecisionLens };
 export * from './routes';
 export * from './decisions';
 export { emitUrlChange } from './shared';
+export { registerPaletteAction, paletteActions, type PaletteAction } from './actions';
 
 /** Idempotent: every zone calls this once on the client. */
 export function defineChrome() {

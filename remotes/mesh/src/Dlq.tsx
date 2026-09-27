@@ -1,4 +1,4 @@
-import { Banner, Layer, closeLayers, openLayer, useLocation, useSequence } from '@portfolio/remote-runtime';
+import { Banner, Layer, TraceLink, closeLayers, openLayer, recordAction, useLocation, useSequence } from '@portfolio/remote-runtime';
 import { useMemo, useState } from 'preact/hooks';
 import { dlq } from './data';
 
@@ -13,6 +13,7 @@ export default function transform(event) {
 export function Dlq() {
   const { params } = useLocation();
   const [result, setResult] = useState<string | null>(null);
+  const [trace, setTrace] = useState<string | null>(null);
   const remaining = result ? [] : dlq;
   return (
     <main class="ms-main">
@@ -20,7 +21,7 @@ export function Dlq() {
         <h1>dead-letter queue</h1>
         <button type="button" class="ms-btn primary" disabled={!remaining.length} onClick={() => openLayer({ modal: 'replay' })} data-anchor="ms-replay-button">dry-run replay</button>
       </header>
-      {result && <Banner tone="success" icon="✓" title={result} anchor="ms-replay-result">every message kept its idempotency key; consumers ignored the one duplicate.</Banner>}
+      {result && <Banner tone="success" icon="✓" title={result} anchor="ms-replay-result" action={trace ? <TraceLink href={trace} /> : undefined}>every message kept its idempotency key; consumers ignored the one duplicate.</Banner>}
       <section class="ms-panel" aria-labelledby="dlq-title" data-anchor="ms-dlq-table">
         <header><h2 id="dlq-title">{remaining.length} parked events</h2><span class="ms-muted">retries exhausted · oldest 46 min</span></header>
         <table class="ms-table">
@@ -29,7 +30,7 @@ export function Dlq() {
         </table>
         {!remaining.length && <p class="ms-muted ms-empty">dlq empty · nothing parked</p>}
       </section>
-      {params.get('modal') === 'replay' && <Replay onDone={(message) => { setResult(message); closeLayers(['modal', 'sub']); }} />}
+      {params.get('modal') === 'replay' && <Replay onDone={(message) => { setResult(message); setTrace(recordAction('mesh', 'replay dlq tracking.update', message, 'Rui')); closeLayers(['modal', 'sub']); }} />}
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import type { RemoteContext, ViewTable } from '@portfolio/remote-runtime';
-import { ViewRouter, openFeed, useWorldEvents } from '@portfolio/remote-runtime';
+import { TraceLink, ViewRouter, openFeed, useWorldEvents } from '@portfolio/remote-runtime';
 import type { CounterOrder } from '@portfolio/mocks';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 import { initialBoard, nextLiveOrder, reduce, type Action } from './board';
@@ -85,7 +85,7 @@ function Page({ ctx }: { ctx: RemoteContext }) {
 
   useEffect(() => {
     if (!board.toast) return;
-    const id = setTimeout(() => dispatch({ type: 'toast', message: null }), 4200);
+    const id = setTimeout(() => dispatch({ type: 'toast', message: null }), board.trace ? 8000 : 4200);
     return () => clearTimeout(id);
   }, [board.toast]);
 
@@ -97,7 +97,7 @@ function Page({ ctx }: { ctx: RemoteContext }) {
       <div class="ct-app">
         <TopBar basePath={ctx.basePath} />
         <ViewRouter remote="counter" basePath={ctx.basePath} views={views} label="Counter" />
-        {board.toast && <div class="ct-toast" role="status">{board.toast}</div>}
+        {board.toast && <div class="ct-toast" role="status">{board.toast}{board.trace && <TraceLink href={board.trace} />}</div>}
       </div>
     </CounterContext.Provider>
   );

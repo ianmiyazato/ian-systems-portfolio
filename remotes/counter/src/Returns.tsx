@@ -1,4 +1,4 @@
-import { AiSurface, Banner, Layer, Link, LiveControl, Tween, closeLayers, getWorld, openLayer, setParams, useAnnouncer, useDemoState, useLiveEvents, useLocation, useSequence } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Layer, Link, LiveControl, Tween, closeLayers, getWorld, openLayer, traceHref, setParams, useAnnouncer, useDemoState, useLiveEvents, useLocation, useSequence } from '@portfolio/remote-runtime';
 import { clock } from '@portfolio/world';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useCounter } from './context';
@@ -87,7 +87,7 @@ export function Returns() {
           )}
         </section>
 
-        {selected && state !== 'loading' && <ReturnDetail key={selected.returnId} item={selected} refunded={refunded.get(selected.returnId)?.method} receiptDown={state === 'error'} onRefund={(message) => act({ type: 'toast', message })} />}
+        {selected && state !== 'loading' && <ReturnDetail key={selected.returnId} item={selected} refunded={refunded.get(selected.returnId)?.method} receiptDown={state === 'error'} onRefund={(message, trace) => act({ type: 'toast', message, trace })} />}
       </div>
 
       {params.get('modal') === 'scan-receipt' && <ScanReceipt returnId={selected?.returnId ?? 'RT-12418'} />}
@@ -95,7 +95,7 @@ export function Returns() {
   );
 }
 
-function ReturnDetail({ item, refunded, receiptDown, onRefund }: { item: ReturnCase; refunded?: RefundMethod; receiptDown: boolean; onRefund: (message: string) => void }) {
+function ReturnDetail({ item, refunded, receiptDown, onRefund }: { item: ReturnCase; refunded?: RefundMethod; receiptDown: boolean; onRefund: (message: string, trace: string) => void }) {
   const { params } = useLocation();
   const receipt = item.receipt || params.get('receipt') === item.returnId;
   const [checked, setChecked] = useState<Record<Check, boolean>>({ tags: false, damage: item.reason === 'damaged', packaging: false });
@@ -106,12 +106,12 @@ function ReturnDetail({ item, refunded, receiptDown, onRefund }: { item: ReturnC
 
   const confirm = () => {
     const world = getWorld();
-    world.record({ topic: 'returns.refunded', key: item.returnId, payload: { returnId: item.returnId, orderId: item.orderId, store: HOME, method, amountCents: quote.amountCents, bonusCents: quote.bonusCents, installmentsReversed: quote.installmentsReversed, staff: 'Ana' } });
+    const refund = world.record({ topic: 'returns.refunded', key: item.returnId, payload: { returnId: item.returnId, orderId: item.orderId, store: HOME, method, amountCents: quote.amountCents, bonusCents: quote.bonusCents, installmentsReversed: quote.installmentsReversed, staff: 'Ana' } });
     if (quote.commissionReversalCents && item.code) {
       world.record({ topic: 'commission.reversed', key: item.code, payload: { code: item.code, creator: item.code, orderId: item.orderId, amountCents: quote.commissionReversalCents, reason: 'return' } });
     }
     const verb = method === 'exchange' ? `Exchange started for ${item.customer}` : `${money(quote.amountCents)} ${method === 'store-credit' ? 'store credit issued' : 'refunded'} to ${item.customer}`;
-    onRefund(`${verb}${quote.commissionReversalCents ? ` · ${item.code} commission reversed −${money(quote.commissionReversalCents)}` : ''} · event sent to Mesh`);
+    onRefund(`${verb}${quote.commissionReversalCents ? ` · ${item.code} commission reversed −${money(quote.commissionReversalCents)}` : ''} · event sent to Mesh`, traceHref(refund));
   };
 
   return (

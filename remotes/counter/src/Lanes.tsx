@@ -1,4 +1,4 @@
-import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow, useWorld } from '@portfolio/remote-runtime';
 import { clock } from '@portfolio/world';
 import { laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
@@ -34,6 +34,7 @@ export function Lanes() {
   return (
     <main class={`ct-main ${state === 'locked' ? 'is-locked' : ''}`} id="counter-lanes">
       <StateBanners state={state} />
+      <CarrierBanner now={now} />
       <section class="ct-head">
         <div>
           <h1 class="ct-title" data-anchor="ct-title">{state === 'loading' ? 'Loading orders…' : `${open} open orders`}</h1>
@@ -109,6 +110,17 @@ export function Lanes() {
       {modal === 'handover' && <Handover orderId={params.get('order') ?? 'MR-904112'} board={board} act={act} />}
       {modal === 'cutoff-plan' && <CutoffPlan act={act} />}
     </main>
+  );
+}
+
+/** Chaos → Counter: when the carrier's circuit opens, the counter says so and re-routes. */
+function CarrierBanner({ now }: { now: number }) {
+  const { world } = useWorld();
+  if (!world.isFaulted('carrier-outage', now)) return null;
+  return (
+    <Banner tone="risk" icon="!" title="Ligeiro Log is down · circuit open" anchor="ct-carrier-down" action={<a class="ct-secondary" href="/mare/ops/mesh/partners/ligeiro-log">Open in Mesh</a>}>
+      New deliveries go to Via Norte (18:30, +R$9.20 each). Orders already labeled for Ligeiro wait in the DLQ and replay when it recovers.
+    </Banner>
   );
 }
 

@@ -12,6 +12,7 @@
     "auth.scored": "BACKWARD",
     "returns.created": "FULL",
     "returns.refunded": "FULL",
-    "price.changed": "FULL"
+    "price.changed": "FULL",
+    "action.performed": "BACKWARD"
   }
 }

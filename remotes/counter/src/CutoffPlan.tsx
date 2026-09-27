@@ -1,4 +1,4 @@
-import { AiSurface, Layer, closeLayers, openLayer, useParam, useSequence } from '@portfolio/remote-runtime';
+import { AiSurface, Layer, closeLayers, openLayer, recordAction, useParam, useSequence } from '@portfolio/remote-runtime';
 import type { Action } from './board';
 
 const moves = [
@@ -20,7 +20,8 @@ export function CutoffPlan({ act }: { act: (action: Action) => void }) {
   const close = () => closeLayers(['modal', 'sub']);
   const apply = () => {
     close();
-    const run = () => act({ type: 'apply-plan' });
+    const trace = recordAction('counter', 'apply cutoff plan', '3 orders re-routed to keep 17:00', 'Ana');
+    const run = () => act({ type: 'apply-plan', trace });
     // Cards glide between lanes via shared view-transition names.
     const doc = document as Document & { startViewTransition?: (callback: () => Promise<void>) => unknown };
     if (doc.startViewTransition) doc.startViewTransition(() => new Promise<void>((resolve) => { run(); setTimeout(resolve, 30); }));

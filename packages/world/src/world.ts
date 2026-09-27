@@ -1,6 +1,7 @@
 import type { Topic } from '@portfolio/events/domain';
-import { eventsForMinute, type Conditions, type FaultId, type Scenario, type WorldEvent } from './generate';
+import { eventsForMinute, type Conditions, type Scenario, type WorldEvent } from './generate';
 import { DEFAULT_START, MINUTE, parseLocalTime } from './time';
+import type { FaultId } from './generate';
 
 export type Speed = 0 | 1 | 10 | 60;
 export const speeds: Array<Exclude<Speed, 0>> = [1, 10, 60];
@@ -34,6 +35,17 @@ const MAX_BATCH = 240;
 
 const tabId = () => Math.random().toString(36).slice(2, 10);
 
+/** Deploy #812 went out at 16:02 and halved the Orders DB pool: the portfolio opens mid-incident. */
+export const INCIDENT_START = parseLocalTime('16:02')!;
+const faultIds: FaultId[] = ['carrier-outage', 'db-pool', 'topic-lag', 'einvoice-fail', 'traffic-spike'];
+
+/** ?fault=none for a healthy world, ?fault=carrier-outage,db-pool to pin several (tests, screenshots). */
+export function faultsFrom(value: string | null): WorldState['faults'] {
+  if (value === 'none') return {};
+  const list = value ? value.split(',').filter((item): item is FaultId => faultIds.includes(item as FaultId)) : ['db-pool' as FaultId];
+  return Object.fromEntries(list.map((fault) => [fault, [{ since: INCIDENT_START }]]));
+}
+
 export function initialState(search = '', now = Date.now()): WorldState {
   const params = new URLSearchParams(search);
   const seed = Number(params.get('seed') ?? 42) || 42;
@@ -42,7 +54,7 @@ export function initialState(search = '', now = Date.now()): WorldState {
   return {
     seed,
     scenario: params.get('scenario') === 'black-friday' ? 'black-friday' : 'normal',
-    faults: {},
+    faults: faultsFrom(params.get('fault')),
     speed: speed === 10 || speed === 60 ? speed : 1,
     paused: params.get('live') === 'paused',
     anchorReal: now,
@@ -284,7 +296,7 @@ function loadActions(seed: number): WorldEvent[] {
 /** Reuse the world stored by another zone (full page loads between zones) unless the URL pins one. */
 export function restoreState(search: string, now = Date.now()): WorldState {
   const params = new URLSearchParams(search);
-  const pinned = ['seed', 't', 'speed', 'scenario', 'live'].some((key) => params.has(key));
+  const pinned = ['seed', 't', 'speed', 'scenario', 'live', 'fault'].some((key) => params.has(key));
   const fresh = initialState(search, now);
   if (pinned) return fresh;
   try {

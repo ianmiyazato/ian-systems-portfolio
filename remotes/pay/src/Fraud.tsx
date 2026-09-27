@@ -36,7 +36,7 @@ export function Fraud() {
         <LiveControl anchor="py-fraud-live" />
       </header>
       {degraded && (
-        <Banner tone="warn" icon="!" title={`Scoring p95 ${p95} ms · SLO ${SLO_MS} ms`} anchor="py-fraud-degraded">
+        <Banner tone="warn" icon="!" title={`Scoring p95 ${p95} ms · SLO ${SLO_MS} ms`} anchor="py-fraud-degraded" action={<a class="py-btn" href="/observability">Open in Tidewatch</a>}>
           Database pool saturation is slowing feature lookups. Authorizations above the timeout fall back to rules-only scoring with step-up, so nothing is approved blind.
         </Banner>
       )}
