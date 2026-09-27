@@ -3,7 +3,7 @@
 import { ZLink } from '@/components/zone-link';
 import { usePlan } from './plan';
 
-const tabs = [['Pipeline', '/atlas/pipeline'], ['Arena', '/atlas/arena'], ['Academy', '/atlas/academy/designing-for-10x']] as const;
+const tabs = [['Pipeline', '/atlas/pipeline'], ['Arena', '/atlas/arena'], ['Academy', '/atlas/academy']] as const;
 
 export function AtlasHeader({ active }: { active: 'Pipeline' | 'Arena' | 'Academy' | 'Welcome' }) {
   const [plan] = usePlan();
