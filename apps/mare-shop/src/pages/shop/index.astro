@@ -1,11 +1,15 @@
 ---
 import '@portfolio/tokens/fonts/consumer';
 import '../../styles/shop.css';
+import '../../styles/home.css';
 import Zone from '../../layouts/Zone.astro';
 import Garment from '../../components/Garment.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import BagDrawer from '../../components/BagDrawer.astro';
-import { brl, installments, products } from '../../lib/data';
+import Billboard from '../../components/Billboard.astro';
+import Row from '../../components/Row.astro';
+import Stories from '../../components/Stories.astro';
+import { products, rows } from '../../lib/data';
 ---
 <Zone title="Maré · Linen, sun and salt." description="Editorial shopping with local stock, creator context and explainable styling." context="Maré · Site">
   <main class="cs">
@@ -17,21 +21,8 @@ import { brl, installments, products } from '../../lib/data';
       <p class="cs-banner info" data-state-only="locked" hidden data-anchor="cs-locked">Summer 27 opens to Maré members first · <a href="#">sign in</a> to shop the drop today.</p>
     </div>
 
-    <section class="cs-hero" data-anchor="cs-hero">
-      <div class="cs-shapes" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div>
-      <span class="cs-kicker">Summer 27 · the editorial edit</span>
-      <h1>Linen, sun <br />and salt.</h1>
-      <p>Quiet layers for bright days, with stock at the store around the corner and Maré Pay in every choice.</p>
-      <div class="cs-hero-actions">
-        <a class="cs-btn primary" href="#picked">Shop the edit</a>
-        <a class="cs-btn" href="/mare/shop?ask=easy%20layers%20for%20a%20humid%20weekend#stylist" data-open="ask=easy layers for a humid weekend">Ask the stylist</a>
-      </div>
-      <aside class="cs-bubble ai-surface" data-anchor="cs-stylist-bubble" aria-label="Simulated AI stylist">
-        <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span></header>
-        <p class="ai-body">“Easy layers for a humid weekend?” I'd start with the natural linen shirt: 2 left at Vila Nova, ready for pickup today.</p>
-        <a class="ai-approve cs-bubble-cta" href="/mare/shop?ask=easy%20layers%20for%20a%20humid%20weekend#stylist" data-open="ask=easy layers for a humid weekend">See 4 matches</a>
-      </aside>
-    </section>
+    <Stories />
+    <Billboard />
 
     <section class="cs-results" id="stylist" hidden data-anchor="cs-results" aria-labelledby="results-title">
       <header>
@@ -40,7 +31,7 @@ import { brl, installments, products } from '../../lib/data';
       </header>
       <div class="cs-results-grid">
         {products.filter((product) => product.why).map((product, index) => (
-          <a class="cs-match" href={`/mare/shop/p/${product.slug}`} style={`--i:${index}`}>
+          <a class="cs-match" href={`/mare/shop/products/${product.slug}`} style={`--i:${index}`}>
             <Garment garment={product.garment} swatch={product.swatch} label={product.name} />
             <div><strong>{product.name}</strong><small>{product.why}</small></div>
             <b>{[0.93, 0.89, 0.84, 0.81][index]?.toFixed(2)}</b>
@@ -56,33 +47,15 @@ import { brl, installments, products } from '../../lib/data';
       </aside>
     </section>
 
-    <section class="cs-picked" id="picked" aria-labelledby="picked-title" data-anchor="cs-picked">
-      <header>
-        <span class="cs-kicker">Picked for you</span>
-        <h2 id="picked-title">Grounded in your size, your store and what you've loved.</h2>
-      </header>
-      <div class="cs-grid" data-state-hide="loading empty">
-        {products.map((product, index) => (
-          <a class="cs-card" href={`/mare/shop/p/${product.slug}`} data-anchor={index === 0 ? 'cs-card' : undefined} style={`--i:${index}`}>
-            <div class="cs-card-media">
-              <Garment garment={product.garment} swatch={product.swatch} label={`${product.name}, ${product.colorName}`} transitionName={`product-${product.slug}`} />
-              <ul class="cs-badges">{product.badges.map((badge) => <li class={`b-${badge.toLowerCase().replace(/\s/g, '-')}`}>{badge}</li>)}{product.creator && <li class="creator">{product.creator}</li>}</ul>
-            </div>
-            <h3>{product.name}</h3>
-            <p class="cs-price"><b>{brl(product.price)}</b><span>{installments(product.price)}</span></p>
-            <p class="cs-stock">{product.stock}</p>
-          </a>
-        ))}
-      </div>
-      <div class="cs-grid" data-state-only="loading" hidden aria-hidden="true">
-        {products.map(() => <div class="cs-card-sk"><div class="cs-card-media skeleton"></div><p class="skeleton cs-sk"></p><p class="skeleton cs-sk short"></p></div>)}
-      </div>
+    <script is:inline>document.documentElement.classList.add('cs-progressive');</script>
+    <div class="cs-rows">
+      {rows.map((row, index) => <Row row={row} order={index} />)}
       <div class="cs-empty" data-state-only="empty" hidden data-anchor="cs-empty">
         <h3>Nothing matches “wool coat” this summer</h3>
         <p>Summer 27 is linen and cotton. Here's what's closest in warmth, or ask the stylist for something else.</p>
         <a class="cs-btn" href="/mare/shop">See the full edit</a>
       </div>
-    </section>
+    </div>
 
     <BagDrawer />
   </main>
@@ -114,4 +87,5 @@ import { brl, installments, products } from '../../lib/data';
     onUrlChange(render);
     render();
   </script>
+  <script src="../../scripts/home.ts"></script>
 </Zone>

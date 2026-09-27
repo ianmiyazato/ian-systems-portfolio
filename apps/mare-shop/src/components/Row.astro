@@ -1,0 +1,37 @@
+---
+// A hover-expand row: scroll-snap track, arrows, and cards that grow and reveal quick actions after hover intent.
+import Garment from './Garment.astro';
+import { brl, installments, type Row } from '../lib/data';
+interface Props { row: Row; order: number }
+const { row, order } = Astro.props;
+---
+<section class="cs-row" id={row.id} aria-labelledby={`row-${row.id}`} data-row={order} data-anchor={row.anchor}>
+  <header>
+    <div><span class="cs-kicker">{row.kicker}</span><h2 id={`row-${row.id}`}>{row.title}</h2></div>
+    <div class="cs-row-nav">
+      <button type="button" data-row-scroll="-1" aria-label={`Scroll ${row.title} back`}>‹</button>
+      <button type="button" data-row-scroll="1" aria-label={`Scroll ${row.title} forward`}>›</button>
+    </div>
+  </header>
+  <ul class="cs-track" data-state-hide={row.id === 'picked' ? 'empty' : undefined}>
+    {row.items.map(({ product, note, progress }, index) => (
+      <li class="cs-tile" style={`--i:${index}`}>
+        <a class={row.id === 'picked' ? 'cs-card' : undefined} href={`/mare/shop/products/${product.slug}`} data-anchor={row.id === 'picked' && index === 0 ? 'cs-card' : undefined}>
+          <div class="cs-tile-media">
+            <Garment garment={product.garment} swatch={product.swatch} label={`${product.name}, ${product.colorName}`} transitionName={row.id === 'picked' ? `product-${product.slug}` : undefined} />
+            {progress !== undefined && <span class="cs-tile-progress" aria-hidden="true"><i style={`width:${progress * 100}%`}></i></span>}
+          </div>
+          <h3>{product.name}</h3>
+          <p class="cs-price"><b>{brl(product.price)}</b><span>{installments(product.price)}</span></p>
+          <p class="cs-tile-note">{note}</p>
+        </a>
+        <div class="cs-tile-actions">
+          <button type="button" class="cs-quick primary" data-open="drawer=bag">Add to bag</button>
+          <button type="button" class="cs-quick" aria-pressed="false" data-save>Save</button>
+          <span class="cs-quick-sizes" aria-label="Sizes in stock">{product.sizes.slice(0, 4).join(' · ')}</span>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <ul class="cs-track cs-track-sk" aria-hidden="true">{row.items.slice(0, 5).map(() => <li class="cs-tile"><div class="cs-tile-media skeleton"></div><p class="skeleton cs-sk-title"></p><p class="skeleton cs-sk-line"></p><p class="skeleton cs-sk-line short"></p></li>)}</ul>
+</section>

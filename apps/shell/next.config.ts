@@ -26,7 +26,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: '/mare/ops/balcao', destination: '/mare/ops/counter', permanent: true },
-      { source: '/mare/ops/balcao/:path*', destination: '/mare/ops/counter/:path*', permanent: true }
+      { source: '/mare/ops/balcao/:path*', destination: '/mare/ops/counter/:path*', permanent: true },
+      { source: '/mare/shop/p/:slug', destination: '/mare/shop/products/:slug', permanent: true }
     ];
   },
   async rewrites() {

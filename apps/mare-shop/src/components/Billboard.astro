@@ -1,0 +1,49 @@
+---
+// Billboard hero: a muted, looping CSS/SVG "preview" (no video bytes), a progress bar and two calls to action.
+---
+<section class="cs-billboard" data-anchor="cs-hero" data-billboard>
+  <div class="cs-bb-copy">
+    <span class="cs-kicker">Summer 27 · the editorial edit · 18 pieces</span>
+    <h1>Linen, sun <br />and salt.</h1>
+    <p>Quiet layers for bright days, with stock at the store around the corner and Maré Pay in every choice.</p>
+    <div class="cs-hero-actions">
+      <a class="cs-btn primary" href="#picked">Shop the edit</a>
+      <a class="cs-btn" href="/mare/shop?ask=easy%20layers%20for%20a%20humid%20weekend#stylist" data-open="ask=easy layers for a humid weekend">Ask the stylist</a>
+    </div>
+  </div>
+
+  <div class="cs-bb-preview" data-anchor="cs-billboard-preview">
+    <svg class="cs-bb-scene" viewBox="0 0 640 420" role="img" aria-label="Preview: linen pieces drying on a line by the sea at sunset">
+      <circle class="bb-sun" cx="560" cy="210" r="62" />
+      <g class="bb-sea">
+        <path d="M-40 300 Q 40 284 120 300 T 280 300 T 440 300 T 600 300 T 760 300 V 420 H -40 Z" />
+        <path class="bb-sea-2" d="M-40 330 Q 40 316 120 330 T 280 330 T 440 330 T 600 330 T 760 330 V 420 H -40 Z" />
+      </g>
+      <path class="bb-line" d="M40 88 Q 320 138 600 88" />
+      <g class="bb-piece p1" transform="translate(200 102)"><path d="M-40 0 L-22 -6 L-8 6 L8 6 L22 -6 L40 0 L48 34 L30 38 L28 110 L-28 110 L-30 38 L-48 34 Z" /></g>
+      <g class="bb-piece p2" transform="translate(350 116)"><path d="M-30 0 L30 0 L42 150 L4 150 L0 60 L-4 150 L-42 150 Z" /></g>
+      <g class="bb-piece p3" transform="translate(495 106)"><path d="M-24 0 L24 0 L30 36 L52 150 L-52 150 L-30 36 Z" /></g>
+    </svg>
+    <div class="cs-bb-meta">
+      <span class="cs-bb-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" /><path d="M11 6l4 4M15 6l-4 4" /></svg>Preview · muted</span>
+      <button type="button" class="cs-bb-pause" data-bb-pause aria-pressed="false">Pause preview</button>
+    </div>
+    <div class="cs-bb-progress" aria-hidden="true"><i></i></div>
+    <aside class="cs-bubble ai-surface" data-anchor="cs-stylist-bubble" aria-label="Simulated AI stylist">
+      <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span></header>
+      <p class="ai-body">“Easy layers for a humid weekend?” I'd start with the natural linen shirt: 2 left at Vila Nova, ready for pickup today.</p>
+      <a class="ai-approve cs-bubble-cta" href="/mare/shop?ask=easy%20layers%20for%20a%20humid%20weekend#stylist" data-open="ask=easy layers for a humid weekend">See 4 matches</a>
+    </aside>
+  </div>
+</section>
+
+<script>
+  // WCAG 2.2.2: anything that moves for more than five seconds can be paused.
+  const billboard = document.querySelector<HTMLElement>('[data-billboard]');
+  const button = billboard?.querySelector<HTMLButtonElement>('[data-bb-pause]');
+  button?.addEventListener('click', () => {
+    const paused = billboard!.classList.toggle('is-paused');
+    button.setAttribute('aria-pressed', String(paused));
+    button.textContent = paused ? 'Play preview' : 'Pause preview';
+  });
+</script>
