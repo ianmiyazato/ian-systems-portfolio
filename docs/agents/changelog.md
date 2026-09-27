@@ -4,6 +4,9 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-27 · `feat(copy)`: US English everywhere (catalog names, US letter sizes, `R$1,249.90`, month-first dates, Maré Pay Credit/Store, ugly-but-English partner fields `trk_no`/`stat_cd`/`occ_dt`, US spellings) and `@portfolio/quality` copy lint in CI (Portuguese words, stray diacritics, pt-BR formatting, day-first dates, British spellings).
+- 2026-09-27 · `fix(world)`: actions recorded in the same millisecond keep distinct ids (a refund's commission reversal was sometimes dropped).
+
 - 2026-09-27 · `feat(product-hub)`: Availability (available-to-promise per channel drifting live from stock events, safety-stock shading, rebalance with an optimistic update and a 10-second undo, allocation agent, oversold variation), Imports (row-by-row feed jobs with live progress, error drawer with suggested fixes that become seller mappings, failed variation) and Audit (AI audit log with outcomes measured later and a "How this was made" drawer: sources, tool calls, model route, eval score, tokens, simulated cost); product detail tabs now render their own sections; approving a price records `price.changed`; Product Hub copy and data move to US English. The crawler's pending list is empty: every nav item in every zone is a real screen.
 
 - 2026-09-27 · `feat(mesh)`: Events (live Kafka-style tail with partition · offset, key search that Counter's "View event in Mesh" lands on, recorded actions highlighted, payload drawer with schema version and consumers) and Contracts (registry from the generated report, PR #212 diff for `delivery.updated` v3 blocked by CI, breaking vs safe consumers, AI expand → migrate → contract plan re-checked live in the browser).
