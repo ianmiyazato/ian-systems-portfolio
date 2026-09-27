@@ -27,8 +27,8 @@ export function PriceChart({ price, sell, forecast, proposed }: PriceChartProps)
   return (
     <svg class="ph-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Price versus sell-through over 12 weeks with the agent's 5-week forecast">
       {[0, 1, 2, 3].map((row) => <line key={row} class="grid" x1="40" x2={width - 20} y1={30 + row * 53} y2={30 + row * 53} />)}
-      <text x="0" y="34" class="axis">R$ 280</text>
-      <text x="0" y={height - 26} class="axis">R$ 180</text>
+      <text x="0" y="34" class="axis">R$280</text>
+      <text x="0" y={height - 26} class="axis">R$180</text>
       <path class="price draw" d={pricePath} />
       <path class="proposed draw" d={proposedPath} />
       <path class="sell draw" d={sellPath} />

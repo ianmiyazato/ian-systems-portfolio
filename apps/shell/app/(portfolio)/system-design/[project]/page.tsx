@@ -35,7 +35,7 @@ export default async function SystemDesignPage({ params }: Props) {
       <SystemDesign arch={arch} />
       <section className="sd-metrics" data-anchor="sd-metrics" aria-label="Before and after">
         {arch.metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
-        <p className="note">Before → after, measured on the real systems this fictitious design is modelled on.</p>
+        <p className="note">Before → after, measured on the real systems this fictitious design is modeled on.</p>
       </section>
     </main>
   );

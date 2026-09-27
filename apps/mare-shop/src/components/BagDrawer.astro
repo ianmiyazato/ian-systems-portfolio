@@ -1,7 +1,7 @@
 ---
 import Garment from './Garment.astro';
 import { brl, installments, productBySlug } from '../lib/data';
-const items = [productBySlug('camisa-linho-natural'), productBySlug('calca-costa-pedra')];
+const items = [productBySlug('natural-linen-shirt'), productBySlug('stone-wide-leg-pants')];
 const total = items.reduce((sum, item) => sum + item.price, 0);
 ---
 <div class="cs-layer" data-layer="drawer=bag" data-closes="drawer" hidden>
@@ -14,7 +14,7 @@ const total = items.reduce((sum, item) => sum + item.price, 0);
           <li><Garment garment={item.garment} swatch={item.swatch} label={item.name} /><div><strong>{item.name}</strong><small>{item.colorName} · M · {item.stock}</small></div><b>{brl(item.price)}</b></li>
         ))}
       </ul>
-      <div class="cs-fulfil" data-anchor="cs-fulfilment">
+      <div class="cs-fulfill" data-anchor="cs-fulfillment">
         <p><b>Pick up today</b> at Shopping Vila Nova · ready by 18:00</p>
         <p class="muted">or delivery by Rota Sul Express · tomorrow</p>
       </div>

@@ -17,13 +17,13 @@ export function Program() {
   return (
     <main class="cc-main">
       <section class="cc-hero" data-anchor="cc-hero">
-        <h1>318 creators sold <em>R$ {total.toFixed(1).replace('.', ',')}M</em> this month</h1>
+        <h1>318 creators sold <em>R${total.toFixed(1)}M</em> this month</h1>
         <span class="cc-sticker big" aria-hidden="true">summer drop ✺</span>
         <p>Attribution, returns and payouts in one place. Commissions confirm 30 days after delivery, so a return never becomes a clawback.</p>
       </section>
 
       {state === 'contract-pending' && <Banner tone="warn" icon="✎" title="4 creators have a contract pending" anchor="cc-contract" action={<button type="button" class="cc-btn">Resend contracts</button>}>Their sales are attributed and commissions accrue, but payouts wait for a signature.</Banner>}
-      {state === 'payout-failed' && <Banner tone="risk" icon="!" title="Payout failed · João M. · R$ 6.700" anchor="cc-payout-failed" action={<button type="button" class="cc-btn primary">Retry payout</button>}>The bank rejected the Pix key. We asked João to confirm it in the app; retrying uses the same idempotency key, so he can't be paid twice.</Banner>}
+      {state === 'payout-failed' && <Banner tone="risk" icon="!" title="Payout failed · Joao M. · R$6,700" anchor="cc-payout-failed" action={<button type="button" class="cc-btn primary">Retry payout</button>}>The bank rejected the Pix key. We asked Joao to confirm it in the app; retrying uses the same idempotency key, so he can't be paid twice.</Banner>}
       {state === 'error' && <Banner tone="risk" icon="!" title="Attribution service delayed · numbers as of 15:40" anchor="cc-error">Orders are still recorded; commission totals catch up when the stream recovers.</Banner>}
       {state === 'offline' && <Banner tone="warn" icon="↯" title="You're offline · rule edits are saved as drafts" anchor="cc-offline" />}
       {state === 'locked' && <Banner tone="info" icon="i" title="Payout week · rules are frozen until Friday 18:00" anchor="cc-locked">Changing rates while payouts calculate would make receipts disagree with payments.</Banner>}
@@ -68,7 +68,7 @@ export function Program() {
         </AiSurface>
 
         <section class="cc-calendar" aria-labelledby="cal-title" data-anchor="cc-calendar">
-          <header><h2 id="cal-title">Campaign week · 22–28 Sep</h2></header>
+          <header><h2 id="cal-title">Campaign week · Sep 22–28</h2></header>
           <ol>
             {week.map((day) => (
               <li key={day.day} class={day.date === 26 ? 'today' : ''}>
@@ -80,8 +80,8 @@ export function Program() {
         </section>
 
         <div class="cc-tiles" data-anchor="cc-summary">
-          <div><span>Pending returns</span><strong>R$ 184k</strong><small>settle after 30 days</small></div>
-          <div><span>Payout Friday</span><strong>R$ 211k</strong><small>{state === 'payout-failed' ? '1 failed · retrying' : '309 creators'}</small></div>
+          <div><span>Pending returns</span><strong>R$184k</strong><small>settle after 30 days</small></div>
+          <div><span>Payout Friday</span><strong>R$211k</strong><small>{state === 'payout-failed' ? '1 failed · retrying' : '309 creators'}</small></div>
           <div><span>New creators</span><strong>12</strong><small>this week</small></div>
         </div>
       </div>

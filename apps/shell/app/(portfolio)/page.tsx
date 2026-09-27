@@ -24,7 +24,7 @@ export default function Home() {
     <main className="home">
       <section className="home-hero" data-anchor="home-hero">
         <div className="home-hero-copy">
-          <span className="eyebrow">Backend depth · product judgement · frontend craft</span>
+          <span className="eyebrow">Backend depth · product judgment · frontend craft</span>
           <h1>
             <span>I build the core platform</span> <em>and the product people touch</em> <span>on top of it.</span>
           </h1>

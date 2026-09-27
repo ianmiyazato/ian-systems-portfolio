@@ -38,9 +38,9 @@ export const summerSwim: Rule = {
 };
 
 export const sampleOrder: LineItem[] = [
-  { name: 'Maiô recorte', price: 259, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré' },
-  { name: 'Saída de praia linho', price: 199, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré' },
-  { name: 'Canga estampada', price: 89, collection: 'Swim · Summer 27', channel: 'Marketplace', seller: 'Casa Ribeira' },
-  { name: 'Camisa linho natural', price: 249, collection: 'Linen · Summer 27', channel: 'Site', seller: 'Maré' },
-  { name: 'Chinelo tiras', price: 119, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré', returned: true }
+  { name: 'Cutout one-piece swimsuit', price: 259, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré' },
+  { name: 'Linen beach cover-up', price: 199, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré' },
+  { name: 'Printed beach sarong', price: 89, collection: 'Swim · Summer 27', channel: 'Marketplace', seller: 'Casa Ribeira' },
+  { name: 'Natural linen shirt', price: 249, collection: 'Linen · Summer 27', channel: 'Site', seller: 'Maré' },
+  { name: 'Strappy flip-flops', price: 119, collection: 'Swim · Summer 27', channel: 'Site', seller: 'Maré', returned: true }
 ];

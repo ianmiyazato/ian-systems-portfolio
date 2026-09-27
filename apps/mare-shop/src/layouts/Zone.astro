@@ -4,7 +4,7 @@ import '@portfolio/overlays/overlays.css';
 import '@portfolio/ai-surface/ai-surface.css';
 
 interface Props { title: string; description: string; context: string; theme?: string; lang?: string }
-const { title, description, context, theme = 'consumer', lang = 'pt-BR' } = Astro.props;
+const { title, description, context, theme = 'consumer', lang = 'en' } = Astro.props;
 ---
 <!doctype html>
 <html lang={lang} data-theme={theme} data-state="live">

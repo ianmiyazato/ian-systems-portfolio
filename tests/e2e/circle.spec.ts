@@ -13,9 +13,9 @@ test.describe('Circle', () => {
 
   test('rule builder receipt recalculates with the rate', async ({ page }) => {
     await page.goto('/mare/ops/circle/rules/summer-swim');
-    await expect(page.locator('.cc-receipt footer strong')).toHaveText('R$ 60,74');
+    await expect(page.locator('.cc-receipt footer strong')).toHaveText('R$60.74');
     await page.getByLabel('Commission rate').fill('12');
-    await expect(page.locator('.cc-receipt footer strong')).toHaveText('R$ 69,90');
+    await expect(page.locator('.cc-receipt footer strong')).toHaveText('R$69.90');
   });
 
   test('no-sales and payout-failed variations', async ({ page }) => {

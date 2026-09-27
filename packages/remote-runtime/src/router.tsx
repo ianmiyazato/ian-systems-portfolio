@@ -27,7 +27,7 @@ export function useParam(key: string): string | null {
 
 type LinkProps = Omit<JSX.HTMLAttributes<HTMLAnchorElement>, 'href'> & { href: string; children?: ComponentChildren; replace?: boolean };
 
-/** In-zone navigation without a reload; modified clicks keep native behaviour. */
+/** In-zone navigation without a reload; modified clicks keep native behavior. */
 export function Link({ href, children, replace, ...rest }: LinkProps) {
   return (
     <a

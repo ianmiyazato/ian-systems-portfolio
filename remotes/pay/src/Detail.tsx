@@ -181,7 +181,7 @@ export function DeclineLetter() {
     <section class="py-letter" aria-labelledby="letter-title" data-anchor="py-letter">
       <header><span class="py-pill decline">Declined · AP-77090</span><span class="py-muted">letter preview · sent in the app and by email</span></header>
       <h2 id="letter-title">About your Maré Pay application</h2>
-      <p>Olá Otávio, we couldn't approve a Maré Pay card this time. The main reasons were:</p>
+      <p>Hi Otavio, we couldn't approve a Maré Pay card this time. The main reasons were:</p>
       <ol><li>Several recent credit inquiries (3 in the last 30 days).</li><li>High use of existing credit limits.</li><li>Short credit history with Maré.</li></ol>
       <p>You can apply again in 90 days, or ask us to review this decision with a person. This decision did not use your gender, age, address region or any protected attribute.</p>
     </section>

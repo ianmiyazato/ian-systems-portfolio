@@ -8,7 +8,7 @@ export type RemoteContext = {
   /** "page" renders full chrome; "tile" renders a compact preview on the host index. */
   mode: 'page' | 'tile';
   environment: Environment;
-  locale: 'pt-BR';
+  locale: 'en-US';
   data: { mode: 'local' | 'supabase'; supabaseUrl?: string; supabaseKey?: string };
   hostVersion: string;
 };

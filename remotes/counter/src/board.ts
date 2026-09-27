@@ -27,8 +27,8 @@ export function reduce(board: Board, action: Action): Board {
         ...board,
         orders: board.orders.map((order) => {
           if (order.id === 'MR-904121') return { ...order, lane: 'picking', sla: 'Luiza picking · cutoff 17:00 kept' };
-          if (order.id === 'MR-904124') return { ...order, lane: 'picking', sla: 'Otávio picking · cutoff 17:00 kept' };
-          if (order.id === 'MR-904115') return { ...order, sla: 'Via Norte 18:30 · +R$ 9,20' };
+          if (order.id === 'MR-904124') return { ...order, lane: 'picking', sla: 'Otavio picking · cutoff 17:00 kept' };
+          if (order.id === 'MR-904115') return { ...order, sla: 'Via Norte 18:30 · +R$9.20' };
           return order;
         }),
         toast: 'Plan applied · 3 orders re-routed · audit event recorded'

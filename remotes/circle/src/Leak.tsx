@@ -35,14 +35,14 @@ export function Leak({ code }: { code: string }) {
               const height = (value / max) * 116 * grow;
               return <rect key={index} class={value > LEAK_BASELINE * 1.8 ? 'spike' : ''} x={index * 30 + 4} width="22" y={130 - height} height={height} rx="7" />;
             })}
-            <text x="4" y="146">13 Sep</text><text x="370" y="146">today</text>
+            <text x="4" y="146">Sep 13</text><text x="370" y="146">today</text>
           </svg>
           <figcaption>Daily uses · dashed line is the 14-day baseline</figcaption>
         </figure>
         <div class="cc-stats" data-anchor="cc-leak-stats">
           <div><span>Uses today</span><strong>76</strong><small>3.8× baseline</small></div>
           <div><span>No creator session</span><strong>71%</strong><small>from a coupon aggregator</small></div>
-          <div><span>Commission at risk</span><strong>R$ 2.3k</strong><small>unconfirmed</small></div>
+          <div><span>Commission at risk</span><strong>R$2.3k</strong><small>unconfirmed</small></div>
         </div>
         <section class="ai-surface ai-inline" aria-label="Simulated AI explanation" data-anchor="cc-leak-why">
           <header class="ai-head"><span class="ai-spark" aria-hidden="true" /><span class="ai-badge">Simulated AI</span><span class="ai-meta">confidence 0.89</span></header>
@@ -70,7 +70,7 @@ export function Leak({ code }: { code: string }) {
           </label>
           <div class="cc-chat" data-anchor="cc-message">
             <span class="cc-avatar small" style={{ '--hue': 2 }}>ML</span>
-            <p class="cc-bubble">Oi Mari! Seu código {code} vazou num site de cupons, então criamos o <b>{newCode}</b> pra você. Suas vendas reais continuam contando normalmente ♥</p>
+            <p class="cc-bubble">Hi Mari! Your code {code} leaked on a coupon site, so we made <b>{newCode}</b> just for you. Your real sales keep counting as usual ♥</p>
           </div>
           <p class="cc-note">Existing orders with {code} still pay out after the return window; only new uses switch codes.</p>
         </Layer>

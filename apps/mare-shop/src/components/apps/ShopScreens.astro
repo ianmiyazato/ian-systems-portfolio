@@ -4,7 +4,7 @@ import Track from './Track.astro';
 import { brl, installments, productBySlug, products } from '../../lib/data';
 interface Props { start: number }
 const { start } = Astro.props;
-const shirt = productBySlug('camisa-linho-natural');
+const shirt = productBySlug('natural-linen-shirt');
 ---
 <Track start={start} labels={['home', 'product', 'order tracking']}>
   <div class="screen">

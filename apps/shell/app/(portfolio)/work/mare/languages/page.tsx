@@ -10,7 +10,7 @@ import { ZLink } from '@/components/zone-link';
 export const metadata: Metadata = { title: 'Five design languages', description: 'Five Maré systems, five users, five design languages on one token contract.' };
 
 const systems = [
-  { theme: 'counter', name: 'Counter', user: 'Store staff, standing, mid-conversation', word: 'Pronto!', motion: 'Snappy pops · scan line · progress ring', density: 'Low · 56 px targets · one action per card', why: 'A tablet at a busy counter needs big, obvious next steps.', href: '/mare/ops/counter' },
+  { theme: 'counter', name: 'Counter', user: 'Store staff, standing, mid-conversation', word: 'Ready!', motion: 'Snappy pops · scan line · progress ring', density: 'Low · 56 px targets · one action per card', why: 'A tablet at a busy counter needs big, obvious next steps.', href: '/mare/ops/counter' },
   { theme: 'product-hub', name: 'Product Hub', user: 'HQ merchandisers at a desk', word: 'Margin 42%', motion: 'Almost none · charts draw once', density: 'High · 13 px tables · hairlines', why: 'Comparing hundreds of SKUs rewards density and stillness.', href: '/mare/ops/product-hub' },
   { theme: 'pay', name: 'Pay', user: 'Credit analysts making careful calls', word: '588', motion: 'Slow sweeps · card float · shine', density: 'Medium · soft 16 px cards', why: 'Credit decisions should feel calm, deliberate and explainable.', href: '/mare/ops/pay' },
   { theme: 'circle', name: 'Circle', user: 'Partnership managers and creators', word: 'Oba!', motion: 'Bouncy · wiggling stickers', density: 'Medium · 24 px radii · pills', why: 'A creator program should feel like the creators it serves.', href: '/mare/ops/circle' },
@@ -31,7 +31,7 @@ export default function Languages() {
       <header className="langs-head" data-anchor="langs-head">
         <span className="eyebrow">Maré · design system</span>
         <h1>Five systems, five users, five design languages.</h1>
-        <p>Each Maré team designs for a different person in a different posture. They share a token contract, behaviour and trust patterns, not a look.</p>
+        <p>Each Maré team designs for a different person in a different posture. They share a token contract, behavior and trust patterns, not a look.</p>
       </header>
       <div className="lang-board" data-anchor="lang-board">
         {systems.map((system) => {

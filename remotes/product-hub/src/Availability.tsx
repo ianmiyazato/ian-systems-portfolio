@@ -84,7 +84,7 @@ export function Availability() {
         </div>
         <LiveControl anchor="ph-availability-live" />
       </div>
-      {state === 'oversold' && <Banner tone="risk" icon="!" title="App oversold 3 units of Linen midi dress · M" anchor="ph-oversold" action={<button type="button" class="ph-btn" onClick={() => openLayer({ modal: 'rebalance', sku: 'MR-18511' })}>Rebalance</button>}>The evening peak drained app allocation faster than the safety stock assumed. Customers were offered backorder with a date; nothing was cancelled.</Banner>}
+      {state === 'oversold' && <Banner tone="risk" icon="!" title="App oversold 3 units of Linen midi dress · M" anchor="ph-oversold" action={<button type="button" class="ph-btn" onClick={() => openLayer({ modal: 'rebalance', sku: 'MR-18511' })}>Rebalance</button>}>The evening peak drained app allocation faster than the safety stock assumed. Customers were offered backorder with a date; nothing was canceled.</Banner>}
       {state === 'error' && <Banner tone="risk" icon="!" title="Allocation service unreachable · showing the last snapshot (16:02)" anchor="ph-availability-error">Checkout keeps checking inventory directly, so no channel can oversell while this is stale.</Banner>}
 
       <div class="ph-kpis" data-anchor="ph-availability-kpis">

@@ -41,7 +41,7 @@ export default async function CaseStudy({ params }: Props) {
         </article>
         <aside className="case-metrics" data-anchor="case-metrics">
           <h2>Outcomes</h2>
-          <p className="note">Measured on the real systems this fictitious case is modelled on.</p>
+          <p className="note">Measured on the real systems this fictitious case is modeled on.</p>
           <ul>{study.metrics.map((metric) => <li key={metric}>{metric}</li>)}</ul>
         </aside>
       </section>

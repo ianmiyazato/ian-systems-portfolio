@@ -4,7 +4,7 @@ import { allPass, forecastLift, guardrails, margin } from './pricing';
 const base = { cost: 144.4, basePrice: 249, days: 16, channels: ['site', 'app'], competitorMedian: 231 };
 
 describe('pricing guardrails', () => {
-  it('accepts the agent proposal of R$ 219', () => {
+  it('accepts the agent proposal of R$219', () => {
     const result = guardrails({ ...base, price: 219 });
     expect(allPass(result)).toBe(true);
     expect(margin(219, 144.4)).toBeCloseTo(0.341, 3);

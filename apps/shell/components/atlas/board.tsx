@@ -78,9 +78,9 @@ function AppDrawer({ app, onMoved }: { app: Application; onMoved: (stage: Stage)
         <dl className="at-meta"><div><dt>Stage</dt><dd>{app.stage}</dd></div><div><dt>Salary</dt><dd>{app.salary}</dd></div><div><dt>Next</dt><dd>{app.next}</dd></div></dl>
         <h3 className="at-sub">Timeline</h3>
         <ol className="at-timeline" data-anchor="at-app-timeline">
-          <li className="done"><b>02 Sep</b>Applied with referral from Ana</li>
-          <li className="done"><b>09 Sep</b>Recruiter call · passed</li>
-          <li className="done"><b>18 Sep</b>Tech screen · system design</li>
+          <li className="done"><b>Sep 2</b>Applied with referral from Ana</li>
+          <li className="done"><b>Sep 9</b>Recruiter call · passed</li>
+          <li className="done"><b>Sep 18</b>Tech screen · system design</li>
           <li className="now"><b>Today</b>Waiting on outcome · onsite pencilled for Thu</li>
         </ol>
         <ZLink className="at-prep-link" href="/atlas/arena?modal=setup&prompt=payments-ledger" data-anchor="at-prep-link"><span className="ai-spark" aria-hidden="true" />Prep in Arena: Design a payments ledger →</ZLink>

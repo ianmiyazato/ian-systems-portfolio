@@ -51,7 +51,7 @@ export function Company() {
           </section>
           <section className="at-card span-3" aria-labelledby="history-title" data-anchor="at-history">
             <h2 id="history-title">Your history with Parallax Pay</h2>
-            <ol className="at-timeline horizontal"><li className="done"><b>Mar 2025</b>Applied · no reply</li><li className="done"><b>02 Sep</b>Applied with referral</li><li className="done"><b>18 Sep</b>Tech screen</li><li className="now"><b>Thu</b>Onsite</li></ol>
+            <ol className="at-timeline horizontal"><li className="done"><b>Mar 2025</b>Applied · no reply</li><li className="done"><b>Sep 2</b>Applied with referral</li><li className="done"><b>Sep 18</b>Tech screen</li><li className="now"><b>Thu</b>Onsite</li></ol>
           </section>
         </div>
       </main>

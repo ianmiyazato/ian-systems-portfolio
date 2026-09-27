@@ -14,12 +14,12 @@ const total = 538;
       <form class="cs-checkout-form" id="checkout">
         <fieldset class="cs-choice">
           <legend>How do you want it?</legend>
-          <label><input type="radio" name="fulfil" value="pickup" checked /><span><b>Pick up today</b><small>Shopping Vila Nova · ready by 18:00 · free</small></span></label>
-          <label><input type="radio" name="fulfil" value="delivery" /><span><b>Delivery tomorrow</b><small>Rota Sul Express · R$ 14,90</small></span></label>
+          <label><input type="radio" name="fulfill" value="pickup" checked /><span><b>Pick up today</b><small>Shopping Vila Nova · ready by 18:00 · free</small></span></label>
+          <label><input type="radio" name="fulfill" value="delivery" /><span><b>Delivery tomorrow</b><small>Rota Sul Express · R$14.90</small></span></label>
         </fieldset>
         <fieldset class="cs-choice">
           <legend>Pay with</legend>
-          <label><input type="radio" name="pay" value="mare" checked /><span><b>Maré Pay Loja</b><small>{installments(total)}</small></span></label>
+          <label><input type="radio" name="pay" value="mare" checked /><span><b>Maré Pay Store</b><small>{installments(total)}</small></span></label>
           <label><input type="radio" name="pay" value="pix" /><span><b>Pix</b><small>{brl(total)} · instant</small></span></label>
         </fieldset>
         <button class="cs-btn primary wide" type="submit">Place order · {brl(total)}</button>
