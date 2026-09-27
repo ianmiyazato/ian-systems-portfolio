@@ -95,19 +95,14 @@
 .cs-summary dt { color: var(--muted); }
 .cs-summary dd { margin: 0; font-weight: 600; }
 
-.cs-pdp { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; padding: 40px 6vw 80px; }
-.cs-pdp-media .garment.big { position: sticky; top: 140px; aspect-ratio: 1; border-radius: var(--radius); }
-.cs-pdp-info { display: grid; align-content: start; gap: 18px; }
-.cs-back { color: var(--muted); font-weight: 600; }
-.cs-pdp-info h1 { font-size: 64px; line-height: .95; }
 .cs-sizes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
 .cs-sizes legend { width: 100%; margin-bottom: 8px; font-weight: 600; }
 .cs-sizes label { position: relative; }
 .cs-sizes input { position: absolute; opacity: 0; }
-.cs-sizes span { display: grid; place-items: center; min-width: 52px; min-height: 48px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 600; cursor: pointer; }
+.cs-sizes label > span { display: grid; place-items: center; min-width: 52px; min-height: 48px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 600; cursor: pointer; }
 .cs-sizes input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--ground); }
 .cs-sizes input:focus-visible + span { outline: 3px solid var(--accent-2); outline-offset: 2px; }
-.cs-sizes .sold-out span { color: var(--muted); text-decoration: line-through; cursor: not-allowed; }
+.cs-sizes .sold-out > span { color: var(--muted); text-decoration: line-through; cursor: not-allowed; }
 .cs-stores { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .cs-stores li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .cs-stores li span { color: var(--muted); }
@@ -134,7 +129,7 @@
   .cs-shapes .s3 { bottom: 20px; right: 55%; width: 90px; height: 90px; }
   .cs-shapes .s4 { display: none; }
   .cs-grid, .cs-results-grid { grid-template-columns: 1fr 1fr; }
-  .cs-results, .cs-pdp, .cs-picked > header { grid-template-columns: 1fr; }
+  .cs-results, .cs-picked > header { grid-template-columns: 1fr; }
   .cs-picked { padding: 56px 20px; }
   .cs-search small { display: none; }
 }

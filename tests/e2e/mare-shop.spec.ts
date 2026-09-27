@@ -22,6 +22,31 @@ test.describe('Maré Shop', () => {
     await expect(page.getByText('2 left · pickup today by 18:00')).toBeVisible();
   });
 
+  test('the PDP answers fit, delivery and bundle questions before Add to bag', async ({ page }) => {
+    await page.goto('/mare/shop/products/linen-midi-dress?t=16:18&live=paused');
+    await expect(page.getByRole('heading', { level: 1, name: 'Linen midi dress' })).toBeVisible();
+    // M is sold out (dashed, announced), so the page preselects S and says why.
+    await expect(page.getByRole('radio', { name: /^M\s*, sold out/ })).toBeDisabled();
+    await expect(page.getByRole('radio', { name: 'S', exact: true })).toBeChecked();
+    await expect(page.getByText(/Runs large · \d+% of reviewers sized down, and M is sold out/)).toBeVisible();
+    await page.getByRole('radio', { name: 'L', exact: true }).check({ force: true });
+    await expect(page.getByText(/L will be noticeably loose/)).toBeVisible();
+    // The cutoff counts down on the world clock: 16:18 → 18:30.
+    await expect(page.getByText('Order within 2 h 12 min')).toBeVisible();
+    // Gallery thumbnails are tabs.
+    await page.getByRole('tab', { name: 'Fabric' }).click();
+    await expect(page.getByRole('img', { name: /close-up of the weave/ })).toBeVisible();
+    // Unticking a companion updates the bundle.
+    await page.getByRole('checkbox', { name: 'Include Straw sun hat' }).uncheck();
+    await expect(page.getByRole('button', { name: 'Add 2 to bag' })).toBeVisible();
+    await expect(page.locator('[data-bundle-total]')).toHaveText('R$538');
+    // The AI review summary shows its sources and how it was made.
+    const summary = page.getByRole('complementary', { name: 'Simulated AI review summary' });
+    await expect(summary.getByText('Simulated AI')).toBeVisible();
+    await summary.getByRole('button', { name: 'How this summary was made' }).click();
+    await expect(summary.getByText(/A person on the reviews team reads every summary/)).toBeVisible();
+  });
+
   test('pay app card flips and installments default to 3x', async ({ page }) => {
     await page.goto('/mare/apps/pay');
     const flip = page.getByRole('button', { name: 'Flip card' }).first();
@@ -54,7 +79,12 @@ test.describe('Maré Shop', () => {
     await tile.hover();
     await expect(tile).toHaveClass(/is-expanded/);
     await expect(tile.getByRole('button', { name: 'Add to bag' })).toBeVisible();
-    await tile.getByRole('button', { name: 'Save' }).click();
+    // Keyboard path: focus expands the card at once, and Enter acts on the quick action.
+    await page.mouse.move(0, 0);
+    await expect(tile).not.toHaveClass(/is-expanded/);
+    await tile.getByRole('button', { name: 'Save' }).focus();
+    await expect(tile).toHaveClass(/is-expanded/);
+    await page.keyboard.press('Enter');
     await expect(tile.getByRole('button', { name: 'Saved' })).toHaveAttribute('aria-pressed', 'true');
   });
 

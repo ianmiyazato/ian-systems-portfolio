@@ -1,4 +1,4 @@
-import { brl as money, catalogBySku, catalogBySlug, type CatalogItem, type Garment } from '@portfolio/mocks';
+import { brl as money, catalog, catalogBySku, catalogBySlug, type CatalogItem, type Garment } from '@portfolio/mocks';
 
 export type { Garment };
 export type Product = CatalogItem & { badges: string[]; stock: string; creator?: string; soldOut?: string[]; why?: string };
@@ -18,6 +18,9 @@ export const products: Product[] = merch.map(([sku, extra]) => ({ ...catalogBySk
 export const brl = (value: number) => money(value);
 export const installments = (value: number) => `3× ${money(Math.round((value / 3) * 100) / 100, { cents: true })} interest-free`;
 export const productBySlug = (slug: string) => products.find((product) => product.slug === slug)!;
+
+/** Every catalog item gets a product page; merchandised ones keep their badges and stock copy. */
+export const allProducts: Product[] = catalog.map((item) => products.find((product) => product.sku === item.sku) ?? { ...item, badges: [], stock: 'In stock' });
 
 /* Home: stories, rows ------------------------------------------------------------------------ */
 
@@ -80,4 +83,56 @@ export const rows: Row[] = [
     item('leather-everyday-sneakers', '3 in store · ready by 18:00'),
     item('linen-shorts', '5 in store · ready in 2 h')
   ] }
+];
+
+/* Product page: reviews, fit, gallery, bundles, reels ----------------------------------------- */
+
+export type Reviews = { average: number; count: number; histogram: [number, number, number, number, number]; fit: { small: number; true: number; large: number }; summary: string; themes: Array<[string, number]> };
+
+/** Deterministic review aggregates per product (histogram is 5★ → 1★). */
+export function reviewsFor(product: CatalogItem): Reviews {
+  const seed = [...product.sku].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const count = 60 + (seed % 140);
+  const five = Math.round(count * (0.62 + (seed % 7) / 100));
+  const four = Math.round(count * 0.22);
+  const three = Math.round(count * 0.08);
+  const two = Math.round(count * 0.03);
+  const one = count - five - four - three - two;
+  const average = (5 * five + 4 * four + 3 * three + 2 * two + one) / count;
+  const large = product.garment === 'dress' || product.garment === 'shirt' ? 58 : 22;
+  return {
+    average: Math.round(average * 10) / 10,
+    count,
+    histogram: [five, four, three, two, one],
+    fit: { small: 100 - large - 30, true: 30, large },
+    summary: large > 50
+      ? `People love how light it feels in the heat and how the ${product.colorName.toLowerCase()} color holds up after washing. Most say it runs large: ${large}% sized down. A few wanted a lining.`
+      : `People love the fabric and the ${product.colorName.toLowerCase()} color. Most say it fits true to size. A few mention it creases, which they say suits the look.`,
+    themes: [['breathable', 41], ['runs large', large > 50 ? 38 : 9], ['color holds up', 24], ['creases', 17]]
+  };
+}
+
+export type GalleryView = { id: string; label: string };
+export const galleryViews: GalleryView[] = [
+  { id: 'front', label: 'Front' },
+  { id: 'back', label: 'Back' },
+  { id: 'detail', label: 'Detail' },
+  { id: 'fabric', label: 'Fabric' }
+];
+
+/** Frequently bought together: two companions per product, fixed for the demo. */
+const companions: Record<string, [string, string]> = {
+  'linen-midi-dress': ['straw-sun-hat', 'leather-slide-sandals'],
+  'natural-linen-shirt': ['stone-wide-leg-pants', 'canvas-tote'],
+  'stone-wide-leg-pants': ['natural-linen-shirt', 'leather-slide-sandals'],
+  'sea-salt-knit': ['linen-shorts', 'canvas-tote']
+};
+export const boughtWith = (product: CatalogItem) => (companions[product.slug] ?? ['canvas-tote', 'straw-sun-hat']).map((slug) => catalogBySlug(slug)!);
+
+export type Reel = { id: string; creator: string; initials: string; caption: string; views: string; slugs: string[] };
+export const reels: Reel[] = [
+  { id: 'nina-weekend', creator: '@ninac', initials: 'NC', caption: 'One dress, three summer plans', views: '48k', slugs: ['linen-midi-dress', 'straw-sun-hat', 'leather-slide-sandals'] },
+  { id: 'duda-market', creator: '@duda.r', initials: 'DR', caption: 'Market run in linen', views: '31k', slugs: ['natural-linen-shirt', 'linen-drawstring-pants', 'canvas-tote'] },
+  { id: 'mari-beach', creator: '@mari.luz', initials: 'ML', caption: 'Beach to bar, no change', views: '62k', slugs: ['linen-midi-dress', 'sea-salt-knit', 'canvas-tote'] },
+  { id: 'ana-scarf', creator: '@anakato', initials: 'AK', caption: 'Three ways with one scarf', views: '19k', slugs: ['silk-square-scarf', 'faux-leather-crossbody', 'ribbed-tank-top'] }
 ];

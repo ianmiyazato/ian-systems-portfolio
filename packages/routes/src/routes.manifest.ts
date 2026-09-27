@@ -122,6 +122,7 @@ export const routes: RouteEntry[] = [
 
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
   { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'V2-shop', heading: 'Linen, sun and salt', release: '0.1', checked: '2026-09-27', mobile: true },
+  { id: 'consumer-pdp', system: 'consumer', title: 'Product page', href: '/mare/shop/products/linen-midi-dress', zone: 'mare-shop', owner: shop, board: 'V2-pdp', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27', mobile: true },
 
   { id: 'atlas-onboarding', system: 'atlas', title: 'Onboarding', href: '/atlas/welcome?step=2', zone: 'shell', owner: shell, board: 'AT-onboarding', heading: 'Where do you want to work', release: '0.1' },
   { id: 'atlas-pipeline', system: 'atlas', title: 'Pipeline', href: '/atlas/pipeline', zone: 'shell', owner: shell, board: 'AT-pipeline', heading: 'interviews this week', release: '0.1' },

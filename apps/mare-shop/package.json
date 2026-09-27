@@ -17,6 +17,7 @@
     "@portfolio/mocks": "workspace:*",
     "@portfolio/overlays": "workspace:*",
     "@portfolio/tokens": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "astro": "5.14.1"
   }
 }
