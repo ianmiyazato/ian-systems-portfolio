@@ -1,8 +1,9 @@
 import type { RemoteContext, ViewTable } from '@portfolio/remote-runtime';
-import { ViewRouter, openFeed, startDemoDriver } from '@portfolio/remote-runtime';
+import { ViewRouter, openFeed, useWorldEvents } from '@portfolio/remote-runtime';
 import type { CounterOrder } from '@portfolio/mocks';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 import { initialBoard, nextLiveOrder, reduce, type Action } from './board';
+import { fromWorld, isCounterOrder } from './live';
 import { CounterContext, type FeedStatus } from './context';
 import { TopBar } from './TopBar';
 import { Tile } from './Tile';
@@ -26,23 +27,61 @@ export function App({ ctx }: { ctx: RemoteContext }) {
   return <Page ctx={ctx} />;
 }
 
+const ACROSS_KEY = 'counter:live-across-tabs';
+
 function Page({ ctx }: { ctx: RemoteContext }) {
   const [board, dispatch] = useReducer(reduce, undefined, initialBoard);
   const [status, setStatus] = useState<FeedStatus>('local');
+  const supabaseReady = Boolean(ctx.data.supabaseUrl && ctx.data.supabaseKey);
+  const [acrossTabs, setAcrossTabs] = useState(() => {
+    try {
+      return supabaseReady && localStorage.getItem(ACROSS_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
   const feed = useRef<ReturnType<typeof openFeed<CounterOrder>> | null>(null);
 
+  // Orders for this store arrive from the world simulation: every open tab computes the same ones.
+  useWorldEvents(['orders.placed'], (event) => {
+    if (isCounterOrder(event)) dispatch({ type: 'created', order: fromWorld(event) });
+  });
+
+  // Free tier: Supabase Broadcast opens only when someone asks for "Live across tabs", only
+  // while the tab is visible, and closes the moment it is hidden. Otherwise BroadcastChannel.
   useEffect(() => {
-    const channel = openFeed<CounterOrder>('counter-order-lanes', ctx.data, (message) => {
-      if (message.event === 'order.created') dispatch({ type: 'created', order: message.payload });
-    }, (next) => setStatus(next as FeedStatus));
-    feed.current = channel;
-    // Demo driver: while a reviewer watches, one leader tab announces a new order every 25 s.
-    const stop = startDemoDriver('counter-order-lanes', 25_000, () => channel.send('order.created', nextLiveOrder()));
-    return () => {
-      stop();
-      channel.close();
+    const data = acrossTabs && supabaseReady ? { ...ctx.data, mode: 'supabase' as const } : { ...ctx.data, mode: 'local' as const };
+    const open = () => {
+      feed.current?.close();
+      feed.current = openFeed<CounterOrder>('counter-order-lanes', data, (message) => {
+        if (message.event === 'order.created') dispatch({ type: 'created', order: message.payload });
+      }, (next) => setStatus(next as FeedStatus));
     };
-  }, [ctx.data]);
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') {
+        feed.current?.close();
+        feed.current = null;
+        setStatus('local');
+      } else open();
+    };
+    open();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      feed.current?.close();
+      feed.current = null;
+    };
+  }, [ctx.data, acrossTabs, supabaseReady]);
+
+  const toggleAcrossTabs = () => {
+    const next = !acrossTabs;
+    setAcrossTabs(next);
+    try {
+      localStorage.setItem(ACROSS_KEY, next ? '1' : '0');
+    } catch {
+      // Private mode: the toggle still works for this page.
+    }
+  };
 
   useEffect(() => {
     if (!board.toast) return;
@@ -54,7 +93,7 @@ function Page({ ctx }: { ctx: RemoteContext }) {
   const emit = () => feed.current?.send('order.created', nextLiveOrder());
 
   return (
-    <CounterContext.Provider value={{ board, act, feedStatus: status, emit, basePath: ctx.basePath }}>
+    <CounterContext.Provider value={{ board, act, feedStatus: status, emit, basePath: ctx.basePath, acrossTabs, supabaseReady, toggleAcrossTabs }}>
       <div class="ct-app">
         <TopBar basePath={ctx.basePath} />
         <ViewRouter remote="counter" basePath={ctx.basePath} views={views} label="Counter" />

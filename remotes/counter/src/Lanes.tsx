@@ -1,15 +1,18 @@
-import { AiSurface, Banner, Link, closeLayers, navigate, openLayer, useDemoState, useLocation } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow } from '@portfolio/remote-runtime';
+import { clock } from '@portfolio/world';
 import { laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
 import type { Action } from './board';
-import { useCounter, type FeedStatus } from './context';
+import { useCounter } from './context';
+import { slaText, withProgress } from './live';
 import { Handover } from './Handover';
 import { CutoffPlan } from './CutoffPlan';
 
 type Filter = 'all' | 'pickup' | 'delivery' | 'late';
 
 export function Lanes() {
-  const { board, act, feedStatus, emit } = useCounter();
+  const { board, act } = useCounter();
+  const now = useSimNow();
   const state = useDemoState();
   const { params } = useLocation();
   const [filter, setFilter] = useState<Filter>('all');
@@ -34,7 +37,7 @@ export function Lanes() {
       <section class="ct-head">
         <div>
           <h1 class="ct-title" data-anchor="ct-title">{state === 'loading' ? 'Loading orders…' : `${open} open orders`}</h1>
-          <p class="ct-sub">Sorted by the next carrier cutoff · updated 16:18</p>
+          <p class="ct-sub">Sorted by the next carrier cutoff · updated {clock(now)}</p>
         </div>
         <div class="ct-filters" role="group" aria-label="Filter orders" data-anchor="ct-filters">
           {filters.map(([id, label, count]) => (
@@ -43,12 +46,12 @@ export function Lanes() {
             </button>
           ))}
         </div>
-        <LiveFeed status={feedStatus} emit={emit} />
+        <LiveFeed />
       </section>
 
       <div class="ct-lanes" data-anchor="ct-lanes" aria-hidden={state === 'locked' ? true : undefined} inert={state === 'locked'}>
         {lanes.map((lane) => {
-          const cards = state === 'loading' ? [] : board.orders.filter((order) => order.lane === lane.id && visible(order));
+          const cards = state === 'loading' ? [] : board.orders.map((order) => withProgress(order, now, 'MR-904117')).filter((order) => order.lane === lane.id && visible(order));
           const empty = state === 'empty' && lane.id === 'to-pick';
           const shown = empty ? [] : cards;
           return (
@@ -74,6 +77,7 @@ export function Lanes() {
                   reminded={reminded.includes(order.id)}
                   anchor={lane.id === 'to-pick' && index === 0 ? 'ct-card' : undefined}
                   act={act}
+                  now={now}
                 />
               ))}
               {state !== 'loading' && !empty && lane.total > cards.length && (
@@ -127,20 +131,28 @@ function StateBanners({ state }: { state: string }) {
   return null;
 }
 
-function LiveFeed({ status, emit }: { status: FeedStatus; emit: () => void }) {
-  const label = status === 'live' ? 'Live · Supabase Broadcast' : status === 'connecting' ? 'Connecting…' : status === 'error' ? 'Realtime unavailable · local' : 'Live · local simulator';
+function LiveFeed() {
+  const { feedStatus: status, emit, acrossTabs, supabaseReady, toggleAcrossTabs } = useCounter();
+  const label = status === 'live' ? 'Live · Supabase Broadcast' : status === 'connecting' ? 'Connecting…' : status === 'error' ? 'Realtime unavailable · local' : 'Live · world simulation';
   return (
-    <div class="ct-live" data-realtime-status={status} data-anchor="ct-live">
-      <i aria-hidden="true" />
-      <span>{label}</span>
-      <button type="button" onClick={emit}>Simulate order</button>
+    <div class="ct-live-group">
+      <div class="ct-live" data-realtime-status={status} data-anchor="ct-live">
+        <i aria-hidden="true" />
+        <span>{label}</span>
+        <button type="button" onClick={emit}>Simulate order</button>
+        <button type="button" class="ct-across" aria-pressed={acrossTabs} disabled={!supabaseReady} title={supabaseReady ? 'Share this board with other browsers over Supabase Broadcast' : 'Supabase is not configured in this build; tabs in this browser still sync'} onClick={toggleAcrossTabs}>
+          Live across tabs
+        </button>
+      </div>
+      <LiveControl anchor="ct-lanes-live" />
     </div>
   );
 }
 
-type CardProps = { order: CounterOrder; fresh: boolean; queued: boolean; reminded: boolean; anchor?: string; act: (action: Action) => void };
+type CardProps = { order: CounterOrder; fresh: boolean; queued: boolean; reminded: boolean; anchor?: string; act: (action: Action) => void; now: number };
 
-function OrderCard({ order, fresh, queued, reminded, anchor, act }: CardProps) {
+function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardProps) {
+  const sla = slaText(order, now);
   const scanned = order.items.filter((item) => item.scanned).length;
   const complete = scanned === order.items.length;
   const action = (() => {
@@ -157,7 +169,7 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act }: CardProps) {
   })();
 
   return (
-    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${order.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id}>
+    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id}>
       <header>
         <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id">{order.id}</Link>
         <span class={`ct-pill ${order.type}`}>{order.type === 'pickup' ? 'Pickup' : 'Delivery from store'}</span>
@@ -170,9 +182,9 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act }: CardProps) {
           <span key={`${item.sku}-${index}`} class={`swatch ${item.scanned ? 'done' : ''}`} data-swatch={item.swatch} style={{ '--i': index }} />
         ))}
       </div>
-      <p class={`ct-sla ${order.urgent ? 'urgent' : ''}`}>
+      <p class={`ct-sla ${sla.urgent ? 'urgent' : ''}`}>
         <span aria-hidden="true">{order.lane === 'handed-over' ? '✓' : '◷'}</span>
-        {reminded && order.note === 'no-show' ? 'Reminder sent 16:19 · waiting' : order.sla}
+        {reminded && order.note === 'no-show' ? 'Reminder sent 16:19 · waiting' : sla.text}
       </p>
       {queued && <p class="ct-queued">Queued · will sync</p>}
       {action && (

@@ -1,31 +1,25 @@
-import { rng, series, pick, int, type Swatch } from '@portfolio/mocks';
+import { catalog, rng, series, pick, int, type Swatch } from '@portfolio/mocks';
 
 export type Status = 'Review price' | 'Low margin' | 'Missing offer' | 'Low stock' | 'Healthy' | 'Rejected';
 export type Product = { id: string; sku: string; name: string; swatch: Swatch; owner: string; stock: number; price: number; margin: number; spark: number[]; status: Status; department: string; channel: string };
 
-const names: Array<[string, Swatch, string]> = [
-  ['Natural linen shirt', 'linen', 'Women'], ['Stone wide-leg pants', 'sand', 'Women'], ['Sea-salt open knit', 'sea', 'Women'], ['Canvas tote bag', 'clay', 'Accessories'],
-  ['Linen midi dress', 'slate', 'Women'], ['Leather everyday sneakers', 'ink', 'Shoes'], ['Linen shorts', 'linen', 'Men'], ['Breeze oxford shirt', 'mist', 'Men'],
-  ['Pleated midi skirt', 'sand', 'Women'], ['Straw sun hat', 'clay', 'Accessories'], ['Ribbed tank top', 'rose', 'Women'], ['Leather slide sandals', 'ink', 'Shoes'],
-  ['Linen drawstring pants', 'sea', 'Men'], ['Silk square scarf', 'rose', 'Accessories']
-];
 const statuses: Status[] = ['Review price', 'Healthy', 'Low stock', 'Missing offer', 'Healthy', 'Low margin', 'Healthy', 'Review price', 'Healthy', 'Low margin', 'Healthy', 'Missing offer', 'Low stock', 'Healthy'];
 
-export const products: Product[] = names.map(([name, swatch, department], index) => {
+/** The catalog table is the shared Maré catalog; product 510233 is the Natural linen shirt. */
+export const products: Product[] = catalog.slice(0, 14).map((item, index) => {
   const random = rng(510233 + index);
-  const price = index === 0 ? 249 : int(random, 99, 349);
   return {
     id: String(510233 + index * 7),
-    sku: `MR-${18401 - index * 29}`,
-    name,
-    swatch,
+    sku: item.sku,
+    name: item.name,
+    swatch: item.swatch,
     owner: pick(random, ['Lara', 'Nina', 'Rui', 'Otavio']),
     stock: index === 0 ? 184 : statuses[index] === 'Low stock' ? int(random, 4, 16) : int(random, 60, 420),
-    price,
+    price: item.price,
     margin: index === 0 ? 42 : statuses[index] === 'Low margin' ? int(random, 22, 29) : int(random, 36, 54),
     spark: series(700 + index, 28, 40, 7, statuses[index] === 'Review price' ? -0.5 : 0.3),
     status: statuses[index]!,
-    department,
+    department: item.department,
     channel: index % 3 === 0 ? 'Marketplace' : index % 3 === 1 ? 'Site' : 'App'
   };
 });

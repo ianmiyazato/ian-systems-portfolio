@@ -20,8 +20,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@portfolio/routes": "workspace:*",
     "@portfolio/tokens": "workspace:*",
-    "@portfolio/routes": "workspace:*"
+    "@portfolio/world": "workspace:*"
   },
   "devDependencies": {
     "typescript": "5.9.2",

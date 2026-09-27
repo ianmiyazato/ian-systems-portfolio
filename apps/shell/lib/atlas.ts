@@ -1,5 +1,5 @@
 export type Stage = 'saved' | 'applied' | 'screen' | 'onsite' | 'offer';
-export type Application = { id: string; company: string; role: string; stage: Stage; next: string; salary: string; location: string; prep?: string };
+export type Application = { id: string; company: string; role: string; stage: Stage; next: string; salary: string; location: string; prep?: string; /** Moved by the live timeline (not by hand), so the card can announce it. */ moved?: boolean };
 
 export const stages: Array<{ id: Stage; label: string }> = [
   { id: 'saved', label: 'Saved' }, { id: 'applied', label: 'Applied' }, { id: 'screen', label: 'Screen' }, { id: 'onsite', label: 'Onsite' }, { id: 'offer', label: 'Offer' }
@@ -58,3 +58,13 @@ export const lessons = [
 
 export const members = [['RM', 'Rafaela M.', 'Senior engineer · 2026'], ['TK', 'Tiago K.', 'Staff engineer · 2025'], ['LS', 'Luana S.', 'Engineer II · 2026']] as const;
 export const velocity = [['Apr', 3, 34], ['May', 5, 29], ['Jun', 4, 31], ['Jul', 7, 24], ['Aug', 6, 22], ['Sep', 8, 19]] as const;
+
+/**
+ * While the member watches, the world moves their pipeline: recruiters reply and cards change
+ * stage at fixed sim-time offsets from 16:18, so every tab (and every screenshot) agrees.
+ */
+export const pipelineTimeline: Array<{ afterMinutes: number; id: string; stage: Stage; next: string; toast: string }> = [
+  { afterMinutes: 2, id: 'quanta', stage: 'screen', next: 'Screen booked Wed 11:00', toast: 'Quanta Health replied · screen booked for Wednesday' },
+  { afterMinutes: 6, id: 'harbor-ai', stage: 'applied', next: 'Applied just now', toast: 'Harbor AI · application sent from your saved role' },
+  { afterMinutes: 11, id: 'orbital', stage: 'screen', next: 'Recruiter call Thu 16:00', toast: 'Orbital Freight wants a recruiter call on Thursday' }
+];

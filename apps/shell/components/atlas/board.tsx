@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { ZLink } from '@/components/zone-link';
 import { Layer, closeLayers, openLayer, useParams } from '@/components/overlay';
-import { applications as seed, stages, type Application, type Stage } from '@/lib/atlas';
+import { applications as seed, pipelineTimeline, stages, type Application, type Stage } from '@/lib/atlas';
+import { DEFAULT_START, MINUTE } from '@portfolio/world';
+import { useSimNow } from '@/lib/world';
+import { LiveControl } from '@/components/live';
 import { AtlasHeader } from './header';
 
 export function Board() {
@@ -13,6 +16,21 @@ export function Board() {
   const [over, setOver] = useState<Stage | null>(null);
   const [coach, setCoach] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [applied, setApplied] = useState<string[]>([]);
+  const now = useSimNow();
+
+  // Recruiters reply while the member watches: timeline entries apply once, unless moved by hand.
+  useEffect(() => {
+    if (now === null) return;
+    const due = pipelineTimeline.filter((entry) => !applied.includes(entry.id) && now - DEFAULT_START >= entry.afterMinutes * MINUTE);
+    if (!due.length) return;
+    setApplied((list) => [...list, ...due.map((entry) => entry.id)]);
+    setApps((list) => list.map((app) => {
+      const entry = due.find((item) => item.id === app.id);
+      return entry ? { ...app, stage: entry.stage, next: entry.next, moved: true } : app;
+    }));
+    setToast(due.at(-1)!.toast);
+  }, [now, applied]);
   const drawer = params.get('drawer');
   const current = apps.find((app) => app.id === drawer);
 
@@ -30,7 +48,7 @@ export function Board() {
       <main className="at-main">
         <header className="at-head" data-anchor="at-board-head">
           <div><span className="at-eyebrow">Pipeline · board</span><h1>Applications</h1></div>
-          <div className="at-actions"><ZLink className="at-btn" href="/atlas/pipeline">Overview</ZLink><button type="button" className="at-btn primary">Add application</button></div>
+          <div className="at-actions"><LiveControl anchor="at-board-live" /><ZLink className="at-btn" href="/atlas/pipeline">Overview</ZLink><button type="button" className="at-btn primary">Add application</button></div>
         </header>
         <div className="at-board" data-anchor="at-board">
           {stages.map((stage) => {
@@ -44,7 +62,7 @@ export function Board() {
                 {cards.map((app) => {
                   const lifted = coach && app.id === 'nimbus';
                   return (
-                    <article key={app.id} className={`at-app ${dragging === app.id ? 'dragging' : ''} ${lifted ? 'lifted' : ''}`} draggable
+                    <article key={app.id} className={`at-app ${dragging === app.id ? 'dragging' : ''} ${lifted ? 'lifted' : ''} ${app.moved ? 'is-arriving' : ''}`} draggable
                       onDragStart={(event) => { event.dataTransfer.setData('text/plain', app.id); setDragging(app.id); }} onDragEnd={() => { setDragging(null); setOver(null); }}
                       data-anchor={app.id === 'parallax-pay' ? 'at-card-parallax' : undefined}>
                       <button type="button" className="at-app-open" onClick={() => openLayer({ drawer: app.id })}>

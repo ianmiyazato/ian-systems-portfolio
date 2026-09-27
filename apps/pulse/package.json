@@ -18,6 +18,7 @@
     "@portfolio/overlays": "workspace:*",
     "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "@sveltejs/adapter-vercel": "6.3.4",
     "@sveltejs/kit": "2.43.1",
     "@sveltejs/vite-plugin-svelte": "6.2.0",

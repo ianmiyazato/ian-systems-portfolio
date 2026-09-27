@@ -59,7 +59,9 @@
   }
 
   onMount(() => {
-    const data = { mode: import.meta.env.PUBLIC_DATA_MODE === 'supabase' ? 'supabase' as const : 'local' as const, supabaseUrl: import.meta.env.PUBLIC_SUPABASE_URL, supabaseKey: import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY };
+    // Free tier: the posting feed syncs tabs over BroadcastChannel only; Supabase is reserved for
+    // Counter's explicit "Live across tabs" demo.
+    const data = { mode: 'local' as const };
     const channel = openFeed<Post>('pulse-posting-feed', data, (message) => {
       if (message.event === 'post') posts = [message.payload, ...posts].slice(0, 6);
     }, (next) => (status = next));

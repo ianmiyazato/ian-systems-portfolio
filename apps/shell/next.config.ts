@@ -20,7 +20,7 @@ const zones = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays'],
+  transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays', '@portfolio/world', '@portfolio/routes'],
   experimental: { optimizePackageImports: ['@xyflow/react'] },
   // v0.2 renamed Balcão to Counter; old links keep working (308, query string preserved).
   async redirects() {

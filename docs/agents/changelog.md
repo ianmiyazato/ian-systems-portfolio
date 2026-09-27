@@ -4,6 +4,8 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-27 · `feat(world)`: the world drives the v0.1 screens. Counter: store orders arrive from the world, SLA and carrier countdowns tick, picking progress advances, "Live across tabs" is an explicit Supabase toggle (closed when hidden, 1 msg/s). Product Hub: stock drains and sparklines shift with reservations, the agent queue grows. Pay: credit applications arrive, the review count and histogram fill. Circle: coded sales tick, top creators reorder with FLIP, the MARI15 leak keeps spiking. Mesh: log tail from world events, live circuit state, DLQ depth and sampled throughput. Atlas: recruiters reply and cards move stages. Pulse: reach rolls, the Tokyo moment triggers, market clocks on sim time. ⌘K gains world controls (pause, 1×/10×/60×, scrubber, Black Friday); every live screen has Pause live updates.
+
 - 2026-09-27 · `feat(copy)`: US English everywhere (catalog names, US letter sizes, `R$1,249.90`, month-first dates, Maré Pay Credit/Store, ugly-but-English partner fields `trk_no`/`stat_cd`/`occ_dt`, US spellings) and `@portfolio/quality` copy lint in CI (Portuguese words, stray diacritics, pt-BR formatting, day-first dates, British spellings).
 - 2026-09-27 · `fix(world)`: actions recorded in the same millisecond keep distinct ids (a refund's commission reversal was sometimes dropped).
 
