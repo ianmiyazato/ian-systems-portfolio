@@ -7,15 +7,31 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  quality:
+  # Docs-only changes skip the browser jobs (free-tier: keep CI lean).
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.diff.outputs.code }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - id: diff
+        run: |
+          base=${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD^' }}
+          files=$(git diff --name-only "$base"...HEAD 2>/dev/null || git diff --name-only HEAD^ HEAD)
+          if echo "$files" | grep -qvE '^(docs/|README\.md|AGENTS\.md|.*\.md$)'; then echo "code=true" >> "$GITHUB_OUTPUT"; else echo "code=false" >> "$GITHUB_OUTPUT"; fi
+
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
           version: 10.17.1
@@ -28,9 +44,12 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm budget
 
+  # Crawler (every manifest route + nav item), flows, Decision Lens anchors and axe.
   e2e:
-    needs: quality
+    needs: [changes, quality]
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,41 +71,33 @@ jobs:
           path: playwright-report
           retention-days: 7
 
-  # Vercel is deployed with the CLI (no Git integration). Both jobs no-op until the
-  # VERCEL_TOKEN repository secret exists; see AGENTS.md "Known gaps".
-  preview:
-    if: github.event_name == 'pull_request'
+  # The full screenshot suite only runs on the develop → main release PR.
+  screenshots:
     needs: quality
+    if: github.event_name == 'pull_request' && github.base_ref == 'main' && github.head_ref == 'develop'
     runs-on: ubuntu-latest
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          fetch-depth: 0
-      - if: env.VERCEL_TOKEN != ''
-        run: npm i -g vercel@60
-      - if: env.VERCEL_TOKEN != ''
-        id: deploy
-        run: |
-          apps=$(scripts/changed-apps.sh "origin/${{ github.base_ref }}")
-          echo "apps=$apps" >> "$GITHUB_OUTPUT"
-          [ -z "$apps" ] && exit 0
-          APPS="$apps" DEPLOY_OUTPUT=deployments.txt scripts/deploy-all.sh
-      - if: env.VERCEL_TOKEN != '' && steps.deploy.outputs.apps != ''
-        run: |
-          {
-            echo "### Preview deployments"
-            echo
-            echo "| Zone | URL |"
-            echo "|---|---|"
-            while IFS='=' read -r app url; do echo "| $app | $url |"; done < deployments.txt
-            echo
-            echo "The shell preview rewrites to the zone previews above. Press **D** on any screen for the Decision Lens."
-          } > comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md --edit-last || gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          version: 10.17.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm screenshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: docs/screenshots
+          retention-days: 7
 
+  # Free tier: no preview deploys at all. Production deploys only from main, only for the zones
+  # whose files changed, and only once the VERCEL_TOKEN secret exists (AGENTS.md "Known gaps").
+  # Record every production deploy in docs/agents/free-tier-ledger.json.
   production:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: quality
@@ -95,7 +106,12 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - if: env.VERCEL_TOKEN != ''
         run: npm i -g vercel@60
       - if: env.VERCEL_TOKEN != ''
-        run: scripts/deploy-all.sh --prod
+        run: |
+          apps=$(scripts/changed-apps.sh HEAD^)
+          [ -z "$apps" ] && echo "No zone changed; nothing to deploy." && exit 0
+          APPS="$apps" scripts/deploy-all.sh --prod

@@ -2,5 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm run build --filter=@portfolio/shell..."
+  "buildCommand": "cd ../.. && pnpm run build --filter=@portfolio/shell...",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ../../apps/shell ../../packages ../../decisions ../../pnpm-lock.yaml",
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": false,
+      "feat/**": false,
+      "fix/**": false,
+      "docs/**": false,
+      "chore/**": false
+    }
+  }
 }
