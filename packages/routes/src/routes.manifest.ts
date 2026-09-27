@@ -70,6 +70,8 @@ export const routes: RouteEntry[] = [
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
   { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
 
+  { id: 'system-design-request-path', system: 'mare', title: 'Request path · live', href: '/system-design/mare/request-path', zone: 'shell', owner: shell, board: 'V2-arch', heading: 'Every hop, live', release: '0.2', checked: '2026-09-27' },
+
   { id: 'counter-lanes', system: 'counter', title: 'Order lanes', href: '/mare/ops/counter', zone: 'mare-ops', owner: remote('counter'), board: 'BA-lanes', heading: 'open orders', release: '0.1', mobile: true },
   { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
   { id: 'counter-handover', system: 'counter', title: 'Handover + third party', href: '/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party', zone: 'mare-ops', owner: remote('counter'), board: 'BA-handover', heading: 'open orders', release: '0.1' },

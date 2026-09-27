@@ -17,3 +17,31 @@ for (const [project, scenario] of [['mare', 'Black Friday spike'], ['atlas', 'Ar
     await expect(page.locator('.sd-before')).toBeVisible();
   });
 }
+
+test.describe('Request path', () => {
+  test('nodes explain themselves and layers can be isolated', async ({ page }) => {
+    await page.goto('/system-design/mare/request-path');
+    await expect(page.getByRole('heading', { level: 1, name: 'Every hop, live' })).toBeVisible();
+    await page.getByRole('button', { name: 'Orders, writes once, emits' }).click();
+    const panel = page.locator('[data-anchor="rp-node-panel"]');
+    await expect(panel).toContainText('enterprise RDBMS');
+    await expect(panel).toContainText('Failure modes');
+    await page.getByRole('button', { name: 'Only queues' }).click();
+    await expect(page.locator('.rp-node.layer-service.dim').first()).toBeAttached();
+    await expect(page.locator('.rp-node.layer-backbone.dim')).toHaveCount(0);
+  });
+
+  test('live packets follow world events', async ({ page }) => {
+    await page.goto('/system-design/mare/request-path');
+    await expect.poll(async () => page.locator('.rp-packet').count(), { timeout: 15000 }).toBeGreaterThan(0);
+  });
+
+  test('a replay runs live across the portfolio and recovers', async ({ page }) => {
+    await page.goto('/system-design/mare/request-path');
+    await page.getByRole('button', { name: 'DB pool saturation after deploy #812' }).click();
+    await page.getByRole('button', { name: 'Run it live across the portfolio' }).click();
+    await expect(page.locator('.rp-node.failed', { hasText: 'Orders' })).toBeVisible();
+    await page.getByRole('button', { name: 'Recover · end the incident' }).click();
+    await expect(page.locator('.rp-node.failed', { hasText: 'Orders' })).toHaveCount(0);
+  });
+});

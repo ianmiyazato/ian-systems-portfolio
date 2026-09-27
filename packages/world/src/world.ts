@@ -3,7 +3,7 @@ import { eventsForMinute, type Conditions, type FaultId, type Scenario, type Wor
 import { DEFAULT_START, MINUTE, parseLocalTime } from './time';
 
 export type Speed = 0 | 1 | 10 | 60;
-export const speeds: Speed[] = [1, 10, 60];
+export const speeds: Array<Exclude<Speed, 0>> = [1, 10, 60];
 
 /**
  * Everything needed to reproduce the world in any tab: same seed + same anchor = same events.
