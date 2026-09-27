@@ -35,10 +35,14 @@
 .ct-filter.late b { color: var(--risk); }
 .ct-filter.late[aria-pressed='true'] { border-color: var(--risk); background: var(--risk); color: var(--surface); }
 .ct-filter.late[aria-pressed='true'] b { color: var(--surface); }
-.ct-live { display: flex; align-items: center; gap: 8px; margin-left: auto; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 12px; font-weight: 600; }
+.ct-live-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
+.ct-live { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 12px; font-weight: 600; }
 .ct-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: breathe 1.8s infinite; }
 .ct-live[data-realtime-status='connecting'] i { background: var(--warn); }
 .ct-live[data-realtime-status='error'] i { background: var(--risk); }
+.ct-live .ct-across { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.ct-live .ct-across[aria-pressed='true'] { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.ct-live .ct-across:disabled { color: var(--muted); cursor: not-allowed; }
 .ct-live button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: var(--ink); color: var(--ground); font-weight: 700; font-size: 12px; }
 .ct-lanes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
 .ct-lane { display: flex; flex-direction: column; gap: 10px; min-height: 480px; padding: 12px; border-radius: var(--radius); background: var(--surface-2); }

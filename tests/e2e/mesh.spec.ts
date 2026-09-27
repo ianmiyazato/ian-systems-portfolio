@@ -4,8 +4,10 @@ test.describe('Mesh', () => {
   test('topology streams the log and shows the degraded edge', async ({ page }) => {
     await page.goto('/mare/ops/mesh');
     await expect(page.locator('.ms-graph .edge.warn')).toHaveCount(2);
-    const before = await page.locator('.ms-log li').count();
-    await expect.poll(async () => page.locator('.ms-log li').count(), { timeout: 8000 }).toBeGreaterThan(before);
+    // The tail is the world's event stream: the newest line changes as events arrive.
+    const newest = page.locator('.ms-log li').last();
+    const before = await newest.textContent();
+    await expect.poll(async () => newest.textContent(), { timeout: 15000 }).not.toBe(before);
   });
 
   test('breaking the carrier shows an open circuit', async ({ page }) => {

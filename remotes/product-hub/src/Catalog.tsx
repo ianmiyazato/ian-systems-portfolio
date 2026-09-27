@@ -1,5 +1,6 @@
 import { brl } from '@portfolio/mocks';
-import { Banner, Link, navigate, useDemoState } from '@portfolio/remote-runtime';
+import { Banner, Link, LiveControl, Tween, navigate, useDemoState, useSimNow, useWorldEvents } from '@portfolio/remote-runtime';
+import { DEFAULT_START, MINUTE } from '@portfolio/world';
 import { useState } from 'preact/hooks';
 import { facets, products, type Status } from './data';
 import { Sparkline } from './charts';
@@ -11,11 +12,23 @@ export function Catalog() {
   const state = useDemoState();
   const [selected, setSelected] = useState<string[]>(state === 'live' ? products.slice(0, 3).map((row) => row.id) : []);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const now = useSimNow(2000);
+  // Stock drains as the world reserves units; the 28-day sparkline shifts left with each sale.
+  const [sold, setSold] = useState<Record<string, number>>({});
+  const [fresh, setFresh] = useState<string | null>(null);
+  useWorldEvents(['stock.reserved'], (event) => {
+    if (!products.some((row) => row.sku === event.payload.sku)) return;
+    setSold((current) => ({ ...current, [event.payload.sku]: (current[event.payload.sku] ?? 0) + event.payload.quantity }));
+    setFresh(event.payload.sku);
+  });
+  // The agents keep working: a new proposal lands in the queue every ~6 minutes of sim time.
+  const queued = 24 + Math.max(0, Math.floor((now - DEFAULT_START) / (6 * MINUTE)));
   const empty = state === 'empty';
   const rows = empty
     ? []
     : products
         .map((row, index) => (state === 'rejected' && index === 0 ? { ...row, status: 'Rejected' as Status } : row))
+        .map((row) => (sold[row.sku] ? { ...row, stock: Math.max(0, row.stock - sold[row.sku]!), spark: [...row.spark.slice(sold[row.sku]! % row.spark.length), ...row.spark.slice(0, sold[row.sku]! % row.spark.length).map((value) => value + 1.5)] } : row))
         .filter((row) => !statusFilter.length || statusFilter.includes(row.status));
   const toggle = (id: string) => setSelected(selected.includes(id) ? selected.filter((item) => item !== id) : [...selected, id]);
   const allSelected = rows.length > 0 && rows.every((row) => selected.includes(row.id));
@@ -48,6 +61,7 @@ export function Catalog() {
         <header class="ph-title-row">
           <h1 data-anchor="ph-title">Summer · needs action</h1>
           <div class="ph-title-actions">
+            <LiveControl anchor="ph-catalog-live" />
             <button type="button" class="ph-btn">Export CSV</button>
             <button type="button" class="ph-btn primary">New product</button>
           </div>
@@ -62,7 +76,7 @@ export function Catalog() {
         {state === 'locked' && <Banner tone="info" icon="i" title="Summer 27 price freeze · 16:00–18:00 · read-only" anchor="ph-locked">Campaign prices are locked while the site caches warm up. Requests queue for 18:00.</Banner>}
 
         <div class="ph-kpis" data-anchor="ph-kpis">
-          <div><span>Needs action</span><strong>24</strong><small>+6 since Monday</small></div>
+          <div><span>Needs action</span><strong><Tween value={queued} /></strong><small>{queued > 24 ? `+${queued - 24} from the agents since 16:18` : '+6 since Monday'}</small></div>
           <div><span>Low margin</span><strong class="bad">8</strong><small>below 30% floor</small></div>
           <div><span>Missing offer</span><strong class="warn">5</strong><small>marketplace only</small></div>
           <div><span>Sell-through · 28d</span><strong>61%</strong><small>target 65%</small></div>
@@ -85,7 +99,7 @@ export function Catalog() {
                 ))}
               {state !== 'loading' &&
                 rows.map((row) => (
-                  <tr key={row.id} class={selected.includes(row.id) ? 'selected' : ''}>
+                  <tr key={row.id} class={`${selected.includes(row.id) ? 'selected' : ''} ${fresh === row.sku ? 'is-arriving' : ''}`}>
                     <td class="check"><input type="checkbox" aria-label={`Select ${row.name}`} checked={selected.includes(row.id)} onChange={() => toggle(row.id)} /></td>
                     <td><Link class="ph-product" href={`/mare/ops/product-hub/products/${row.id}?tab=pricing`}><span class="swatch" data-swatch={row.swatch} />{row.name}</Link></td>
                     <td class="mono">{row.sku}</td>

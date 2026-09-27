@@ -16,6 +16,10 @@ export type CounterOrder = {
   lane: Lane;
   items: OrderItem[];
   sla: string;
+  /** Sim-time deadline (pickup promise or carrier cutoff); set for orders from the live world. */
+  deadline?: number;
+  /** Sim time the order started waiting in Ready. */
+  since?: number;
   urgent: boolean;
   total: string;
   payment: string;

@@ -1,4 +1,7 @@
-import { AiSurface, Banner, openLayer, useDemoState, useLocation, useTween } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, LiveControl, openLayer, useDemoState, useFlip, useLocation, useSimNow, useTween, useWorldEvents } from '@portfolio/remote-runtime';
+import { DEFAULT_START } from '@portfolio/world';
+import { useState } from 'preact/hooks';
+import { codedCreator } from './roster';
 import { creators, brlk, week } from './data';
 import { Leak } from './Leak';
 
@@ -12,14 +15,30 @@ function Trend({ values, up }: { values: number[]; up: boolean }) {
 export function Program() {
   const state = useDemoState();
   const { params } = useLocation();
-  const total = useTween(2.1, 1200);
+  const now = useSimNow(1000);
+  // Coded orders from the world add to each creator's month; the cards reorder with FLIP.
+  const [extra, setExtra] = useState<Record<string, number>>({});
+  const [bumped, setBumped] = useState<string | null>(null);
+  useWorldEvents(['orders.placed'], (event) => {
+    const creator = codedCreator(event.payload.orderId);
+    if (!creator) return;
+    setExtra((current) => ({ ...current, [creator.code]: (current[creator.code] ?? 0) + event.payload.totalCents / 100_000 }));
+    setBumped(creator.code);
+  });
+  const liveCreators = creators.map((creator) => ({ ...creator, sales: creator.sales + (extra[creator.code] ?? 0), commission: creator.commission + (extra[creator.code] ?? 0) * 0.1 })).sort((a, b) => b.sales - a.sales);
+  const grid = useFlip<HTMLDivElement>(liveCreators.map((creator) => creator.code).join(','));
+  const added = Object.values(extra).reduce((sum, value) => sum + value, 0) / 1000;
+  const total = useTween(2.1 + added, 1200);
+  // The leak keeps spiking while nobody acts: MARI15 uses climb every 40 s of sim time.
+  const leakUses = 76 + Math.max(0, Math.floor((now - DEFAULT_START) / 40_000));
   const empty = state === 'empty';
   return (
     <main class="cc-main">
       <section class="cc-hero" data-anchor="cc-hero">
-        <h1>318 creators sold <em>R${total.toFixed(1)}M</em> this month</h1>
+        <h1>318 creators sold <em>R${total.toFixed(2)}M</em> this month</h1>
         <span class="cc-sticker big" aria-hidden="true">summer drop ✺</span>
         <p>Attribution, returns and payouts in one place. Commissions confirm 30 days after delivery, so a return never becomes a clawback.</p>
+        <LiveControl anchor="cc-program-live" />
       </section>
 
       {state === 'contract-pending' && <Banner tone="warn" icon="✎" title="4 creators have a contract pending" anchor="cc-contract" action={<button type="button" class="cc-btn">Resend contracts</button>}>Their sales are attributed and commissions accrue, but payouts wait for a signature.</Banner>}
@@ -46,9 +65,9 @@ export function Program() {
               </div>
             </div>
           ) : (
-            <div class="cc-cards">
-              {creators.map((creator, index) => (
-                <article key={creator.code} class={`cc-card ${creator.leak ? 'leak' : ''}`} style={{ '--i': index }}>
+            <div class="cc-cards" ref={grid}>
+              {liveCreators.map((creator, index) => (
+                <article key={creator.code} data-flip={creator.code} class={`cc-card ${creator.leak ? 'leak' : ''} ${bumped === creator.code ? 'is-bumped' : ''}`} style={{ '--i': index }}>
                   <header><span class="cc-avatar" style={{ '--hue': creator.hue }}>{creator.initials}</span><div><strong>{creator.name}</strong><small>{creator.handle}</small></div></header>
                   <span class="cc-code">{creator.code}</span>
                   <dl><div><dt>Sales</dt><dd>{brlk(creator.sales)}</dd></div><div><dt>Commission</dt><dd>{brlk(creator.commission)}</dd></div></dl>
@@ -61,7 +80,7 @@ export function Program() {
           )}
         </section>
 
-        <AiSurface title="Coupon leak detected · MARI15" meta="3.8× baseline" anchor="cc-leak-card" className="cc-ai"
+        <AiSurface title="Coupon leak detected · MARI15" meta={`${leakUses} uses today · ${(leakUses / 20).toFixed(1)}× baseline`} anchor="cc-leak-card" className="cc-ai"
           sources={[{ label: 'coupon uses · 14d', score: 0.96 }, { label: 'referrer logs', score: 0.91 }, { label: 'creator sessions', score: 0.88 }]}
           actions={<><button type="button" class="ai-approve" onClick={() => openLayer({ modal: 'leak', code: 'MARI15' })}>Investigate</button><button type="button" class="ai-explain" onClick={() => openLayer({ modal: 'leak', code: 'MARI15' })}>Why flagged?</button></>}>
           71% of today's MARI15 uses came from a coupon aggregator with no creator-session evidence. Mariana didn't post today.

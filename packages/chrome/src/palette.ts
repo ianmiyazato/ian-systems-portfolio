@@ -1,4 +1,5 @@
 import { resolveScreen, routes, systemOf, systems } from './routes';
+import { DEFAULT_START, clock, getWorld, localHour, parseLocalTime, speeds } from '@portfolio/world';
 import { chromeVars, escapeHtml } from './shared';
 
 const styles = `
@@ -18,11 +19,21 @@ a[aria-current='page']::before{content:'●';margin-right:6px;color:var(--lens-a
 .states button{min-height:36px;padding:0 12px;border:1px solid var(--lens-line);border-radius:999px;background:var(--lens-surface);color:var(--lens-ink);cursor:pointer;font:600 11px var(--lens-mono)}
 .states button[aria-pressed='true']{border-color:var(--lens-accent);background:var(--lens-accent);color:var(--lens-accent-ink)}
 .empty{padding:24px;color:var(--lens-muted);text-align:center}
+.world{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;padding:12px 14px;border-top:1px solid var(--lens-line);font:600 11px var(--lens-font)}
+.world>span{color:var(--lens-muted)}
+.world .row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.world time{min-width:64px;font:600 13px var(--lens-mono);font-variant-numeric:tabular-nums}
+.world button{min-height:32px;padding:0 10px;border:1px solid var(--lens-line);border-radius:999px;background:var(--lens-surface);color:var(--lens-ink);cursor:pointer;font:600 11px var(--lens-mono)}
+.world button[aria-pressed='true']{border-color:var(--lens-ink);background:var(--lens-ink);color:var(--lens-surface)}
+.world input[type=range]{flex:1;min-width:160px;accent-color:var(--lens-accent)}
 @keyframes fade{from{opacity:0}}@keyframes rise{from{opacity:0;transform:translateY(-8px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 `;
 
-/** <im-command-palette> — ⌘K / Ctrl+K: jump to any artboard or show a design state. */
+/** Minutes after 06:00 for the scrubber (06:00–23:59 Maré time). */
+const SCRUB_FROM = 6 * 60;
+
+/** <im-command-palette> — ⌘K / Ctrl+K: jump to any screen, show a design state, drive the world clock. */
 export class CommandPalette extends HTMLElement {
   private root: ShadowRoot;
   private open = false;
@@ -71,6 +82,56 @@ export class CommandPalette extends HTMLElement {
     else (this.returnFocus as HTMLElement | null)?.focus?.();
   }
 
+  /** The shared world clock: pause, speed, scrub and the Black Friday scenario, synced to every tab. */
+  private worldPanel() {
+    const world = getWorld();
+    const { state } = world;
+    const now = world.now();
+    const minutes = Math.round(localHour(now) * 60);
+    const speed = speeds.map((value) => `<button type="button" data-speed="${value}" aria-pressed="${!state.paused && state.speed === value}">${value}×</button>`).join('');
+    return `<div class="world" role="group" aria-label="World clock">
+      <span>World</span>
+      <div class="row"><time data-world-clock>${clock(now, true)}</time><button type="button" data-pause aria-pressed="${state.paused}">${state.paused ? 'Resume' : 'Pause'}</button>${speed}
+        <button type="button" data-scenario aria-pressed="${state.scenario === 'black-friday'}">Black Friday 3.4×</button></div>
+      <span><label for="scrub">Time</label></span>
+      <div class="row"><input id="scrub" type="range" min="${SCRUB_FROM}" max="1439" step="1" value="${Math.max(SCRUB_FROM, minutes)}" aria-valuetext="${clock(now)}"><button type="button" data-reset>Back to 16:18</button></div>
+    </div>`;
+  }
+
+  private bindWorld() {
+    const world = getWorld();
+    const rerender = () => {
+      const focusId = (this.root.activeElement as HTMLElement | null)?.id;
+      this.render();
+      if (focusId) (this.root.getElementById(focusId) as HTMLElement | null)?.focus();
+    };
+    this.root.querySelector('[data-pause]')?.addEventListener('click', () => { world.setPaused(!world.state.paused); rerender(); });
+    this.root.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach((button) => button.addEventListener('click', () => { world.setSpeed(Number(button.dataset.speed) as 1 | 10 | 60); rerender(); }));
+    this.root.querySelector('[data-scenario]')?.addEventListener('click', () => { world.setScenario(world.state.scenario === 'black-friday' ? 'normal' : 'black-friday'); rerender(); });
+    this.root.querySelector('[data-reset]')?.addEventListener('click', () => { world.seek(DEFAULT_START); rerender(); });
+    const scrub = this.root.querySelector<HTMLInputElement>('#scrub');
+    scrub?.addEventListener('change', () => {
+      const minutes = Number(scrub.value);
+      const target = parseLocalTime(`${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`, world.now());
+      if (target) world.seek(target);
+      rerender();
+    });
+    scrub?.addEventListener('input', () => {
+      const minutes = Number(scrub.value);
+      const label = this.root.querySelector('[data-world-clock]');
+      if (label) label.textContent = `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}:00`;
+    });
+    // Keep the clock ticking while the palette is open.
+    clearInterval(this.tick);
+    this.tick = window.setInterval(() => {
+      const label = this.root.querySelector('[data-world-clock]');
+      if (!this.open) return clearInterval(this.tick);
+      if (label && document.activeElement !== this && !this.root.querySelector('#scrub:active')) label.textContent = clock(world.now(), true);
+    }, 1000);
+  }
+
+  private tick = 0;
+
   private filtered() {
     const query = this.query.trim().toLowerCase();
     return routes.filter((screen) => !query || `${screen.title} ${screen.href} ${systemOf(screen.system).title}`.toLowerCase().includes(query));
@@ -105,7 +166,7 @@ export class CommandPalette extends HTMLElement {
       : `<div class="states"><span>Open a product screen to preview its empty, loading, error, offline and locked states.</span></div>`;
     this.root.innerHTML = `<style>${styles}</style><div class="scrim" data-scrim><section class="panel" role="dialog" aria-modal="true" aria-label="Command palette">
       <div><label for="q">Jump to a screen</label><input id="q" autocomplete="off" placeholder="Search every screen, route and state…" value="${escapeHtml(this.query)}" role="combobox" aria-expanded="true" aria-controls="results"></div>
-      <div class="list" id="results" role="listbox" aria-label="Screens">${groups || '<p class="empty">No screen matches that search.</p>'}</div>${states}</section></div>`;
+      <div class="list" id="results" role="listbox" aria-label="Screens">${groups || '<p class="empty">No screen matches that search.</p>'}</div>${states}${this.worldPanel()}</section></div>`;
     const input = this.root.querySelector('input')!;
     input.addEventListener('input', () => {
       this.query = input.value;
@@ -131,6 +192,7 @@ export class CommandPalette extends HTMLElement {
     this.root.querySelector('[data-scrim]')!.addEventListener('mousedown', (event) => {
       if (event.target === event.currentTarget) this.show(false);
     });
+    this.bindWorld();
     this.root.querySelectorAll<HTMLButtonElement>('[data-state]').forEach((button) =>
       button.addEventListener('click', () => {
         const url = new URL(location.href);

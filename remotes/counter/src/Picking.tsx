@@ -1,10 +1,12 @@
-import { Banner, Link, navigate, useDemoState, useTween } from '@portfolio/remote-runtime';
+import { Banner, Link, navigate, useDemoState, useSimNow, useTween } from '@portfolio/remote-runtime';
+import { slaText } from './live';
 import { pickingOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
 import { useCounter } from './context';
 
 export function Picking({ orderId }: { orderId: string }) {
   const { board, act } = useCounter();
+  const now = useSimNow();
   const state = useDemoState();
   const order = board.orders.find((item) => item.id === orderId) ?? pickingOrder;
   const initial = state === 'picked' ? order.items.length : order.items.filter((item) => item.scanned).length;
@@ -30,7 +32,7 @@ export function Picking({ orderId }: { orderId: string }) {
         {state === 'offline' && <div class="ct-offline" role="status"><b aria-hidden="true">↯</b> Offline · scans queue locally and sync with idempotency keys</div>}
         <header class="ct-pick-head">
           <h1 class="ct-title">{order.id} · {order.customer}</h1>
-          <span class="ct-deadline" data-anchor="ct-deadline">◷ {order.sla}</span>
+          <span class="ct-deadline" data-anchor="ct-deadline">◷ {slaText(order, now).text}</span>
         </header>
         <p class="ct-sub">{order.type === 'pickup' ? 'Pickup' : 'Delivery from store'} · {total} items · {order.payment}</p>
         <ol class="ct-items" data-anchor="ct-items">

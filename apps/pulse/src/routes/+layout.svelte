@@ -9,6 +9,7 @@
   import '../app.css';
   import { i18n, type Lang } from '$lib/i18n.svelte';
   import { clock, view } from '$lib/view.svelte';
+  import { live } from '$lib/world.svelte';
   import { markets } from '$lib/data';
 
   let { children } = $props();
@@ -24,7 +25,9 @@
     void import('@portfolio/chrome').then(({ defineChrome }) => defineChrome());
     // CJK faces load after first paint; unicode-range means only the glyph chunks in use download.
     requestAnimationFrame(() => void import('@portfolio/tokens/fonts/pulse-cjk'));
-    return view.start();
+    const stopWorld = live.start();
+    const stopView = view.start();
+    return () => { stopWorld(); stopView(); };
   });
 </script>
 
@@ -38,9 +41,15 @@
   </nav>
   <ul class="pl-clocks" aria-label="Market clocks" data-anchor="pl-clocks">
     {#each markets as market}
-      <li><span>{market.id}</span><time>{clock(view.now, market.zone)}</time></li>
+      <li><span>{market.id}</span><time>{clock(live.now, market.zone)}</time></li>
     {/each}
   </ul>
+  <div class={`live-control ${live.paused ? 'is-paused' : ''}`} data-anchor="pl-live" data-live={live.paused ? 'paused' : 'running'}>
+    <i class="live-dot" aria-hidden="true"></i>
+    <span class="live-label">{live.paused ? 'Paused' : 'Live'}</span>
+    <time class="live-clock">{live.clock}</time>
+    <button type="button" class="live-pause" aria-pressed={live.paused} onclick={() => live.toggle()}>{live.paused ? 'Resume live updates' : 'Pause live updates'}</button>
+  </div>
   <div class="pl-lang" role="group" aria-label="Language" data-anchor="pl-lang">
     {#each ['EN', 'KR', 'JP'] as const as lang}
       <button type="button" class:active={i18n.lang === lang} aria-pressed={i18n.lang === lang} onclick={() => i18n.set(lang as Lang)}>{lang}</button>

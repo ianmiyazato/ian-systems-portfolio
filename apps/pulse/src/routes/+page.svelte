@@ -2,6 +2,7 @@
   import { base } from '$app/paths';
   import { i18n } from '$lib/i18n.svelte';
   import { view } from '$lib/view.svelte';
+  import { live } from '$lib/world.svelte';
   import { completion, MOMENT_HOUR, providerFor, questionsFor, talent } from '$lib/data';
   import type { Chunk } from '@portfolio/ai-sim';
 
@@ -23,6 +24,9 @@
   let sources = $state<Chunk[]>([]);
   let streaming = $state(false);
   let asked = $state<string | null>(null);
+  // Views roll while you watch; 90 s of sim time in, Tokyo's bridge moment triggers.
+  const reach = $derived(18.4 + live.elapsed * 0.0021);
+  const tokyoMoment = $derived(live.elapsed >= 90);
 
   async function ask(text = question) {
     if (!text.trim() || streaming) return;
@@ -56,8 +60,11 @@
   {#if view.state === 'error'}<p class="pl-banner risk" data-anchor="pl-error">Tokyo signal feed delayed 12 min · Tokyo lines are dashed until it catches up.</p>{/if}
   {#if view.state === 'locked'}<p class="pl-banner info" data-anchor="pl-locked">Tokyo data is embargoed until the label's release at 00:00 JST · request early access.</p>{/if}
 
+  {#if tokyoMoment}
+    <p class="pl-banner info pl-moment-live" role="status" data-anchor="pl-moment-live">Moment detected · Tokyo · bridge 01:18 completion +9% in 20 min · the JP fan pages are cutting it</p>
+  {/if}
   <div class="pl-kpis" data-anchor="pl-kpis">
-    <div><span>{i18n.t('reach')}</span><strong>18.4M</strong><small>+24% Seoul</small></div>
+    <div><span>{i18n.t('reach')}</span><strong>{reach.toFixed(2)}M</strong><small>+24% Seoul · rolling</small></div>
     <div><span>{i18n.t('moment')}</span><strong>0.91</strong><small>chorus · 00:42–00:57</small></div>
     <div><span>{i18n.t('pages')}</span><strong>18</strong><small>6 per market</small></div>
     <div><span>{i18n.t('gate')}</span><strong class="ok">{i18n.t('pass')}</strong><small>ft-analyst-v2</small></div>
