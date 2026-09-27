@@ -193,7 +193,7 @@ function Ship({ item, size, price, onDone }: { item: string; size: string; price
       footer={<><button type="button" class="ct-ghost" onClick={close}>Cancel</button><button type="button" class="ct-primary" onClick={() => { onDone(); close(); }}>Book delivery</button></>}>
       <dl class="ct-receipt">
         <div><dt>From</dt><dd>Online DC · picks tonight</dd></div>
-        <div><dt>To</dt><dd>742 Ocean Avenue, apt 31 · Sao Paulo</dd></div>
+        <div><dt>To</dt><dd>742 Ocean Avenue, apt 31 · São Paulo</dd></div>
         <div><dt>Promise</dt><dd>Tomorrow by 18:00 · Via Norte</dd></div>
         <div><dt>Delivery</dt><dd>{free ? 'Free (over R$299)' : 'R$14.90'}</dd></div>
       </dl>

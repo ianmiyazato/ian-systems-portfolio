@@ -47,21 +47,21 @@ export const carrierNames = ['Rota Sul Express', 'Ligeiro Log', 'Via Norte', 'Co
 /** Fictitious customers and staff (first names only in ops tools; last initial when needed). */
 export const firstNames = ['Rafael', 'Luiza', 'Caio', 'Marina', 'Bruno', 'Taina', 'Nina', 'Joao', 'Lara', 'Rui', 'Beatriz', 'Otavio', 'Helena', 'Diego', 'Camila', 'Thiago', 'Yasmin', 'Pedro', 'Aline', 'Gustavo'] as const;
 
-export type CreatorProfile = { name: string; handle: string; code: string; initials: string; level: 'Rising' | 'Core' | 'Star'; category: 'Swim' | 'Linen' | 'Street' | 'Accessories'; city: 'Sao Paulo' | 'Rio' | 'Recife' | 'Curitiba' | 'Salvador'; hue: number };
+export type CreatorProfile = { name: string; handle: string; code: string; initials: string; level: 'Rising' | 'Core' | 'Star'; category: 'Swim' | 'Linen' | 'Street' | 'Accessories'; city: 'São Paulo' | 'Rio' | 'Recife' | 'Curitiba' | 'Salvador'; hue: number };
 
 export const creatorRoster: CreatorProfile[] = [
-  { name: 'Nina Costa', handle: '@ninac', code: 'NINA10', initials: 'NC', level: 'Star', category: 'Linen', city: 'Sao Paulo', hue: 0 },
+  { name: 'Nina Costa', handle: '@ninac', code: 'NINA10', initials: 'NC', level: 'Star', category: 'Linen', city: 'São Paulo', hue: 0 },
   { name: 'Joao Martins', handle: '@joaomar', code: 'JOAO12', initials: 'JM', level: 'Core', category: 'Street', city: 'Rio', hue: 1 },
   { name: 'Mariana Luz', handle: '@mari.luz', code: 'MARI15', initials: 'ML', level: 'Star', category: 'Swim', city: 'Recife', hue: 2 },
-  { name: 'Tomas Reis', handle: '@tomas.r', code: 'TOMAS8', initials: 'TR', level: 'Core', category: 'Street', city: 'Sao Paulo', hue: 3 },
+  { name: 'Tomas Reis', handle: '@tomas.r', code: 'TOMAS8', initials: 'TR', level: 'Core', category: 'Street', city: 'São Paulo', hue: 3 },
   { name: 'Ana Kato', handle: '@anakato', code: 'ANAK10', initials: 'AK', level: 'Rising', category: 'Accessories', city: 'Curitiba', hue: 4 },
   { name: 'Bia Santos', handle: '@bia.s', code: 'BIA10', initials: 'BS', level: 'Core', category: 'Swim', city: 'Salvador', hue: 5 },
-  { name: 'Leo Prado', handle: '@leoprado', code: 'LEO12', initials: 'LP', level: 'Rising', category: 'Linen', city: 'Sao Paulo', hue: 0 },
+  { name: 'Leo Prado', handle: '@leoprado', code: 'LEO12', initials: 'LP', level: 'Rising', category: 'Linen', city: 'São Paulo', hue: 0 },
   { name: 'Duda Rocha', handle: '@duda.r', code: 'DUDA10', initials: 'DR', level: 'Star', category: 'Linen', city: 'Rio', hue: 1 },
   { name: 'Iris Moura', handle: '@irism', code: 'IRIS8', initials: 'IM', level: 'Rising', category: 'Swim', city: 'Recife', hue: 2 },
   { name: 'Theo Lima', handle: '@theolima', code: 'THEO10', initials: 'TL', level: 'Core', category: 'Accessories', city: 'Curitiba', hue: 3 },
   { name: 'Clara Nunes', handle: '@claran', code: 'CLARA12', initials: 'CN', level: 'Core', category: 'Street', city: 'Salvador', hue: 4 },
-  { name: 'Rafa Dias', handle: '@rafadias', code: 'RAFA8', initials: 'RD', level: 'Rising', category: 'Street', city: 'Sao Paulo', hue: 5 }
+  { name: 'Rafa Dias', handle: '@rafadias', code: 'RAFA8', initials: 'RD', level: 'Rising', category: 'Street', city: 'São Paulo', hue: 5 }
 ];
 
 /** en-US money: R$1,249.90 (BRL values, US formatting). */
@@ -80,3 +80,19 @@ export function brlCompact(value: number) {
 }
 
 export const count = (value: number) => Math.round(value).toLocaleString('en-US');
+
+/** Editorial silhouettes (viewBox 0 0 240 230), filled with the product swatch in every zone. */
+export const garmentPaths: Record<Garment, string> = {
+  shirt: 'M70 40 L100 28 Q120 44 140 28 L170 40 L196 92 L170 104 L162 86 L162 200 L78 200 L78 86 L70 104 L44 92 Z M120 44 L120 200',
+  trousers: 'M78 30 L162 30 L170 200 L130 200 L120 90 L110 200 L70 200 Z',
+  knit: 'M66 46 Q120 20 174 46 L200 110 L176 118 L168 92 L168 196 L72 196 L72 92 L64 118 L40 110 Z',
+  dress: 'M96 26 L144 26 L150 70 L184 200 L56 200 L90 70 Z',
+  bag: 'M58 88 L182 88 L172 196 L68 196 Z M92 88 Q92 40 120 40 Q148 40 148 88',
+  sneaker: 'M36 150 Q40 110 84 108 L120 96 Q150 120 196 128 Q214 132 212 156 L212 170 L36 170 Z',
+  shorts: 'M70 50 L170 50 L182 150 L132 158 L120 100 L108 158 L58 150 Z',
+  hat: 'M40 140 Q120 170 200 140 Q190 128 160 124 Q156 70 120 70 Q84 70 80 124 Q50 128 40 140 Z',
+  skirt: 'M84 40 L156 40 L150 60 L190 196 L50 196 L90 60 Z M104 60 L96 196 M136 60 L144 196 M120 60 L120 196',
+  tank: 'M92 30 Q120 60 148 30 L160 34 L158 80 L170 200 L70 200 L82 80 L80 34 Z',
+  sandal: 'M50 160 Q60 130 110 128 L190 132 Q214 136 210 156 L208 168 L50 168 Z M96 128 Q120 104 150 130',
+  scarf: 'M60 50 L180 50 L180 170 L60 170 Z M60 50 L180 170 M120 50 L180 110'
+};

@@ -26,9 +26,6 @@ const pending = new Set<string>([
   '/mare/ops/product-hub?view=imports',
   '/mare/ops/product-hub/products/510233?tab=stock',
   '/mare/ops/product-hub/products/510233?tab=audit',
-  '/mare/ops/circle?view=creators',
-  '/mare/ops/circle?view=campaigns',
-  '/mare/ops/circle?view=payouts',
   '/mare/ops/mesh?view=events',
   '/mare/ops/mesh?view=contracts'
 ]);
