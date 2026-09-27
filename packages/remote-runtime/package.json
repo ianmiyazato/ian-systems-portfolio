@@ -22,6 +22,8 @@
   "dependencies": {
     "@portfolio/ai-surface": "workspace:*",
     "@portfolio/overlays": "workspace:*",
+    "@portfolio/routes": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "@supabase/realtime-js": "2.117.2",
     "preact": "10.29.8"
   },

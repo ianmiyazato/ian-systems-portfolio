@@ -6,3 +6,5 @@ export * from './hooks';
 export * from './state';
 export * from './realtime';
 export { defineRemote } from './define';
+export * from './views';
+export * from './live';

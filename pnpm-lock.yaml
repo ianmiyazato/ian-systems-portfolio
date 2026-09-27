@@ -273,6 +273,12 @@ importers:
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../overlays
+      '@portfolio/routes':
+        specifier: workspace:*
+        version: link:../routes
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../world
       '@supabase/realtime-js':
         specifier: 2.117.2
         version: 2.117.2
@@ -361,6 +367,22 @@ importers:
       '@fontsource/ibm-plex-mono':
         specifier: 5.3.0
         version: 5.3.0
+
+  packages/world:
+    dependencies:
+      '@portfolio/events':
+        specifier: workspace:*
+        version: link:../events
+      '@portfolio/mocks':
+        specifier: workspace:*
+        version: link:../mocks
+    devDependencies:
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
   remotes/balcao:
     dependencies:

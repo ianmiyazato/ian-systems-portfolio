@@ -73,6 +73,12 @@ export function navItems<R extends RemoteName>(remote: R): Array<{ id: ViewId<R>
     .map((view) => ({ id: view.id as ViewId<R>, title: view.title, href: viewHref(remote, view) }));
 }
 
+/** The nav item to highlight for a view (itself, or its parent for detail views). */
+export function navIdFor<R extends RemoteName>(remote: R, id: ViewId<R>): ViewId<R> {
+  const view = viewsOf(remote).find((item) => item.id === id);
+  return (view?.parent ?? id) as ViewId<R>;
+}
+
 export type ViewMatch<R extends RemoteName> =
   | { kind: 'view'; id: ViewId<R>; rest: string[] }
   | { kind: 'redirect'; href: string }
