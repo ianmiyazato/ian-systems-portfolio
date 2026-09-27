@@ -395,6 +395,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -420,6 +423,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -445,6 +451,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -470,6 +479,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -495,6 +507,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8

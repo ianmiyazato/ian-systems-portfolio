@@ -67,4 +67,59 @@ test.describe('Counter', () => {
     const id = await first.locator('[data-lane="to-pick"] .ct-card.is-fresh').getAttribute('data-order');
     await expect(second.locator(`[data-order="${id}"]`)).toBeVisible();
   });
+
+  test('returns: legacy ?view= link lands on the Returns path route', async ({ page }) => {
+    await page.goto('/mare/ops/counter?view=returns');
+    await expect(page).toHaveURL(/\/mare\/ops\/counter\/returns$/);
+    await expect(page.getByRole('heading', { level: 1, name: 'Returns' })).toBeVisible();
+    await expect(page.locator('.ct-tabs [aria-current="page"]')).toHaveText('Returns');
+  });
+
+  test('returns: scan the receipt, check the condition and refund as store credit', async ({ page }) => {
+    await page.goto('/mare/ops/counter/returns?return=RT-12407');
+    await page.getByRole('button', { name: 'Scan receipt' }).click();
+    const modal = page.getByRole('dialog', { name: 'Scan receipt' });
+    await modal.getByRole('button', { name: 'Simulate scan', exact: true }).click();
+    await expect(modal).toBeHidden();
+    await expect(page.locator('[data-anchor="ct-receipt"]')).toContainText('MR-903244');
+    for (const name of ['Tags attached', 'No damage beyond the reason given', 'Original packaging or bag']) await page.getByRole('button', { name }).click();
+    await page.getByRole('button', { name: 'Refund R$262.90' }).click();
+    await expect(page.locator('.ct-toast')).toContainText('store credit issued to Marina');
+    await expect(page.getByRole('link', { name: 'View event in Mesh' })).toHaveAttribute('href', '/mare/ops/mesh/events?key=RT-12407');
+  });
+
+  test('returns: refunding a coded order reverses the Circle commission', async ({ page }) => {
+    await page.goto('/mare/ops/counter/returns?return=RT-12418');
+    for (const name of ['Tags attached', 'No damage beyond the reason given', 'Original packaging or bag']) await page.getByRole('button', { name }).click();
+    await page.getByRole('radio', { name: /Original payment/ }).click();
+    await expect(page.getByRole('radio', { name: /Original payment/ })).toContainText('Cancels 2 remaining installments');
+    await page.getByRole('button', { name: 'Refund R$319.00' }).click();
+    await expect(page.locator('.ct-toast')).toContainText('NINA10 commission reversed −R$19.14');
+  });
+
+  test('stock: sold-out size gets an AI tip, then a two-hour reservation', async ({ page }) => {
+    await page.goto('/mare/ops/counter/stock?sku=MR-18511&size=M');
+    await expect(page.getByRole('heading', { level: 1, name: 'Linen midi dress' })).toBeVisible();
+    await expect(page.getByRole('radio', { name: /M\s*Out/ })).toBeVisible();
+    await expect(page.locator('[data-anchor="ct-stock-freshness"]')).toContainText('updated from stock events');
+    const tip = page.locator('[data-anchor="ct-stock-ai"]');
+    await expect(tip).toContainText('Simulated AI');
+    await tip.getByRole('button', { name: /Show L/ }).click();
+    await expect(page).toHaveURL(/size=L/);
+    await page.getByRole('button', { name: 'Reserve for customer · 2 h' }).click();
+    await page.getByRole('dialog', { name: 'Reserve for a customer' }).getByRole('button', { name: /Hold until/ }).click();
+    await expect(page.locator('[data-anchor="ct-reserved"]')).toContainText('Reserved L for Helena');
+  });
+
+  test('stock: pausing live updates freezes the world clock', async ({ page }) => {
+    await page.goto('/mare/ops/counter/stock');
+    const control = page.locator('[data-anchor="ct-stock-live"]');
+    await control.getByRole('button', { name: 'Pause live updates' }).click();
+    await expect(control).toHaveAttribute('data-live', 'paused');
+    const time = await control.locator('time').textContent();
+    await page.waitForTimeout(1500);
+    await expect(control.locator('time')).toHaveText(time!);
+    await control.getByRole('button', { name: 'Resume live updates' }).click();
+  });
 });
+

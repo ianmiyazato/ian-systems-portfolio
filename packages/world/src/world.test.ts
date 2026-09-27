@@ -71,6 +71,16 @@ describe('event generation', () => {
     expect(Date.parse(recent.at(-1)!.at)).toBeLessThan(DEFAULT_START);
   });
 
+  it('records actions people take and replays them in queries', () => {
+    const w = world('?live=paused');
+    const seen: string[] = [];
+    w.subscribe(({ events }) => seen.push(...events.map((event) => event.topic)));
+    const refund = w.record({ topic: 'returns.refunded', key: 'RT-1', payload: { returnId: 'RT-1', orderId: 'MR-900001', store: '#0412', method: 'store-credit', amountCents: 24900, bonusCents: 2490, installmentsReversed: 0, staff: 'Ana' } });
+    expect(domainEventSchema.safeParse(refund).success).toBe(true);
+    expect(seen).toContain('returns.refunded');
+    expect(w.between(DEFAULT_START - MINUTE, DEFAULT_START + MINUTE, ['returns.refunded'])).toHaveLength(1);
+  });
+
   it('opens and recovers faults at the current sim time', () => {
     const w = world('?live=paused');
     w.setFault('db-pool', true);

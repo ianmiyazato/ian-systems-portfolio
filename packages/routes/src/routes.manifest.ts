@@ -72,6 +72,8 @@ export const routes: RouteEntry[] = [
   { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
   { id: 'counter-handover', system: 'counter', title: 'Handover + third party', href: '/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party', zone: 'mare-ops', owner: remote('counter'), board: 'BA-handover', heading: 'open orders', release: '0.1' },
   { id: 'counter-cutoff-plan', system: 'counter', title: 'Cutoff plan + why', href: '/mare/ops/counter?modal=cutoff-plan&sub=why', zone: 'mare-ops', owner: remote('counter'), board: 'BA-cutoff', heading: 'open orders', release: '0.1' },
+  { id: 'counter-returns', system: 'counter', title: 'Returns', href: '/mare/ops/counter/returns', zone: 'mare-ops', owner: remote('counter'), board: 'BA-returns', heading: 'Returns', release: '0.2', checked: '2026-09-27' },
+  { id: 'counter-stock', system: 'counter', title: 'Stock lookup', href: '/mare/ops/counter/stock', zone: 'mare-ops', owner: remote('counter'), board: 'BA-stock', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27' },
 
   { id: 'product-hub-catalog', system: 'product-hub', title: 'Catalog workspace', href: '/mare/ops/product-hub', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-catalog', heading: 'needs action', release: '0.1' },
   { id: 'product-hub-detail', system: 'product-hub', title: 'Product detail · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-detail', heading: 'linho', release: '0.1' },

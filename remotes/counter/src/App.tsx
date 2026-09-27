@@ -1,14 +1,25 @@
-import type { RemoteContext } from '@portfolio/remote-runtime';
-import { openFeed, startDemoDriver, useSegments } from '@portfolio/remote-runtime';
+import type { RemoteContext, ViewTable } from '@portfolio/remote-runtime';
+import { ViewRouter, openFeed, startDemoDriver } from '@portfolio/remote-runtime';
 import type { CounterOrder } from '@portfolio/mocks';
 import { useEffect, useReducer, useRef, useState } from 'preact/hooks';
 import { initialBoard, nextLiveOrder, reduce, type Action } from './board';
+import { CounterContext, type FeedStatus } from './context';
 import { TopBar } from './TopBar';
 import { Tile } from './Tile';
 import { Lanes } from './Lanes';
 import { Picking } from './Picking';
+import { Returns } from './Returns';
+import { Stock } from './Stock';
 
-export type FeedStatus = 'local' | 'connecting' | 'live' | 'error';
+export type { FeedStatus };
+
+/** Every Counter view in routes.manifest.ts, and nothing else (TypeScript checks both ways). */
+const views: ViewTable<'counter'> = {
+  orders: () => <Lanes />,
+  picking: ({ rest }) => <Picking orderId={rest[0] ?? 'MR-904117'} />,
+  returns: () => <Returns />,
+  stock: () => <Stock />
+};
 
 export function App({ ctx }: { ctx: RemoteContext }) {
   if (ctx.mode === 'tile') return <Tile />;
@@ -16,7 +27,6 @@ export function App({ ctx }: { ctx: RemoteContext }) {
 }
 
 function Page({ ctx }: { ctx: RemoteContext }) {
-  const segments = useSegments(ctx.basePath);
   const [board, dispatch] = useReducer(reduce, undefined, initialBoard);
   const [status, setStatus] = useState<FeedStatus>('local');
   const feed = useRef<ReturnType<typeof openFeed<CounterOrder>> | null>(null);
@@ -42,13 +52,14 @@ function Page({ ctx }: { ctx: RemoteContext }) {
 
   const act = (action: Action) => dispatch(action);
   const emit = () => feed.current?.send('order.created', nextLiveOrder());
-  const picking = segments[0] === 'pick';
 
   return (
-    <div class="ct-app">
-      <TopBar active={picking ? 'Picking' : 'Orders'} />
-      {picking ? <Picking orderId={segments[1] ?? 'MR-904117'} board={board} act={act} /> : <Lanes board={board} act={act} feedStatus={status} emit={emit} />}
-      {board.toast && <div class="ct-toast" role="status">{board.toast}</div>}
-    </div>
+    <CounterContext.Provider value={{ board, act, feedStatus: status, emit, basePath: ctx.basePath }}>
+      <div class="ct-app">
+        <TopBar basePath={ctx.basePath} />
+        <ViewRouter remote="counter" basePath={ctx.basePath} views={views} label="Counter" />
+        {board.toast && <div class="ct-toast" role="status">{board.toast}</div>}
+      </div>
+    </CounterContext.Provider>
   );
 }

@@ -4,6 +4,11 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-27 · `feat(counter)`: Returns (queue, receipt scan, condition checklist, refund to original payment with Maré Pay installment reversal, +10% store credit or exchange; refunds emit `returns.refunded` and reverse Circle commissions) and Stock lookup (search/scan, color and size grid projected from stock events with freshness, reserve 2 h, ship home, nearby stores with courier ETA and Pull, fit tip), both live from the world simulation.
+- 2026-09-27 · `test(crawler)`: Playwright crawler over every manifest route and every nav item (heading, zero console errors, no error boundary or not-found, nav item current on arrival); `/pulse/distribution` gains its h1.
+- 2026-09-27 · `feat(counter)`: Balcão renamed Counter with 308 redirects from `/mare/ops/balcao*`.
+- 2026-09-27 · `feat(world)`: `@portfolio/world` deterministic in-browser simulation, domain event contracts, US English catalog, typed remote view router with designed not-found, live hooks.
+
 - 2026-09-27 · `feat(platform)`: `@portfolio/routes` manifest (routes, deep links, remote views, boards, expected headings) read by ⌘K, the lens, e2e, screenshots and a generated parity table; `pnpm verify:route`, `pnpm shots`, `pnpm budget`; Decision Lens tags for Design/UX/Architecture/Engineering/Free-tier; main-only Vercel deploys with `ignoreCommand`; CI without preview deploys, docs-only skip and release-only screenshots; AGENTS.md split into an index plus `docs/agents/*`.
 
 ## v0.1
