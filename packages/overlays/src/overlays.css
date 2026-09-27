@@ -22,7 +22,7 @@
   .ov-modal { top: auto; bottom: 0; left: 0; width: 100vw; border-radius: var(--radius) var(--radius) 0 0; transform: none; animation: ov-sheet-plain var(--duration) var(--ease) both; }
 }
 
-/* Theme motion: Balcão pops, Product Hub fades, Pay sweeps, Circle bounces, Mesh slides, Atlas springs. */
+/* Theme motion: Counter pops, Product Hub fades, Pay sweeps, Circle bounces, Mesh slides, Atlas springs. */
 @keyframes ov-fade { from { opacity: 0; } }
 @keyframes ov-rise { from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)); } }
 @keyframes ov-pop { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.85); } 65% { opacity: 1; transform: translate(-50%, -50%) scale(1.03); } }

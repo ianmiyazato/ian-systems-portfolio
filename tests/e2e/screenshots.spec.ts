@@ -9,7 +9,7 @@ const picked = process.env.SHOT_ONLY?.split(',').filter(Boolean);
 const selected = (screen: ScreenRoute) => !picked || picked.some((item) => screen.id === item || screen.system === item || screen.href === item);
 // Some variations belong to a specific screen rather than the area's main screen.
 const stateScreen: Record<string, [string, string]> = {
-  picked: ['balcao-picking', '/mare/ops/balcao/pick/MR-904117'],
+  picked: ['counter-picking', '/mare/ops/counter/pick/MR-904117'],
   limit: ['atlas-arena', '/atlas/arena'],
   generating: ['atlas-feedback', '/atlas/arena/sessions/14'],
   'checkout-failed': ['atlas-paywall', '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout']

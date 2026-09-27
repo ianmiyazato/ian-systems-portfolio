@@ -25,28 +25,28 @@ export function Handover({ orderId, board, act }: Props) {
         eyebrow={`${order.id} · pickup`}
         onClose={close}
         width={600}
-        anchor="bc-handover"
+        anchor="ct-handover"
         footer={
           <>
-            <button type="button" class="bc-secondary" onClick={() => openLayer({ sub: 'third-party' })} data-anchor="bc-third-party">Someone else is picking up</button>
-            <button type="button" class="bc-primary" disabled={code.length < 6} onClick={() => finish('code verified')}>Confirm handover</button>
+            <button type="button" class="ct-secondary" onClick={() => openLayer({ sub: 'third-party' })} data-anchor="ct-third-party">Someone else is picking up</button>
+            <button type="button" class="ct-primary" disabled={code.length < 6} onClick={() => finish('code verified')}>Confirm handover</button>
           </>
         }
       >
-        <div class="bc-handover-items">
+        <div class="ct-handover-items">
           {order.items.map((item, index) => (
             <div key={`${item.sku}-${index}`}><span class="swatch" data-swatch={item.swatch} /><span>{item.name}<small>Size {item.size} · {item.aisle}</small></span></div>
           ))}
-          <p class="bc-paid"><b>{order.total}</b>{order.payment}</p>
+          <p class="ct-paid"><b>{order.total}</b>{order.payment}</p>
         </div>
-        <label class="bc-code-label" for="bc-code">Ask for the 6-digit pickup code</label>
-        <div class="bc-code" data-anchor="bc-code">
-          <input id="bc-code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onInput={(event) => setCode(event.currentTarget.value.replace(/\D/g, '').slice(0, 6))} />
+        <label class="ct-code-label" for="ct-code">Ask for the 6-digit pickup code</label>
+        <div class="ct-code" data-anchor="ct-code">
+          <input id="ct-code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onInput={(event) => setCode(event.currentTarget.value.replace(/\D/g, '').slice(0, 6))} />
           {Array.from({ length: 6 }, (_, index) => (
             <span key={index} class={code[index] ? 'filled' : index === code.length ? 'caret-box' : ''} aria-hidden="true">{code[index] ?? ''}</span>
           ))}
         </div>
-        <button type="button" class="bc-camera"><span aria-hidden="true">▣</span>Use camera · scan the QR code in the customer's app</button>
+        <button type="button" class="ct-camera"><span aria-hidden="true">▣</span>Use camera · scan the QR code in the customer's app</button>
       </Layer>
       {sub === 'third-party' && (
         <Layer
@@ -55,25 +55,25 @@ export function Handover({ orderId, board, act }: Props) {
           title="Authorize a third party"
           eyebrow="Pickup on behalf of the customer"
           onClose={() => closeLayers(['sub'])}
-          anchor="bc-authorize"
-          footer={<button type="button" class="bc-primary wide" disabled={!matches} onClick={() => finish('Marina M. authorized in app')}>Confirm and hand over</button>}
+          anchor="ct-authorize"
+          footer={<button type="button" class="ct-primary wide" disabled={!matches} onClick={() => finish('Marina M. authorized in app')}>Confirm and hand over</button>}
         >
-          <div class="bc-auth" data-anchor="bc-app-authorization">
-            <span class="bc-auth-avatar" aria-hidden="true">MM</span>
+          <div class="ct-auth" data-anchor="ct-app-authorization">
+            <span class="ct-auth-avatar" aria-hidden="true">MM</span>
             <div>
               <strong>Marina M.</strong>
               <p>Authorized by {order.customer} in the Maré app · 15:52</p>
               <small>ID ending 4471</small>
             </div>
           </div>
-          <label class="bc-field">
+          <label class="ct-field">
             Last 4 digits of Marina's ID
             <span>
               <input inputMode="numeric" maxLength={4} value={idDigits} onInput={(event) => setIdDigits(event.currentTarget.value.replace(/\D/g, '').slice(0, 4))} />
               {idDigits.length === 4 && <em class={matches ? 'match' : 'nomatch'}>{matches ? 'Matches' : 'Does not match'}</em>}
             </span>
           </label>
-          <p class="bc-note">The ID photo is not stored. Only the match result and your staff badge go to the audit log.</p>
+          <p class="ct-note">The ID photo is not stored. Only the match result and your staff badge go to the audit log.</p>
         </Layer>
       )}
     </>

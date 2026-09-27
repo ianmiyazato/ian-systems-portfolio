@@ -59,12 +59,12 @@ importers:
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
-      '@portfolio/remote-balcao':
-        specifier: workspace:*
-        version: link:../../remotes/balcao
       '@portfolio/remote-circle':
         specifier: workspace:*
         version: link:../../remotes/circle
+      '@portfolio/remote-counter':
+        specifier: workspace:*
+        version: link:../../remotes/counter
       '@portfolio/remote-mesh':
         specifier: workspace:*
         version: link:../../remotes/mesh
@@ -384,7 +384,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
-  remotes/balcao:
+  remotes/circle:
     dependencies:
       '@portfolio/mocks':
         specifier: workspace:*
@@ -409,7 +409,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
-  remotes/circle:
+  remotes/counter:
     dependencies:
       '@portfolio/mocks':
         specifier: workspace:*

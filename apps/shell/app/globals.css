@@ -102,7 +102,7 @@ kbd { padding: 1px 6px; border: 1px solid currentColor; border-radius: 5px; font
 .lang-card h2 { font-size: 22px; }
 .lang-card header span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
 .lang-word { display: grid; place-items: center; min-height: 140px; margin: 0; border-radius: var(--radius-sm); background: var(--surface-2); font-family: var(--font-display); font-weight: var(--display-weight); font-stretch: var(--display-stretch); letter-spacing: var(--display-tracking); font-size: 38px; }
-.lang-balcao .lang-word { background: var(--ink); color: var(--accent); font-size: 52px; animation: pop 1.6s var(--ease) infinite; }
+.lang-counter .lang-word { background: var(--ink); color: var(--accent); font-size: 52px; animation: pop 1.6s var(--ease) infinite; }
 .lang-product-hub .lang-word { font-size: 28px; }
 .lang-pay .lang-word { font-size: 64px; background: linear-gradient(120deg, var(--surface-2), color-mix(in srgb, var(--accent-2) 25%, var(--surface))); animation: rise 2.4s var(--ease) infinite alternate; }
 .lang-circle .lang-word { color: var(--accent-text); font-size: 48px; --sticker-rotate: -5deg; animation: wiggle 1.8s ease-in-out infinite; }
@@ -114,7 +114,7 @@ kbd { padding: 1px 6px; border: 1px solid currentColor; border-radius: 5px; font
 .lang-card dt { color: var(--muted); font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
 .lang-card dd { margin: 2px 0 0; font-size: 13px; line-height: 1.45; }
 .lang-open { margin-top: auto; color: var(--accent-text); font-weight: 700; }
-.lang-balcao .lang-open { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.lang-counter .lang-open { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 .langs-shared, .langs-ai { margin-top: 96px; }
 .langs-shared ol { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 0; padding: 0; list-style: none; counter-reset: shared; }
 .langs-shared li { padding: 20px; border-top: 3px solid var(--accent); background: var(--surface); border-radius: 0 0 14px 14px; }

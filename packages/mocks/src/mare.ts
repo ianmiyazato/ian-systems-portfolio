@@ -8,7 +8,7 @@ export const store = { name: 'Shopping Vila Nova', code: '#0412', cutoff: '17:00
 export type Swatch = 'linen' | 'sand' | 'sea' | 'clay' | 'ink' | 'slate' | 'rose' | 'mist';
 export type OrderItem = { sku: string; name: string; size: string; aisle: string; swatch: Swatch; scanned?: boolean };
 export type Lane = 'to-pick' | 'picking' | 'ready' | 'handed-over';
-export type BalcaoOrder = {
+export type CounterOrder = {
   id: string;
   customer: string;
   type: 'pickup' | 'delivery';
@@ -32,7 +32,7 @@ export const laneTotals = { open: 59, pickup: 38, delivery: 21, late: 5 } as con
 
 const item = (sku: string, name: string, size: string, aisle: string, swatch: Swatch, scanned?: boolean): OrderItem => ({ sku, name, size, aisle, swatch, scanned });
 
-export const pickingOrder: BalcaoOrder = {
+export const pickingOrder: CounterOrder = {
   id: 'MR-904117', customer: 'Rafael', type: 'pickup', lane: 'picking', sla: '16 min left', urgent: true, total: 'R$ 697,00', payment: 'Paid · Maré Pay Crédito',
   items: [
     item('MR-18401', 'Camisa linho natural', 'M', 'A3 · shelf 2', 'linen', true),
@@ -41,8 +41,8 @@ export const pickingOrder: BalcaoOrder = {
   ]
 };
 
-/** The approved Balcão board: the artboard's cards, in lane order. Also seeds Supabase. */
-export const balcaoBoard: BalcaoOrder[] = [
+/** The approved Counter board: the artboard's cards, in lane order. Also seeds Supabase. */
+export const counterBoard: CounterOrder[] = [
   { id: 'MR-904121', customer: 'Nina', type: 'delivery', lane: 'to-pick', sla: 'Cutoff 17:00 · 42 min', urgent: false, total: 'R$ 538,00', payment: 'Paid · Pix', items: [item('MR-18190', 'Tricô sal', 'P', 'B2 · shelf 1', 'sea'), item('MR-17921', 'Bolsa lona', 'U', 'D1 · hook 3', 'clay')] },
   { id: 'MR-904120', customer: 'Otávio', type: 'pickup', lane: 'to-pick', sla: '38 min left', urgent: false, total: 'R$ 289,00', payment: 'Paid · card', items: [item('MR-18372', 'Calça costa pedra', '44', 'C1 · shelf 4', 'sand')] },
   { id: 'MR-904124', customer: 'Helena', type: 'delivery', lane: 'to-pick', sla: 'Cutoff 17:00 · 42 min', urgent: false, total: 'R$ 818,00', payment: 'Paid · Maré Pay Loja', items: [item('MR-18511', 'Vestido maré', 'M', 'A1 · rail 2', 'slate'), item('MR-18401', 'Camisa linho natural', 'G', 'A3 · shelf 2', 'linen'), item('MR-18190', 'Tricô sal', 'M', 'B2 · shelf 1', 'sea')] },
@@ -64,7 +64,7 @@ const catalog: Array<Omit<OrderItem, 'size' | 'aisle'>> = [
 ];
 
 /** The n-th synthetic order the demo driver announces over Realtime. Deterministic per n. */
-export function liveOrder(n: number): BalcaoOrder {
+export function liveOrder(n: number): CounterOrder {
   const random = rng(9000 + n);
   const count = int(random, 1, 3);
   const type = random() > 0.4 ? 'pickup' : 'delivery';
@@ -83,6 +83,6 @@ export function liveOrder(n: number): BalcaoOrder {
 }
 
 /** Kept for seeds and tiles: the board plus deterministic filler orders. */
-export function balcaoOrders(): BalcaoOrder[] {
-  return balcaoBoard;
+export function counterOrders(): CounterOrder[] {
+  return counterBoard;
 }

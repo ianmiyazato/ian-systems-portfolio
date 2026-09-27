@@ -6,7 +6,7 @@
  * Add a screen here first; `pnpm verify:route <href>` then proves it renders its heading.
  */
 export type Zone = 'shell' | 'mare-ops' | 'mare-shop' | 'pulse';
-export type SystemId = 'overview' | 'mare' | 'balcao' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'consumer' | 'atlas' | 'pulse';
+export type SystemId = 'overview' | 'mare' | 'counter' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'consumer' | 'atlas' | 'pulse';
 
 export type System = {
   id: SystemId;
@@ -48,7 +48,7 @@ const common = ['empty', 'loading', 'error', 'offline', 'locked'];
 export const systems: System[] = [
   { id: 'overview', title: 'Overview', theme: 'portfolio', owner: '@portfolio/shell', states: [] },
   { id: 'mare', title: 'Maré', theme: 'portfolio', owner: '@portfolio/shell', states: [] },
-  { id: 'balcao', title: 'Balcão', theme: 'balcao', owner: '@portfolio/remote-balcao', states: [...common, 'reminder-sent', 'picked'], home: 'balcao-lanes' },
+  { id: 'counter', title: 'Counter', theme: 'counter', owner: '@portfolio/remote-counter', states: [...common, 'reminder-sent', 'picked'], home: 'counter-lanes' },
   { id: 'product-hub', title: 'Product Hub', theme: 'product-hub', owner: '@portfolio/remote-product-hub', states: [...common, 'rejected'], home: 'product-hub-catalog' },
   { id: 'pay', title: 'Pay', theme: 'pay', owner: '@portfolio/remote-pay', states: [...common, 'approved', 'declined', 'drift'], home: 'pay-applications' },
   { id: 'circle', title: 'Circle', theme: 'circle', owner: '@portfolio/remote-circle', states: [...common, 'contract-pending', 'payout-failed'], home: 'circle-program' },
@@ -68,10 +68,10 @@ export const routes: RouteEntry[] = [
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
   { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
 
-  { id: 'balcao-lanes', system: 'balcao', title: 'Order lanes', href: '/mare/ops/balcao', zone: 'mare-ops', owner: remote('balcao'), board: 'BA-lanes', heading: 'open orders', release: '0.1', mobile: true },
-  { id: 'balcao-picking', system: 'balcao', title: 'Picking mode', href: '/mare/ops/balcao/pick/MR-904117', zone: 'mare-ops', owner: remote('balcao'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
-  { id: 'balcao-handover', system: 'balcao', title: 'Handover + third party', href: '/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party', zone: 'mare-ops', owner: remote('balcao'), board: 'BA-handover', heading: 'open orders', release: '0.1' },
-  { id: 'balcao-cutoff-plan', system: 'balcao', title: 'Cutoff plan + why', href: '/mare/ops/balcao?modal=cutoff-plan&sub=why', zone: 'mare-ops', owner: remote('balcao'), board: 'BA-cutoff', heading: 'open orders', release: '0.1' },
+  { id: 'counter-lanes', system: 'counter', title: 'Order lanes', href: '/mare/ops/counter', zone: 'mare-ops', owner: remote('counter'), board: 'BA-lanes', heading: 'open orders', release: '0.1', mobile: true },
+  { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
+  { id: 'counter-handover', system: 'counter', title: 'Handover + third party', href: '/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party', zone: 'mare-ops', owner: remote('counter'), board: 'BA-handover', heading: 'open orders', release: '0.1' },
+  { id: 'counter-cutoff-plan', system: 'counter', title: 'Cutoff plan + why', href: '/mare/ops/counter?modal=cutoff-plan&sub=why', zone: 'mare-ops', owner: remote('counter'), board: 'BA-cutoff', heading: 'open orders', release: '0.1' },
 
   { id: 'product-hub-catalog', system: 'product-hub', title: 'Catalog workspace', href: '/mare/ops/product-hub', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-catalog', heading: 'needs action', release: '0.1' },
   { id: 'product-hub-detail', system: 'product-hub', title: 'Product detail · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-detail', heading: 'linho', release: '0.1' },
@@ -129,7 +129,7 @@ export const routes: RouteEntry[] = [
 export type ViewDef = { readonly id: string; readonly title: string; readonly segment: string; readonly nav: boolean; readonly navPath?: string; readonly parent?: string };
 
 export const remoteViews = {
-  balcao: [
+  counter: [
     { id: 'orders', title: 'Orders', segment: '', nav: true },
     { id: 'picking', title: 'Picking', segment: 'pick', nav: true, navPath: 'pick/MR-904117' },
     { id: 'returns', title: 'Returns', segment: 'returns', nav: true },

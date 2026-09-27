@@ -8,7 +8,7 @@ ian-systems-portfolio (pnpm + Turborepo)
 ├── apps/mare-ops    Vite/React boundary · port 3001 · /mare/ops/*
 ├── apps/mare-shop   Astro boundary · port 3002 · /mare/shop/* + /mare/apps/*
 ├── apps/pulse       SvelteKit boundary · port 3003 · /pulse/*
-├── remotes/*        Balcão, Product Hub, Pay, Circle, Mesh: independent Preact builds with their own
+├── remotes/*        Counter, Product Hub, Pay, Circle, Mesh: independent Preact builds with their own
 │                    theme + fonts + chrome, each emitting remote-[hash].js, CSS and mf-manifest.json
 ├── packages
 │   ├── tokens       themes.json → generated themes.css + TS; nine themes; self-hosted fonts per theme

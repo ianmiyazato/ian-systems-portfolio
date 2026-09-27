@@ -5,6 +5,18 @@
   "buildCommand": "cd ../.. && pnpm run build --filter=@portfolio/mare-ops...",
   "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ../../apps/mare-ops ../../remotes ../../packages ../../decisions ../../pnpm-lock.yaml",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/mare/ops/balcao",
+      "destination": "/mare/ops/counter",
+      "permanent": true
+    },
+    {
+      "source": "/mare/ops/balcao/:path*",
+      "destination": "/mare/ops/counter/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/mare/ops/:path*",
