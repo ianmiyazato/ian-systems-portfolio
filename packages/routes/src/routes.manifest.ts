@@ -106,6 +106,8 @@ export const routes: RouteEntry[] = [
   { id: 'mesh-dlq-replay', system: 'mesh', title: 'DLQ replay + transform', href: '/mare/ops/mesh/dlq?modal=replay&sub=transform', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-dlq', heading: 'dead-letter queue', release: '0.1' },
   { id: 'mesh-invoice-chain', system: 'mesh', title: 'Invoice chain', href: '/mare/ops/mesh/invoices/MR-904117', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-invoices', heading: 'invoice chain', release: '0.1' },
 
+  { id: 'mesh-events', system: 'mesh', title: 'Event stream', href: '/mare/ops/mesh/events', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-events', heading: 'event stream', release: '0.2', checked: '2026-09-27', states: ['empty'] },
+  { id: 'mesh-contracts', system: 'mesh', title: 'Contracts', href: '/mare/ops/mesh/contracts', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-contracts', heading: 'contracts', release: '0.2', checked: '2026-09-27', states: ['error'] },
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
   { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'CS-site', heading: 'Linen, sun and salt', release: '0.1', mobile: true },
 

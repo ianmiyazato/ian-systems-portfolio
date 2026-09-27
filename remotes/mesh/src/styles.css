@@ -21,7 +21,7 @@
 .ms-btn:hover { border-color: var(--accent); }
 .ms-btn.primary { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
 .ms-btn.wide { width: 100%; min-height: 40px; }
-.ms-btn:disabled { opacity: .45; }
+.ms-btn:disabled { border-style: dashed; color: var(--muted); cursor: not-allowed; }
 .ms-back { align-self: flex-start; display: inline-flex; align-items: center; min-height: 36px; color: var(--muted); font-family: var(--font-mono); }
 .ms-page-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .ms-page-head h1, .ms-partner-head h1 { font-size: 22px; }
@@ -168,3 +168,57 @@
   .ms-grid .span-2, .ms-grid .span-3 { grid-column: auto; }
   .ms-counters { display: none; }
 }
+
+/* v0.2 views: events and contracts */
+.ms-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ms-kpis > div { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); font-family: var(--font-mono); }
+.ms-kpis span, .ms-kpis small { color: var(--muted); font-size: 11px; }
+.ms-kpis strong { font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.ms-filter { display: flex; gap: 8px; }
+.ms-filter input, .ms-filter select { min-height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--ink); font: 12px var(--font-mono); }
+.ms-filter input { width: 260px; }
+.ms-events td { vertical-align: middle; }
+.ms-topic { padding: 2px 8px; border-radius: 4px; background: var(--surface-2); color: var(--accent-text); }
+.ms-link { min-height: 32px; padding: 0; border: 0; background: none; color: var(--accent-text); font: inherit; text-align: left; cursor: pointer; }
+.ms-link:hover { text-decoration: underline; }
+.ms-link[aria-pressed='true'] { color: var(--ink); font-weight: 600; }
+.ms-by { margin-left: 8px; padding: 1px 6px; border-radius: 4px; background: color-mix(in srgb, var(--ai) 22%, transparent); color: var(--ink); font-style: normal; font-size: 11px; }
+.ms-table tr.action td { background: color-mix(in srgb, var(--ai) 10%, transparent); }
+.ms-table tr.selected td { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.ms-table tr.selected td:first-child { box-shadow: inset 2px 0 var(--accent); }
+.ms-empty { display: grid; gap: 4px; padding: 28px; border: 1px dashed var(--line); border-radius: var(--radius); font-family: var(--font-mono); text-align: center; }
+.ms-kv { display: grid; gap: 6px; margin: 0 0 12px; font: 12px var(--font-mono); }
+.ms-kv div { display: grid; grid-template-columns: 140px 1fr; gap: 8px; }
+.ms-kv dt { color: var(--muted); }
+.ms-kv dd { margin: 0; overflow-wrap: anywhere; }
+.ms-json { max-height: 320px; margin: 0; padding: 12px; overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--ground); color: var(--ink); font: 12px/1.55 var(--font-mono); }
+.ms-subhead { margin: 14px 0 6px; font: 500 12px var(--font-mono); }
+.ms-delivered { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font: 12px var(--font-mono); }
+.ms-delivered li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.ms-delivered small { color: var(--muted); }
+.ms-contracts { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.ms-proposed { color: var(--warn); }
+.ms-check { padding: 3px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font: 500 11px var(--font-mono); white-space: nowrap; }
+.ms-check.pass { border-color: color-mix(in srgb, var(--success) 50%, var(--line)); color: var(--success); }
+.ms-check.fail { border-color: color-mix(in srgb, var(--risk) 50%, var(--line)); color: var(--risk); }
+.ms-diff { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; font: 12px var(--font-mono); }
+.ms-diff li { display: grid; grid-template-columns: 18px auto 1fr auto; gap: 8px; align-items: baseline; padding: 6px 8px; border-radius: 4px; background: var(--surface-2); }
+.ms-diff li.removed { background: color-mix(in srgb, var(--risk) 14%, transparent); }
+.ms-diff li.added { background: color-mix(in srgb, var(--success) 12%, transparent); }
+.ms-diff-sign { font-weight: 700; }
+.ms-diff li.removed .ms-diff-sign, .ms-diff li.removed code { color: var(--risk); }
+.ms-diff li.added .ms-diff-sign, .ms-diff li.added code { color: var(--success); }
+.ms-diff-kind { color: var(--muted); }
+.ms-breaks { padding: 1px 6px; border-radius: 4px; background: var(--risk); color: var(--ground); font-weight: 600; font-size: 11px; white-space: nowrap; }
+.ms-verdict { padding: 8px 10px; border-left: 2px solid currentColor; font: 12px var(--font-mono); }
+.ms-consumers { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ms-consumers li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); font: 12px var(--font-mono); }
+.ms-consumers li.breaks { border-color: color-mix(in srgb, var(--risk) 45%, var(--line)); }
+.ms-consumers p { margin-top: 2px; color: var(--muted); }
+.ms-consumers code { color: var(--risk); }
+.ms-plan { display: grid; gap: 8px; margin: 0; padding-left: 18px; font-size: 12px; }
+.ms-plan code { color: var(--accent-text); }
+.ms-prs { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.ms-prs > li { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.ms-prs header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--font-mono); }
+@media (max-width: 1100px) { .ms-contracts { grid-template-columns: 1fr; } .ms-kpis { grid-template-columns: repeat(2, 1fr); } .ms-table { display: block; overflow-x: auto; } }
