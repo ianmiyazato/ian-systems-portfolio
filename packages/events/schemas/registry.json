@@ -11,6 +11,7 @@
     "dispute.opened": "BACKWARD",
     "auth.scored": "BACKWARD",
     "returns.created": "FULL",
-    "returns.refunded": "FULL"
+    "returns.refunded": "FULL",
+    "price.changed": "FULL"
   }
 }

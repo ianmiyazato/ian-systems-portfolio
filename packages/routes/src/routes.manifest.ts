@@ -78,9 +78,13 @@ export const routes: RouteEntry[] = [
   { id: 'counter-stock', system: 'counter', title: 'Stock lookup', href: '/mare/ops/counter/stock', zone: 'mare-ops', owner: remote('counter'), board: 'BA-stock', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27', states: ['empty', 'offline'] },
 
   { id: 'product-hub-catalog', system: 'product-hub', title: 'Catalog workspace', href: '/mare/ops/product-hub', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-catalog', heading: 'needs action', release: '0.1' },
-  { id: 'product-hub-detail', system: 'product-hub', title: 'Product detail · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-detail', heading: 'linho', release: '0.1' },
-  { id: 'product-hub-agent-run', system: 'product-hub', title: 'Agent run + edit', href: '/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-agent-run', heading: 'linho', release: '0.1' },
+  { id: 'product-hub-detail', system: 'product-hub', title: 'Product detail · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-detail', heading: 'Natural linen shirt', release: '0.1' },
+  { id: 'product-hub-agent-run', system: 'product-hub', title: 'Agent run + edit', href: '/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-agent-run', heading: 'Natural linen shirt', release: '0.1' },
   { id: 'product-hub-onboarding', system: 'product-hub', title: 'Seller onboarding', href: '/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-onboarding', heading: 'Onboard Linho', release: '0.1' },
+
+  { id: 'product-hub-availability', system: 'product-hub', title: 'Availability', href: '/mare/ops/product-hub/availability', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-availability', heading: 'Availability', release: '0.2', checked: '2026-09-27', states: ['oversold', 'error'] },
+  { id: 'product-hub-imports', system: 'product-hub', title: 'Imports', href: '/mare/ops/product-hub/imports', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-imports', heading: 'Imports', release: '0.2', checked: '2026-09-27', states: ['failed'] },
+  { id: 'product-hub-audit', system: 'product-hub', title: 'AI audit log', href: '/mare/ops/product-hub/audit', zone: 'mare-ops', owner: remote('product-hub'), board: 'PH-audit', heading: 'Audit', release: '0.2', checked: '2026-09-27', states: ['empty'] },
 
   { id: 'pay-applications', system: 'pay', title: 'Applications', href: '/mare/ops/pay', zone: 'mare-ops', owner: remote('pay'), board: 'PY-applications', heading: 'Applications', release: '0.1' },
   { id: 'pay-application-detail', system: 'pay', title: 'Application detail', href: '/mare/ops/pay/applications/AP-77118', zone: 'mare-ops', owner: remote('pay'), board: 'PY-detail', heading: 'Bruno S.', release: '0.1' },

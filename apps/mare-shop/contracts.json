@@ -1,4 +1,23 @@
-{ "consumer": "shop-tracking", "owner": "@portfolio/mare-shop", "reads": {
-  "delivery.updated": ["orderId", "carrier", "status", "etaMinutes", "trackingNumber"],
-  "orders.placed": ["orderId", "items[].name"]
-} }
+{
+  "consumer": "shop-tracking",
+  "owner": "@portfolio/mare-shop",
+  "reads": {
+   "delivery.updated": [
+    "orderId",
+    "carrier",
+    "status",
+    "etaMinutes",
+    "trackingNumber"
+   ],
+   "orders.placed": [
+    "orderId",
+    "items[].name"
+   ],
+   "price.changed": [
+    "sku",
+    "toCents",
+    "channels",
+    "untilDays"
+   ]
+  }
+}

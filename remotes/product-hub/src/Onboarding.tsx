@@ -5,14 +5,15 @@ const steps = [['company', 'Company'], ['mapping', 'Catalog mapping'], ['logisti
 
 type Mapping = { field: string; sample: string; target: string; confidence: number };
 
+/** The seller's feed columns are terse legacy exports; the agent maps them onto Maré's catalog model. */
 const mappings: Mapping[] = [
-  { field: 'cor', sample: 'Areia', target: 'Color → Sand', confidence: 0.97 },
-  { field: 'tam', sample: 'M', target: 'Size (BR letter)', confidence: 0.95 },
+  { field: 'clr', sample: 'SND', target: 'Color → Sand', confidence: 0.97 },
+  { field: 'sz_cd', sample: 'M', target: 'Size (US letter)', confidence: 0.95 },
   { field: 'ncm', sample: '6205.90.00', target: 'Tax code (NCM)', confidence: 0.99 },
-  { field: 'tecido', sample: '100% linho', target: 'Material composition', confidence: 0.91 },
-  { field: 'cuidado', sample: 'Lavar à mão', target: 'Care instructions', confidence: 0.88 },
-  { field: 'categoria', sample: 'Camisas > Manga longa', target: 'Category → Tops › Shirts', confidence: 0.78 },
-  { field: 'modelagem', sample: 'Reta', target: 'Fit → Regular', confidence: 0.64 }
+  { field: 'fab_comp', sample: '100% LIN', target: 'Material composition', confidence: 0.91 },
+  { field: 'care_txt', sample: 'HANDWASH CLD', target: 'Care instructions', confidence: 0.88 },
+  { field: 'cat_path', sample: 'SHIRTS>LS', target: 'Category → Tops › Shirts', confidence: 0.78 },
+  { field: 'fit_cd', sample: 'STR', target: 'Fit → Regular', confidence: 0.64 }
 ];
 
 const AUTO = 0.85;
@@ -88,7 +89,7 @@ export function Onboarding({ seller }: { seller: string }) {
             <header><h2>Site preview</h2></header>
             <div class="ph-preview">
               <span class="swatch" data-swatch="sand" />
-              <div><strong>Camisa linho reta</strong><small>Linho & Co · Tops › Shirts</small><b>R$ 239 · 3× sem juros</b></div>
+              <div><strong>Camisa linho reta</strong><small>Linho & Co · Tops › Shirts</small><b>R$239 · 3× sem juros</b></div>
             </div>
           </section>
         </aside>

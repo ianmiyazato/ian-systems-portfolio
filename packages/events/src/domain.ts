@@ -85,6 +85,11 @@ export const domainEvents = {
     topic: z.literal('returns.refunded'),
     payload: z.object({ returnId: z.string(), orderId: z.string(), store, method: z.enum(['original-payment', 'store-credit', 'exchange']), amountCents: cents, bonusCents: cents, installmentsReversed: z.number().int().nonnegative(), staff: z.string() })
   }),
+  'price.changed': z.object({
+    ...base,
+    topic: z.literal('price.changed'),
+    payload: z.object({ sku: z.string(), name: z.string(), fromCents: cents, toCents: cents, channels: z.array(z.enum(['site', 'app', 'marketplace'])).min(1), source: z.enum(['agent', 'human']), model: z.string().optional(), approvedBy: z.string(), reason: z.string(), untilDays: z.number().int().positive() })
+  }),
   'commission.reversed': z.object({
     ...base,
     topic: z.literal('commission.reversed'),
@@ -108,5 +113,6 @@ export const domainEventSchema = z.discriminatedUnion('topic', [
   domainEvents['auth.scored'],
   domainEvents['returns.created'],
   domainEvents['returns.refunded'],
-  domainEvents['commission.reversed']
+  domainEvents['commission.reversed'],
+  domainEvents['price.changed']
 ]);

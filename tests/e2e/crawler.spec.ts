@@ -16,18 +16,8 @@ for (const route of routes) {
   });
 }
 
-/** Nav items not yet rebuilt as real screens. Must be empty when M2 closes. */
-const pending = new Set<string>([
-  '/mare/ops/product-hub/products/510233?tab=pricing',
-  '/mare/ops/product-hub/availability',
-  '/mare/ops/product-hub/imports',
-  '/mare/ops/product-hub/audit',
-  '/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping',
-  '/mare/ops/product-hub?view=imports',
-  '/mare/ops/product-hub/products/510233?tab=stock',
-  '/mare/ops/product-hub/products/510233?tab=audit',
-  '/mare/ops/mesh?view=contracts'
-]);
+/** Nav items not yet rebuilt as real screens. Empty since M2: every nav item is a real screen. */
+const pending = new Set<string>([]);
 
 // One page per system (its home) plus each zone's entry points is enough to reach every nav.
 const roots = [...new Set([...systems.map((system) => system.home).filter((id): id is string => Boolean(id)), 'home', 'work-index', 'mare-ops-index', 'counter-picking', 'atlas-academy'])];
