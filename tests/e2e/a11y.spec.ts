@@ -9,12 +9,16 @@ const targets = [
   ...systems.flatMap((system) => {
     const home = system.home ? routeById(system.home) : undefined;
     return home ? system.states.map((state) => [`${system.id}--${state}`, withState(home.href, state)] as const) : [];
-  })
+  }),
+  ...routes.flatMap((route) => (route.states ?? []).map((state) => [`${route.id}--${state}`, withState(route.href, state)] as const))
 ];
+
+// The world is pinned (?live=paused) so axe measures the resting design, not a row mid-arrival.
+const pinned = (href: string) => `${href}${href.includes('?') ? '&' : '?'}live=paused`;
 
 for (const [name, href] of targets) {
   test(`a11y · ${name}`, async ({ page }) => {
-    await page.goto(href);
+    await page.goto(pinned(href));
     await expect(page.locator('.im-footer')).toContainText('All names are fictitious · data is synthetic · AI behavior is simulated in v0.1');
     await page.waitForLoadState('networkidle');
     // Let sequenced reveals (agent traces, streamed text) finish so axe measures resting colours.

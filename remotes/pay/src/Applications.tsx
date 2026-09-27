@@ -17,8 +17,8 @@ export function Applications() {
           <p>Review-band decisions pair model contributions with policy evidence. Everything else is decided automatically and sampled for audit.</p>
         </div>
         <div class="py-hero-cards" aria-hidden="true">
-          <PayCard kind="credito" />
-          <PayCard kind="loja" />
+          <PayCard kind="credit" />
+          <PayCard kind="store" />
         </div>
       </header>
 
@@ -27,11 +27,11 @@ export function Applications() {
           Challenger routing is paused and every 18–24 application goes to manual review until the risk team signs off.
         </Banner>
       )}
-      {state === 'approved' && <Banner tone="success" icon="✓" title="Approved · AP-77118 · Crédito + Loja · R$ 4.000" anchor="py-approved">Virtual card issued in the app; decision, factors and reviewer are in the audit log.</Banner>}
+      {state === 'approved' && <Banner tone="success" icon="✓" title="Approved · AP-77118 · Credit + Store · R$4,000" anchor="py-approved">Virtual card issued in the app; decision, factors and reviewer are in the audit log.</Banner>}
       {state === 'declined' && <DeclineLetter />}
       {state === 'error' && <Banner tone="risk" icon="!" title="Bureau connection failed · new applications are queued" anchor="py-error">Nothing is auto-declined while the bureau is down; the queue drains automatically when it returns.</Banner>}
       {state === 'offline' && <Banner tone="warn" icon="↯" title="Offline · decisions are held locally" anchor="py-offline">Nothing is sent to customers until you reconnect and a second check passes.</Banner>}
-      {state === 'locked' && <Banner tone="info" icon="i" title="Read-only · you are not a credit approver for limits above R$ 2.000" anchor="py-locked">Ask your lead for the Approver role; every request is logged.</Banner>}
+      {state === 'locked' && <Banner tone="info" icon="i" title="Read-only · you are not a credit approver for limits above R$2,000" anchor="py-locked">Ask your lead for the Approver role; every request is logged.</Banner>}
 
       <div class="py-kpis" data-anchor="py-kpis">
         <div><span>In review</span><strong>37</strong><small>median wait 14 min</small></div>
