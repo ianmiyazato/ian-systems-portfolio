@@ -1,16 +1,15 @@
 import { AiSurface, Banner, Link, closeLayers, navigate, openLayer, useDemoState, useLocation } from '@portfolio/remote-runtime';
 import { laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
-import type { Action, Board } from './board';
-import type { FeedStatus } from './App';
+import type { Action } from './board';
+import { useCounter, type FeedStatus } from './context';
 import { Handover } from './Handover';
 import { CutoffPlan } from './CutoffPlan';
 
 type Filter = 'all' | 'pickup' | 'delivery' | 'late';
 
-type Props = { board: Board; act: (action: Action) => void; feedStatus: FeedStatus; emit: () => void };
-
-export function Lanes({ board, act, feedStatus, emit }: Props) {
+export function Lanes() {
+  const { board, act, feedStatus, emit } = useCounter();
   const state = useDemoState();
   const { params } = useLocation();
   const [filter, setFilter] = useState<Filter>('all');

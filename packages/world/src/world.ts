@@ -24,6 +24,8 @@ type Listener = (batch: Batch) => void;
 type StateListener = (state: WorldState) => void;
 
 const STORAGE_KEY = 'portfolio:world:v1';
+const ACTIONS_KEY = 'portfolio:world:actions:v1';
+const MAX_ACTIONS = 120;
 const CHANNEL = 'portfolio:world';
 /** A stored world older than this (real time) restarts at 16:18 instead of jumping hours ahead. */
 const STALE_MS = 30 * MINUTE;
@@ -59,11 +61,16 @@ export class World {
   private cache = new Map<number, WorldEvent[]>();
   private channel: BroadcastChannel | null = null;
   private readonly id = tabId();
+  /** Events people caused (a refund, an approval). Kept per browser, shared with other tabs. */
+  private actions: WorldEvent[] = [];
 
   constructor(state: WorldState, options: { sync?: boolean } = {}) {
     this.state = state;
     this.cursor = this.now();
-    if (options.sync && typeof window !== 'undefined') this.connect();
+    if (options.sync && typeof window !== 'undefined') {
+      this.actions = loadActions(state.seed);
+      this.connect();
+    }
   }
 
   /** Current sim time (ms). */
@@ -97,7 +104,39 @@ export class World {
         if (at >= from && at < to && (!topics || topics.includes(item.topic))) out.push(item);
       }
     }
+    for (const item of this.actions) {
+      const at = Date.parse(item.at);
+      if (at >= from && at < to && (!topics || topics.includes(item.topic))) out.push(item);
+    }
     return out.sort((a, b) => a.at.localeCompare(b.at));
+  }
+
+  /**
+   * Record an event a person caused, at the current sim time. It reaches every subscriber
+   * immediately, every other open tab and zone over BroadcastChannel, and later queries.
+   */
+  record<T extends WorldEvent>(event: Omit<T, 'at' | 'id'> & { id?: string }): T {
+    const full = { ...event, id: event.id ?? `act_${this.id}_${Date.now().toString(36)}`, at: new Date(this.now()).toISOString() } as T;
+    this.remember(full);
+    this.channel?.postMessage({ type: 'action', event: full });
+    return full;
+  }
+
+  /** Actions only (newest last), e.g. for an audit log. */
+  recorded(topics?: Topic[]): WorldEvent[] {
+    return this.actions.filter((item) => !topics || topics.includes(item.topic));
+  }
+
+  private remember(event: WorldEvent) {
+    if (this.actions.some((item) => item.id === event.id)) return;
+    this.actions = [...this.actions, event].slice(-MAX_ACTIONS);
+    try {
+      localStorage.setItem(ACTIONS_KEY, JSON.stringify({ seed: this.state.seed, events: this.actions }));
+    } catch {
+      // Storage unavailable: the action still reaches this tab and the channel.
+    }
+    const batch = { events: [event], now: this.now(), from: this.cursor };
+    for (const listener of this.listeners) listener(batch);
   }
 
   /** The latest `limit` events of the given topics before `before` (searches back up to 6 h). */
@@ -221,11 +260,21 @@ export class World {
   private connect() {
     if (typeof BroadcastChannel === 'undefined') return;
     this.channel = new BroadcastChannel(CHANNEL);
-    this.channel.onmessage = (message: MessageEvent<{ type: string; state?: WorldState }>) => {
+    this.channel.onmessage = (message: MessageEvent<{ type: string; state?: WorldState; event?: WorldEvent }>) => {
       if (message.data.type === 'state' && message.data.state) this.adopt(message.data.state);
+      if (message.data.type === 'action' && message.data.event) this.remember(message.data.event);
       if (message.data.type === 'hello' && this.state.rev > 0) this.channel?.postMessage({ type: 'state', state: this.state });
     };
     this.channel.postMessage({ type: 'hello' });
+  }
+}
+
+function loadActions(seed: number): WorldEvent[] {
+  try {
+    const stored = JSON.parse(localStorage.getItem(ACTIONS_KEY) ?? 'null') as { seed: number; events: WorldEvent[] } | null;
+    return stored && stored.seed === seed && Array.isArray(stored.events) ? stored.events : [];
+  } catch {
+    return [];
   }
 }
 

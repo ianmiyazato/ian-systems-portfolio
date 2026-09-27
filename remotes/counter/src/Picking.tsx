@@ -1,11 +1,10 @@
 import { Banner, Link, navigate, useDemoState, useTween } from '@portfolio/remote-runtime';
 import { pickingOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
-import type { Action, Board } from './board';
+import { useCounter } from './context';
 
-type Props = { orderId: string; board: Board; act: (action: Action) => void };
-
-export function Picking({ orderId, board, act }: Props) {
+export function Picking({ orderId }: { orderId: string }) {
+  const { board, act } = useCounter();
   const state = useDemoState();
   const order = board.orders.find((item) => item.id === orderId) ?? pickingOrder;
   const initial = state === 'picked' ? order.items.length : order.items.filter((item) => item.scanned).length;
