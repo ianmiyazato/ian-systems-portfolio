@@ -81,6 +81,15 @@ describe('event generation', () => {
     expect(w.between(DEFAULT_START - MINUTE, DEFAULT_START + MINUTE, ['returns.refunded'])).toHaveLength(1);
   });
 
+  it('keeps actions recorded in the same millisecond distinct', () => {
+    const w = world('?live=paused');
+    const payload = { code: 'NINA10', creator: 'Nina Costa', orderId: 'MR-900001', amountCents: 1914, reason: 'return' as const };
+    const first = w.record({ topic: 'commission.reversed', key: 'NINA10', payload });
+    const second = w.record({ topic: 'commission.reversed', key: 'NINA10', payload });
+    expect(first.id).not.toBe(second.id);
+    expect(w.recorded(['commission.reversed'])).toHaveLength(2);
+  });
+
   it('opens and recovers faults at the current sim time', () => {
     const w = world('?live=paused');
     w.setFault('db-pool', true);

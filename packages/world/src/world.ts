@@ -63,6 +63,8 @@ export class World {
   private readonly id = tabId();
   /** Events people caused (a refund, an approval). Kept per browser, shared with other tabs. */
   private actions: WorldEvent[] = [];
+  /** Actions recorded in the same millisecond still get distinct ids (a refund records two). */
+  private sequence = 0;
 
   constructor(state: WorldState, options: { sync?: boolean } = {}) {
     this.state = state;
@@ -116,7 +118,8 @@ export class World {
    * immediately, every other open tab and zone over BroadcastChannel, and later queries.
    */
   record<T extends WorldEvent>(event: Omit<T, 'at' | 'id'> & { id?: string }): T {
-    const full = { ...event, id: event.id ?? `act_${this.id}_${Date.now().toString(36)}`, at: new Date(this.now()).toISOString() } as T;
+    this.sequence += 1;
+    const full = { ...event, id: event.id ?? `act_${this.id}_${Date.now().toString(36)}_${this.sequence}`, at: new Date(this.now()).toISOString() } as T;
     this.remember(full);
     this.channel?.postMessage({ type: 'action', event: full });
     return full;
