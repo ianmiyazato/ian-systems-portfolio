@@ -39,7 +39,8 @@ const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
 if (canHover) {
   document.addEventListener('pointerover', (event) => {
     const tile = (event.target as HTMLElement).closest<HTMLElement>('.cs-row.is-ready .cs-tile');
-    if (!tile || tile === expanded) return;
+    // Keyboard focus wins: a resting pointer must not steal the card someone is tabbing through.
+    if (!tile || tile === expanded || document.activeElement?.closest('.cs-tile')) return;
     window.clearTimeout(intent);
     intent = window.setTimeout(() => expand(tile), INTENT_MS);
   });
