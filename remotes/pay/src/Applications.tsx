@@ -4,6 +4,7 @@ import { useState } from 'preact/hooks';
 import { applications, bandFor, brl, histogram, REVIEW_BAND, type Application } from './data';
 import { PayCard } from './PayCard';
 import { DeclineLetter } from './Detail';
+import { Recap, RecapChip, useRecap } from './Recap';
 
 /** One in five Maré Pay checkouts from a new customer is a credit application; the score is stable per order. */
 function applicationFrom(event: WorldEvent): Application | null {
@@ -29,6 +30,7 @@ export function Applications() {
   const liveBins = histogram.map((bin) => ({ ...bin, count: bin.count + live.filter((item) => item.score >= bin.from && item.score < bin.from + 20).length * 4 }));
   const maxCount = Math.max(...liveBins.map((bin) => bin.count));
   const sweep = useTween(1, 1400);
+  const recap = useRecap();
   return (
     <main class="py-main">
       <header class="py-hero" data-anchor="py-hero">
@@ -36,7 +38,7 @@ export function Applications() {
           <span class="py-eyebrow">Maré Pay · Credit operations</span>
           <h1>Applications</h1>
           <p>Review-band decisions pair model contributions with policy evidence. Everything else is decided automatically and sampled for audit.</p>
-          <LiveControl anchor="py-applications-live" />
+          <div class="py-hero-row"><LiveControl anchor="py-applications-live" /><RecapChip count={recap.frames.length} since={recap.since} /></div>
         </div>
         <div class="py-hero-cards" aria-hidden="true">
           <PayCard kind="credit" />
@@ -111,6 +113,7 @@ export function Applications() {
           </AiSurface>
         </section>
       </div>
+      {recap.open && <Recap frames={recap.frames} since={recap.since} />}
     </main>
   );
 }

@@ -97,5 +97,27 @@ test.describe('Pay', () => {
     await expect(page.locator('[data-anchor="py-policy-conflict"]')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Request approval' })).toBeDisabled();
   });
-});
 
+  test('the recap replays what changed since you left, story by story', async ({ page }) => {
+    await page.goto('/mare/ops/pay');
+    await page.getByRole('button', { name: /What changed since/ }).click();
+    const recap = page.getByRole('dialog', { name: 'What changed since you left' });
+    await expect(recap.getByText('Applications', { exact: true })).toBeVisible();
+    await recap.getByRole('button', { name: 'Pause' }).click();
+    await recap.getByRole('button', { name: 'Next' }).click();
+    // The default world is mid-incident, so scoring is slow and the card points to Tidewatch.
+    await expect(recap.getByText('214 ms')).toBeVisible();
+    await expect(recap.getByRole('link', { name: 'Open P-812 in Tidewatch' })).toHaveAttribute('href', '/observability');
+    await page.keyboard.press('ArrowRight');
+    await expect(recap.getByText('2 due')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(recap).toBeHidden();
+  });
+
+  test('returning to Pay after a while plays the recap once', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('pay:last-visit', String(Date.parse('2026-09-26T14:00:00-03:00'))));
+    await page.goto('/mare/ops/pay?t=16:18');
+    await expect(page.getByRole('dialog', { name: 'What changed since you left' })).toBeVisible();
+    await expect(page.getByText(/Since 14:00 · 1 of 5/)).toBeVisible();
+  });
+});
