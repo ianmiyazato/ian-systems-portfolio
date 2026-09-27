@@ -125,7 +125,8 @@ export const routes: RouteEntry[] = [
  * component (checked by TypeScript), and its nav renders only from this list, so a nav item
  * cannot exist without a screen. `segment` is the first path segment under /mare/ops/<remote>.
  */
-export type ViewDef = { readonly id: string; readonly title: string; readonly segment: string; readonly nav: boolean; readonly navPath?: string };
+/** `parent` names the nav item a non-nav view highlights (an application detail lights up Applications). */
+export type ViewDef = { readonly id: string; readonly title: string; readonly segment: string; readonly nav: boolean; readonly navPath?: string; readonly parent?: string };
 
 export const remoteViews = {
   balcao: [
@@ -144,7 +145,7 @@ export const remoteViews = {
   ],
   pay: [
     { id: 'applications', title: 'Applications', segment: '', nav: true },
-    { id: 'application', title: 'Application', segment: 'applications', nav: false },
+    { id: 'application', title: 'Application', segment: 'applications', nav: false, parent: 'applications' },
     { id: 'accounts', title: 'Accounts', segment: 'accounts', nav: true },
     { id: 'disputes', title: 'Disputes', segment: 'disputes', nav: true },
     { id: 'collections', title: 'Collections', segment: 'collections', nav: true },

@@ -18,3 +18,34 @@
 .tone-info { background: var(--accent-soft); }
 .tone-ai { border-color: color-mix(in srgb, var(--ai) 45%, var(--line)); background: var(--ai-soft); }
 .tone-ai .state-icon { background: var(--ai); color: var(--ai-ink); }
+
+/* Live world: control, freshness, sparklines, arriving rows. Themes restyle through tokens. */
+.live-control { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 4px 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font: 600 12px var(--font-ui); white-space: nowrap; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: breathe 1.8s infinite; }
+.live-control.is-paused .live-dot { background: var(--muted); animation: none; }
+.live-clock { color: var(--muted); font: 500 12px var(--font-mono); font-variant-numeric: tabular-nums; }
+.live-speed { padding: 2px 6px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font: 700 11px var(--font-mono); }
+.live-pause { min-height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--ink); font: 600 12px var(--font-ui); cursor: pointer; }
+.live-pause[aria-pressed='true'] { border-color: var(--ink); background: var(--ink); color: var(--ground); }
+.live-fresh { color: var(--muted); font: 500 12px var(--font-mono); font-variant-numeric: tabular-nums; }
+.live-spark { overflow: visible; }
+.live-spark path { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.is-arriving { position: relative; animation: row-arrive .45s var(--ease) both; }
+tr.is-arriving { animation: none; }
+tr.is-arriving > * { position: relative; animation: row-arrive .45s var(--ease) both; }
+/* The flash is an overlay that fades out, so only opacity and transform ever animate. */
+.is-arriving::after, tr.is-arriving > :first-child::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--accent); opacity: 0; pointer-events: none; animation: row-flash 1.2s var(--ease) both; }
+tr.is-arriving::after { content: none; }
+tr.is-arriving > :first-child::before { inset: 0 auto 0 0; width: 4px; }
+@keyframes row-arrive { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes row-flash { 0% { opacity: .16; } 100% { opacity: 0; } }
+.view-redirect { padding: 24px; color: var(--muted); }
+
+/* Designed not-found: the remote's chrome stays; the body lists every real view. */
+.view-not-found { display: grid; justify-items: start; gap: 12px; max-width: 640px; margin: 48px auto; padding: 32px; border: 1px dashed var(--line); border-radius: var(--radius); background: var(--surface); animation: rise .3s var(--ease) both; }
+.view-not-found-code { color: var(--accent-text); font: 800 56px/1 var(--font-display); letter-spacing: var(--display-tracking); }
+.view-not-found h1 { font-size: 28px; }
+.view-not-found p { color: var(--muted); }
+.view-not-found ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.view-not-found a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--ink); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .is-arriving, .view-not-found, .live-dot { animation: none; } }
