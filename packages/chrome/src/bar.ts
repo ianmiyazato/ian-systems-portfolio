@@ -30,7 +30,7 @@ const links: Array<[string, string]> = [
   ['Design languages', '/work/mare/languages']
 ];
 
-/** <im-portfolio-bar context="Maré Ops · Balcão"> — the same top nav in Next, Vite, Astro and SvelteKit. */
+/** <im-portfolio-bar context="Maré Ops · Counter"> — the same top nav in Next, Vite, Astro and SvelteKit. */
 export class PortfolioBar extends HTMLElement {
   static observedAttributes = ['context'];
   private root: ShadowRoot;

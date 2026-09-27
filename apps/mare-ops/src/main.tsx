@@ -9,7 +9,7 @@ import { RemoteBoundary, RemoteSlot } from './remote-host';
 
 type Health = Record<string, { ok: boolean; version?: string } | undefined>;
 
-const themes: Record<string, string> = { balcao: 'balcao', 'product-hub': 'product-hub', pay: 'pay', circle: 'circle', mesh: 'mesh' };
+const themes: Record<string, string> = { counter: 'counter', 'product-hub': 'product-hub', pay: 'pay', circle: 'circle', mesh: 'mesh' };
 
 function usePath() {
   const [path, setPath] = useState(location.pathname);
@@ -119,6 +119,10 @@ function NotFound() {
     </section>
   );
 }
+
+// v0.2 renamed Balcão to Counter. The shell and vercel.json redirect with a 308; this covers
+// the zone's own preview server so old /mare/ops/balcao links never render a 404.
+if (/^\/mare\/ops\/balcao(\/|$)/.test(location.pathname)) history.replaceState(null, '', location.href.replace('/mare/ops/balcao', '/mare/ops/counter'));
 
 defineChrome();
 createRoot(document.getElementById('root')!).render(

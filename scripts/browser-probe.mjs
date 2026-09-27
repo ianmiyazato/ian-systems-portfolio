@@ -2,7 +2,7 @@
 // BASE=https://… PATHS='/ /pulse' SHOTS=dir node scripts/browser-probe.mjs
 import { chromium } from '@playwright/test';
 const base = process.env.BASE ?? 'https://ian-portfolio-shell.vercel.app';
-const paths = (process.env.PATHS ?? '/ /mare/ops/balcao /mare/shop /pulse /atlas/pipeline').split(' ');
+const paths = (process.env.PATHS ?? '/ /mare/ops/counter /mare/shop /pulse /atlas/pipeline').split(' ');
 const shots = process.env.SHOTS;
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });

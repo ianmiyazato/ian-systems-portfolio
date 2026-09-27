@@ -40,7 +40,7 @@ ian-systems-portfolio (pnpm + Turborepo)
 ├── apps/mare-ops    Vite/React host · :3001 · /mare/ops/* · runtime federation of five remotes
 ├── apps/mare-shop   Astro · :3002 · /mare/shop/*, /mare/apps/*
 ├── apps/pulse       SvelteKit · :3003 · /pulse/*
-├── remotes/*        Balcão, Product Hub, Pay, Circle, Mesh · independent Preact builds (mount(el, ctx) → unmount)
+├── remotes/*        Counter, Product Hub, Pay, Circle, Mesh · independent Preact builds (mount(el, ctx) → unmount)
 └── packages
     ├── routes       routes.manifest.ts: every route, deep link, nav view, board and expected heading
     ├── tokens       themes.json → themes.css + TS · nine themes · self-hosted fonts
@@ -90,7 +90,7 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 ## 6. v0.2 milestones
 
 - [x] M1 · agent ergonomics (routes manifest, verify:route/shots/budget, docs split) and free-tier configuration
-- [ ] M2 · every nav item a real screen (12 broken views), crawler in CI, Balcão → Counter with redirects
+- [ ] M2 · every nav item a real screen (12 broken views), crawler in CI, Counter → Counter with redirects
 - [ ] M3 · US English pass and copy lint
 - [ ] M4 · `packages/world` wired into every system
 - [ ] M5 · `/system-design/mare/request-path` with scenario replays

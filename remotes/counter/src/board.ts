@@ -1,15 +1,15 @@
-import { balcaoBoard, liveOrder, type BalcaoOrder, type Lane } from '@portfolio/mocks';
+import { counterBoard, liveOrder, type CounterOrder, type Lane } from '@portfolio/mocks';
 
-export type Board = { orders: BalcaoOrder[]; fresh: string[]; reminded: string[]; queued: string[]; live: number; toast: string | null };
+export type Board = { orders: CounterOrder[]; fresh: string[]; reminded: string[]; queued: string[]; live: number; toast: string | null };
 
 export type Action =
-  | { type: 'created'; order: BalcaoOrder }
-  | { type: 'move'; id: string; lane: Lane; patch?: Partial<BalcaoOrder> }
+  | { type: 'created'; order: CounterOrder }
+  | { type: 'move'; id: string; lane: Lane; patch?: Partial<CounterOrder> }
   | { type: 'remind'; id: string }
   | { type: 'toast'; message: string | null }
   | { type: 'apply-plan' };
 
-export const initialBoard = (): Board => ({ orders: balcaoBoard.map((order) => ({ ...order })), fresh: [], reminded: [], queued: [], live: 0, toast: null });
+export const initialBoard = (): Board => ({ orders: counterBoard.map((order) => ({ ...order })), fresh: [], reminded: [], queued: [], live: 0, toast: null });
 
 export function reduce(board: Board, action: Action): Board {
   switch (action.type) {
@@ -37,11 +37,11 @@ export function reduce(board: Board, action: Action): Board {
 }
 
 /** Shared, deterministic sequence so every tab announces the same next order. */
-export function nextLiveOrder(): BalcaoOrder {
+export function nextLiveOrder(): CounterOrder {
   let n = 1;
   try {
-    n = Number(localStorage.getItem('portfolio-demo-sequence:balcao') ?? '0') + 1;
-    localStorage.setItem('portfolio-demo-sequence:balcao', String(n));
+    n = Number(localStorage.getItem('portfolio-demo-sequence:counter') ?? '0') + 1;
+    localStorage.setItem('portfolio-demo-sequence:counter', String(n));
   } catch {
     n = Math.floor(Date.now() / 20000) % 100;
   }

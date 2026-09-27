@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const target = resolve(root, process.argv[2] ?? 'apps/mare-ops/dist/mare/ops/remotes');
-const remotes = ['balcao', 'product-hub', 'pay', 'circle', 'mesh'];
+const remotes = ['counter', 'product-hub', 'pay', 'circle', 'mesh'];
 
 rmSync(target, { recursive: true, force: true });
 mkdirSync(target, { recursive: true });

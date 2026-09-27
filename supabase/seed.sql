@@ -1,4 +1,4 @@
--- Generated from @portfolio/mocks (balcaoBoard + liveOrder 1-6). Regenerate: WRITE_SEED=1 pnpm --filter @portfolio/mocks test
+-- Generated from @portfolio/mocks (counterBoard + liveOrder 1-6). Regenerate: WRITE_SEED=1 pnpm --filter @portfolio/mocks test
 insert into public.orders (id, lane, customer_alias, item_count, status, cutoff_at, created_at) values
   ('MR-904121', 'delivery', 'Nina', 2, 'to-pick', '2026-09-26T20:00:00Z', '2026-09-26T18:30:00.000Z'),
   ('MR-904120', 'pickup', 'Otávio', 1, 'to-pick', '2026-09-26T20:00:00Z', '2026-09-26T18:27:00.000Z'),

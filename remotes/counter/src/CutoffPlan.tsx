@@ -35,38 +35,38 @@ export function CutoffPlan({ act }: { act: (action: Action) => void }) {
         eyebrow="Cutoff plan · 16:18"
         onClose={close}
         width={820}
-        anchor="bc-cutoff-plan"
+        anchor="ct-cutoff-plan"
         footer={
           <>
-            <button type="button" class="bc-ghost" onClick={close}>Dismiss</button>
-            <button type="button" class="bc-secondary" onClick={() => openLayer({ sub: 'why' })} data-anchor="bc-why-button">Why this plan?</button>
-            <button type="button" class="bc-primary" onClick={apply}>Apply plan</button>
+            <button type="button" class="ct-ghost" onClick={close}>Dismiss</button>
+            <button type="button" class="ct-secondary" onClick={() => openLayer({ sub: 'why' })} data-anchor="ct-why-button">Why this plan?</button>
+            <button type="button" class="ct-primary" onClick={apply}>Apply plan</button>
           </>
         }
       >
-        <div class="bc-impact" data-anchor="bc-impact">
+        <div class="ct-impact" data-anchor="ct-impact">
           <div class="good"><span>Missed cutoffs</span><strong>3 → 0</strong></div>
           <div><span>Extra cost</span><strong>R$ 18,40</strong></div>
           <div><span>Staff time</span><strong>+6 min</strong></div>
         </div>
-        <ol class="bc-moves" data-anchor="bc-moves">
+        <ol class="ct-moves" data-anchor="ct-moves">
           {moves.slice(0, shown).map((move) => (
             <li key={move.order}>
               <b>{move.order}</b>
-              <span class="bc-from">{move.from}</span>
+              <span class="ct-from">{move.from}</span>
               <span aria-hidden="true">→</span>
-              <span class="bc-to">{move.to}</span>
+              <span class="ct-to">{move.to}</span>
               <small>{move.reason}</small>
             </li>
           ))}
         </ol>
-        <AiSurface inline title="Proposed by the cutoff agent · you approve" meta="confidence 0.92" sources={sources} anchor="bc-plan-ai">
+        <AiSurface inline title="Proposed by the cutoff agent · you approve" meta="confidence 0.92" sources={sources} anchor="ct-plan-ai">
           Nothing moves until you apply. Each move is a replay-safe command with its own idempotency key.
         </AiSurface>
       </Layer>
       {sub === 'why' && (
-        <Layer kind="sub-drawer" level={2} title="Why this plan" eyebrow="Evidence behind each move" onClose={() => closeLayers(['sub'])} anchor="bc-why">
-          <ol class="bc-reasons">
+        <Layer kind="sub-drawer" level={2} title="Why this plan" eyebrow="Evidence behind each move" onClose={() => closeLayers(['sub'])} anchor="ct-why">
+          <ol class="ct-reasons">
             <li><b>1</b><p>At the current pace (4.1 min per item) three delivery orders finish after Rota Sul's 17:00 collection.</p></li>
             <li><b>2</b><p>Luiza and Otávio finish their current orders by 16:22 and are the nearest pickers to aisles A and B.</p></li>
             <li><b>3</b><p>Via Norte's 18:30 run costs R$ 9,20 per parcel, less than the refund policy for a missed same-day delivery.</p></li>
@@ -74,7 +74,7 @@ export function CutoffPlan({ act }: { act: (action: Action) => void }) {
           <ul class="ai-sources" aria-label="Sources">
             {sources.map((source) => <li class="ai-source" key={source.label}>{source.label}<b>{source.score.toFixed(2)}</b></li>)}
           </ul>
-          <p class="bc-note">Guardrail: the plan never moves a pickup whose customer is already on the way.</p>
+          <p class="ct-note">Guardrail: the plan never moves a pickup whose customer is already on the way.</p>
         </Layer>
       )}
     </>

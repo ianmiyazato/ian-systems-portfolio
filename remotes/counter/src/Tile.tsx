@@ -1,17 +1,17 @@
-import { balcaoOrders, store } from '@portfolio/mocks';
+import { counterOrders, store } from '@portfolio/mocks';
 
 const lanes = [['to-pick', 'To pick'], ['picking', 'Picking'], ['ready', 'Ready'], ['handed-over', 'Done']] as const;
 
 /** Compact preview for the Maré Ops index: same language, no interactive controls. */
 export function Tile() {
-  const orders = balcaoOrders();
+  const orders = counterOrders();
   return (
-    <div class="bc-tile">
-      <div class="bc-tile-bar"><b>balcão</b><span><i />Carrier {store.cutoff} · {store.cutoffIn}</span></div>
-      <div class="bc-tile-body">
+    <div class="ct-tile">
+      <div class="ct-tile-bar"><b>counter</b><span><i />Carrier {store.cutoff} · {store.cutoffIn}</span></div>
+      <div class="ct-tile-body">
         <small>Store counter · tablet-first</small>
         <strong>59 open orders</strong>
-        <div class="bc-tile-lanes">
+        <div class="ct-tile-lanes">
           {lanes.map(([id, label]) => (
             <div key={id}>
               <em>{label}</em>

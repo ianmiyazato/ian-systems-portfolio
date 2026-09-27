@@ -3,7 +3,7 @@ const base = process.env.LHCI_BASE ?? 'https://ian-portfolio-shell.vercel.app';
 module.exports = {
   ci: {
     collect: {
-      url: ['/', '/work/mare', '/mare/shop', '/mare/ops/balcao', '/pulse'].map((path) => `${base}${path}`),
+      url: ['/', '/work/mare', '/mare/shop', '/mare/ops/counter', '/pulse'].map((path) => `${base}${path}`),
       numberOfRuns: 3,
       settings: { chromeFlags: '--headless=new --no-sandbox' }
     },

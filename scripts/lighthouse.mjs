@@ -12,7 +12,7 @@ import { ensureServers } from './lib/servers.mjs';
 const base = process.env.LHCI_BASE ?? 'http://127.0.0.1:3000';
 const stopServers = process.env.LHCI_BASE ? () => {} : await ensureServers();
 const runs = Number(process.env.RUNS ?? 3);
-const paths = (process.env.PATHS ?? '/ /work/mare /mare/shop /mare/ops/balcao /pulse').split(' ');
+const paths = (process.env.PATHS ?? '/ /work/mare /mare/shop /mare/ops/counter /pulse').split(' ');
 const port = 9333;
 const categories = ['performance', 'accessibility', 'best-practices', 'seo'];
 mkdirSync('.lighthouseci', { recursive: true });

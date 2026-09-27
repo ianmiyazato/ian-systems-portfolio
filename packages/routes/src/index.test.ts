@@ -31,19 +31,19 @@ describe('routes manifest', () => {
   });
 
   it('prefers the base screen when an overlay is closed', () => {
-    expect(resolveScreen('/mare/ops/balcao', '')?.id).toBe('balcao-lanes');
-    expect(resolveScreen('/mare/ops/balcao', '?modal=cutoff-plan&sub=why')?.id).toBe('balcao-cutoff-plan');
+    expect(resolveScreen('/mare/ops/counter', '')?.id).toBe('counter-lanes');
+    expect(resolveScreen('/mare/ops/counter', '?modal=cutoff-plan&sub=why')?.id).toBe('counter-cutoff-plan');
     expect(resolveScreen('/mare/ops/product-hub/products/510233', '?tab=pricing')?.id).toBe('product-hub-detail');
   });
 
   it('resolves dynamic ids to their artboard', () => {
-    expect(resolveScreen('/mare/ops/balcao/pick/MR-904120')?.id).toBe('balcao-picking');
+    expect(resolveScreen('/mare/ops/counter/pick/MR-904120')?.id).toBe('counter-picking');
     expect(resolveScreen('/mare/ops/mesh/partners/via-norte')?.id).toBe('mesh-partner');
     expect(resolveScreen('/pulse/distribution/')?.id).toBe('pulse-distribution');
   });
 
   it('derives overlay params from deep links', () => {
-    expect(overlayParams(routes.find((route) => route.id === 'balcao-handover')!)).toEqual({ modal: 'handover', sub: 'third-party' });
+    expect(overlayParams(routes.find((route) => route.id === 'counter-handover')!)).toEqual({ modal: 'handover', sub: 'third-party' });
   });
 });
 

@@ -9,10 +9,10 @@ Every approved screen, the design board it is checked against, and its screensho
 | 1 | `/` | OV-home | Overview | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/overview/home.png` |
 | 2 | `/work/mare/languages` | OV-languages | Maré | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mare/mare-languages.png` |
 | 3 | `/system-design/mare` | SD-mare | Maré | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mare/system-design-mare.png` |
-| 4 | `/mare/ops/balcao` | BA-lanes | Balcão | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-lanes.png` |
-| 5 | `/mare/ops/balcao/pick/MR-904117` | BA-picking | Balcão | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-picking.png` |
-| 6 | `/mare/ops/balcao?modal=handover&order=MR-904112&sub=third-party` | BA-handover | Balcão | 0.1 | modal=handover sub=third-party | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-handover.png` |
-| 7 | `/mare/ops/balcao?modal=cutoff-plan&sub=why` | BA-cutoff | Balcão | 0.1 | modal=cutoff-plan sub=why | ✅ 2026-09-26 | `docs/screenshots/balcao/balcao-cutoff-plan.png` |
+| 4 | `/mare/ops/counter` | BA-lanes | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-lanes.png` |
+| 5 | `/mare/ops/counter/pick/MR-904117` | BA-picking | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-picking.png` |
+| 6 | `/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party` | BA-handover | Counter | 0.1 | modal=handover sub=third-party | ✅ 2026-09-26 | `docs/screenshots/counter/counter-handover.png` |
+| 7 | `/mare/ops/counter?modal=cutoff-plan&sub=why` | BA-cutoff | Counter | 0.1 | modal=cutoff-plan sub=why | ✅ 2026-09-26 | `docs/screenshots/counter/counter-cutoff-plan.png` |
 | 8 | `/mare/ops/product-hub` | PH-catalog | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-catalog.png` |
 | 9 | `/mare/ops/product-hub/products/510233?tab=pricing` | PH-detail | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-detail.png` |
 | 10 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | PH-agent-run | Product Hub | 0.1 | modal=agent-run sub=edit | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-agent-run.png` |

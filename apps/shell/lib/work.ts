@@ -28,7 +28,7 @@ export const studies: CaseStudy[] = [
     ],
     metrics: ['API latency 450 → ~200 ms', 'Error rate 1.8% → 0.5–0.7%', 'Catalog reads 3–5× faster', 'Deploys 2 → 8–12 per week'],
     shots: [
-      { src: 'balcao/balcao-lanes.png', label: 'Balcão · order lanes', href: '/mare/ops/balcao' },
+      { src: 'counter/counter-lanes.png', label: 'Counter · order lanes', href: '/mare/ops/counter' },
       { src: 'product-hub/product-hub-detail.png', label: 'Product Hub · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing' },
       { src: 'pay/pay-application-detail.png', label: 'Pay · application', href: '/mare/ops/pay/applications/AP-77118' },
       { src: 'circle/circle-rule-builder.png', label: 'Circle · rule builder', href: '/mare/ops/circle/rules/summer-swim' },
