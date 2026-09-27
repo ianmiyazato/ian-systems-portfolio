@@ -398,6 +398,39 @@
       "status": "ok"
     },
     {
+      "topic": "price.changed",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "A price change was approved (by a person, or an agent proposal a person approved).",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "analytics-lake",
+          "owner": "data platform (CDC → lake)",
+          "reads": [
+            "*"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "shop-tracking",
+          "owner": "@portfolio/mare-shop",
+          "reads": [
+            "sku",
+            "toCents",
+            "channels",
+            "untilDays"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
       "topic": "returns.created",
       "mode": "FULL",
       "format": "JSON Schema",

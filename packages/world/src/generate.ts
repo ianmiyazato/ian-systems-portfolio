@@ -23,7 +23,8 @@ export const baseRates: Record<Topic, number> = {
   'returns.created': 0.12,
   // Only people create these (Counter refunds, Circle reversals), through World.record().
   'returns.refunded': 0,
-  'commission.reversed': 0
+  'commission.reversed': 0,
+  'price.changed': 0
 };
 
 /** The Ligeiro Log outage is the chaos panel's carrier; Counter's store is #0412. */

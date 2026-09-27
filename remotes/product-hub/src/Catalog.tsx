@@ -1,10 +1,11 @@
+import { brl } from '@portfolio/mocks';
 import { Banner, Link, navigate, useDemoState } from '@portfolio/remote-runtime';
 import { useState } from 'preact/hooks';
 import { facets, products, type Status } from './data';
 import { Sparkline } from './charts';
 
 const tone = (status: Status) => (status === 'Healthy' ? 'ok' : status === 'Low margin' || status === 'Rejected' ? 'bad' : 'warn');
-const brl = (value: number) => `R$ ${value.toLocaleString('pt-BR')}`;
+
 
 export function Catalog() {
   const state = useDemoState();
@@ -36,7 +37,7 @@ export function Catalog() {
             <label key={label} class="ph-check">
               <input type="checkbox" checked={statusFilter.includes(label)} onChange={() => setStatusFilter(statusFilter.includes(label) ? statusFilter.filter((item) => item !== label) : [...statusFilter, label])} />
               <span>{label}</span>
-              <em>{count.toLocaleString('pt-BR')}</em>
+              <em>{count.toLocaleString('en-US')}</em>
             </label>
           ))}
         </section>
@@ -52,8 +53,8 @@ export function Catalog() {
           </div>
         </header>
         {state === 'rejected' && (
-          <Banner tone="risk" icon="!" title="Price change rejected · Camisa linho natural · R$ 199" anchor="ph-rejected">
-            Lara rejected the proposal: margin would fall to 27.4%, below the 30% floor, and the marketplace offer would lose parity. The agent will not re-propose below R$ 207.
+          <Banner tone="risk" icon="!" title="Price change rejected · Natural linen shirt · R$199" anchor="ph-rejected">
+            Lara rejected the proposal: margin would fall to 27.4%, below the 30% floor, and the marketplace offer would lose parity. The agent will not re-propose below R$207.
           </Banner>
         )}
         {state === 'error' && <Banner tone="risk" icon="!" title="Pricing service timed out · showing prices cached at 16:02" anchor="ph-error">Edits are disabled until prices refresh; nothing you see is stale by more than 16 minutes.</Banner>}
@@ -130,7 +131,7 @@ function FacetGroup({ title, items, checked }: { title: string; items: ReadonlyA
         <label key={label} class="ph-check">
           <input type="checkbox" defaultChecked={checked.includes(label)} />
           <span>{label}</span>
-          <em>{count.toLocaleString('pt-BR')}</em>
+          <em>{count.toLocaleString('en-US')}</em>
         </label>
       ))}
     </section>
