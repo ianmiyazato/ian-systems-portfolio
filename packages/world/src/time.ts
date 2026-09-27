@@ -42,11 +42,13 @@ export function ago(ms: number) {
   return minutes < 60 ? `${minutes} min ago` : `${Math.round(minutes / 60)} h ago`;
 }
 
-/** "14 min", "1 h 05 min" for countdowns. */
+/** "14 min", "1 h 05 min", "5 d 1 h" for countdowns. */
 export function duration(ms: number) {
   const total = Math.max(0, Math.round(ms / MINUTE));
-  const hours = Math.floor(total / 60);
+  const days = Math.floor(total / 1440);
+  const hours = Math.floor((total % 1440) / 60);
   const minutes = total % 60;
+  if (days) return `${days} d ${hours} h`;
   return hours ? `${hours} h ${pad(minutes)} min` : `${minutes} min`;
 }
 

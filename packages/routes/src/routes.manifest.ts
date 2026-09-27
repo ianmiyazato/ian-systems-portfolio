@@ -96,6 +96,9 @@ export const routes: RouteEntry[] = [
   { id: 'circle-program', system: 'circle', title: 'Program dashboard', href: '/mare/ops/circle', zone: 'mare-ops', owner: remote('circle'), board: 'CI-program', heading: 'creators sold', release: '0.1' },
   { id: 'circle-rule-builder', system: 'circle', title: 'Rule builder', href: '/mare/ops/circle/rules/summer-swim', zone: 'mare-ops', owner: remote('circle'), board: 'CI-rules', heading: 'Rule builder', release: '0.1' },
   { id: 'circle-leak', system: 'circle', title: 'Leak + rotate', href: '/mare/ops/circle?modal=leak&code=MARI15&sub=rotate', zone: 'mare-ops', owner: remote('circle'), board: 'CI-leak', heading: 'creators sold', release: '0.1' },
+  { id: 'circle-creators', system: 'circle', title: 'Creators', href: '/mare/ops/circle/creators', zone: 'mare-ops', owner: remote('circle'), board: 'CI-creators', heading: 'Creators', release: '0.2', checked: '2026-09-27', states: ['new', 'error'] },
+  { id: 'circle-campaigns', system: 'circle', title: 'Campaigns', href: '/mare/ops/circle/campaigns', zone: 'mare-ops', owner: remote('circle'), board: 'CI-campaigns', heading: 'Summer swim drop', release: '0.2', checked: '2026-09-27', states: ['scheduled'] },
+  { id: 'circle-payouts', system: 'circle', title: 'Payouts', href: '/mare/ops/circle/payouts', zone: 'mare-ops', owner: remote('circle'), board: 'CI-payouts', heading: 'Payouts', release: '0.2', checked: '2026-09-27', states: ['payout-failed'] },
   { id: 'circle-creator-app', system: 'circle', title: 'Creator app', href: '/mare/apps/circle', zone: 'mare-shop', owner: shop, board: 'CI-app', heading: 'Circle creator app', release: '0.1' },
 
   { id: 'mesh-topology', system: 'mesh', title: 'Topology', href: '/mare/ops/mesh', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-topology', heading: 'live topology', release: '0.1' },
