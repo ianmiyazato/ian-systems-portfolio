@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { validateDecisions } from './decisions';
-import { screens } from './routes';
+import { routes as screens } from './routes';
 
 const dir = resolve(__dirname, '../../../decisions');
 const load = (id: string) => JSON.parse(readFileSync(resolve(dir, `${id}.json`), 'utf8')) as unknown;

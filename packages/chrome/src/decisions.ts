@@ -1,5 +1,13 @@
-export const decisionTags = ['Frontend', 'Backend', 'Data', 'AI'] as const;
+/**
+ * v0.1 tags (Frontend, Backend, Data, AI) stay valid; v0.2 adds the four review lenses
+ * (Design, UX, Architecture, Engineering) and Free-tier for choices made for cost reasons.
+ */
+export const decisionTags = ['Frontend', 'Backend', 'Data', 'AI', 'Design', 'UX', 'Architecture', 'Engineering', 'Free-tier'] as const;
 export type DecisionTag = (typeof decisionTags)[number];
+
+/** A screen must explain both what people see and how the system behind it works. */
+const experienceTags: DecisionTag[] = ['Frontend', 'Design', 'UX'];
+const systemTags: DecisionTag[] = ['Backend', 'Architecture', 'Engineering', 'Data', 'Free-tier'];
 
 export type Decision = {
   id: string;
@@ -41,7 +49,7 @@ export function validateDecisions(screenId: string, decisions: unknown): string[
     }
   }
   const tags = new Set(decisions.map((item) => (item as Decision).tag));
-  if (!tags.has('Frontend') || !tags.has('Backend')) problems.push(`${screenId}: must mix Frontend and Backend decisions`);
-  if (tags.size < 3) problems.push(`${screenId}: must span at least three of Frontend, Backend, Data and AI`);
+  if (!experienceTags.some((tag) => tags.has(tag)) || !systemTags.some((tag) => tags.has(tag))) problems.push(`${screenId}: must mix an experience decision (${experienceTags.join('/')}) with a system decision (${systemTags.join('/')})`);
+  if (tags.size < 3) problems.push(`${screenId}: must span at least three tags`);
   return problems;
 }

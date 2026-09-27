@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
-import { screens } from '../../packages/chrome/src/routes';
+import { routes as screens } from '../../packages/routes/src/index';
 
 type Resolution = { id: string; anchor: string; resolved: boolean; visible: boolean };
 

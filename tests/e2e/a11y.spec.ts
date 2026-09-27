@@ -1,15 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { areas, screens } from '../../packages/chrome/src/routes';
+import { routeById, routes, systems } from '../../packages/routes/src/index';
 
-// Every screen and deep link in the parity registry, plus each area's variations, through the shell domain.
-const main: Record<string, string> = {
-  balcao: '/mare/ops/balcao', 'product-hub': '/mare/ops/product-hub', pay: '/mare/ops/pay', circle: '/mare/ops/circle',
-  mesh: '/mare/ops/mesh', consumer: '/mare/shop', atlas: '/atlas/pipeline', pulse: '/pulse'
-};
+// Every route and deep link in the manifest, plus each system's variations, through the shell domain.
+const withState = (href: string, state: string) => `${href.split('?')[0]}?state=${state}`;
 const targets = [
-  ...screens.map((screen) => [screen.id, screen.href] as const),
-  ...areas.flatMap((area) => (main[area.id] ? area.states.map((state) => [`${area.id}--${state}`, `${main[area.id]}?state=${state}`] as const) : []))
+  ...routes.map((route) => [route.id, route.href] as const),
+  ...systems.flatMap((system) => {
+    const home = system.home ? routeById(system.home) : undefined;
+    return home ? system.states.map((state) => [`${system.id}--${state}`, withState(home.href, state)] as const) : [];
+  })
 ];
 
 for (const [name, href] of targets) {

@@ -1,5 +1,5 @@
 import { loadDecisions, type Decision } from './decisions';
-import { resolveScreen, type ScreenRoute } from './routes';
+import { resolveScreen, type RouteEntry } from './routes';
 import { chromeVars, escapeHtml, eventIsTyping, tagColor } from './shared';
 
 export type AnchorResolution = { id: string; anchor: string; resolved: boolean; visible: boolean };
@@ -52,7 +52,7 @@ export class DecisionLens extends HTMLElement {
   private root: ShadowRoot;
   private open = false;
   private decisions: Decision[] = [];
-  private screen: ScreenRoute | undefined;
+  private screen: Pick<RouteEntry, 'id' | 'title'> | undefined;
   private active: number | null = null;
   private frame = 0;
   private observer: MutationObserver | null = null;
@@ -123,7 +123,7 @@ export class DecisionLens extends HTMLElement {
   private async load() {
     const token = ++this.loadToken;
     const override = this.getAttribute('screen');
-    this.screen = override ? { id: override, area: 'overview', label: override, href: location.pathname, zone: 'shell' } : resolveScreen(location.pathname, location.search);
+    this.screen = override ? { id: override, title: override } : resolveScreen(location.pathname, location.search);
     const decisions = this.screen ? await loadDecisions(this.screen.id) : [];
     if (token === this.loadToken) this.decisions = decisions;
   }
@@ -194,7 +194,7 @@ export class DecisionLens extends HTMLElement {
       : '';
     this.root.innerHTML = `<style>${styles}</style><div class="layer" aria-label="Decision lens">
       <div class="tint"></div><div class="outline"></div>
-      <aside class="legend ${this.collapsed ? 'collapsed' : ''}" aria-label="Decisions on this screen"><header><div><strong>Decision lens · ${this.decisions.length}</strong><small>${escapeHtml(this.screen?.label ?? 'This screen')} · press D to hide</small></div><div class="legend-actions"><button type="button" class="close" data-collapse aria-expanded="${!this.collapsed}">${this.collapsed ? 'List' : 'Fold'}</button><button type="button" class="close" data-hide>Hide</button></div></header><ol>${items}</ol></aside>
+      <aside class="legend ${this.collapsed ? 'collapsed' : ''}" aria-label="Decisions on this screen"><header><div><strong>Decision lens · ${this.decisions.length}</strong><small>${escapeHtml(this.screen?.title ?? 'This screen')} · press D to hide</small></div><div class="legend-actions"><button type="button" class="close" data-collapse aria-expanded="${!this.collapsed}">${this.collapsed ? 'List' : 'Fold'}</button><button type="button" class="close" data-hide>Hide</button></div></header><ol>${items}</ol></aside>
       ${hotspots}${card}</div>`;
     this.root.querySelectorAll<HTMLButtonElement>('[data-index]').forEach((button) => {
       const index = Number(button.dataset.index);
