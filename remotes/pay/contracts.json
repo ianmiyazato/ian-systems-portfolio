@@ -1,0 +1,5 @@
+{ "consumer": "pay", "owner": "@portfolio/remote-pay", "reads": {
+  "auth.scored": ["authId", "account", "merchant", "amountCents", "score", "action", "latencyMs", "device"],
+  "dispute.opened": ["disputeId", "account", "amountCents", "reason", "network", "dueDays"],
+  "payments.captured": ["method", "amountCents", "installments"]
+} }

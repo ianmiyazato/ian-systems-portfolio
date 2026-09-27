@@ -1,0 +1,5 @@
+{ "consumer": "tidewatch", "owner": "observability (OpenTelemetry collector)", "reads": {
+  "delivery.updated": ["orderId", "status"],
+  "orders.placed": ["orderId", "channel"],
+  "auth.scored": ["latencyMs", "action"]
+} }

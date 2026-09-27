@@ -1,0 +1,4 @@
+{ "consumer": "analytics-lake", "owner": "data platform (CDC → lake)", "reads": {
+  "orders.placed": ["*"],
+  "payments.captured": ["*"]
+} }

@@ -1,0 +1,5 @@
+{ "consumer": "circle", "owner": "@portfolio/remote-circle", "reads": {
+  "orders.placed": ["orderId"],
+  "commission.confirmed": ["code", "orderId", "amountCents", "reversed"],
+  "commission.reversed": ["code", "orderId", "amountCents", "reason"]
+} }

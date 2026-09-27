@@ -1,0 +1,490 @@
+{
+  "generatedBy": "packages/events/src/compat.ts",
+  "topics": [
+    {
+      "topic": "auth.scored",
+      "mode": "BACKWARD",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "An authorization was scored before capture.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "pay",
+          "owner": "@portfolio/remote-pay",
+          "reads": [
+            "authId",
+            "account",
+            "merchant",
+            "amountCents",
+            "score",
+            "action",
+            "latencyMs",
+            "device"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "tidewatch",
+          "owner": "observability (OpenTelemetry collector)",
+          "reads": [
+            "latencyMs",
+            "action"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "commission.confirmed",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "Creator commission confirmed after the 30-day return window.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "circle",
+          "owner": "@portfolio/remote-circle",
+          "reads": [
+            "code",
+            "orderId",
+            "amountCents",
+            "reversed"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "commission.reversed",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "Unconfirmed commission reversed (return, fraud or coupon leak).",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "circle",
+          "owner": "@portfolio/remote-circle",
+          "reads": [
+            "code",
+            "orderId",
+            "amountCents",
+            "reason"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "delivery.updated",
+      "mode": "BACKWARD",
+      "format": "JSON Schema",
+      "current": "v2",
+      "versions": [
+        "v1",
+        "v2"
+      ],
+      "proposed": "v3.proposed",
+      "description": "v2 adds the exception status and an optional tracking number.",
+      "proposedDescription": "PROPOSED (PR #212): ETA as a delivery window, carrier as a stable id. Removes etaMinutes and carrier.",
+      "transitions": [
+        {
+          "from": "v1",
+          "to": "v2",
+          "compatible": true,
+          "changes": [
+            {
+              "path": "status",
+              "kind": "enum-widened",
+              "after": "exception",
+              "breaks": [
+                "forward"
+              ]
+            },
+            {
+              "path": "trackingNumber",
+              "kind": "added",
+              "after": "string?",
+              "breaks": []
+            }
+          ]
+        },
+        {
+          "from": "v2",
+          "to": "v3.proposed",
+          "compatible": false,
+          "changes": [
+            {
+              "path": "carrier",
+              "kind": "removed",
+              "before": "string",
+              "breaks": [
+                "forward"
+              ]
+            },
+            {
+              "path": "etaMinutes",
+              "kind": "removed",
+              "before": "integer",
+              "breaks": [
+                "forward"
+              ]
+            },
+            {
+              "path": "carrierId",
+              "kind": "added",
+              "after": "string",
+              "breaks": [
+                "backward"
+              ]
+            },
+            {
+              "path": "eta",
+              "kind": "added",
+              "after": "object",
+              "breaks": [
+                "backward"
+              ]
+            }
+          ]
+        }
+      ],
+      "consumers": [
+        {
+          "consumer": "counter",
+          "owner": "@portfolio/remote-counter",
+          "reads": [
+            "orderId",
+            "carrier",
+            "status",
+            "etaMinutes"
+          ],
+          "breaks": [
+            "carrier",
+            "etaMinutes"
+          ]
+        },
+        {
+          "consumer": "mesh",
+          "owner": "@portfolio/remote-mesh",
+          "reads": [
+            "orderId",
+            "status",
+            "trackingNumber"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "notifications",
+          "owner": "notifications service (Redis streams)",
+          "reads": [
+            "orderId",
+            "status",
+            "etaMinutes"
+          ],
+          "breaks": [
+            "etaMinutes"
+          ]
+        },
+        {
+          "consumer": "shop-tracking",
+          "owner": "@portfolio/mare-shop",
+          "reads": [
+            "orderId",
+            "carrier",
+            "status",
+            "etaMinutes",
+            "trackingNumber"
+          ],
+          "breaks": [
+            "carrier",
+            "etaMinutes"
+          ]
+        },
+        {
+          "consumer": "tidewatch",
+          "owner": "observability (OpenTelemetry collector)",
+          "reads": [
+            "orderId",
+            "status"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "blocked"
+    },
+    {
+      "topic": "dispute.opened",
+      "mode": "BACKWARD",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "A cardholder opened a dispute.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "pay",
+          "owner": "@portfolio/remote-pay",
+          "reads": [
+            "disputeId",
+            "account",
+            "amountCents",
+            "reason",
+            "network",
+            "dueDays"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "invoice.issued",
+      "mode": "BACKWARD",
+      "format": "JSON Schema",
+      "current": "v2",
+      "versions": [
+        "v2"
+      ],
+      "description": "An e-invoice was authorized or rejected by the tax gateway.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "mesh",
+          "owner": "@portfolio/remote-mesh",
+          "reads": [
+            "orderId",
+            "invoice",
+            "status",
+            "rejectionCode",
+            "ncm"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "orders.placed",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v4",
+      "versions": [
+        "v3",
+        "v4"
+      ],
+      "description": "An order was placed. v4 adds fulfillment as an optional field (backward compatible).",
+      "transitions": [
+        {
+          "from": "v3",
+          "to": "v4",
+          "compatible": true,
+          "changes": [
+            {
+              "path": "fulfillment",
+              "kind": "added",
+              "after": "string? (2 values)",
+              "breaks": []
+            }
+          ]
+        }
+      ],
+      "consumers": [
+        {
+          "consumer": "analytics-lake",
+          "owner": "data platform (CDC → lake)",
+          "reads": [
+            "*"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "circle",
+          "owner": "@portfolio/remote-circle",
+          "reads": [
+            "orderId"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "counter",
+          "owner": "@portfolio/remote-counter",
+          "reads": [
+            "orderId",
+            "fulfillment",
+            "store",
+            "customer",
+            "items[].sku",
+            "items[].size"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "notifications",
+          "owner": "notifications service (Redis streams)",
+          "reads": [
+            "orderId",
+            "customer"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "shop-tracking",
+          "owner": "@portfolio/mare-shop",
+          "reads": [
+            "orderId",
+            "items[].name"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "tidewatch",
+          "owner": "observability (OpenTelemetry collector)",
+          "reads": [
+            "orderId",
+            "channel"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "payments.captured",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v3",
+      "versions": [
+        "v3"
+      ],
+      "description": "A payment was captured.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "analytics-lake",
+          "owner": "data platform (CDC → lake)",
+          "reads": [
+            "*"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "pay",
+          "owner": "@portfolio/remote-pay",
+          "reads": [
+            "method",
+            "amountCents",
+            "installments"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "returns.created",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "A customer started a return.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "counter",
+          "owner": "@portfolio/remote-counter",
+          "reads": [
+            "returnId",
+            "orderId",
+            "store",
+            "channel",
+            "sku",
+            "size",
+            "reason",
+            "customer"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "returns.refunded",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "A return was refunded, credited or exchanged.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "counter",
+          "owner": "@portfolio/remote-counter",
+          "reads": [
+            "returnId",
+            "store",
+            "method",
+            "amountCents"
+          ],
+          "breaks": []
+        },
+        {
+          "consumer": "notifications",
+          "owner": "notifications service (Redis streams)",
+          "reads": [
+            "returnId",
+            "method",
+            "amountCents"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "topic": "stock.reserved",
+      "mode": "FULL",
+      "format": "JSON Schema",
+      "current": "v2",
+      "versions": [
+        "v2"
+      ],
+      "description": "Units were reserved for an order at a store.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "counter",
+          "owner": "@portfolio/remote-counter",
+          "reads": [
+            "sku",
+            "size",
+            "store",
+            "quantity"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    }
+  ]
+}

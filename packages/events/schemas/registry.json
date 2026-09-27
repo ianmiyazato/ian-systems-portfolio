@@ -1,0 +1,16 @@
+{
+  "$comment": "Compatibility mode per topic. BACKWARD lets producers add enum values readers will learn; FULL is for topics every service reads.",
+  "modes": {
+    "orders.placed": "FULL",
+    "stock.reserved": "FULL",
+    "payments.captured": "FULL",
+    "delivery.updated": "BACKWARD",
+    "commission.confirmed": "FULL",
+    "commission.reversed": "FULL",
+    "invoice.issued": "BACKWARD",
+    "dispute.opened": "BACKWARD",
+    "auth.scored": "BACKWARD",
+    "returns.created": "FULL",
+    "returns.refunded": "FULL"
+  }
+}
