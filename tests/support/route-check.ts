@@ -20,9 +20,12 @@ export type RouteProblems = { href: string; heading: string | null; problems: st
  * blank, no remote error boundary or designed not-found is showing, and the <h1> contains the
  * manifest heading (when the route is in the manifest).
  */
-export async function inspectRoute(page: Page, href: string, errors: string[], expected = resolveScreen(new URL(href, 'https://x.invalid').pathname, new URL(href, 'https://x.invalid').search)?.heading): Promise<RouteProblems> {
+export async function inspectRoute(page: Page, href: string, errors: string[], heading?: string): Promise<RouteProblems> {
   await expect(page.locator('.im-footer')).toContainText(footer, { timeout: 20_000 });
   await page.waitForLoadState('networkidle');
+  // Judge the page the browser ended on: legacy links (?view=, /balcao) redirect first.
+  const landed = new URL(page.url());
+  const expected = heading ?? resolveScreen(landed.pathname, landed.search)?.heading;
   await page.waitForFunction(() => !document.querySelector('[data-remote-status="loading"]'), undefined, { timeout: 15_000 }).catch(() => undefined);
   const snapshot = await page.evaluate(() => {
     const main = document.querySelector('main') ?? document.body;

@@ -76,6 +76,10 @@
 <svelte:head><title>Pulse · Distribution</title><meta name="description" content="Moment detected to campaign across LA, Seoul and Tokyo." /></svelte:head>
 
 <main class="pl-main">
+  <section class="pl-hero small">
+    <span class="pl-kicker">Moment → campaign · one evidence trail</span>
+    <h1>{i18n.t('distribution')}</h1>
+  </section>
   <section class="pl-moment" data-anchor="pl-moment">
     <span class="pl-live"><i></i>{i18n.t('detected')}</span>
     <div><strong>AERA · “Tidal” · chorus lift 00:42–00:57</strong><p>Seoul completion +24% in 40 min · confidence 0.91 · LA usually follows in 9–14 h</p></div>
