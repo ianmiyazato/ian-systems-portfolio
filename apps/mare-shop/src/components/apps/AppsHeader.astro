@@ -1,0 +1,12 @@
+---
+// Header + app switcher shared by every /mare/apps page.
+interface Props { title: string; kicker: string; current: 'shop' | 'tracking' | 'pay' | 'circle' | 'circle-reel' }
+const { title, kicker, current } = Astro.props;
+const apps = [['shop', 'Shopping'], ['tracking', 'Tracking'], ['pay', 'Pay'], ['circle', 'Circle'], ['circle-reel', 'Reels']] as const;
+---
+<header class="apps-head" data-anchor="app-head">
+  <div><span class="cs-kicker">{kicker}</span><h1>{title}</h1><p><slot /></p></div>
+  <nav class="apps-switch" aria-label="Maré apps" data-anchor="app-switch">
+    {apps.map(([id, label]) => <a href={`/mare/apps/${id}`} aria-current={current === id ? 'page' : undefined}>{label}</a>)}
+  </nav>
+</header>

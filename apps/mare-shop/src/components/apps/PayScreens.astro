@@ -4,20 +4,33 @@ interface Props { start: number }
 const { start } = Astro.props;
 ---
 <Track start={start} labels={['home', 'installments', 'virtual card']}>
-  <div class="screen">
-    <div class="pa-card-scene">
-      <button class="pa-flip" type="button" aria-pressed="false" aria-label="Flip card">
-        <span class="pa-face front"><b>maré pay · Credit</b><span>•••• 4471</span><small>BRUNO S · 09/31</small><i class="py-shine"></i></span>
-        <span class="pa-face back"><span class="pa-strip"></span><span>CVV •••</span><small>Reveal the full number with Face ID in Virtual card</small></span>
-      </button>
+  <div class="screen pa-home" data-private="true">
+    <div class="pa-top">
+      <span>Hi, Bruno</span>
+      <button type="button" class="pa-eye" data-eye aria-pressed="false" aria-label="Show amounts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /><path class="pa-eye-slash" d="M4 4l16 16" /></svg></button>
+    </div>
+    <div class="pa-cards" role="group" aria-label="Your cards · swipe">
+      <div class="pa-card-scene">
+        <button class="pa-flip" type="button" aria-pressed="false" aria-label="Flip card">
+          <span class="pa-face front"><b>maré pay · Credit</b><span>•••• 4471</span><small>BRUNO S · 09/31</small><i class="py-shine"></i></span>
+          <span class="pa-face back"><span class="pa-strip"></span><span>CVV •••</span><small>Reveal the full number with Face ID in Virtual card</small></span>
+        </button>
+      </div>
+      <div class="pa-mini virtual"><b>Virtual card</b><span>•••• 9120</span><small>for online checkout</small></div>
+      <div class="pa-mini store"><b>Maré Store card</b><span>•••• 0386</span><small>10% back in stores</small></div>
     </div>
     <div class="pa-bill">
       <span>Current bill · due Oct 10</span>
-      <strong>R$1,284.50</strong>
+      <strong><span class="pa-private" data-value="R$1,284.50"><span aria-hidden="true">R$ ••••••</span><span class="visually-hidden">amount hidden</span></span></strong>
       <div class="pa-usage"><i></i></div>
-      <span>R$1,284 of R$4,000 limit used</span>
+      <span><span class="pa-private" data-value="R$1,284 of R$4,000"><span aria-hidden="true">R$ •••• of R$ ••••</span><span class="visually-hidden">amounts hidden</span></span> limit used</span>
     </div>
     <div class="pa-actions"><span><i>R$</i>Pay bill</span><span><i>3×</i>Installments</span><span><i>▣</i>Virtual card</span><span><i>↑</i>Limit</span></div>
+    <ul class="pa-activity" aria-label="Recent activity">
+      <li><span>Maré · Vila Nova<small>Today · 3× installments</small></span><b class="pa-private" data-value="R$538.00"><span aria-hidden="true">R$ •••</span><span class="visually-hidden">amount hidden</span></b></li>
+      <li><span>Refund · MR-904113<small>Yesterday · back to card</small></span><b class="pa-private" data-value="+R$229.00"><span aria-hidden="true">+R$ •••</span><span class="visually-hidden">amount hidden</span></b></li>
+      <li><span>Maré app · online<small>Sep 24</small></span><b class="pa-private" data-value="R$149.00"><span aria-hidden="true">R$ •••</span><span class="visually-hidden">amount hidden</span></b></li>
+    </ul>
   </div>
   <div class="screen">
     <p class="pa-title">Split this purchase</p>

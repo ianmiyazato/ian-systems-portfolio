@@ -7,6 +7,12 @@
 .garment[data-swatch='ink'] .garment-shape { fill: var(--swatch-ink); } .garment[data-swatch='slate'] .garment-shape { fill: var(--swatch-slate); }
 .garment[data-swatch='rose'] .garment-shape { fill: var(--swatch-rose); } .garment[data-swatch='mist'] .garment-shape { fill: var(--swatch-mist); }
 
+/* --sw: the element's product swatch, for backgrounds (weave, reels). */
+[data-swatch='linen'] { --sw: var(--swatch-linen); } [data-swatch='sand'] { --sw: var(--swatch-sand); }
+[data-swatch='sea'] { --sw: var(--swatch-sea); } [data-swatch='clay'] { --sw: var(--swatch-clay); }
+[data-swatch='ink'] { --sw: var(--swatch-ink); } [data-swatch='slate'] { --sw: var(--swatch-slate); }
+[data-swatch='rose'] { --sw: var(--swatch-rose); } [data-swatch='mist'] { --sw: var(--swatch-mist); }
+
 .cs { font-size: 15px; }
 .cs h1, .cs h2, .cs h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: var(--display-tracking); }
 .cs-kicker { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }

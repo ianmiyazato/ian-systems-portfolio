@@ -1,0 +1,27 @@
+---
+import '@portfolio/tokens/fonts/circle';
+import '../../styles/apps.css';
+import '../../styles/shop.css';
+import Zone from '../../layouts/Zone.astro';
+import Phone from '../../components/Phone.astro';
+import AppsHeader from '../../components/apps/AppsHeader.astro';
+import ReelFeed from '../../components/apps/ReelFeed.astro';
+---
+<Zone title="Shoppable reels · Maré" description="Creator reels you can shop: a vertical feed with a progress bar, double-tap hearts, a floating product tag and every item in a sheet." context="Maré · Apps" theme="circle">
+  <main class="apps">
+    <AppsHeader kicker="Maré apps · Circle creators" title="Shoppable reels" current="circle-reel">Creator reels you can shop. Swipe up for the next reel, double-tap to like, and open the items to add them. Every sale credits the creator through Circle.</AppsHeader>
+    <div class="phones">
+      <div class="phone-wrap">
+        <Phone label="Reel feed" anchor="app-reel-0" darkScreen><ReelFeed uid="rl0" /></Phone>
+        <p class="phone-caption">Reel feed</p>
+      </div>
+      <div class="phone-wrap">
+        <Phone label="Shop the reel" anchor="app-reel-1" darkScreen><ReelFeed uid="rl1" sheet /></Phone>
+        <p class="phone-caption">Shop the reel</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    import '../../scripts/reels';
+  </script>
+</Zone>

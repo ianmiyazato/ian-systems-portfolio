@@ -1,8 +1,4 @@
 /* Product page: dense, decision-first. Tokens only. */
-[data-swatch='linen'] { --sw: var(--swatch-linen); } [data-swatch='sand'] { --sw: var(--swatch-sand); }
-[data-swatch='sea'] { --sw: var(--swatch-sea); } [data-swatch='clay'] { --sw: var(--swatch-clay); }
-[data-swatch='ink'] { --sw: var(--swatch-ink); } [data-swatch='slate'] { --sw: var(--swatch-slate); }
-[data-swatch='rose'] { --sw: var(--swatch-rose); } [data-swatch='mist'] { --sw: var(--swatch-mist); }
 
 .pdp-crumbs { display: flex; flex-wrap: wrap; gap: 8px; padding: 18px 6vw 0; color: var(--muted); font-size: 13px; }
 .pdp-crumbs a { display: inline-flex; align-items: center; min-height: 24px; text-decoration: underline; text-underline-offset: 3px; }

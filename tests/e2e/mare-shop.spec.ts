@@ -88,6 +88,45 @@ test.describe('Maré Shop', () => {
     await expect(tile.getByRole('button', { name: 'Saved' })).toHaveAttribute('aria-pressed', 'true');
   });
 
+  test('tracking: the courier and ETA follow the world clock and the sheet resizes from the keyboard', async ({ page }) => {
+    await page.goto('/mare/apps/tracking?t=16:18&live=paused');
+    const map = page.getByRole('region', { name: 'Live map screen' });
+    await expect(map.getByText('Arriving in 24 min')).toBeVisible();
+    const handle = map.getByRole('button', { name: /Delivery details: drag/ });
+    await expect(handle).toHaveAttribute('aria-expanded', 'false');
+    await handle.focus();
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await expect(handle).toHaveAttribute('aria-expanded', 'true');
+    await map.getByRole('button', { name: 'Message' }).click();
+    await map.getByRole('button', { name: "I'm coming down" }).click();
+    await expect(map.getByText('Sent to Caio: “I\'m coming down”')).toBeVisible();
+    await page.goto('/mare/apps/tracking?t=16:50&live=paused');
+    await expect(page.getByRole('region', { name: 'Live map screen' }).getByText('Delivered at 16:42')).toBeVisible();
+  });
+
+  test('pay app is private by default until you tap the eye', async ({ page }) => {
+    await page.goto('/mare/apps/pay');
+    const home = page.getByRole('region', { name: 'Home screen' });
+    await expect(home.getByText('R$1,284.50')).toHaveCount(0);
+    await expect(home.getByText('amount hidden').first()).toBeAttached();
+    await home.getByRole('button', { name: 'Show amounts' }).click();
+    await expect(home.getByText('R$1,284.50')).toBeVisible();
+    await expect(home.getByRole('button', { name: 'Hide amounts' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('reels: deep link, double-tap like and shop every item', async ({ page }) => {
+    await page.goto('/mare/apps/circle-reel?reel=mari-beach');
+    const feed = page.getByRole('region', { name: 'Reel feed' });
+    const reel = feed.locator('[data-reel="mari-beach"]');
+    await expect(reel).toHaveClass(/is-active/);
+    await reel.locator('.rl-stage').dblclick({ position: { x: 60, y: 200 } });
+    await expect(reel.locator('[data-like]')).toHaveAttribute('aria-pressed', 'true');
+    await reel.getByRole('button', { name: 'Shop 3 items in this reel' }).click();
+    await reel.getByRole('button', { name: /Add all 3/ }).click();
+    await expect(reel.getByText('@mari.luz earns the commission through Circle')).toBeVisible();
+  });
+
   test('offline variation shows saved picks', async ({ page }) => {
     await page.goto('/mare/shop?state=offline');
     await expect(page.getByText(/You're offline/)).toBeVisible();

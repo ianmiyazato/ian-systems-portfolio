@@ -1,8 +1,8 @@
 ---
-interface Props { label: string; theme?: string; anchor?: string }
-const { label, theme, anchor } = Astro.props;
+interface Props { label: string; theme?: string; anchor?: string; darkScreen?: boolean }
+const { label, theme, anchor, darkScreen = false } = Astro.props;
 ---
-<section class="phone" aria-label={label} data-theme={theme} data-anchor={anchor}>
+<section class={`phone ${darkScreen ? 'phone-dark' : ''}`} aria-label={label} data-theme={theme} data-anchor={anchor}>
   <div class="phone-notch" aria-hidden="true"></div>
   <div class="phone-status" aria-hidden="true"><span>9:41</span><span>●●● 5G ▮</span></div>
   <div class="phone-screen"><slot /></div>

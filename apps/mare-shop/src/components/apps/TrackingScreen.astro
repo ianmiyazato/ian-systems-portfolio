@@ -1,0 +1,55 @@
+---
+// Map-first delivery tracking: courier on the route, ETA chip, draggable bottom sheet with snap points.
+import Garment from '../Garment.astro';
+import { productBySlug, brl } from '../../lib/data';
+interface Props { snap: 'peek' | 'half' | 'full'; uid: string }
+const { snap, uid } = Astro.props;
+const items = [productBySlug('natural-linen-shirt'), productBySlug('stone-wide-leg-pants')];
+const steps = ['Placed', 'Packed', 'Picked up', 'On the way', 'Delivered'];
+const route = 'M52 520 H132 V400 H204 V286 H156 V178 H236 V118';
+---
+<div class="tr" data-tracking data-snap={snap}>
+  <svg class="tr-map" viewBox="0 0 296 636" aria-hidden="true">
+    <rect class="tr-land" width="296" height="636" />
+    <path class="tr-water" d="M0 590 Q 80 560 150 585 T 296 570 V 636 H0 Z" />
+    <rect class="tr-park" x="22" y="236" width="104" height="120" rx="14" />
+    <g class="tr-blocks">
+      {[[22, 60, 104, 150], [150, 30, 70, 124], [246, 30, 40, 70], [150, 196, 40, 70], [222, 150, 64, 110], [22, 380, 90, 110], [150, 312, 34, 70], [222, 300, 64, 160], [150, 426, 110, 60], [22, 510, 20, 40], [160, 506, 126, 40]].map(([x, y, w, h]) => <rect x={x} y={y} width={w} height={h} rx="6" />)}
+    </g>
+    <path class="tr-route" d={route} />
+    <path class="tr-route-done" d={route} data-route />
+    <g class="tr-pin store" transform="translate(52 520)"><circle r="11" /><text y="4">M</text></g>
+    <g class="tr-pin home" transform="translate(236 118)"><circle r="11" /><path d="M-5 3 V-2 L0 -6 L5 -2 V3 Z" /></g>
+    <g class="tr-courier" data-courier><circle class="tr-courier-halo" r="18" /><circle r="10" /><path d="M-4 1 h8 M-2 -3 l3 4" /></g>
+  </svg>
+
+  <p class="tr-eta" data-anchor={`${uid}-eta`}><span class="tr-live" aria-hidden="true"></span><b data-eta-time>16:42</b><span data-eta-left>24 min</span></p>
+
+  <section class="tr-sheet" aria-label="Delivery details" data-sheet>
+    <button type="button" class="tr-handle" data-handle aria-label="Delivery details: drag or use arrow keys to resize" aria-expanded={snap === 'full' ? 'true' : 'false'}><span></span></button>
+    <header>
+      <h2><span data-eta-headline>Arriving in 24 min</span></h2>
+      <p class="tr-sub">Order MR-904117 · Rota Sul Express · updated <time data-updated>16:18</time></p>
+    </header>
+    <ol class="tr-steps" aria-label="Delivery progress">
+      {steps.map((step, index) => <li class={index < 3 ? 'done' : index === 3 ? 'now' : ''} aria-current={index === 3 ? 'step' : undefined}><i></i><span>{step}</span></li>)}
+    </ol>
+    <div class="tr-courier-card">
+      <span class="tr-avatar" aria-hidden="true">CR</span>
+      <div><b>Caio R.</b><small>Motorbike · ★ 4.9 · 1,204 deliveries</small></div>
+      <button type="button" class="tr-round" data-message aria-expanded="false">Message</button>
+    </div>
+    <div class="tr-replies" hidden data-replies>
+      {['Leave it with the doorman', "I'm coming down", 'Ring apt 42'].map((text) => <button type="button" data-reply>{text}</button>)}
+    </div>
+    <p class="tr-sent" role="status" data-sent></p>
+    <dl class="tr-details">
+      <div><dt>Deliver to</dt><dd>120 Palm Street · apt 42</dd></div>
+      <div><dt>Safe drop</dt><dd><label class="tr-toggle"><input type="checkbox" checked /> Leave with the doorman</label></dd></div>
+    </dl>
+    <ul class="tr-items">
+      {items.map((item) => <li><Garment garment={item.garment} swatch={item.swatch} label="" /><span>{item.name}<small>{item.colorName} · M</small></span><b>{brl(item.price)}</b></li>)}
+    </ul>
+    <button type="button" class="tr-share" data-share>Share live ETA</button>
+  </section>
+</div>

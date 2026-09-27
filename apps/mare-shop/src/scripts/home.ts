@@ -75,3 +75,5 @@ document.addEventListener('click', (event) => {
 });
 
 reveal();
+
+export {};

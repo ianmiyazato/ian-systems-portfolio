@@ -1,0 +1,43 @@
+---
+// Shoppable reels: a vertical snap feed; each reel loops a CSS "video", double-tap likes, and the items sit in a sheet.
+import Garment from '../Garment.astro';
+import { catalogBySlug } from '@portfolio/mocks';
+import { brl, reels } from '../../lib/data';
+interface Props { sheet?: boolean; uid: string }
+const { sheet = false, uid } = Astro.props;
+---
+<div class="rl-feed" data-reel-feed data-sheet-open={sheet ? 'true' : 'false'}>
+  {reels.map((reel, index) => {
+    const items = reel.slugs.map((slug) => catalogBySlug(slug)!);
+    const hero = items[0]!;
+    return (
+      <article class="rl" data-reel={reel.id} data-swatch={hero.swatch} aria-label={`Reel by ${reel.creator}: ${reel.caption}`} aria-roledescription="reel">
+        <div class="rl-progress" aria-hidden="true"><i></i></div>
+        <div class="rl-stage" data-stage>
+          <div class="rl-art"><Garment garment={hero.garment} swatch={hero.swatch} label={`${hero.name} in the reel`} /></div>
+          <a class="rl-tag" href={`/mare/shop/products/${hero.slug}`} data-anchor={index === 0 ? `${uid}-tag` : undefined}><i aria-hidden="true"></i>{hero.name} · {brl(hero.price)}</a>
+          <span class="rl-burst" aria-hidden="true"></span>
+        </div>
+        <div class="rl-rail">
+          <button type="button" class="rl-like" aria-pressed="false" data-like data-count={1200 + index * 830}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" /></svg><span>{(1200 + index * 830).toLocaleString('en-US')}</span><span class="visually-hidden"> likes, like this reel</span></button>
+          <button type="button" class="rl-pause" aria-pressed="false" data-pause>Pause</button>
+        </div>
+        <div class="rl-meta">
+          <p class="rl-creator"><b class="rl-avatar" aria-hidden="true">{reel.initials}</b>{reel.creator} · {reel.views} views</p>
+          <p class="rl-caption">{reel.caption}</p>
+          <button type="button" class="rl-shop" data-shop aria-expanded="false" data-anchor={index === 0 ? `${uid}-shop` : undefined}>Shop {items.length} items in this reel</button>
+        </div>
+        <section class="rl-sheet" aria-label={`Items in this reel`} hidden data-items>
+          <header><b>In this reel</b><button type="button" class="rl-close" data-close-items aria-label="Close items">×</button></header>
+          <ul>
+            {items.map((item) => (
+              <li><Garment garment={item.garment} swatch={item.swatch} label="" /><span>{item.name}<small>{brl(item.price)} · pickup today</small></span><button type="button" class="rl-add" data-add aria-pressed="false">Add</button></li>
+            ))}
+          </ul>
+          <button type="button" class="rl-add-all" data-add-all>Add all {items.length} · {brl(items.reduce((sum, item) => sum + item.price, 0))}</button>
+          <p class="rl-note" role="status" data-note></p>
+        </section>
+      </article>
+    );
+  })}
+</div>

@@ -30,3 +30,21 @@ document.querySelectorAll<HTMLElement>('[data-typing]').forEach((node) => {
     node.textContent = phrases[phrase]!.slice(0, chars);
   }, 60);
 });
+
+/* Pay: private by default. Amounts render masked; the eye reveals them for this screen only. */
+document.querySelectorAll<HTMLElement>('[data-private]').forEach((screen) => {
+  const eye = screen.querySelector<HTMLButtonElement>('[data-eye]');
+  const masked = new Map<HTMLElement, string>();
+  eye?.addEventListener('click', () => {
+    const show = eye.getAttribute('aria-pressed') !== 'true';
+    eye.setAttribute('aria-pressed', String(show));
+    eye.setAttribute('aria-label', show ? 'Hide amounts' : 'Show amounts');
+    screen.dataset.private = String(!show);
+    screen.querySelectorAll<HTMLElement>('.pa-private').forEach((node) => {
+      if (!masked.has(node)) masked.set(node, node.innerHTML);
+      node.innerHTML = show ? node.dataset.value! : masked.get(node)!;
+    });
+  });
+});
+
+export {};

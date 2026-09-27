@@ -98,7 +98,7 @@ export const routes: RouteEntry[] = [
   { id: 'pay-fraud', system: 'pay', title: 'Fraud', href: '/mare/ops/pay/fraud', zone: 'mare-ops', owner: remote('pay'), board: 'PY-fraud', heading: 'Fraud', release: '0.2', checked: '2026-09-27', states: ['degraded', 'loading'] },
   { id: 'pay-models', system: 'pay', title: 'Models', href: '/mare/ops/pay/models', zone: 'mare-ops', owner: remote('pay'), board: 'PY-models', heading: 'Models', release: '0.2', checked: '2026-09-27', states: ['drift'] },
   { id: 'pay-policies', system: 'pay', title: 'Policies', href: '/mare/ops/pay/policies', zone: 'mare-ops', owner: remote('pay'), board: 'PY-policies', heading: 'Policies', release: '0.2', checked: '2026-09-27', states: ['conflict'] },
-  { id: 'pay-customer-app', system: 'pay', title: 'Pay customer app', href: '/mare/apps/pay', zone: 'mare-shop', owner: shop, board: 'PY-app', heading: 'Pay app', release: '0.1', mobile: true },
+  { id: 'pay-customer-app', system: 'pay', title: 'Pay customer app', href: '/mare/apps/pay', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Pay app', release: '0.1', mobile: true },
 
   { id: 'circle-program', system: 'circle', title: 'Program dashboard', href: '/mare/ops/circle', zone: 'mare-ops', owner: remote('circle'), board: 'CI-program', heading: 'creators sold', release: '0.1' },
   { id: 'circle-rule-builder', system: 'circle', title: 'Rule builder', href: '/mare/ops/circle/rules/summer-swim', zone: 'mare-ops', owner: remote('circle'), board: 'CI-rules', heading: 'Rule builder', release: '0.1' },
@@ -107,6 +107,7 @@ export const routes: RouteEntry[] = [
   { id: 'circle-campaigns', system: 'circle', title: 'Campaigns', href: '/mare/ops/circle/campaigns', zone: 'mare-ops', owner: remote('circle'), board: 'CI-campaigns', heading: 'Summer swim drop', release: '0.2', checked: '2026-09-27', states: ['scheduled'] },
   { id: 'circle-payouts', system: 'circle', title: 'Payouts', href: '/mare/ops/circle/payouts', zone: 'mare-ops', owner: remote('circle'), board: 'CI-payouts', heading: 'Payouts', release: '0.2', checked: '2026-09-27', states: ['payout-failed'] },
   { id: 'circle-creator-app', system: 'circle', title: 'Creator app', href: '/mare/apps/circle', zone: 'mare-shop', owner: shop, board: 'CI-app', heading: 'Circle creator app', release: '0.1' },
+  { id: 'circle-reel', system: 'circle', title: 'Shoppable reels', href: '/mare/apps/circle-reel', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Shoppable reels', release: '0.2', checked: '2026-09-27' },
 
   { id: 'mesh-topology', system: 'mesh', title: 'Topology', href: '/mare/ops/mesh', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-topology', heading: 'live topology', release: '0.1' },
   { id: 'mesh-partner', system: 'mesh', title: 'Partner adapter', href: '/mare/ops/mesh/partners/ligeiro-log', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-partner', heading: 'Ligeiro Log', release: '0.1' },
@@ -121,6 +122,7 @@ export const routes: RouteEntry[] = [
   { id: 'observability-slos', system: 'observability', title: 'Tidewatch · SLOs', href: '/observability/slos', zone: 'shell', owner: shell, board: 'TW-slos', heading: 'SLOs', release: '0.2', checked: '2026-09-27' },
 
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
+  { id: 'consumer-tracking', system: 'consumer', title: 'Live delivery tracking', href: '/mare/apps/tracking', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Live delivery tracking', release: '0.2', checked: '2026-09-27' },
   { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'V2-shop', heading: 'Linen, sun and salt', release: '0.1', checked: '2026-09-27', mobile: true },
   { id: 'consumer-pdp', system: 'consumer', title: 'Product page', href: '/mare/shop/products/linen-midi-dress', zone: 'mare-shop', owner: shop, board: 'V2-pdp', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27', mobile: true },
 
