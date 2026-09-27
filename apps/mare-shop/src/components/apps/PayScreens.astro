@@ -7,28 +7,28 @@ const { start } = Astro.props;
   <div class="screen">
     <div class="pa-card-scene">
       <button class="pa-flip" type="button" aria-pressed="false" aria-label="Flip card">
-        <span class="pa-face front"><b>maré pay · Crédito</b><span>•••• 4471</span><small>BRUNO S · 09/31</small><i class="py-shine"></i></span>
+        <span class="pa-face front"><b>maré pay · Credit</b><span>•••• 4471</span><small>BRUNO S · 09/31</small><i class="py-shine"></i></span>
         <span class="pa-face back"><span class="pa-strip"></span><span>CVV •••</span><small>Reveal the full number with Face ID in Virtual card</small></span>
       </button>
     </div>
     <div class="pa-bill">
-      <span>Current bill · due 10 Oct</span>
-      <strong>R$ 1.284,50</strong>
+      <span>Current bill · due Oct 10</span>
+      <strong>R$1,284.50</strong>
       <div class="pa-usage"><i></i></div>
-      <span>R$ 1.284 of R$ 4.000 limit used</span>
+      <span>R$1,284 of R$4,000 limit used</span>
     </div>
     <div class="pa-actions"><span><i>R$</i>Pay bill</span><span><i>3×</i>Installments</span><span><i>▣</i>Virtual card</span><span><i>↑</i>Limit</span></div>
   </div>
   <div class="screen">
     <p class="pa-title">Split this purchase</p>
-    <p class="pa-sub">Camisa linho natural + Calça costa pedra · R$ 538,00</p>
+    <p class="pa-sub">Natural linen shirt + Stone wide-leg pants · R$538.00</p>
     <div class="pa-options">
-      <label><span>1× R$ 538,00<small>pay in full</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
-      <label><span>2× R$ 269,00<small>no interest</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
-      <label><span>3× R$ 179,33 <em>no interest</em><small>Oct, Nov, Dec</small></span><input type="radio" name={`pa-inst-${start}`} checked /></label>
-      <label><span>6× R$ 94,61<small>1,99% a.m. · CET 26,7% a.a.</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+      <label><span>1× R$538.00<small>pay in full</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+      <label><span>2× R$269.00<small>no interest</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
+      <label><span>3× R$179.33 <em>no interest</em><small>Oct, Nov, Dec</small></span><input type="radio" name={`pa-inst-${start}`} checked /></label>
+      <label><span>6× R$94.61<small>1.99% a month · 26.7% APR</small></span><input type="radio" name={`pa-inst-${start}`} /></label>
     </div>
-    <button class="pa-confirm" type="button">Confirm 3× R$ 179,33</button>
+    <button class="pa-confirm" type="button">Confirm 3× R$179.33</button>
   </div>
   <div class="screen pa-sheet-screen">
     <div class="pa-behind" aria-hidden="true">

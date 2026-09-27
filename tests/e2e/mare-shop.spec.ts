@@ -15,9 +15,9 @@ test.describe('Maré Shop', () => {
   });
 
   test('product page shows sizes, store stock and installments', async ({ page }) => {
-    await page.goto('/mare/shop/p/camisa-linho-natural');
-    await expect(page.getByText('3× R$ 83 sem juros com Maré Pay')).toBeVisible();
-    await expect(page.getByRole('radio', { name: 'PP' })).toBeDisabled();
+    await page.goto('/mare/shop/p/natural-linen-shirt');
+    await expect(page.getByText('3× R$83.00 interest-free with Maré Pay')).toBeVisible();
+    await expect(page.getByRole('radio', { name: 'XS' })).toBeDisabled();
     await expect(page.getByText('2 left · pickup today by 18:00')).toBeVisible();
   });
 

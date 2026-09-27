@@ -179,7 +179,7 @@ function Invite({ onSent }: { onSent: (creator: Creator) => void }) {
             <li><b>{name || 'The creator'}</b> ({handle || '@handle'}) earns <b>{rate}%</b> of each order placed with code <b>{code}</b>.</li>
             <li>Commission <b>confirms 30 days after delivery</b>. Returned items never become a clawback, because nothing is paid before the window closes.</li>
             <li>Payouts every Friday by Pix once confirmed commission passes R$50.</li>
-            <li>Posts about Maré are labelled as a paid partnership.</li>
+            <li>Posts about Maré are labeled as a paid partnership.</li>
             <li>Either side can end the agreement with 7 days' notice; confirmed commission is always paid.</li>
           </ol>
         </article>

@@ -58,7 +58,7 @@ export function Academy() {
           <p>Write rate × entry size × retention, plus replication and indexes. Say the numbers; interviewers grade the reasoning, not the exact answer.</p>
         </article>
         <aside className="at-side">
-          <AiSurface title="Practise this" meta="grounded in this lesson" anchor="at-practice-this" actions={<ZLink className="ai-approve" href="/atlas/arena?modal=setup&prompt=estimate-storage">Start a 20-min drill</ZLink>}>
+          <AiSurface title="Practice this" meta="grounded in this lesson" anchor="at-practice-this" actions={<ZLink className="ai-approve" href="/atlas/arena?modal=setup&prompt=estimate-storage">Start a 20-min drill</ZLink>}>
             Estimation was your weakest rubric line in session 14. This drill uses the ledger example from this lesson.
           </AiSurface>
           <section className="at-card" data-anchor="at-members-lesson">
@@ -99,7 +99,7 @@ function Paywall() {
         <Layer kind="sub" level={2} title="Checkout · Pro" eyebrow="First week free" onClose={() => closeLayers(['sub'])} width={460} anchor="at-checkout"
           footer={done ? <button type="button" className="at-btn primary wide" onClick={close}>Back to the lesson</button> : <button type="button" className="at-btn primary wide" onClick={() => { if (!failed) { setPlan('Pro'); setDone(true); } }}>Start free week</button>}>
           {done ? (
-            <div className="at-success" role="status" data-anchor="at-checkout-success"><b aria-hidden="true">✓</b><strong>You’re Pro</strong><p>Members lessons, unlimited Arena and loop intelligence are unlocked in every open tab. First charge on 3 Oct.</p></div>
+            <div className="at-success" role="status" data-anchor="at-checkout-success"><b aria-hidden="true">✓</b><strong>You’re Pro</strong><p>Members lessons, unlimited Arena and loop intelligence are unlocked in every open tab. First charge on Oct 3.</p></div>
           ) : (
             <>
               <div className="at-seg" role="group" aria-label="Payment method">{(['card', 'pix'] as const).map((value) => <button key={value} type="button" aria-pressed={method === value} onClick={() => setMethod(value)}>{value === 'card' ? 'Card' : 'Pix'}</button>)}</div>

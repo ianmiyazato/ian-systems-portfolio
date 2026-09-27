@@ -19,7 +19,7 @@ export function RuleBuilder({ id }: { id: string }) {
         <h1>Rule builder · Swim</h1>
         <span class="cc-sticker" aria-hidden="true">priority 20</span>
       </header>
-      {saved && <Banner tone="success" icon="✓" title="Rule published · applies to orders from 23 Sep">Receipts already issued keep their original rates; the change is versioned in the rule history.</Banner>}
+      {saved && <Banner tone="success" icon="✓" title="Rule published · applies to orders from Sep 23">Receipts already issued keep their original rates; the change is versioned in the rule history.</Banner>}
       {state === 'locked' && <Banner tone="info" icon="i" title="Payout week · rules are frozen until Friday 18:00" />}
       <div class="cc-rule-grid">
         <section class="cc-builder" aria-labelledby="rule-title">
@@ -39,11 +39,11 @@ export function RuleBuilder({ id }: { id: string }) {
           <div class="cc-block then" data-anchor="cc-then">
             <span class="cc-block-label">Then pay</span>
             <label class="cc-rate"><span class="visually-hidden">Commission rate</span><input type="number" min={0} max={30} value={rate} onInput={(event) => setRate(Math.max(0, Math.min(30, Number(event.currentTarget.value) || 0)))} /><b>%</b></label>
-            <span class="cc-dates">from <b>23 Sep</b> to <b>31 Dec</b></span>
+            <span class="cc-dates">from <b>Sep 23</b> to <b>Dec 31</b></span>
           </div>
           <p class="cc-priority" data-anchor="cc-priority"><b>Why priority 20?</b> It beats the program default (6%) and the Linen rule (8%, priority 10), but a creator-specific deal (priority 30) still wins. Only one rule pays per item.</p>
           <AiSurface inline title="Impact estimate" meta="last 90 days · 0.84" anchor="cc-impact" sources={[{ label: 'attributed orders · 90d', score: 0.9 }, { label: 'swim sell-through', score: 0.82 }]}>
-            41 creators are eligible. Expect about +R$ 38k attributed swim sales a month for R$ 3.8k extra commission.
+            41 creators are eligible. Expect about +R$38k attributed swim sales a month for R$3.8k extra commission.
           </AiSurface>
           <div class="cc-actions">
             <button type="button" class="cc-btn">Save draft</button>
@@ -64,7 +64,7 @@ export function RuleBuilder({ id }: { id: string }) {
           </ul>
           <footer>
             <div><span>Commission</span><strong>{brl(total)}</strong></div>
-            <small>Confirms 26 Oct · {RETURN_WINDOW_DAYS} days after delivery</small>
+            <small>Confirms Oct 26 · {RETURN_WINDOW_DAYS} days after delivery</small>
           </footer>
         </aside>
       </div>

@@ -15,13 +15,13 @@ export function Pipeline() {
       <AtlasHeader active="Pipeline" />
       <main className="at-main">
         <header className="at-head" data-anchor="at-head">
-          <div><span className="at-eyebrow">Pipeline · week of 22 Sep</span><h1>{empty ? 'Start your pipeline' : 'Four interviews this week'}</h1></div>
+          <div><span className="at-eyebrow">Pipeline · week of Sep 22</span><h1>{empty ? 'Start your pipeline' : 'Four interviews this week'}</h1></div>
           <ZLink className="at-btn primary" href="/atlas/pipeline/board">Open board</ZLink>
         </header>
         {state === 'error' && <p className="at-banner risk" data-anchor="at-error">Job board sync failed 12 min ago · your pipeline is safe, new postings will appear when it recovers.</p>}
         {state === 'offline' && <p className="at-banner warn" data-anchor="at-offline">Offline · edits save locally and sync when you reconnect.</p>}
         {state === 'locked' && <p className="at-banner info" data-anchor="at-locked">Loop intelligence is a Pro feature · <ZLink href="/atlas/academy/designing-for-10x?modal=paywall">see plans</ZLink></p>}
-        {state === 'limit' && <p className="at-banner warn" data-anchor="at-limit">You've used 3 of 3 free Arena sessions this month · next resets 1 Oct, or go Pro for unlimited.</p>}
+        {state === 'limit' && <p className="at-banner warn" data-anchor="at-limit">You've used 3 of 3 free Arena sessions this month · next resets Oct 1, or go Pro for unlimited.</p>}
         {state === 'loading' ? (
           <div className="at-grid" aria-busy="true" data-anchor="at-loading">
             {[0, 1, 2, 3, 4].map((key) => <div key={key} className={`at-card skeleton ${key === 0 || key === 3 ? 'span-2' : ''}`} style={{ minHeight: key < 3 ? 200 : 120 }} aria-hidden="true" />)}

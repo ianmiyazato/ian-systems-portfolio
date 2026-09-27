@@ -21,7 +21,7 @@ for (const [name, href] of targets) {
     await page.goto(pinned(href));
     await expect(page.locator('.im-footer')).toContainText('All names are fictitious · data is synthetic · AI behavior is simulated in v0.1');
     await page.waitForLoadState('networkidle');
-    // Let sequenced reveals (agent traces, streamed text) finish so axe measures resting colours.
+    // Let sequenced reveals (agent traces, streamed text) finish so axe measures resting colors.
     await page.waitForTimeout(2600);
     const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
     const serious = results.violations.filter((violation) => violation.impact === 'serious' || violation.impact === 'critical');

@@ -6,7 +6,7 @@ export const escapeHtml = (value: string) =>
 const portfolio = themes.portfolio;
 
 /**
- * Portfolio chrome (lens, palette) keeps one identity in every zone, so reviewers recognise it
+ * Portfolio chrome (lens, palette) keeps one identity in every zone, so reviewers recognize it
  * even inside Mesh's dark console. Values come from the token package, never literals.
  */
 export const chromeVars = `

@@ -16,7 +16,7 @@ export const studies: CaseStudy[] = [
     slug: 'mare', name: 'Maré', kind: 'Retail platform · five operational systems + consumer', theme: 'portfolio',
     pitch: 'One fashion retailer, five internal systems with five different users, and a consumer site that has to feel effortless on top.',
     problem: [
-      'Store staff, merchandisers, credit analysts, partnership managers and integration engineers were all working in one generic admin, so every screen was optimised for nobody.',
+      'Store staff, merchandisers, credit analysts, partnership managers and integration engineers were all working in one generic admin, so every screen was optimized for nobody.',
       'Underneath, each channel talked to each carrier, tax gateway and payment partner directly. Every new partner multiplied the failure modes.',
       'The job: give each team a product shaped around its work, and give the platform one canonical event contract to stand on.'
     ],

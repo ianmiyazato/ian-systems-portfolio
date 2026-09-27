@@ -70,7 +70,7 @@ export function Onboarding({ seller }: { seller: string }) {
           ) : (
             <div class="ph-step-placeholder">
               <h2 id="map-title">{steps[index]?.[1]}</h2>
-              <p>{step === 'company' ? 'CNPJ, legal name and bank details verified on 24 Sep.' : step === 'logistics' ? 'Choose pickup windows and the carriers Linho & Co can hand over to.' : step === 'payouts' ? 'Payout schedule and commission tier for new marketplace sellers.' : 'Everything above, one last time, before the offers go live.'}</p>
+              <p>{step === 'company' ? 'CNPJ, legal name and bank details verified on Sep 24.' : step === 'logistics' ? 'Choose pickup windows and the carriers Linho & Co can hand over to.' : step === 'payouts' ? 'Payout schedule and commission tier for new marketplace sellers.' : 'Everything above, one last time, before the offers go live.'}</p>
               <button type="button" class="ph-btn" onClick={() => setParams({ step: 'mapping' })}>Back to catalog mapping</button>
             </div>
           )}
@@ -89,7 +89,7 @@ export function Onboarding({ seller }: { seller: string }) {
             <header><h2>Site preview</h2></header>
             <div class="ph-preview">
               <span class="swatch" data-swatch="sand" />
-              <div><strong>Camisa linho reta</strong><small>Linho & Co · Tops › Shirts</small><b>R$239 · 3× sem juros</b></div>
+              <div><strong>Straight linen shirt</strong><small>Linho & Co · Tops › Shirts</small><b>R$239 · 3× interest-free</b></div>
             </div>
           </section>
         </aside>

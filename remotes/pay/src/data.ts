@@ -8,10 +8,10 @@ export const bandFor = (score: number): Band => (score >= REVIEW_BAND[1] ? 'Auto
 
 export const applications: Application[] = [
   { id: 'AP-77118', name: 'Bruno S.', amount: 6000, score: 588, product: 'Credit + Store', age: '12 min', band: 'Review', flag: 'Address mismatch' },
-  { id: 'AP-77121', name: 'Tainá R.', amount: 4000, score: 712, product: 'Credit', age: '4 min', band: 'Auto-approve' },
+  { id: 'AP-77121', name: 'Taina R.', amount: 4000, score: 712, product: 'Credit', age: '4 min', band: 'Auto-approve' },
   { id: 'AP-77097', name: 'Helena C.', amount: 9000, score: 603, product: 'Credit + Store', age: '31 min', band: 'Review', flag: 'Thin file' },
   { id: 'AP-77104', name: 'Diego M.', amount: 2500, score: 655, product: 'Store', age: '18 min', band: 'Auto-approve' },
-  { id: 'AP-77090', name: 'Otávio L.', amount: 1500, score: 541, product: 'Store', age: '44 min', band: 'Decline', flag: '3 inquiries · 30d' },
+  { id: 'AP-77090', name: 'Otavio L.', amount: 1500, score: 541, product: 'Store', age: '44 min', band: 'Decline', flag: '3 inquiries · 30d' },
   { id: 'AP-77088', name: 'Camila F.', amount: 3200, score: 689, product: 'Credit', age: '52 min', band: 'Auto-approve' },
   { id: 'AP-77085', name: 'Pedro A.', amount: 5000, score: 574, product: 'Credit', age: '1 h', band: 'Review', flag: 'Income unverified' }
 ];
