@@ -3,6 +3,7 @@ import { CommandPalette } from './palette';
 import { DecisionLens } from './lens';
 import { NowPlayingBar } from './now-playing';
 import { Shortcuts } from './shortcuts';
+import { enhanceAiSurfaces } from './provenance';
 
 export { PortfolioBar, CommandPalette, DecisionLens, NowPlayingBar, Shortcuts };
 export { viewsOf } from './shortcuts';
@@ -22,4 +23,8 @@ export function defineChrome() {
   if (!customElements.get('im-shortcuts')) customElements.define('im-shortcuts', Shortcuts);
   // Shortcuts need no markup in any zone: one instance is added to the page.
   if (!document.querySelector('im-shortcuts')) document.body.append(document.createElement('im-shortcuts'));
+  if (!document.documentElement.dataset.aiHow) {
+    document.documentElement.dataset.aiHow = 'on';
+    enhanceAiSurfaces();
+  }
 }

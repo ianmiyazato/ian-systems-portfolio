@@ -244,6 +244,9 @@ importers:
 
   packages/chrome:
     dependencies:
+      '@portfolio/ai-sim':
+        specifier: workspace:*
+        version: link:../ai-sim
       '@portfolio/routes':
         specifier: workspace:*
         version: link:../routes

@@ -182,3 +182,9 @@ td.bad, span.bad, dd.bad { color: var(--risk); font-weight: 650; }
 .tw-first-run h1 { margin: 6px 0 8px; font: 650 24px var(--font-display); letter-spacing: -.03em; }
 .tw-first-run pre { overflow-x: auto; padding: 14px; border-radius: var(--radius-sm); background: var(--surface-2); font: 13px/1.6 var(--font-mono); }
 @media (max-width: 760px) { .tw-skeleton { grid-template-columns: 1fr; } .tw-skeleton span:first-child { grid-column: auto; } .tw-banner { width: calc(100% - 32px); margin-top: 12px; } }
+.tw-status.neutral { background: var(--surface-2); color: var(--ink); }
+.tw-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tw-tabs button { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font: 600 12px var(--font-ui); cursor: pointer; }
+.tw-tabs button span { color: var(--muted); font-family: var(--font-mono); }
+.tw-tabs button[aria-selected='true'] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+.tw-table tr.is-arriving { animation: fade .6s ease both; }

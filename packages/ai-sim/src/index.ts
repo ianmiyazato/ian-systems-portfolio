@@ -74,3 +74,44 @@ export class LiveProvider implements AIProvider {
   runEval(): Promise<EvalResult[]> { return Promise.reject(this.unavailable()); }
 }
 
+
+/* Provenance ------------------------------------------------------------------------------------ */
+
+export type ProvenanceSource = { label: string; score?: number };
+export type Provenance = {
+  sources: ProvenanceSource[];
+  tools: Array<{ tool: string; ms: number; output: string }>;
+  route: string;
+  evalScore: number;
+  tokens: { input: number; output: number };
+  cost: number;
+};
+
+const hash = (value: string) => [...value].reduce((sum, char) => (sum * 31 + char.charCodeAt(0)) >>> 0, 7);
+
+/**
+ * "How this was made" for any simulated AI card, deterministic per card: the same card always shows the
+ * same tools, latencies, route, eval score, tokens and cost. Scoring cards route to a fine-tuned model;
+ * long-form text escalates to the large model.
+ */
+export function provenanceFor(key: string, sources: ProvenanceSource[], route?: string): Provenance {
+  const seed = hash(key);
+  const long = key.length > 42 || /why|summary|pitch|brief|draft|root cause|what/i.test(key);
+  const chosen = route ?? (long ? 'large · escalated: open-ended text' : `ft-${['pricing-v2', 'risk-v3', 'ops-v4', 'mesh-v1'][seed % 4]}`);
+  const input = 900 + (seed % 2400);
+  const output = long ? 180 + (seed % 220) : 40 + (seed % 60);
+  const large = chosen.startsWith('large');
+  return {
+    sources: sources.length ? sources : [{ label: 'grounding corpus', score: 0.8 + (seed % 15) / 100 }],
+    tools: [
+      { tool: 'retrieve', ms: 30 + (seed % 40), output: `${Math.max(3, sources.length + 2)} chunks` },
+      { tool: 'rerank', ms: 12 + (seed % 20), output: `top ${Math.max(1, sources.length)}` },
+      { tool: 'guardrails', ms: 6 + (seed % 9), output: 'passed' },
+      { tool: large ? 'generate · large' : `generate · ${chosen}`, ms: (large ? 620 : 140) + (seed % 260), output: `${output} tokens` }
+    ],
+    route: chosen,
+    evalScore: Math.round((0.84 + (seed % 13) / 100) * 100) / 100,
+    tokens: { input, output },
+    cost: Math.round(((input / 1_000_000) * (large ? 3 : 0.4) + (output / 1_000_000) * (large ? 15 : 1.6)) * 10_000) / 10_000
+  };
+}

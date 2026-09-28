@@ -12,7 +12,8 @@ test.describe('reduced motion', () => {
       await page.waitForTimeout(1000);
       const running = await page.evaluate(() =>
         document.getAnimations()
-          .filter((animation) => animation.playState === 'running')
+          // The global rule shrinks everything to 1 ms; those are neutralized, not motion.
+          .filter((animation) => animation.playState === 'running' && Number(animation.effect?.getComputedTiming().duration ?? 0) > 1)
           .map((animation) => {
             const target = (animation.effect as KeyframeEffect | null)?.target as Element | null;
             const name = (animation as CSSAnimation).animationName ?? (animation as CSSTransition).transitionProperty ?? 'script';
