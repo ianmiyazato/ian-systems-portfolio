@@ -121,5 +121,14 @@ test.describe('Counter', () => {
     await expect(control.locator('time')).toHaveText(time!);
     await control.getByRole('button', { name: 'Resume live updates' }).click();
   });
-});
 
+  test('the delivery on the road shows the same live ETA as the customer app', async ({ page }) => {
+    await page.goto('/mare/ops/counter?t=16:18&live=paused');
+    const card = page.locator('[data-order="MR-904090"]');
+    await expect(card.getByText('ETA 16:42 · 24 min')).toBeVisible();
+    await expect(card.getByRole('progressbar', { name: 'Delivery progress' })).toHaveAttribute('aria-valuenow', '61');
+    await expect(card.getByRole('link', { name: 'See what the customer sees' })).toHaveAttribute('href', '/mare/apps/tracking');
+    await page.goto('/mare/ops/counter?t=16:50&live=paused');
+    await expect(page.locator('[data-order="MR-904090"]').getByText('Delivered 16:42')).toBeVisible();
+  });
+});

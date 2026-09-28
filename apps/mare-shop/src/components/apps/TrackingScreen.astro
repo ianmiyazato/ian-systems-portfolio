@@ -1,14 +1,15 @@
 ---
 // Map-first delivery tracking: courier on the route, ETA chip, draggable bottom sheet with snap points.
 import Garment from '../Garment.astro';
+import { deliveryRun } from '@portfolio/mocks';
 import { productBySlug, brl } from '../../lib/data';
 interface Props { snap: 'peek' | 'half' | 'full'; uid: string }
 const { snap, uid } = Astro.props;
-const items = [productBySlug('natural-linen-shirt'), productBySlug('stone-wide-leg-pants')];
+const items = [productBySlug('canvas-tote')];
 const steps = ['Placed', 'Packed', 'Picked up', 'On the way', 'Delivered'];
 const route = 'M52 520 H132 V400 H204 V286 H156 V178 H236 V118';
 ---
-<div class="tr" data-tracking data-snap={snap}>
+<div class="tr" data-tracking data-snap={snap} data-collected={deliveryRun.collected} data-eta={deliveryRun.eta}>
   <svg class="tr-map" viewBox="0 0 296 636" aria-hidden="true">
     <rect class="tr-land" width="296" height="636" />
     <path class="tr-water" d="M0 590 Q 80 560 150 585 T 296 570 V 636 H0 Z" />
@@ -29,7 +30,7 @@ const route = 'M52 520 H132 V400 H204 V286 H156 V178 H236 V118';
     <button type="button" class="tr-handle" data-handle aria-label="Delivery details: drag or use arrow keys to resize" aria-expanded={snap === 'full' ? 'true' : 'false'}><span></span></button>
     <header>
       <h2><span data-eta-headline>Arriving in 24 min</span></h2>
-      <p class="tr-sub">Order MR-904117 · Rota Sul Express · updated <time data-updated>16:18</time></p>
+      <p class="tr-sub">Order {deliveryRun.orderId} · {deliveryRun.carrier} · updated <time data-updated>16:18</time></p>
     </header>
     <ol class="tr-steps" aria-label="Delivery progress">
       {steps.map((step, index) => <li class={index < 3 ? 'done' : index === 3 ? 'now' : ''} aria-current={index === 3 ? 'step' : undefined}><i></i><span>{step}</span></li>)}
@@ -48,7 +49,7 @@ const route = 'M52 520 H132 V400 H204 V286 H156 V178 H236 V118';
       <div><dt>Safe drop</dt><dd><label class="tr-toggle"><input type="checkbox" checked /> Leave with the doorman</label></dd></div>
     </dl>
     <ul class="tr-items">
-      {items.map((item) => <li><Garment garment={item.garment} swatch={item.swatch} label="" /><span>{item.name}<small>{item.colorName} · M</small></span><b>{brl(item.price)}</b></li>)}
+      {items.map((item) => <li><Garment garment={item.garment} swatch={item.swatch} label="" /><span>{item.name}<small>{item.colorName} · {item.sizes[0]}</small></span><b>{brl(item.price)}</b></li>)}
     </ul>
     <button type="button" class="tr-share" data-share>Share live ETA</button>
   </section>

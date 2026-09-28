@@ -91,3 +91,6 @@ export function liveOrder(n: number): CounterOrder {
 export function counterOrders(): CounterOrder[] {
   return counterBoard;
 }
+
+/** The one delivery on the road: Counter's handed-over card and the consumer tracking app read the same run. */
+export const deliveryRun = { orderId: 'MR-904090', carrier: 'Rota Sul Express', courier: 'Caio R.', collected: '15:40', eta: '16:42' } as const;

@@ -7,8 +7,8 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function position(root: HTMLElement) {
   const now = getWorld().now();
-  const dispatch = parseLocalTime('16:05', now)!;
-  const eta = parseLocalTime('16:42', now)!;
+  const dispatch = parseLocalTime(root.dataset.collected!, now)!;
+  const eta = parseLocalTime(root.dataset.eta!, now)!;
   const progress = Math.min(1, Math.max(0, (now - dispatch) / (eta - dispatch)));
   const left = Math.max(0, Math.ceil((eta - now) / MINUTE - 1e-6));
   const route = root.querySelector<SVGPathElement>('[data-route]')!;

@@ -1,6 +1,6 @@
 import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow, useWorld } from '@portfolio/remote-runtime';
-import { clock } from '@portfolio/world';
-import { laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
+import { MINUTE, clock, parseLocalTime } from '@portfolio/world';
+import { deliveryRun, laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
 import type { Action } from './board';
 import { useCounter } from './context';
@@ -198,6 +198,7 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardPro
         <span aria-hidden="true">{order.lane === 'handed-over' ? '✓' : '◷'}</span>
         {reminded && order.note === 'no-show' ? 'Reminder sent 16:19 · waiting' : sla.text}
       </p>
+      {order.id === deliveryRun.orderId && <CourierEta now={now} />}
       {queued && <p class="ct-queued">Queued · will sync</p>}
       {action && (
         <button type="button" class={`ct-action ${order.lane} ${order.note === 'no-show' ? 'remind' : ''}`} onClick={action.run} disabled={action.disabled}>
@@ -205,5 +206,24 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardPro
         </button>
       )}
     </article>
+  );
+}
+
+/** Ride-hailing-style live ETA for the delivery on the road: same run and clock as the customer's tracking app. */
+function CourierEta({ now }: { now: number }) {
+  const collected = parseLocalTime(deliveryRun.collected, now)!;
+  const eta = parseLocalTime(deliveryRun.eta, now)!;
+  const progress = Math.min(1, Math.max(0, (now - collected) / (eta - collected)));
+  const left = Math.max(0, Math.ceil((eta - now) / MINUTE - 1e-6));
+  const delivered = progress >= 1;
+  return (
+    <div class={`ct-eta ${delivered ? 'done' : ''}`} data-anchor="ct-courier-eta">
+      <p>
+        <b>{delivered ? `Delivered ${clock(eta)}` : `ETA ${clock(eta)} · ${left} min`}</b>
+        <span>{deliveryRun.courier} · {deliveryRun.carrier}</span>
+      </p>
+      <span class="ct-eta-bar" role="progressbar" aria-label="Delivery progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}><i style={{ transform: `scaleX(${progress})` }} /></span>
+      <a class="ct-eta-link" href="/mare/apps/tracking">See what the customer sees</a>
+    </div>
   );
 }

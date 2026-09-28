@@ -4,6 +4,8 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-27 · `feat(counter)`: live courier ETA on the handed-over delivery (MR-904090): ETA, minutes left and a progress bar on the world clock, with a link to the customer's tracking view; both read one shared `deliveryRun`, so the ops card and the consumer app always agree (the tracking app now follows MR-904090 instead of an order Counter is still picking).
+
 - 2026-09-27 · `feat(pay)`: story-style "what changed since you left" recap on the Applications queue: five cards computed from world events since the reviewer's last visit (new applications, scoring latency that follows P-812, disputes due, drift watch, the policy waiting for a second approver), progress bars, Pause, arrow keys, links into each view; plays once per session after 20+ minutes away and replays from a ring chip or `?recap=1`.
 
 - 2026-09-27 · `feat(atlas)`: Academy browse at `/atlas/academy`: billboard for the new *Payments at scale* series (match percentage, Play, My list, pausable SVG preview), Continue watching with progress bars and cards that expand after hover intent or at once on focus to offer Resume and Practice in Arena, a Top 5 row with outlined giant numerals, and generated SVG artwork that re-draws for the member's weakest rubric area (Estimation shows each title's numbers) with a visible, changeable reason. Keyboard focus now wins over a resting pointer in the shop rows too.

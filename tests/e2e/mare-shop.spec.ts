@@ -82,8 +82,11 @@ test.describe('Maré Shop', () => {
     // Keyboard path: focus expands the card at once, and Enter acts on the quick action.
     await page.mouse.move(0, 0);
     await expect(tile).not.toHaveClass(/is-expanded/);
-    await tile.getByRole('button', { name: 'Save' }).focus();
+    await tile.getByRole('link').focus();
     await expect(tile).toHaveClass(/is-expanded/);
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await expect(tile.getByRole('button', { name: 'Save' })).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(tile.getByRole('button', { name: 'Saved' })).toHaveAttribute('aria-pressed', 'true');
   });
