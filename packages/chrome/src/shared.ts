@@ -1,9 +1,8 @@
-import { themes } from '@portfolio/tokens';
+import { portfolio } from '@portfolio/tokens/themes.json';
 
 export const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
 
-const portfolio = themes.portfolio;
 
 /**
  * Portfolio chrome (lens, palette) keeps one identity in every zone, so reviewers recognize it

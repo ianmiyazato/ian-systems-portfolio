@@ -1,0 +1,222 @@
+{
+  "home": {
+    "kb": 108.4,
+    "budget": 130,
+    "group": "shell"
+  },
+  "mare-languages": {
+    "kb": 105.4,
+    "budget": 130,
+    "group": "shell"
+  },
+  "system-design-mare": {
+    "kb": 169.7,
+    "budget": null,
+    "group": "shell"
+  },
+  "system-design-request-path": {
+    "kb": 125.6,
+    "budget": 130,
+    "group": "shell"
+  },
+  "pay-customer-app": {
+    "kb": 5.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "circle-creator-app": {
+    "kb": 5.5,
+    "budget": 60,
+    "group": "shop"
+  },
+  "circle-reel": {
+    "kb": 4.8,
+    "budget": 60,
+    "group": "shop"
+  },
+  "observability-problems": {
+    "kb": 129.1,
+    "budget": 130,
+    "group": "shell"
+  },
+  "observability-trace": {
+    "kb": 126.8,
+    "budget": 130,
+    "group": "shell"
+  },
+  "observability-logs": {
+    "kb": 125.3,
+    "budget": 130,
+    "group": "shell"
+  },
+  "observability-slos": {
+    "kb": 125.4,
+    "budget": 130,
+    "group": "shell"
+  },
+  "observability-ai-audit": {
+    "kb": 124.4,
+    "budget": 130,
+    "group": "shell"
+  },
+  "consumer-app": {
+    "kb": 5.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "consumer-tracking": {
+    "kb": 12.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "consumer-site": {
+    "kb": 6.9,
+    "budget": 60,
+    "group": "shop"
+  },
+  "consumer-pdp": {
+    "kb": 13.4,
+    "budget": 60,
+    "group": "shop"
+  },
+  "atlas-onboarding": {
+    "kb": 115.7,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-pipeline": {
+    "kb": 118.3,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-board": {
+    "kb": 127.6,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-company": {
+    "kb": 116.1,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-arena-setup": {
+    "kb": 120,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-arena-session": {
+    "kb": 120,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-feedback": {
+    "kb": 120.5,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-transcript": {
+    "kb": 120.5,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-mix": {
+    "kb": 127.6,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-wrapped": {
+    "kb": 125.9,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-offers": {
+    "kb": 127.9,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-live-mock": {
+    "kb": 123.9,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-loop-season": {
+    "kb": 128.1,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-academy-browse": {
+    "kb": 119.2,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-academy": {
+    "kb": 119,
+    "budget": 130,
+    "group": "shell"
+  },
+  "atlas-paywall": {
+    "kb": 119,
+    "budget": 130,
+    "group": "shell"
+  },
+  "system-design-atlas": {
+    "kb": 169.7,
+    "budget": null,
+    "group": "shell"
+  },
+  "system-design-pulse": {
+    "kb": 169.7,
+    "budget": null,
+    "group": "shell"
+  },
+  "remote-counter": {
+    "kb": 36.8,
+    "budget": 180,
+    "group": "remote"
+  },
+  "host (with counter)": {
+    "kb": 64.1,
+    "budget": null,
+    "group": "host"
+  },
+  "remote-product-hub": {
+    "kb": 34.7,
+    "budget": 180,
+    "group": "remote"
+  },
+  "host (with product-hub)": {
+    "kb": 63.5,
+    "budget": null,
+    "group": "host"
+  },
+  "remote-pay": {
+    "kb": 42,
+    "budget": 180,
+    "group": "remote"
+  },
+  "host (with pay)": {
+    "kb": 64.1,
+    "budget": null,
+    "group": "host"
+  },
+  "remote-circle": {
+    "kb": 32.4,
+    "budget": 180,
+    "group": "remote"
+  },
+  "host (with circle)": {
+    "kb": 64.1,
+    "budget": null,
+    "group": "host"
+  },
+  "remote-mesh": {
+    "kb": 34.3,
+    "budget": 180,
+    "group": "remote"
+  },
+  "host (with mesh)": {
+    "kb": 64.1,
+    "budget": null,
+    "group": "host"
+  }
+}

@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function runPaletteAction(page: Page, query: string, title: RegExp) {
-  await page.waitForFunction(() => customElements.get('im-command-palette'));
+  await page.waitForFunction(() => document.documentElement.dataset.chrome === 'on');
   await page.keyboard.press('Control+k');
   const palette = page.getByRole('dialog', { name: 'Command palette' });
   await expect(palette).toBeVisible();

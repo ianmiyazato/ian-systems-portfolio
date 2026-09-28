@@ -70,6 +70,7 @@ pnpm check                        # lint + typecheck + test + build
 pnpm verify:route <path> [path…]  # build if needed, open in Chromium, assert heading, 0 console errors, 0 error boundaries
 pnpm shots <path|id|system>       # screenshots on demand → docs/screenshots/<system>/
 pnpm budget                       # free-tier ledger: deploys used, Supabase rows, static output per app
+pnpm js:budget                    # gzip JS gate: shell 130 kB, remote 180 kB, shop 60 kB
 pnpm build && pnpm e2e            # crawler, flows, lens anchors, axe against production builds behind :3000
 pnpm build && pnpm screenshots    # everything; then node scripts/readme-gallery.mjs
 pnpm build && pnpm lighthouse     # Lighthouse (mobile, median of 3) on the local production build
@@ -98,7 +99,7 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 - [x] M7 · consumer patterns (shop home, PDP, apps, Academy) + ops-tool patterns
 - [x] M7b · ten Atlas and Pulse features with the shared now-playing bar
 - [x] M8 · motion system, power-user UX, AI audit
-- [ ] M9 · contract checker, performance HUD, JS budgets, Lighthouse
+- [x] M9 · contract checker, performance HUD, JS budgets, Lighthouse
 - [ ] M10 · Decision Lens and parity completion, README tour, v0.2.0 release
 
 v0.1 milestones M1–M10 are complete (see [changelog.md](docs/agents/changelog.md)).

@@ -24,6 +24,7 @@
     "verify:route": "node scripts/verify-route.mjs",
     "shots": "node scripts/shots.mjs",
     "budget": "node scripts/budget.mjs",
+    "js:budget": "playwright test tests/e2e/budgets.spec.ts --project=chromium --workers=1",
     "contracts": "WRITE_CONTRACTS=${WRITE_CONTRACTS:-} corepack pnpm --filter @portfolio/events exec vitest run src/compat.test.ts"
   },
   "devDependencies": {

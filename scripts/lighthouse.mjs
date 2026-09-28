@@ -12,7 +12,7 @@ import { ensureServers } from './lib/servers.mjs';
 const base = process.env.LHCI_BASE ?? 'http://127.0.0.1:3000';
 const stopServers = process.env.LHCI_BASE ? () => {} : await ensureServers();
 const runs = Number(process.env.RUNS ?? 3);
-const paths = (process.env.PATHS ?? '/ /work/mare /mare/shop /mare/ops/counter /pulse').split(' ');
+const paths = (process.env.PATHS ?? '/ /mare/shop /mare/ops/counter /observability /pulse').split(' ');
 const port = 9333;
 const categories = ['performance', 'accessibility', 'best-practices', 'seo'];
 mkdirSync('.lighthouseci', { recursive: true });
@@ -20,6 +20,7 @@ mkdirSync('.lighthouseci', { recursive: true });
 const browser = await chromium.launch({ args: [`--remote-debugging-port=${port}`] });
 const median = (values) => values.sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const results = [];
+const failures = [];
 for (const path of paths) {
   const scores = Object.fromEntries(categories.map((category) => [category, []]));
   let lcp = [];
@@ -32,7 +33,14 @@ for (const path of paths) {
   const row = { path, ...Object.fromEntries(categories.map((category) => [category, median(scores[category])])), lcpMs: Math.round(median(lcp)) };
   results.push(row);
   console.log(JSON.stringify(row));
+  if (row.performance < 90) failures.push(`${path}: performance ${row.performance} < 90`);
+  if (row.accessibility < 95) failures.push(`${path}: accessibility ${row.accessibility} < 95`);
+  if (row['best-practices'] < 95) failures.push(`${path}: best practices ${row['best-practices']} < 95`);
 }
 await browser.close();
-writeFileSync('.lighthouseci/summary.json', JSON.stringify({ base, runs, measuredAt: new Date().toISOString(), results }, null, 2));
+writeFileSync('.lighthouseci/summary.json', JSON.stringify({ base, runs, measuredAt: new Date().toISOString(), results, failures }, null, 2));
 stopServers();
+if (failures.length) {
+  console.error(`Lighthouse thresholds failed:\n${failures.join('\n')}`);
+  process.exitCode = 1;
+}

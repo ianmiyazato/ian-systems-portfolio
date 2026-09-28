@@ -5,7 +5,7 @@ import { DEFAULT_START, MINUTE, clock, duration } from '@portfolio/world';
 import { ZLink } from '@/components/zone-link';
 import { Layer, closeLayers, openLayer, useDemoState, useParams } from '@/components/overlay';
 import { useSimNow } from '@/lib/world';
-import { continents, isOnline, member, mentors, surgeAt, type Mentor } from '@/lib/atlas';
+import { continents, isOnline, member, mentors, surgeAt, type Mentor } from '@/lib/atlas-mentors';
 import { AtlasHeader } from './header';
 
 type Phase = 'idle' | 'searching' | 'matched' | 'canceled' | 'waitlist';

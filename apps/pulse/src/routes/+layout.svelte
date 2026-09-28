@@ -13,6 +13,7 @@
   import { live } from '$lib/world.svelte';
   import { params } from '$lib/params.svelte';
   import { markets } from '$lib/data';
+  import { pulseFontPreloads } from '@portfolio/tokens/fonts/pulse-preload';
 
   let { children } = $props();
   const nav = [
@@ -29,14 +30,20 @@
   onMount(() => {
     i18n.init();
     void import('@portfolio/chrome').then(({ defineChrome }) => defineChrome());
-    // CJK faces load after first paint; unicode-range means only the glyph chunks in use download.
-    requestAnimationFrame(() => void import('@portfolio/tokens/fonts/pulse-cjk'));
+    // KR/JP mode loads its subsetted faces from i18n.set(). Mixed-script labels use the system
+    // fallback in EN so optional fonts cannot shift the first paint.
     const stopWorld = live.start();
     const stopView = view.start();
     const stopParams = params.start();
     return () => { stopWorld(); stopView(); stopParams(); };
   });
 </script>
+
+<svelte:head>
+  {#each pulseFontPreloads as href}
+    <link rel="preload" {href} as="font" type="font/woff2" crossorigin="anonymous" />
+  {/each}
+</svelte:head>
 
 <im-portfolio-bar context="Pulse"></im-portfolio-bar>
 <header class="pl-nav" data-anchor="pl-nav">

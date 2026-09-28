@@ -7,6 +7,7 @@
     ".": "./src/index.ts",
     "./styles.css": "./src/styles.css",
     "./themes.css": "./src/themes.css",
+    "./themes.json": "./src/themes.json",
     "./fonts/*": "./src/fonts/*.ts"
   },
   "scripts": {
