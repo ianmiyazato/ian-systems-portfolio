@@ -1,4 +1,4 @@
-import { AiSurface, Banner, Layer, LiveControl, closeLayers, openLayer, setParams, useAnnouncer, useDemoState, useLiveEvents, useLocation, useSimNow } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Layer, LiveControl, TraceLink, closeLayers, openLayer, recordAction, setParams, useAnnouncer, useDemoState, useLiveEvents, useLocation, useSimNow } from '@portfolio/remote-runtime';
 import { DEFAULT_START, clock, duration, type WorldEvent } from '@portfolio/world';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { Kpis, Ring, brl } from './ui';
@@ -106,6 +106,7 @@ export function Disputes() {
 
 function DisputeCase({ dispute, now, status, onStatus }: { dispute: Dispute; now: number; status: Status; onStatus: (status: Status) => void }) {
   const { params } = useLocation();
+  const [trace, setTrace] = useState<string | null>(null);
   const [checked, setChecked] = useState<string[]>(dispute.reason === 'not-received' ? ['pod', 'address', 'device'] : ['device']);
   const likelihood = Math.min(0.95, BASE_LIKELIHOOD + proofs.filter((proof) => checked.includes(proof.id)).reduce((sum, proof) => sum + proof.weight, 0));
   const steps = [
@@ -116,6 +117,7 @@ function DisputeCase({ dispute, now, status, onStatus }: { dispute: Dispute; now
   ];
   const toggle = (id: string) => setChecked(checked.includes(id) ? checked.filter((item) => item !== id) : [...checked, id]);
   const submit = () => {
+    setTrace(recordAction('pay', 'submit dispute evidence', `${dispute.id} · ${checked.length} proofs`, 'Rui'));
     onStatus('submitted');
     closeLayers(['modal']);
   };
@@ -135,7 +137,7 @@ function DisputeCase({ dispute, now, status, onStatus }: { dispute: Dispute; now
         {steps.map((step) => <li key={step.label} class={step.state}><i aria-hidden="true" /><b>{step.label}</b><small>{step.when}</small></li>)}
       </ol>
 
-      {status === 'submitted' && <Banner tone="success" icon="✓" title="Evidence submitted to the network" anchor="py-dispute-submitted">4-page representment with {checked.length} proofs. The network decides in about 30 days; the customer keeps the provisional credit until then.</Banner>}
+      {status === 'submitted' && <Banner tone="success" icon="✓" title="Evidence submitted to the network" anchor="py-dispute-submitted" action={trace ? <TraceLink href={trace} /> : undefined}>4-page representment with {checked.length} proofs. The network decides in about 30 days; the customer keeps the provisional credit until then.</Banner>}
       {status === 'accepted' && <Banner tone="info" icon="i" title="Loss accepted · customer refunded" anchor="py-dispute-accepted">The claim is closed as a write-off and fed back to the fraud model as a label.</Banner>}
 
       <AiSurface title="Evidence pack" meta={`${checked.length} of ${proofs.length} proofs · assembled 16:02`} anchor="py-evidence-pack"

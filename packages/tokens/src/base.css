@@ -81,3 +81,6 @@ tr.is-arriving > :first-child::before { inset: 0 auto 0 0; width: 4px; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+
+/* "View trace": the thread from any action to Tidewatch. Inherits the toast's ink. */
+.trace-link { margin-left: 10px; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }

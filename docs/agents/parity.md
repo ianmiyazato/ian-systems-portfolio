@@ -46,22 +46,26 @@ Every approved screen, the design board it is checked against, and its screensho
 | 38 | `/mare/ops/mesh/invoices/MR-904117` | MS-invoices | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-invoice-chain.png` |
 | 39 | `/mare/ops/mesh/events` | MS-events | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-events.png` |
 | 40 | `/mare/ops/mesh/contracts` | MS-contracts | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-contracts.png` |
-| 41 | `/mare/apps/shop` | CS-app | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-app.png` |
-| 42 | `/mare/shop` | CS-site | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-site.png` |
-| 43 | `/atlas/welcome?step=2` | AT-onboarding | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-onboarding.png` |
-| 44 | `/atlas/pipeline` | AT-pipeline | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-pipeline.png` |
-| 45 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | AT-board | Atlas | 0.1 | drawer=parallax-pay sub=log-outcome | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-board.png` |
-| 46 | `/atlas/companies/parallax-pay` | AT-company | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-company.png` |
-| 47 | `/atlas/arena?modal=setup&prompt=payments-ledger` | AT-arena | Atlas | 0.1 | modal=setup | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-setup.png` |
-| 48 | `/atlas/arena/session/14` | AT-session | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-session.png` |
-| 49 | `/atlas/arena/sessions/14` | AT-feedback | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-feedback.png` |
-| 50 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | AT-transcript | Atlas | 0.1 | drawer=transcript | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-transcript.png` |
-| 51 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
-| 52 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
-| 53 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
-| 54 | `/pulse` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
-| 55 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
-| 56 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
-| 57 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
+| 41 | `/observability` | V2-apm | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-problems.png` |
+| 42 | `/observability/traces/9f3a2c` | V2-trace | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-trace.png` |
+| 43 | `/observability/logs` | TW-logs | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-logs.png` |
+| 44 | `/observability/slos` | TW-slos | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-slos.png` |
+| 45 | `/mare/apps/shop` | CS-app | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-app.png` |
+| 46 | `/mare/shop` | CS-site | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-site.png` |
+| 47 | `/atlas/welcome?step=2` | AT-onboarding | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-onboarding.png` |
+| 48 | `/atlas/pipeline` | AT-pipeline | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-pipeline.png` |
+| 49 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | AT-board | Atlas | 0.1 | drawer=parallax-pay sub=log-outcome | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-board.png` |
+| 50 | `/atlas/companies/parallax-pay` | AT-company | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-company.png` |
+| 51 | `/atlas/arena?modal=setup&prompt=payments-ledger` | AT-arena | Atlas | 0.1 | modal=setup | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-setup.png` |
+| 52 | `/atlas/arena/session/14` | AT-session | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-session.png` |
+| 53 | `/atlas/arena/sessions/14` | AT-feedback | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-feedback.png` |
+| 54 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | AT-transcript | Atlas | 0.1 | drawer=transcript | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-transcript.png` |
+| 55 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
+| 56 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
+| 57 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
+| 58 | `/pulse` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
+| 59 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
+| 60 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 61 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **57/57**.
+Parity: **61/61**.

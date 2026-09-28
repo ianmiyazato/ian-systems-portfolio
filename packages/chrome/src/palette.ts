@@ -1,6 +1,7 @@
 import { resolveScreen, routes, systemOf, systems } from './routes';
 import { DEFAULT_START, clock, getWorld, localHour, parseLocalTime, speeds } from '@portfolio/world';
 import { chromeVars, escapeHtml } from './shared';
+import { paletteActions } from './actions';
 
 const styles = `
 :host{${chromeVars}}
@@ -13,6 +14,10 @@ h3{margin:12px 8px 4px;color:var(--lens-muted);font:700 10px var(--lens-mono);te
 a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:8px 10px;border-radius:10px;color:var(--lens-ink);text-decoration:none;font:600 13px var(--lens-font)}
 a small{color:var(--lens-muted);font:500 10px var(--lens-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
 a[aria-selected='true'],a:hover{background:var(--lens-surface-2)}
+.action{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:var(--lens-ink);cursor:pointer;font:600 13px var(--lens-font);text-align:left}
+.action small{color:var(--lens-muted);font:500 10px var(--lens-mono)}
+.action[aria-selected='true'],.action:hover{background:var(--lens-surface-2)}
+.action.on span{color:var(--lens-orange)}
 a[aria-current='page']::before{content:'●';margin-right:6px;color:var(--lens-accent)}
 .states{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:12px 14px;border-top:1px solid var(--lens-line);background:var(--lens-surface-2)}
 .states span{margin-right:4px;color:var(--lens-muted);font:600 11px var(--lens-font)}
@@ -146,7 +151,15 @@ export class CommandPalette extends HTMLElement {
     const area = current ? systemOf(current.system) : undefined;
     const activeState = new URLSearchParams(location.search).get('state') ?? 'live';
     const results = this.filtered();
+    const actions = paletteActions(this.query);
     let flatIndex = -1;
+    const actionGroup = actions.length
+      ? `<h3>Actions</h3>${actions.map((action) => {
+          flatIndex += 1;
+          const on = action.active?.() ?? false;
+          return `<button type="button" role="option" class="action ${on ? 'on' : ''}" data-action="${escapeHtml(action.id)}" data-flat="${flatIndex}" aria-selected="${flatIndex === this.selected}"><span>${escapeHtml(action.title)}${on ? ' · running' : ''}</span><small>${escapeHtml(action.hint)}</small></button>`;
+        }).join('')}`
+      : '';
     const groups = systems
       .map((group) => {
         const items = results.filter((screen) => screen.system === group.id);
@@ -165,8 +178,8 @@ export class CommandPalette extends HTMLElement {
           .join('')}</div>`
       : `<div class="states"><span>Open a product screen to preview its empty, loading, error, offline and locked states.</span></div>`;
     this.root.innerHTML = `<style>${styles}</style><div class="scrim" data-scrim><section class="panel" role="dialog" aria-modal="true" aria-label="Command palette">
-      <div><label for="q">Jump to a screen</label><input id="q" autocomplete="off" placeholder="Search every screen, route and state…" value="${escapeHtml(this.query)}" role="combobox" aria-expanded="true" aria-controls="results"></div>
-      <div class="list" id="results" role="listbox" aria-label="Screens">${groups || '<p class="empty">No screen matches that search.</p>'}</div>${states}${this.worldPanel()}</section></div>`;
+      <div><label for="q">Jump to a screen or run an action</label><input id="q" autocomplete="off" placeholder="Search screens, routes, states and actions (try “chaos”)…" value="${escapeHtml(this.query)}" role="combobox" aria-expanded="true" aria-controls="results"></div>
+      <div class="list" id="results" role="listbox" aria-label="Actions and screens">${actionGroup}${groups || (actionGroup ? '' : '<p class="empty">No screen or action matches that search.</p>')}</div>${states}${this.worldPanel()}</section></div>`;
     const input = this.root.querySelector('input')!;
     input.addEventListener('input', () => {
       this.query = input.value;
@@ -178,21 +191,28 @@ export class CommandPalette extends HTMLElement {
       next.setSelectionRange(position, position);
     });
     input.addEventListener('keydown', (event) => {
-      const count = this.filtered().length;
+      const count = this.filtered().length + paletteActions(this.query).length;
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
         event.preventDefault();
         this.selected = (this.selected + (event.key === 'ArrowDown' ? 1 : -1) + count) % Math.max(count, 1);
         this.root.querySelectorAll('[data-flat]').forEach((link) => link.setAttribute('aria-selected', String(Number((link as HTMLElement).dataset.flat) === this.selected)));
         this.root.querySelector(`[data-flat="${this.selected}"]`)?.scrollIntoView({ block: 'nearest' });
       } else if (event.key === 'Enter') {
-        const target = this.root.querySelector<HTMLAnchorElement>(`[data-flat="${this.selected}"]`);
-        if (target) location.assign(target.href);
+        const target = this.root.querySelector<HTMLElement>(`[data-flat="${this.selected}"]`);
+        if (target instanceof HTMLAnchorElement) location.assign(target.href);
+        else target?.click();
       }
     });
     this.root.querySelector('[data-scrim]')!.addEventListener('mousedown', (event) => {
       if (event.target === event.currentTarget) this.show(false);
     });
     this.bindWorld();
+    this.root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) =>
+      button.addEventListener('click', () => {
+        paletteActions('').find((action) => action.id === button.dataset.action)?.run();
+        this.render();
+      })
+    );
     this.root.querySelectorAll<HTMLButtonElement>('[data-state]').forEach((button) =>
       button.addEventListener('click', () => {
         const url = new URL(location.href);

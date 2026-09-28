@@ -346,5 +346,51 @@
       "ease": "cubic-bezier(.2,.8,.2,1)",
       "duration": "300ms"
     }
+  },
+  "tidewatch": {
+    "color": {
+      "ground": "#F3F6F7",
+      "surface": "#FFFFFF",
+      "surface-2": "#EAF0F1",
+      "ink": "#0C1A1E",
+      "muted": "#4F6167",
+      "line": "#D5DFE1",
+      "accent": "#0B6E69",
+      "accent-ink": "#FFFFFF",
+      "accent-text": "#0A6661",
+      "accent-2": "#D9573A",
+      "risk": "#B42318",
+      "warn": "#8A5300",
+      "success": "#1B7A4B",
+      "info": "#1F5FA8",
+      "ai": "#5B4BD6",
+      "ai-ink": "#FFFFFF",
+      "series-1": "#2a78d6",
+      "series-2": "#eb6834",
+      "series-3": "#1baf7a",
+      "series-4": "#eda100",
+      "series-5": "#e87ba4",
+      "series-6": "#008300",
+      "series-7": "#4a3aa7",
+      "series-8": "#e34948"
+    },
+    "font": {
+      "display": "'Geist Variable', system-ui, sans-serif",
+      "ui": "'Geist Variable', system-ui, sans-serif",
+      "mono": "'Geist Mono Variable', ui-monospace, monospace"
+    },
+    "shape": {
+      "radius": "10px",
+      "radius-sm": "6px",
+      "display-weight": "650",
+      "display-tracking": "-0.03em",
+      "display-stretch": "100%"
+    },
+    "motion": {
+      "overlay-in": "ov-fade",
+      "drawer-in": "ov-drawer-fade",
+      "ease": "cubic-bezier(.2,.8,.2,1)",
+      "duration": "180ms"
+    }
   }
 }

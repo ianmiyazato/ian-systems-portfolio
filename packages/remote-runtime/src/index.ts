@@ -8,3 +8,4 @@ export * from './realtime';
 export { defineRemote } from './define';
 export * from './views';
 export * from './live';
+export * from './trace';

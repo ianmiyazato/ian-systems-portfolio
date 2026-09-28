@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/action.performed",
+  "title": "action.performed",
+  "description": "A consequential action a person took in an ops tool (apply a plan, submit evidence, replay a DLQ, rotate a code); carries the trace context.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "action.performed"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "system",
+        "action",
+        "summary",
+        "actor"
+      ],
+      "properties": {
+        "system": {
+          "type": "string",
+          "enum": [
+            "counter",
+            "product-hub",
+            "pay",
+            "circle",
+            "mesh",
+            "tidewatch"
+          ]
+        },
+        "action": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "actor": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

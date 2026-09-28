@@ -36,8 +36,14 @@ test.describe('Request path', () => {
     await expect.poll(async () => page.locator('.rp-packet').count(), { timeout: 15000 }).toBeGreaterThan(0);
   });
 
-  test('a replay runs live across the portfolio and recovers', async ({ page }) => {
+  test('the default world is mid-incident, so the DB pool replay offers recovery', async ({ page }) => {
     await page.goto('/system-design/mare/request-path');
+    await page.getByRole('button', { name: 'DB pool saturation after deploy #812' }).click();
+    await expect(page.getByRole('button', { name: 'Recover · end the incident' })).toBeVisible();
+  });
+
+  test('a replay runs live across the portfolio and recovers', async ({ page }) => {
+    await page.goto('/system-design/mare/request-path?fault=none');
     await page.getByRole('button', { name: 'DB pool saturation after deploy #812' }).click();
     await page.getByRole('button', { name: 'Run it live across the portfolio' }).click();
     await expect(page.locator('.rp-node.failed', { hasText: 'Orders' })).toBeVisible();

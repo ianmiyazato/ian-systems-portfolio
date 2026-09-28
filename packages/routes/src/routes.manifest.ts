@@ -6,7 +6,7 @@
  * Add a screen here first; `pnpm verify:route <href>` then proves it renders its heading.
  */
 export type Zone = 'shell' | 'mare-ops' | 'mare-shop' | 'pulse';
-export type SystemId = 'overview' | 'mare' | 'counter' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'consumer' | 'atlas' | 'pulse';
+export type SystemId = 'overview' | 'mare' | 'counter' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'observability' | 'consumer' | 'atlas' | 'pulse';
 
 export type System = {
   id: SystemId;
@@ -55,6 +55,7 @@ export const systems: System[] = [
   { id: 'pay', title: 'Pay', theme: 'pay', owner: '@portfolio/remote-pay', states: [...common, 'approved', 'declined', 'drift'], home: 'pay-applications' },
   { id: 'circle', title: 'Circle', theme: 'circle', owner: '@portfolio/remote-circle', states: [...common, 'contract-pending', 'payout-failed'], home: 'circle-program' },
   { id: 'mesh', title: 'Mesh', theme: 'mesh', owner: '@portfolio/remote-mesh', states: [...common, 'calm', 'down', 'replayed'], home: 'mesh-topology' },
+  { id: 'observability', title: 'Tidewatch', theme: 'tidewatch', owner: '@portfolio/shell', states: [...common], home: 'observability-problems' },
   { id: 'consumer', title: 'Consumer', theme: 'consumer', owner: '@portfolio/mare-shop', states: common, home: 'consumer-site' },
   { id: 'atlas', title: 'Atlas', theme: 'atlas', owner: '@portfolio/shell', states: [...common, 'limit', 'generating', 'checkout-failed'], home: 'atlas-pipeline' },
   { id: 'pulse', title: 'Pulse', theme: 'pulse', owner: '@portfolio/pulse', states: common, home: 'pulse-intelligence' }
@@ -114,6 +115,11 @@ export const routes: RouteEntry[] = [
 
   { id: 'mesh-events', system: 'mesh', title: 'Event stream', href: '/mare/ops/mesh/events', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-events', heading: 'event stream', release: '0.2', checked: '2026-09-27', states: ['empty'] },
   { id: 'mesh-contracts', system: 'mesh', title: 'Contracts', href: '/mare/ops/mesh/contracts', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-contracts', heading: 'contracts', release: '0.2', checked: '2026-09-27', states: ['error'] },
+  { id: 'observability-problems', system: 'observability', title: 'Tidewatch · Problems', href: '/observability', zone: 'shell', owner: shell, board: 'V2-apm', heading: 'Checkout p95 degraded', release: '0.2', checked: '2026-09-27' },
+  { id: 'observability-trace', system: 'observability', title: 'Tidewatch · Trace waterfall', href: '/observability/traces/9f3a2c', zone: 'shell', owner: shell, board: 'V2-trace', heading: 'Trace 9f3a2c', release: '0.2', checked: '2026-09-27' },
+  { id: 'observability-logs', system: 'observability', title: 'Tidewatch · Logs', href: '/observability/logs', zone: 'shell', owner: shell, board: 'TW-logs', heading: 'Logs', release: '0.2', checked: '2026-09-27' },
+  { id: 'observability-slos', system: 'observability', title: 'Tidewatch · SLOs', href: '/observability/slos', zone: 'shell', owner: shell, board: 'TW-slos', heading: 'SLOs', release: '0.2', checked: '2026-09-27' },
+
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
   { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'CS-site', heading: 'Linen, sun and salt', release: '0.1', mobile: true },
 

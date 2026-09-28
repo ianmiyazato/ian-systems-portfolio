@@ -1,5 +1,5 @@
 import { brl } from '@portfolio/mocks';
-import { AiSurface, Banner, Layer, Link, closeLayers, getWorld, openLayer, setParams, useDemoState, useLocation, useSequence } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Layer, Link, TraceLink, closeLayers, getWorld, openLayer, traceHref, setParams, useDemoState, useLocation, useSequence } from '@portfolio/remote-runtime';
 import { useMemo, useState } from 'preact/hooks';
 import { product, products } from './data';
 import { PriceChart } from './charts';
@@ -15,11 +15,13 @@ export function Detail({ id }: { id: string }) {
   const row = products.find((item) => item.id === id) ?? products[0]!;
   const modal = params.get('modal');
   const [approved, setApproved] = useState<number | null>(null);
+  const [trace, setTrace] = useState<string | null>(null);
   const show = (...tabs: string[]) => tabs.includes(tab);
   // Approving writes price.changed: the audit log, the storefront and the lake all read it.
   const approve = (price: number, edited = false) => {
     setApproved(price);
-    getWorld().record({ topic: 'price.changed', key: row.sku, payload: { sku: row.sku, name: row.name, fromCents: product.price * 100, toCents: price * 100, channels: ['site', 'app'], source: 'agent', model: 'ft-pricing-v2', approvedBy: 'Lara', reason: edited ? 'Edited proposal: matching competitor median' : 'Agent proposal approved as is', untilDays: 16 } });
+    const event = getWorld().record({ topic: 'price.changed', key: row.sku, payload: { sku: row.sku, name: row.name, fromCents: product.price * 100, toCents: price * 100, channels: ['site', 'app'], source: 'agent', model: 'ft-pricing-v2', approvedBy: 'Lara', reason: edited ? 'Edited proposal: matching competitor median' : 'Agent proposal approved as is', untilDays: 16 } });
+    setTrace(traceHref(event));
   };
 
   return (
@@ -44,7 +46,7 @@ export function Detail({ id }: { id: string }) {
           <button type="button" key={key} aria-current={tab === key ? 'page' : undefined} onClick={() => setParams({ tab: key })}>{label}</button>
         ))}
       </nav>
-      {approved && <Banner tone="success" icon="✓" title={`Price change approved · ${brl(approved)} on site and app until Oct 12`} anchor="ph-approved">Written to the audit log with your reason. The product page revalidates on the price event; marketplace keeps R$249.</Banner>}
+      {approved && <Banner tone="success" icon="✓" title={`Price change approved · ${brl(approved)} on site and app until Oct 12`} anchor="ph-approved" action={trace ? <TraceLink href={trace} /> : undefined}>Written to the audit log with your reason. The product page revalidates on the price event; marketplace keeps R$249.</Banner>}
       {state === 'rejected' && <Banner tone="risk" icon="!" title="Last proposal rejected · margin below the 30% floor">The agent's R$199 proposal was rejected by Lara; guardrails now block anything under R$207.</Banner>}
 
       <div class="ph-grid">

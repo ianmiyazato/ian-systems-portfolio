@@ -2,6 +2,31 @@
   "generatedBy": "packages/events/src/compat.ts",
   "topics": [
     {
+      "topic": "action.performed",
+      "mode": "BACKWARD",
+      "format": "JSON Schema",
+      "current": "v1",
+      "versions": [
+        "v1"
+      ],
+      "description": "A consequential action a person took in an ops tool (apply a plan, submit evidence, replay a DLQ, rotate a code); carries the trace context.",
+      "transitions": [],
+      "consumers": [
+        {
+          "consumer": "tidewatch",
+          "owner": "observability (OpenTelemetry collector)",
+          "reads": [
+            "system",
+            "action",
+            "summary",
+            "actor"
+          ],
+          "breaks": []
+        }
+      ],
+      "status": "ok"
+    },
+    {
       "topic": "auth.scored",
       "mode": "BACKWARD",
       "format": "JSON Schema",
