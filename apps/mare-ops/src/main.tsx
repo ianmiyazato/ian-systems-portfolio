@@ -78,7 +78,7 @@ function App() {
         {dir && !entry && active && <NotFound />}
         {dir && !active && <Index dir={dir} />}
       </main>
-      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.2</footer>
       <im-decision-lens />
       <im-command-palette />
     </>

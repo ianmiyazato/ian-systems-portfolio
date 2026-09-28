@@ -12,7 +12,7 @@ export function Zone({ theme, context, children }: { theme: string; context?: st
     <div className="zone" data-theme={theme}>
       <im-portfolio-bar context={context} />
       {children}
-      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.2</footer>
       <im-decision-lens />
       <im-command-palette />
     </div>
