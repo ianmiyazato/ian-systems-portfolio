@@ -18,6 +18,7 @@
     { href: `${base}`, key: 'roster' },
     { href: `${base}/intelligence`, key: 'intelligence' },
     { href: `${base}/distribution`, key: 'distribution' },
+    { href: `${base}/audio/afterglow`, key: 'audio' },
     { href: `${base}/harness`, key: 'harness' }
   ] as const;
   const current = (href: string) => (page.url.pathname.replace(/\/$/, '') || base) === href;
@@ -60,6 +61,8 @@
   </div>
 </header>
 {@render children()}
+<!-- The shared now-playing bar (from @portfolio/chrome) keeps playing across Pulse pages. -->
+<im-now-playing source="pulse"></im-now-playing>
 <footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
 <im-decision-lens></im-decision-lens>
 <im-command-palette></im-command-palette>

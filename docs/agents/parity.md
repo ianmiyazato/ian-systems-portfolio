@@ -74,8 +74,9 @@ Every approved screen, the design board it is checked against, and its screensho
 | 66 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
 | 67 | `/pulse` | PU-roster | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-roster.png` |
 | 68 | `/pulse/intelligence` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
-| 69 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
-| 70 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
-| 71 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
+| 69 | `/pulse/audio/afterglow` | PU-audio | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-audio.png` |
+| 70 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
+| 71 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 72 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **71/71**.
+Parity: **72/72**.

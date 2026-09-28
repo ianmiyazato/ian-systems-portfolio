@@ -56,4 +56,26 @@ test.describe('Pulse', () => {
     await page.getByRole('button', { name: 'Clear the filter' }).first().click();
     await expect(page.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'true');
   });
+
+  test('audio: play on the shared bar, keep playing across Pulse pages, approve a cut', async ({ page }) => {
+    await page.goto('/pulse/audio/afterglow');
+    await expect(page.getByRole('heading', { level: 1, name: 'Afterglow' })).toBeVisible();
+    await page.getByRole('button', { name: '▶ Play' }).click();
+    const bar = page.getByRole('region', { name: 'Now playing' });
+    await expect(bar.getByText('Afterglow', { exact: true })).toBeVisible();
+    await page.getByRole('navigation', { name: 'Pulse' }).getByRole('link', { name: 'Roster' }).click();
+    await expect(page.getByRole('heading', { level: 1, name: 'Hana Rae' })).toBeVisible();
+    await expect(bar.getByRole('button', { name: 'Pause' })).toBeVisible();
+    await bar.getByRole('link', { name: 'Open Afterglow' }).click();
+    await page.getByRole('button', { name: 'Review the cut' }).click();
+    const cut = page.getByRole('dialog', { name: 'Tokyo vertical · 1:04–1:32' });
+    await cut.getByRole('button', { name: 'Approve the draft' }).click();
+    await expect(cut.getByText(/Draft added to Distribution/)).toBeVisible();
+  });
+
+  test('audio: a pre-release track shows forecasts only', async ({ page }) => {
+    await page.goto('/pulse/audio/afterglow?state=empty');
+    await expect(page.getByText('Forecast · week 1')).toBeVisible();
+    await expect(page.getByText(/Pre-release · no listening data yet/)).toBeVisible();
+  });
 });

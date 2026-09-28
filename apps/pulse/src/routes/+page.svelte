@@ -78,7 +78,7 @@
               onpointerleave={() => leave(`${row.id}:${artist.id}`)}
               onfocusin={() => (focused = `${row.id}:${artist.id}`)}
               onfocusout={(event) => { if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node)) focused = null; }}>
-              <a class="pr-card-main" href="{base}/intelligence" aria-label="{artist.name}, {artist.market}, momentum up {liveMomentum(artist, live.elapsed)}%">
+              <a class="pr-card-main" href={artist.id === 'hana-rae' ? `${base}/audio/afterglow` : `${base}/intelligence`} aria-label="{artist.name}, {artist.market}, momentum up {liveMomentum(artist, live.elapsed)}%">
                 <span class="pr-art"><span class="pr-eq">{#each Array(7) as _, index}<i style="--i:{index}"></i>{/each}</span><b>{artist.name.slice(0, 1)}</b></span>
                 <span class="pr-name">{artist.name}</span>
                 <span class="pr-meta" lang="ko">{artist.local}</span>
@@ -88,7 +88,7 @@
                 <p class="pr-fit"><span>Brand fit · Maré Summer 27</span><b>{view.state === 'locked' ? 'Pro' : `${fitBreakdown(artist, brands[0]!).score}%`}</b></p>
                 <div class="pr-more-actions">
                   <button type="button" class="pl-btn primary" onclick={() => { sent = false; params.open({ pitch: artist.id }); }} disabled={view.state === 'locked'}>Pitch to brand</button>
-                  <a class="pl-btn" href="{base}/intelligence">Open</a>
+                  <a class="pl-btn" href={artist.id === 'hana-rae' ? `${base}/audio/afterglow` : `${base}/intelligence`}>Open</a>
                 </div>
               </div>
             </li>
@@ -108,7 +108,7 @@
     <p>The 0:24 hook was cut by a Seoul fan page at 21:40 KST and reposted by {pages} pages in 26 hours. Tokyo picked it up with Japanese captions; LA is following on the usual 9–14 hour lag.</p>
     {#snippet footer()}
       <a class="pl-btn primary" href="{base}/distribution">Build campaign</a>
-      <a class="pl-btn" href="{base}/intelligence">Open intelligence</a>
+      <a class="pl-btn" href="{base}/audio/afterglow">Open audio intelligence</a>
     {/snippet}
   </Layer>
 {/if}
