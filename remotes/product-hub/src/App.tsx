@@ -1,5 +1,5 @@
 import type { RemoteContext, ViewTable } from '@portfolio/remote-runtime';
-import { Link, ViewRouter, useNav } from '@portfolio/remote-runtime';
+import { DensityToggle, Link, ViewRouter, useDensity, useNav, type Density } from '@portfolio/remote-runtime';
 import { Catalog } from './Catalog';
 import { Detail } from './Detail';
 import { Onboarding } from './Onboarding';
@@ -18,7 +18,7 @@ const views: ViewTable<'product-hub'> = {
   audit: () => <Audit />
 };
 
-function Nav({ basePath }: { basePath: string }) {
+function Nav({ basePath, density, setDensity }: { basePath: string; density: Density; setDensity: (density: Density) => void }) {
   const nav = useNav('product-hub', basePath);
   return (
     <header class="ph-nav" data-anchor="ph-nav">
@@ -26,17 +26,19 @@ function Nav({ basePath }: { basePath: string }) {
       <nav aria-label="Product Hub" data-shortcut-nav>
         {nav.map((item) => <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>)}
       </nav>
-      <label class="ph-search"><span class="visually-hidden">Search catalog</span><input placeholder="Search SKU, name, owner…" /><kbd>/</kbd></label>
+      <label class="ph-search"><span class="visually-hidden">Search catalog</span><input data-shortcut-search placeholder="Search SKU, name, owner…" /><kbd>/</kbd></label>
+      <DensityToggle value={density} onChange={setDensity} />
       <span class="ph-user" aria-label="Signed in as Lara, merchandising">LA</span>
     </header>
   );
 }
 
 export function App({ ctx }: { ctx: RemoteContext }) {
+  const [density, setDensity] = useDensity('product-hub');
   if (ctx.mode === 'tile') return <Tile />;
   return (
-    <div class="ph-app">
-      <Nav basePath={ctx.basePath} />
+    <div class="ph-app" data-density={density}>
+      <Nav basePath={ctx.basePath} density={density} setDensity={setDensity} />
       <ViewRouter remote="product-hub" basePath={ctx.basePath} views={views} label="Product Hub" />
     </div>
   );

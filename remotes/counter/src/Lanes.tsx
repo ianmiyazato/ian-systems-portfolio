@@ -1,4 +1,4 @@
-import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow, useWorld } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useScreenActions, useSimNow, useWorld } from '@portfolio/remote-runtime';
 import { MINUTE, clock, parseLocalTime } from '@portfolio/world';
 import { deliveryRun, laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
@@ -12,6 +12,7 @@ type Filter = 'all' | 'pickup' | 'delivery' | 'late';
 
 export function Lanes() {
   const { board, act } = useCounter();
+  useScreenActions([{ id: 'ct:cutoff-plan', title: 'Apply the cutoff plan', hint: '3 deliveries would miss 17:00', keywords: 'cutoff plan counter', run: () => openLayer({ modal: 'cutoff-plan' }) }], []);
   const now = useSimNow();
   const state = useDemoState();
   const { params } = useLocation();

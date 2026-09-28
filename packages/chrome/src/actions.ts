@@ -40,7 +40,16 @@ export function registerPaletteAction(action: PaletteAction) {
   if (!registry.some((item) => item.id === action.id)) registry.push(action);
 }
 
+/**
+ * Screen actions from other bundles (remotes, islands): a shared list on window, so a Preact remote can
+ * offer "Approve 3 selected prices" without importing chrome. Screens add while mounted and remove on unmount.
+ */
+export type ScreenAction = { id: string; title: string; hint: string; keywords?: string; run: () => void };
+type Host = { __imScreenActions?: ScreenAction[] };
+export const screenActions = (): ScreenAction[] => ((globalThis as Host).__imScreenActions ??= []);
+
 export function paletteActions(query: string): PaletteAction[] {
   const needle = query.trim().toLowerCase();
-  return registry.filter((action) => !needle || `${action.title} ${action.keywords} ${action.hint}`.toLowerCase().includes(needle));
+  const screen = screenActions().map((action): PaletteAction => ({ group: 'This screen', keywords: '', ...action }));
+  return [...screen, ...registry].filter((action) => !needle || `${action.title} ${action.keywords} ${action.hint}`.toLowerCase().includes(needle));
 }

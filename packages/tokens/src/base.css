@@ -100,3 +100,10 @@ tr.is-arriving > :first-child::before { inset: 0 auto 0 0; width: 4px; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Density toggle (Product Hub, Pay, Mesh): comfortable / compact rows, themed by tokens. */
+.density-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.density-toggle button { min-height: 32px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 12px var(--font-ui); cursor: pointer; }
+.density-toggle button[aria-pressed='true'] { background: var(--ink); color: var(--surface); }
+[data-density='compact'] :is(td, th) { padding-top: 4px !important; padding-bottom: 4px !important; }
+[data-density='compact'] :is(tr, li[data-nav-row]) { font-size: 13px; }

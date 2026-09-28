@@ -1,5 +1,5 @@
 import type { RemoteContext, ViewTable } from '@portfolio/remote-runtime';
-import { Link, ViewRouter, useNav } from '@portfolio/remote-runtime';
+import { DensityToggle, Link, ViewRouter, useDensity, useNav, type Density } from '@portfolio/remote-runtime';
 import { Applications } from './Applications';
 import { Detail } from './Detail';
 import { PayCard } from './PayCard';
@@ -24,7 +24,7 @@ const views: ViewTable<'pay'> = {
 
 const badges: Partial<Record<string, string>> = { applications: '37', collections: '6' };
 
-function SideNav({ basePath }: { basePath: string }) {
+function SideNav({ basePath, density, setDensity }: { basePath: string; density: Density; setDensity: (density: Density) => void }) {
   const nav = useNav('pay', basePath);
   return (
     <aside class="py-side" data-anchor="py-side">
@@ -36,16 +36,17 @@ function SideNav({ basePath }: { basePath: string }) {
           </Link>
         ))}
       </nav>
-      <div class="py-side-foot"><span>ft-risk-v3 · champion</span><small>policy v7 · current</small></div>
+      <div class="py-side-foot"><DensityToggle value={density} onChange={setDensity} /><span>ft-risk-v3 · champion</span><small>policy v7 · current</small></div>
     </aside>
   );
 }
 
 export function App({ ctx }: { ctx: RemoteContext }) {
+  const [density, setDensity] = useDensity('pay');
   if (ctx.mode === 'tile') return <Tile />;
   return (
-    <div class="py-app">
-      <SideNav basePath={ctx.basePath} />
+    <div class="py-app" data-density={density}>
+      <SideNav basePath={ctx.basePath} density={density} setDensity={setDensity} />
       <ViewRouter remote="pay" basePath={ctx.basePath} views={views} label="Pay" />
     </div>
   );

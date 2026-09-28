@@ -1,4 +1,4 @@
-import { Banner, Layer, TraceLink, closeLayers, openLayer, recordAction, useLocation, useSequence } from '@portfolio/remote-runtime';
+import { Banner, Layer, TraceLink, closeLayers, openLayer, recordAction, useLocation, useScreenActions, useSequence } from '@portfolio/remote-runtime';
 import { useMemo, useState } from 'preact/hooks';
 import { dlq } from './data';
 
@@ -12,6 +12,7 @@ export default function transform(event) {
 
 export function Dlq() {
   const { params } = useLocation();
+  useScreenActions([{ id: 'ms:replay-dlq', title: 'Replay DLQ tracking.update', hint: 'dry-run first · 17 parked', keywords: 'dlq replay mesh', run: () => openLayer({ modal: 'replay' }) }], []);
   const [result, setResult] = useState<string | null>(null);
   const [trace, setTrace] = useState<string | null>(null);
   const remaining = result ? [] : dlq;

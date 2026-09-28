@@ -9,3 +9,5 @@ export { defineRemote } from './define';
 export * from './views';
 export * from './live';
 export * from './trace';
+export * from './actions';
+export * from './density';
