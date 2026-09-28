@@ -68,6 +68,7 @@ const remote = (name: string) => `@portfolio/remote-${name}`;
 
 export const routes: RouteEntry[] = [
   { id: 'home', system: 'overview', title: 'Portfolio home', href: '/', zone: 'shell', owner: shell, board: 'OV-home', heading: 'I build the core platform', release: '0.1', mobile: true },
+  { id: 'work-v0-2', system: 'overview', title: 'v0.2 improvement map', href: '/work/v0-2', zone: 'shell', owner: shell, board: 'V2-map', heading: 'Twelve changes', release: '0.2', checked: '2026-09-28' },
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
   { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
 

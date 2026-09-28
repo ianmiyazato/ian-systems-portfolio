@@ -1,6 +1,6 @@
 # Systems portfolio operating manual
 
-> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.1.0 verified 2026-09-26. v0.2 is in progress on `develop`.
+> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.1.0 verified 2026-09-26; v0.2.0 release candidate is complete on `develop`.
 >
 > **Free-tier ledger (v0.2):** 0/12 production deploys · 0/0 preview deploys · 24/2,000 Supabase rows · 11/20 MB · 0 new projects, functions, crons or storage. Run `pnpm budget` for live totals.
 
@@ -30,7 +30,7 @@ This public portfolio demonstrates Ian Miyazato's product/design execution, fron
 - Data is deterministic synthetic demo data. v0.2 moves all copy and mock data to US English (`en-US` formatting; money stays BRL, e.g. `R$1,249.90`); Pulse mixes EN/KR/JP.
 - AI is simulated. Every AI surface shows **Simulated AI**, sources and an explicit human approval.
 - Only state these real metrics verbatim: API latency 450 → ~200 ms; Error rate 1.8% → 0.5–0.7%; Uptime 99.5 → 99.9%; Batch runtime 60–90 → 5–15 min; Deploys 2 → 8–12 per week; Recovery time (MTTR) 2–3 h → 30–45 min; Catalog reads 3–5× faster; Dashboard load 2.8 s → 1.2 s; Feature adoption +30–40%; Analytics queries 5–10× faster; Availability 99.8%. Anything else unmeasured is a `[value]` placeholder.
-- Every page footer reads: "All names are fictitious · data is synthetic · AI behavior is simulated in v0.1" (updated to v0.2 at release).
+- Every page footer reads: "All names are fictitious · data is synthetic · AI behavior is simulated in v0.2".
 
 ## 2. Map
 

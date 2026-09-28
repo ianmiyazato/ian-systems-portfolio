@@ -73,6 +73,6 @@
 {@render children()}
 <!-- The shared now-playing bar (from @portfolio/chrome) keeps playing across Pulse pages. -->
 <im-now-playing source="pulse"></im-now-playing>
-<footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+<footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.2</footer>
 <im-decision-lens></im-decision-lens>
 <im-command-palette></im-command-palette>

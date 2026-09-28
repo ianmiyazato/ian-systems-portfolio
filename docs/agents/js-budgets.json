@@ -4,6 +4,11 @@
     "budget": 130,
     "group": "shell"
   },
+  "work-v0-2": {
+    "kb": 108.4,
+    "budget": 130,
+    "group": "shell"
+  },
   "mare-languages": {
     "kb": 105.4,
     "budget": 130,
@@ -50,7 +55,7 @@
     "group": "shell"
   },
   "observability-slos": {
-    "kb": 125.4,
+    "kb": 125.5,
     "budget": 130,
     "group": "shell"
   },
@@ -170,7 +175,7 @@
     "group": "shell"
   },
   "remote-counter": {
-    "kb": 36.8,
+    "kb": 36.9,
     "budget": 180,
     "group": "remote"
   },
