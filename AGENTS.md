@@ -1,8 +1,8 @@
 # Systems portfolio operating manual
 
-> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.1.0 verified 2026-09-26; v0.2.0 release candidate is complete on `develop`.
+> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.2.0 deployed and verified 2026-09-28: the full Playwright suite (585 tests: crawler, flows, Decision Lens anchors, axe, reduced motion, JS budgets) passes against the production domain, and all 12 legacy `?view=` links resolve.
 >
-> **Free-tier ledger (v0.2):** 0/12 production deploys · 0/0 preview deploys · 24/2,000 Supabase rows · 11/20 MB · 0 new projects, functions, crons or storage. Run `pnpm budget` for live totals.
+> **Free-tier ledger (v0.2):** 4/12 production deploys · 0/0 preview deploys · 24/2,000 Supabase rows · 11/20 MB · 0 new projects, functions, crons or storage. Run `pnpm budget` for live totals.
 
 This file is the index. Detail lives in `docs/agents/`:
 
@@ -100,7 +100,7 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 - [x] M7b · ten Atlas and Pulse features with the shared now-playing bar
 - [x] M8 · motion system, power-user UX, AI audit
 - [x] M9 · contract checker, performance HUD, JS budgets, Lighthouse
-- [ ] M10 · Decision Lens and parity completion, README tour, v0.2.0 release
+- [x] M10 · Decision Lens and parity completion, README tour, v0.2.0 release
 
 v0.1 milestones M1–M10 are complete (see [changelog.md](docs/agents/changelog.md)).
 
@@ -119,7 +119,7 @@ Recorded 2026-09-27 (v0.2 session, Claude Code):
 
 ## 8. Known gaps / next steps
 
-- **The v0.2 production deploy is awaiting renewed Vercel team authentication.** The 2026-09-28 `main` production job skipped because `VERCEL_TOKEN` is absent; the stored CLI OAuth token is expired, and both available Vercel connectors lack access to team `miyazato`. No deployment was created and the ledger remains 0/12. Exact recovery: run `vercel login`, verify `vercel whoami`, then `APPS="mare-ops mare-shop pulse shell" pnpm deploy:prod`; alternatively create a token at https://vercel.com/account/tokens, run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`, and rerun the `main` workflow. Afterward update the ledger, run the production smoke suite, mark M10 complete and publish the release.
+- **CI deploys still need `VERCEL_TOKEN`.** v0.2.0 was deployed from an authenticated CLI session (2026-09-28). The `main` workflow's production job skips until a token exists: create one at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`. In this sandbox `~/.local/share` is read-only, so the CLI needs `--global-config <writable dir>` to refresh or store a login.
 - **Chrome DevTools MCP** needs Chrome stable (absent; no sudo). Fix: install Google Chrome, or `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath ~/.cache/ms-playwright/chromium-1187/chrome-linux/chrome`.
 - **`@lhci/cli` on WSL** cannot launch Chrome (EACCES on the Windows temp dir); `pnpm lighthouse` uses the Lighthouse Node API over Playwright's Chromium instead. `pnpm lighthouse:ci` works on plain Linux.
 - **adapter-vercel + `paths.base`** writes prerender overrides without the base; `apps/pulse/scripts/fix-vercel-overrides.mjs` re-keys them. Remove once fixed upstream.
