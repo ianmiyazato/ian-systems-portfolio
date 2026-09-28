@@ -412,3 +412,61 @@
 @media (prefers-reduced-motion: reduce) { .mx-play::after, .mx-eq i, .mx-row.is-fresh { animation: none; } }
 @media (max-width: 1100px) { .mx { grid-template-columns: minmax(0, 1fr); } .mx-library, .mx-rail { position: static; } .mx-library ul { grid-auto-flow: column; overflow-x: auto; } }
 @media (max-width: 760px) { .mx { padding: 12px 16px 40px; } .mx-hero { flex-direction: column; align-items: start; } .mx-cover.big { width: 140px; height: 140px; } .mx-row { grid-template-columns: 40px minmax(0, 1fr) 56px; } .mx-row > :nth-child(3), .mx-row > :nth-child(4) { display: none; } }
+.mx-wrapped { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); font-weight: 600; font-size: 13px; }
+.mx-wrapped span { color: var(--accent); }
+
+/* Atlas Wrapped --------------------------------------------------------------------------------- */
+.aw { display: grid; place-items: center; min-height: calc(100vh - 170px); padding: 24px 16px 48px; }
+.aw-story { position: relative; display: grid; grid-template-rows: auto 1fr auto; width: min(460px, 100%); height: min(780px, calc(100vh - 150px)); min-height: 560px; padding: 16px 22px 18px; overflow: hidden; border-radius: 24px; box-shadow: var(--elevation); transition: background .5s ease, color .5s ease; }
+.aw-story.t-mint { background: var(--accent); color: var(--accent-ink); }
+.aw-story.t-indigo { background: var(--accent-2); color: var(--ai-ink); }
+.aw-story.t-amber { background: var(--warn); color: var(--accent-ink); }
+.aw-story.t-coral { background: var(--risk); color: var(--accent-ink); }
+.aw-story.t-ink { background: var(--surface-2); color: var(--ink); }
+.aw-bars-top { display: flex; gap: 4px; }
+.aw-bars-top span { flex: 1; height: 4px; overflow: hidden; border-radius: 4px; background: color-mix(in srgb, currentColor 25%, transparent); }
+.aw-bars-top i { display: block; height: 100%; background: currentColor; transform: scaleX(0); transform-origin: left; }
+.aw-bars-top i.done { transform: none; }
+.aw-bars-top i.now { animation: ab-fill linear forwards; }
+.aw-bars-top i.hold { transform: scaleX(.5); }
+.aw-card { position: relative; z-index: 2; display: grid; align-content: end; gap: 14px; padding-top: 24px; pointer-events: none; animation: rise .45s var(--ease) both; }
+.aw-card :is(a, button) { pointer-events: auto; }
+.aw-kicker { font: 600 13px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.aw-card h2 { margin: 0; font: 700 clamp(36px, 5vw, 52px)/0.98 var(--font-display); letter-spacing: -.04em; }
+.aw-body p { margin: 0; font-size: 16px; line-height: 1.5; }
+.aw-big { font: 700 80px/1 var(--font-display) !important; }
+.aw-bars { display: flex; align-items: end; gap: 10px; height: 220px; }
+.aw-bars span { display: grid; flex: 1; grid-template-rows: 1fr auto auto; justify-items: center; gap: 4px; height: 100%; }
+.aw-bars i { align-self: end; width: 100%; height: calc(var(--h) * 100%); border-radius: 8px 8px 2px 2px; background: currentColor; transform-origin: bottom; animation: aw-grow .8s var(--ease) both; animation-delay: calc(var(--i) * 90ms + 200ms); }
+.aw-bars b { font: 700 15px var(--font-mono); }
+.aw-bars small { font: 500 12px var(--font-mono); }
+@keyframes aw-grow { from { transform: scaleY(0); } }
+.aw-ring { position: relative; display: grid; place-items: center; width: 220px; height: 220px; }
+.aw-ring svg { position: absolute; inset: 0; transform: rotate(-90deg); animation: aw-spin 1.2s var(--ease) both; }
+.aw-ring circle { fill: none; stroke-width: 12; }
+.aw-ring .track { stroke: color-mix(in srgb, currentColor 22%, transparent); }
+.aw-ring .fill { stroke: currentColor; stroke-linecap: round; }
+.aw-ring b { font: 700 64px var(--font-display); }
+@keyframes aw-spin { from { transform: rotate(-450deg); } to { transform: rotate(-90deg); } }
+.aw-line { width: 100%; }
+.aw-line polyline { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: aw-draw 1.4s var(--ease) .2s forwards; }
+.aw-line text { fill: currentColor; font: 700 13px var(--font-mono); text-anchor: middle; }
+@keyframes aw-draw { to { stroke-dashoffset: 0; } }
+.aw-outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; padding: 0; list-style: none; font-size: 15px; }
+.aw-outcomes li { padding: 12px; border-radius: 14px; background: color-mix(in srgb, currentColor 12%, transparent); }
+.aw-outcomes b { display: block; font: 700 40px var(--font-display); }
+.aw-outcomes .aw-live { grid-column: 1 / -1; animation: rise .4s var(--ease) both; }
+.aw-share { display: grid; gap: 16px; }
+.aw-cta { justify-self: start; display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: currentColor; font-weight: 700; }
+.t-ink .aw-cta { background: var(--accent); color: var(--accent-ink); }
+.t-mint .aw-cta, .t-amber .aw-cta, .t-coral .aw-cta { background: var(--accent-ink); color: var(--ink); }
+.t-indigo .aw-cta { background: var(--ai-ink); color: var(--ink); }
+.aw-hit { position: absolute; top: 40px; bottom: 70px; z-index: 1; border: 0; background: transparent; cursor: pointer; }
+.aw-hit.prev { left: 0; width: 34%; } .aw-hit.next { right: 0; width: 66%; }
+.aw-hit:focus-visible { outline: 3px solid currentColor; outline-offset: -8px; border-radius: 16px; }
+.aw-controls { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; font: 600 13px var(--font-mono); }
+.aw-pause { min-width: 44px; min-height: 44px; padding: 0 14px; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; font: 600 13px var(--font-ui); }
+.aw-canvas { display: block; width: 100%; height: auto; border-radius: var(--radius-sm); }
+.aw-privacy { display: grid; gap: 4px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 14px; }
+.aw-privacy span { display: inline-block; width: 20px; color: var(--accent-text); }
+@media (prefers-reduced-motion: reduce) { .aw-card, .aw-bars i, .aw-ring svg, .aw-outcomes .aw-live, .aw-bars-top i.now { animation: none; } .aw-line polyline { animation: none; stroke-dashoffset: 0; } .aw-story { transition: none; } }

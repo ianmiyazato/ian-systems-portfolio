@@ -90,6 +90,7 @@ export function PracticeMix() {
               </li>
             ))}
           </ul>
+          <ZLink className="mx-wrapped" href="/atlas/wrapped" data-anchor="mx-wrapped-link"><span aria-hidden="true">✦</span> Your 2026 Wrapped</ZLink>
         </nav>
 
         <section className="mx-page" aria-labelledby="mx-title">

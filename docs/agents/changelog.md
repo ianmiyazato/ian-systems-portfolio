@@ -4,6 +4,8 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-27 · `feat(atlas)`: Atlas Wrapped at `/atlas/wrapped` (music-streaming year-in-review): five bold story cards (sessions with growing bars, top skill with a spinning ring, most replayed prompt with a self-drawing score line, outcomes with today's booked screens live, share), tap/hold/arrow keys/Pause with a segmented progress bar, and a privacy-safe 1080 × 1350 share image drawn on a canvas from counts only; fewer than five sessions shows a three-card mini-recap.
+
 - 2026-09-27 · `feat(atlas)`: Practice Mix at `/atlas/arena/mix/today` (music-streaming pattern): library of mixes, cover with a pulsing play button, Shuffle by weakness with FLIP, a track list whose playing row shows an equalizer, a "why it's here" drawer with remove, Why-this-mix and Up-next rails, a 06:00 refresh countdown, a live track inserted when the world books Orbital Freight's call, and a first-run empty mix. `<im-now-playing>` joins `@portfolio/chrome`: a shared, silent now-playing bar (transport, scrubber, open-mix link) whose state lives in sessionStorage, mounted in the Atlas layout so it keeps playing across pages; the pure store ships as `@portfolio/chrome/now-playing` for server-rendered pages.
 
 - 2026-09-27 · `feat(counter)`: live courier ETA on the handed-over delivery (MR-904090): ETA, minutes left and a progress bar on the world clock, with a link to the customer's tracking view; both read one shared `deliveryRun`, so the ops card and the consumer app always agree (the tracking app now follows MR-904090 instead of an order Counter is still picking).

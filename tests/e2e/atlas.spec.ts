@@ -89,4 +89,23 @@ test.describe('Atlas', () => {
     await expect(page.getByRole('heading', { name: 'No mix yet' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Start the baseline' })).toBeVisible();
   });
+
+  test('wrapped: story cards, pause, and a privacy-safe share image', async ({ page }) => {
+    await page.goto('/atlas/wrapped');
+    await expect(page.getByRole('heading', { level: 2, name: 'You practiced 33 times.' })).toBeVisible();
+    await page.getByRole('button', { name: 'Pause' }).click();
+    await page.getByRole('button', { name: 'Next card' }).click();
+    await expect(page.getByRole('heading', { level: 2, name: 'Behavioral, 84/100.' })).toBeVisible();
+    for (let step = 0; step < 3; step += 1) await page.keyboard.press('ArrowRight');
+    await page.getByRole('button', { name: 'Share your recap' }).click();
+    const share = page.getByRole('dialog', { name: 'Share your recap' });
+    await expect(share.getByRole('link', { name: 'Download image' })).toHaveAttribute('download', 'atlas-wrapped-2026.png');
+    await expect(share.getByText('Company names are left out')).toBeVisible();
+  });
+
+  test('wrapped with fewer than five sessions is an encouraging mini-recap', async ({ page }) => {
+    await page.goto('/atlas/wrapped?state=empty');
+    await expect(page.getByRole('heading', { level: 2, name: 'You started.' })).toBeVisible();
+    await expect(page.getByText('1 / 3')).toBeVisible();
+  });
 });
