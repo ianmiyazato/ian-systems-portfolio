@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@portfolio/ai-surface": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
     "@portfolio/routes": "workspace:*",
     "@portfolio/world": "workspace:*",

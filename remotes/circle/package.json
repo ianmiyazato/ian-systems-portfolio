@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@portfolio/mocks": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@portfolio/world": "workspace:*",

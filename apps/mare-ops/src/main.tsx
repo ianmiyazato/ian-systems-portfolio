@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { defineChrome } from '@portfolio/chrome';
 import '@portfolio/tokens/styles.css';
+import '@portfolio/motion/motion.css';
 import '@portfolio/tokens/fonts/portfolio';
 import './style.css';
 import { environment, loadDirectory, probe, type RemoteDirectory } from './federation';

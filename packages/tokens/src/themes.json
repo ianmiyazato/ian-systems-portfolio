@@ -34,7 +34,9 @@
       "overlay-in": "ov-rise",
       "drawer-in": "ov-drawer-slide",
       "ease": "cubic-bezier(.2,.8,.2,1)",
-      "duration": "280ms"
+      "duration": "280ms",
+      "enter": "m-rise",
+      "personality": "rise"
     }
   },
   "counter": {
@@ -72,7 +74,9 @@
       "overlay-in": "ov-pop",
       "drawer-in": "ov-drawer-pop",
       "ease": "cubic-bezier(.34,1.56,.64,1)",
-      "duration": "220ms"
+      "duration": "220ms",
+      "enter": "m-snap",
+      "personality": "snap"
     }
   },
   "product-hub": {
@@ -110,7 +114,9 @@
       "overlay-in": "ov-fade",
       "drawer-in": "ov-drawer-fade",
       "ease": "ease-out",
-      "duration": "160ms"
+      "duration": "160ms",
+      "enter": "m-fade",
+      "personality": "fade"
     }
   },
   "pay": {
@@ -149,7 +155,9 @@
       "overlay-in": "ov-sweep",
       "drawer-in": "ov-drawer-sweep",
       "ease": "cubic-bezier(.16,1,.3,1)",
-      "duration": "520ms"
+      "duration": "520ms",
+      "enter": "m-sweep",
+      "personality": "sweep"
     }
   },
   "circle": {
@@ -188,7 +196,9 @@
       "overlay-in": "ov-bounce",
       "drawer-in": "ov-drawer-bounce",
       "ease": "cubic-bezier(.34,1.8,.64,1)",
-      "duration": "420ms"
+      "duration": "420ms",
+      "enter": "m-bounce",
+      "personality": "bounce"
     }
   },
   "mesh": {
@@ -226,7 +236,9 @@
       "overlay-in": "ov-slide",
       "drawer-in": "ov-drawer-slide",
       "ease": "cubic-bezier(.25,.1,.25,1)",
-      "duration": "200ms"
+      "duration": "200ms",
+      "enter": "m-slide",
+      "personality": "slide"
     }
   },
   "consumer": {
@@ -268,7 +280,9 @@
       "overlay-in": "ov-rise",
       "drawer-in": "ov-drawer-slide",
       "ease": "cubic-bezier(.2,.8,.2,1)",
-      "duration": "320ms"
+      "duration": "320ms",
+      "enter": "m-rise",
+      "personality": "rise"
     }
   },
   "atlas": {
@@ -306,7 +320,9 @@
       "overlay-in": "ov-spring",
       "drawer-in": "ov-drawer-spring",
       "ease": "cubic-bezier(.3,1.3,.5,1)",
-      "duration": "380ms"
+      "duration": "380ms",
+      "enter": "m-spring",
+      "personality": "spring"
     }
   },
   "pulse": {
@@ -341,10 +357,12 @@
       "display-stretch": "100%"
     },
     "motion": {
-      "overlay-in": "ov-rise",
+      "overlay-in": "ov-pulse",
       "drawer-in": "ov-drawer-slide",
       "ease": "cubic-bezier(.2,.8,.2,1)",
-      "duration": "300ms"
+      "duration": "300ms",
+      "enter": "m-pulse",
+      "personality": "pulse"
     }
   },
   "tidewatch": {
@@ -389,8 +407,10 @@
     "motion": {
       "overlay-in": "ov-fade",
       "drawer-in": "ov-drawer-fade",
-      "ease": "cubic-bezier(.2,.8,.2,1)",
-      "duration": "180ms"
+      "ease": "ease-out",
+      "duration": "180ms",
+      "enter": "m-fade",
+      "personality": "fade"
     }
   }
 }

@@ -1,5 +1,6 @@
 import { AiSurface, Banner, Layer, LiveControl, Tween, closeLayers, getWorld, openLayer, useDemoState, useFlip, useLocation, useWorldEvents } from '@portfolio/remote-runtime';
 import { brl, brlCompact } from '@portfolio/mocks';
+import { withViewTransition } from '@portfolio/motion';
 import { useMemo, useState } from 'preact/hooks';
 import { COMMISSION_RATE, codedCreator, creatorByCode, newcomer, roster, type Creator } from './roster';
 
@@ -31,6 +32,12 @@ export function Creators() {
   const state = useDemoState();
   const { params } = useLocation();
   const { extra, bumped } = useLiveSales();
+  const openCode = params.get('drawer') === 'creator' ? params.get('creator') : null;
+  // Card avatar → profile avatar share a view-transition-name; the drawer opens inside the transition.
+  const openProfile = (code: string) => withViewTransition(() => new Promise<void>((resolve) => {
+    openLayer({ drawer: 'creator', creator: code });
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  }));
   const [level, setLevel] = useState<(typeof levels)[number]>('All');
   const [category, setCategory] = useState<(typeof categories)[number]>('All');
   const [city, setCity] = useState<(typeof cities)[number]>('All');
@@ -88,9 +95,9 @@ export function Creators() {
 
       <div class="cc-creator-grid" ref={grid} data-anchor="cc-creator-grid">
         {visible.map((creator, index) => (
-          <button type="button" key={creator.code} data-flip={creator.code} class={`cc-creator ${bumped === creator.code ? 'is-bumped' : ''} ${creator.sales === 0 ? 'is-new' : ''}`} onClick={() => openLayer({ drawer: 'creator', creator: creator.code })} aria-label={`${creator.name}, ${creator.sales} sales, rank ${index + 1}`}>
+          <button type="button" key={creator.code} data-flip={creator.code} data-nav-row class={`cc-creator ${bumped === creator.code ? 'is-bumped' : ''} ${creator.sales === 0 ? 'is-new' : ''}`} onClick={() => openProfile(creator.code)} aria-label={`${creator.name}, ${creator.sales} sales, rank ${index + 1}`}>
             <span class="cc-rank" aria-hidden="true">{creator.sales ? index + 1 - invited.length : '·'}</span>
-            <span class={`cc-avatar ring level-${creator.level.toLowerCase()}`} style={{ '--hue': creator.hue }}>{creator.initials}</span>
+            <span class={`cc-avatar ring level-${creator.level.toLowerCase()}`} style={{ '--hue': creator.hue, viewTransitionName: openCode === creator.code ? undefined : `creator-${creator.code}` }}>{creator.initials}</span>
             <strong>{creator.name}</strong>
             <small>{creator.handle} · {creator.city}</small>
             <span class="cc-code">{creator.code}</span>
@@ -118,6 +125,7 @@ function CreatorDrawer({ creator }: { creator: Creator }) {
   return (
     <Layer kind="drawer" title={creator.name} eyebrow={`${creator.handle} · ${creator.level} · ${creator.category} · ${creator.city}`} onClose={() => closeLayers(['drawer', 'creator'])} width={520} anchor="cc-creator-drawer"
       footer={<><button type="button" class="cc-btn">Message</button><button type="button" class="cc-btn primary">Send brief</button></>}>
+      <div class="cc-drawer-head"><span class={`cc-avatar ring big level-${creator.level.toLowerCase()}`} style={{ '--hue': creator.hue, viewTransitionName: `creator-${creator.code}` }}>{creator.initials}</span><div><strong>{creator.name}</strong><small>{creator.handle} · {creator.city}</small></div></div>
       <div class="cc-drawer-stats">
         <div><span>Coded sales</span><strong><Tween value={creator.sales} /></strong></div>
         <div><span>Revenue</span><strong>{brlCompact(creator.revenue)}</strong></div>

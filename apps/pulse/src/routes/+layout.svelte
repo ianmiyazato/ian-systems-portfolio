@@ -3,6 +3,7 @@
   import { page } from '$app/state';
   import { base } from '$app/paths';
   import '@portfolio/tokens/styles.css';
+  import '@portfolio/motion/motion.css';
   import '@portfolio/tokens/fonts/pulse';
   import '@portfolio/overlays/overlays.css';
   import '@portfolio/ai-surface/ai-surface.css';
@@ -40,7 +41,7 @@
 <im-portfolio-bar context="Pulse"></im-portfolio-bar>
 <header class="pl-nav" data-anchor="pl-nav">
   <a class="pl-logo" href={base}><i aria-hidden="true"></i>pulse</a>
-  <nav aria-label="Pulse">
+  <nav aria-label="Pulse" data-shortcut-nav>
     {#each nav as item}
       <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{i18n.t(item.key)}</a>
     {/each}

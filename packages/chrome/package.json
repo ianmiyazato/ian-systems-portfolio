@@ -24,6 +24,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@portfolio/ai-sim": "workspace:*",
     "@portfolio/routes": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@portfolio/world": "workspace:*"

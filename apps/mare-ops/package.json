@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@portfolio/chrome": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/remote-counter": "workspace:*",
     "@portfolio/remote-circle": "workspace:*",
     "@portfolio/remote-mesh": "workspace:*",

@@ -16,6 +16,7 @@
     "@portfolio/chrome": "workspace:*",
     "@portfolio/events": "workspace:*",
     "@portfolio/mocks": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
     "@portfolio/routes": "workspace:*",
     "@portfolio/tokens": "workspace:*",

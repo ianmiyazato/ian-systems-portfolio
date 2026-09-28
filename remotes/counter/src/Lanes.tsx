@@ -1,4 +1,4 @@
-import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useSimNow, useWorld } from '@portfolio/remote-runtime';
+import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useScreenActions, useSimNow, useWorld } from '@portfolio/remote-runtime';
 import { MINUTE, clock, parseLocalTime } from '@portfolio/world';
 import { deliveryRun, laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
 import { useState } from 'preact/hooks';
@@ -12,6 +12,7 @@ type Filter = 'all' | 'pickup' | 'delivery' | 'late';
 
 export function Lanes() {
   const { board, act } = useCounter();
+  useScreenActions([{ id: 'ct:cutoff-plan', title: 'Apply the cutoff plan', hint: '3 deliveries would miss 17:00', keywords: 'cutoff plan counter', run: () => openLayer({ modal: 'cutoff-plan' }) }], []);
   const now = useSimNow();
   const state = useDemoState();
   const { params } = useLocation();
@@ -181,9 +182,9 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardPro
   })();
 
   return (
-    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id}>
+    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id} data-nav-row>
       <header>
-        <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id">{order.id}</Link>
+        <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id" data-nav-open>{order.id}</Link>
         <span class={`ct-pill ${order.type}`}>{order.type === 'pickup' ? 'Pickup' : 'Delivery from store'}</span>
       </header>
       <p class="ct-customer">

@@ -1,8 +1,21 @@
 import type { ComponentChildren, JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { navigate, onUrlChange, readParams, setParams } from '@portfolio/overlays';
+import { navigate as go, onUrlChange, readParams, setParams } from '@portfolio/overlays';
+import { withViewTransition } from '@portfolio/motion';
 
-export { navigate, setParams };
+export { setParams };
+
+/**
+ * In-remote navigation runs inside a view transition: elements that share a view-transition-name
+ * (an order card and its picking header, a creator card and its profile) morph between views.
+ * The update resolves after two frames so Preact has rendered the new view before the snapshot.
+ */
+export function navigate(href: string, options: { replace?: boolean } = {}) {
+  withViewTransition(() => new Promise<void>((resolve) => {
+    go(href, options);
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  }));
+}
 
 export type Location = { pathname: string; params: URLSearchParams };
 

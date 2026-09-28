@@ -84,3 +84,26 @@ tr.is-arriving > :first-child::before { inset: 0 auto 0 0; width: 4px; }
 
 /* "View trace": the thread from any action to Tidewatch. Inherits the toast's ink. */
 .trace-link { margin-left: 10px; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+
+/*
+ * Reduced motion, enforced globally: every animation jumps to its end state and every transition is
+ * instant, including live indicators. Component rules can refine this, never undo it.
+ * (tests/e2e/reduced-motion.spec.ts fails if anything is still running on any route.)
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Density toggle (Product Hub, Pay, Mesh): comfortable / compact rows, themed by tokens. */
+.density-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.density-toggle button { min-height: 32px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 12px var(--font-ui); cursor: pointer; }
+.density-toggle button[aria-pressed='true'] { background: var(--ink); color: var(--surface); }
+[data-density='compact'] :is(td, th) { padding-top: 4px !important; padding-bottom: 4px !important; }
+[data-density='compact'] :is(tr, li[data-nav-row]) { font-size: 13px; }

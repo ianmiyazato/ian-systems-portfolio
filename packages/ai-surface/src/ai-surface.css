@@ -45,3 +45,15 @@
 .ai-prov-tools b { font: 500 11px var(--font-mono); }
 .ai-prov-tools i { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--ai); transform: scaleX(var(--w)); transform-origin: left; }
 .ai-prov-trace { color: var(--ai); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* "How this was made" disclosure, added to every AI card by @portfolio/chrome. */
+.ai-how { display: grid; gap: 8px; border-top: 1px solid color-mix(in srgb, var(--ai) 30%, var(--line)); padding-top: 8px; }
+.ai-how summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--ink); font: 600 13px var(--font-ui); cursor: pointer; list-style: none; }
+.ai-how summary::-webkit-details-marker { display: none; }
+.ai-how summary::before { content: '▸'; color: var(--ai); transition: transform .2s ease; }
+.ai-how[open] summary::before { transform: rotate(90deg); }
+.ai-how h4 { margin: 4px 0 0; color: var(--muted); font: 600 11px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.ai-how .ai-prov-tools li { grid-template-columns: 1fr auto auto; color: var(--ink); }
+.ai-how .ai-prov-tools small { color: var(--muted); }
+.ai-how-trace { justify-self: start; display: inline-flex; align-items: center; min-height: 36px; color: var(--ink); font: 600 13px var(--font-ui); text-decoration: underline; text-underline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .ai-how summary::before { transition: none; } }

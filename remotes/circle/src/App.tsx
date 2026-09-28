@@ -20,7 +20,7 @@ function PillNav({ basePath }: { basePath: string }) {
   return (
     <header class="cc-nav" data-anchor="cc-nav">
       <Link class="cc-logo" href="/mare/ops/circle">circle<sup aria-hidden="true">✺</sup></Link>
-      <nav aria-label="Circle">
+      <nav aria-label="Circle" data-shortcut-nav>
         {nav.map((item) => <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>)}
       </nav>
       <span class="cc-user" aria-label="Signed in as Bia, creator partnerships">BI</span>

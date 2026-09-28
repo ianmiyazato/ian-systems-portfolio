@@ -59,6 +59,9 @@ importers:
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/remote-circle':
         specifier: workspace:*
         version: link:../../remotes/circle
@@ -114,6 +117,9 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -141,6 +147,9 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -190,6 +199,9 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -232,6 +244,9 @@ importers:
 
   packages/chrome:
     dependencies:
+      '@portfolio/ai-sim':
+        specifier: workspace:*
+        version: link:../ai-sim
       '@portfolio/routes':
         specifier: workspace:*
         version: link:../routes
@@ -274,6 +289,15 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
+  packages/motion:
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
   packages/overlays:
     devDependencies:
       happy-dom:
@@ -303,6 +327,9 @@ importers:
       '@portfolio/ai-surface':
         specifier: workspace:*
         version: link:../ai-surface
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../overlays
@@ -428,6 +455,9 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/remote-runtime':
         specifier: workspace:*
         version: link:../../packages/remote-runtime

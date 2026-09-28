@@ -167,6 +167,9 @@
 @keyframes bounce-up { 0% { opacity: 0; transform: translateY(10px) scale(.6); } 30% { opacity: 1; transform: translateY(0) scale(1.15); } 100% { opacity: 0; transform: translateY(-18px); } }
 .cc-empty { grid-column: 1 / -1; padding: 40px; border: 2px dashed var(--line); border-radius: 24px; text-align: center; }
 .cc-empty p { color: var(--muted); }
+.cc-drawer-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.cc-drawer-head small { display: block; color: var(--muted); }
+.cc-avatar.big { width: 56px; height: 56px; font-size: 18px; }
 .cc-drawer-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .cc-drawer-stats div { display: grid; gap: 2px; padding: 12px; border-radius: 18px; background: var(--surface-2); }
 .cc-drawer-stats span { color: var(--muted); font-size: 11px; }

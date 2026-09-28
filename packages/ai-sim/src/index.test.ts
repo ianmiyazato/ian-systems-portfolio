@@ -28,3 +28,15 @@ describe('SimulatedProvider', () => {
   });
 });
 
+
+describe('provenanceFor', () => {
+  it('is deterministic per card and escalates open-ended text to the large model', async () => {
+    const { provenanceFor } = await import('./index');
+    const a = provenanceFor('Cutoff plan ready', [{ label: 'carrier cutoffs', score: 0.92 }]);
+    expect(provenanceFor('Cutoff plan ready', [{ label: 'carrier cutoffs', score: 0.92 }])).toEqual(a);
+    expect(a.route).toMatch(/^ft-/);
+    expect(provenanceFor('Why this mix: rubric and calendar', []).route).toMatch(/^large/);
+    expect(a.tools.map((tool) => tool.tool)).toEqual(['retrieve', 'rerank', 'guardrails', `generate · ${a.route}`]);
+    expect(a.cost).toBeGreaterThan(0);
+  });
+});

@@ -6,7 +6,7 @@ import { LiveControl } from '@/components/live';
 import { useDemoState } from '@/components/overlay';
 import { useProblems } from '@/lib/tidewatch';
 
-const items = [['Problems', '/observability'], ['Traces', '/observability/traces/9f3a2c'], ['Logs', '/observability/logs'], ['SLOs', '/observability/slos']] as const;
+const items = [['Problems', '/observability'], ['Traces', '/observability/traces/9f3a2c'], ['Logs', '/observability/logs'], ['SLOs', '/observability/slos'], ['AI audit', '/observability/ai-audit']] as const;
 
 export function TidewatchNav() {
   const path = usePathname();
@@ -17,7 +17,7 @@ export function TidewatchNav() {
   return (
     <header className="tw-nav" data-anchor="tw-nav">
       <ZLink className="tw-logo" href="/observability"><span aria-hidden="true" />tidewatch</ZLink>
-      <nav aria-label="Tidewatch">
+      <nav aria-label="Tidewatch" data-shortcut-nav>
         {items.map(([label, href]) => (
           <ZLink key={href} href={href} aria-current={current(href) ? 'page' : undefined}>{label}{label === 'Problems' && open > 0 && <b className="tw-count">{open}</b>}</ZLink>
         ))}

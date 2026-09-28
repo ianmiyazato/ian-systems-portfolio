@@ -120,6 +120,7 @@ export const routes: RouteEntry[] = [
   { id: 'observability-trace', system: 'observability', title: 'Tidewatch · Trace waterfall', href: '/observability/traces/9f3a2c', zone: 'shell', owner: shell, board: 'V2-trace', heading: 'Trace 9f3a2c', release: '0.2', checked: '2026-09-27' },
   { id: 'observability-logs', system: 'observability', title: 'Tidewatch · Logs', href: '/observability/logs', zone: 'shell', owner: shell, board: 'TW-logs', heading: 'Logs', release: '0.2', checked: '2026-09-27' },
   { id: 'observability-slos', system: 'observability', title: 'Tidewatch · SLOs', href: '/observability/slos', zone: 'shell', owner: shell, board: 'TW-slos', heading: 'SLOs', release: '0.2', checked: '2026-09-27' },
+  { id: 'observability-ai-audit', system: 'observability', title: 'Tidewatch · AI audit', href: '/observability/ai-audit', zone: 'shell', owner: shell, board: 'TW-ai-audit', heading: 'AI audit', release: '0.2', checked: '2026-09-28' },
 
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
   { id: 'consumer-tracking', system: 'consumer', title: 'Live delivery tracking', href: '/mare/apps/tracking', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Live delivery tracking', release: '0.2', checked: '2026-09-27' },
