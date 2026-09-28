@@ -108,4 +108,32 @@ test.describe('Atlas', () => {
     await expect(page.getByRole('heading', { level: 2, name: 'You started.' })).toBeVisible();
     await expect(page.getByText('1 / 3')).toBeVisible();
   });
+
+  test('offer wallet: private by default, FX scenario, and accept archives the rest', async ({ page }) => {
+    await page.goto('/atlas/offers');
+    const kite = page.locator('[data-anchor="of-card"]');
+    await expect(kite.getByText('amount hidden')).toBeAttached();
+    await page.getByRole('button', { name: 'Show amounts' }).click();
+    await expect(kite.getByText('R$43,167')).toBeVisible();
+    await expect(page.getByText(/the USD contract nets R\$[\d,]+ more a month/)).toBeVisible();
+    await page.getByRole('slider').fill('4.9');
+    await expect(page.getByText(/the USD contract nets R\$[\d,]+ less a month/)).toBeVisible();
+    await page.getByRole('button', { name: 'Show me the break-even' }).click();
+    await expect(page.getByText('R$5.03', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Accept offer' }).click();
+    await page.getByRole('button', { name: 'Confirm with Face ID' }).click();
+    const sheet = page.getByRole('dialog', { name: 'You accepted Kite Robotics' });
+    await expect(sheet.getByText('5 processes archived, notes queued:')).toBeVisible();
+    await sheet.getByRole('link', { name: 'Open the board' }).click();
+    await expect(page.getByText('5 processes archived after you accepted an offer')).toBeVisible();
+    await expect(page.locator('.at-board').getByText('Parallax Pay')).toHaveCount(0);
+    await expect(page.locator('.at-board').getByText('Accepted · contract review Mon 10:00')).toBeVisible();
+  });
+
+  test('offer wallet: an offer expiring tonight counts down on the world clock', async ({ page }) => {
+    await page.goto('/atlas/offers?state=expiring&t=16:18&live=paused');
+    await expect(page.getByText('Expires in 5 h 42 min · 22:00')).toBeVisible();
+    await page.goto('/atlas/pipeline?state=expiring');
+    await expect(page.getByRole('link', { name: 'open the offer wallet' })).toBeVisible();
+  });
 });

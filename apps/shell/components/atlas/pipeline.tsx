@@ -21,6 +21,7 @@ export function Pipeline() {
         {state === 'error' && <p className="at-banner risk" data-anchor="at-error">Job board sync failed 12 min ago · your pipeline is safe, new postings will appear when it recovers.</p>}
         {state === 'offline' && <p className="at-banner warn" data-anchor="at-offline">Offline · edits save locally and sync when you reconnect.</p>}
         {state === 'locked' && <p className="at-banner info" data-anchor="at-locked">Loop intelligence is a Pro feature · <ZLink href="/atlas/academy/designing-for-10x?modal=paywall">see plans</ZLink></p>}
+        {state === 'expiring' && <p className="at-banner warn" data-anchor="at-offer-expiring">Kite Robotics&apos; offer expires tonight at 22:00 · <ZLink href="/atlas/offers?state=expiring">open the offer wallet</ZLink></p>}
         {state === 'limit' && <p className="at-banner warn" data-anchor="at-limit">You've used 3 of 3 free Arena sessions this month · next resets Oct 1, or go Pro for unlimited.</p>}
         {state === 'loading' ? (
           <div className="at-grid" aria-busy="true" data-anchor="at-loading">
