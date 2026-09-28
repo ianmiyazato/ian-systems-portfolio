@@ -3,7 +3,12 @@
   "limits": { "productionDeploys": 12, "previewDeploys": 0, "supabaseRows": 2000, "supabaseDbMb": 20, "staticOutputMbPerApp": 25 },
   "vercel": {
     "projects": ["ian-portfolio-shell", "ian-portfolio-mare-ops", "ian-portfolio-mare-shop", "ian-portfolio-pulse"],
-    "deploys": []
+    "deploys": [
+      { "date": "2026-09-28", "kind": "production", "apps": ["mare-ops"], "reason": "v0.2.0 release (ian-portfolio-mare-g37438wbq.vercel.app)" },
+      { "date": "2026-09-28", "kind": "production", "apps": ["mare-shop"], "reason": "v0.2.0 release (ian-portfolio-mare-shop-mxm47tlk7.vercel.app)" },
+      { "date": "2026-09-28", "kind": "production", "apps": ["pulse"], "reason": "v0.2.0 release (ian-portfolio-pulse-pi18p461n.vercel.app)" },
+      { "date": "2026-09-28", "kind": "production", "apps": ["shell"], "reason": "v0.2.0 release (ian-portfolio-shell-b90182dly.vercel.app)" }
+    ]
   },
   "supabase": {
     "projectRef": "mtsgotwfnryoljdjsgcd",
