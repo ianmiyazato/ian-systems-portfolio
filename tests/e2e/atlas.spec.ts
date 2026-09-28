@@ -59,4 +59,34 @@ test.describe('Atlas', () => {
     await expect(card.getByRole('link', { name: 'Practice in Arena' })).toHaveAttribute('href', /prompt=lru-cache/);
     await expect(page.getByRole('link', { name: /Number 1: Payments at scale/ })).toBeVisible();
   });
+
+  test('practice mix: play, keep playing across pages, shuffle by weakness, why drawer', async ({ page }) => {
+    await page.goto('/atlas/arena/mix/today?t=16:18');
+    await expect(page.getByRole('heading', { level: 1, name: 'Interview Mix · Tuesday' })).toBeVisible();
+    await page.getByRole('button', { name: 'Play mix' }).click();
+    const bar = page.getByRole('region', { name: 'Now playing' });
+    await expect(bar.getByText('Estimate storage for a payments ledger')).toBeVisible();
+    await expect(page.locator('.mx-row.is-current').getByLabel('Playing')).toBeVisible();
+    // The player lives in the layout: it keeps going on another Atlas page.
+    await page.getByRole('navigation', { name: 'Atlas' }).getByRole('link', { name: 'Pipeline' }).click();
+    await expect(page).toHaveURL(/\/atlas\/pipeline/);
+    await expect(bar.getByRole('button', { name: 'Pause' })).toBeVisible();
+    await bar.getByRole('button', { name: 'Next' }).click();
+    await expect(bar.getByText('Designing for 10×')).toBeVisible();
+    await bar.getByRole('link', { name: 'Open Interview Mix · Tuesday' }).click();
+    await page.getByRole('button', { name: 'Shuffle by weakness' }).click();
+    await expect(page.locator('.mx-table [data-row]').nth(1)).toHaveAttribute('data-row', 'fanout-envelope');
+    await page.getByRole('button', { name: 'You liked it on Sunday' }).click();
+    const drawer = page.getByRole('dialog', { name: 'Caching that stays correct' });
+    await drawer.getByRole('button', { name: 'Remove from this mix' }).click();
+    await expect(page.locator('[data-row="caching-correct"]')).toHaveCount(0);
+  });
+
+  test('practice mix reacts to the pipeline and has a first-run state', async ({ page }) => {
+    await page.goto('/atlas/arena/mix/today?t=16:40&live=paused');
+    await expect(page.locator('[data-row="orbital-screen"]').getByText('New')).toBeVisible();
+    await page.goto('/atlas/arena/mix/today?state=empty');
+    await expect(page.getByRole('heading', { name: 'No mix yet' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Start the baseline' })).toBeVisible();
+  });
 });

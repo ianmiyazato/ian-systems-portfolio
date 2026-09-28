@@ -8,6 +8,7 @@ declare module 'react' {
       'im-portfolio-bar': ChromeElement;
       'im-decision-lens': ChromeElement;
       'im-command-palette': ChromeElement;
+      'im-now-playing': ChromeElement & { source?: string };
     }
   }
 }

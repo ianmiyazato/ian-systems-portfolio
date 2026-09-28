@@ -1,8 +1,10 @@
 import { PortfolioBar } from './bar';
 import { CommandPalette } from './palette';
 import { DecisionLens } from './lens';
+import { NowPlayingBar } from './now-playing';
 
-export { PortfolioBar, CommandPalette, DecisionLens };
+export { PortfolioBar, CommandPalette, DecisionLens, NowPlayingBar };
+export { playQueue, togglePlay, step, seek, stopPlaying, nowPlaying, onNowPlaying, type Track, type NowPlaying } from './now-playing';
 export * from './routes';
 export * from './decisions';
 export { emitUrlChange } from './shared';
@@ -14,4 +16,5 @@ export function defineChrome() {
   if (!customElements.get('im-portfolio-bar')) customElements.define('im-portfolio-bar', PortfolioBar);
   if (!customElements.get('im-command-palette')) customElements.define('im-command-palette', CommandPalette);
   if (!customElements.get('im-decision-lens')) customElements.define('im-decision-lens', DecisionLens);
+  if (!customElements.get('im-now-playing')) customElements.define('im-now-playing', NowPlayingBar);
 }
