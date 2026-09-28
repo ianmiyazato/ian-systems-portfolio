@@ -58,7 +58,7 @@ export const systems: System[] = [
   { id: 'observability', title: 'Tidewatch', theme: 'tidewatch', owner: '@portfolio/shell', states: [...common], home: 'observability-problems' },
   { id: 'consumer', title: 'Consumer', theme: 'consumer', owner: '@portfolio/mare-shop', states: common, home: 'consumer-site' },
   { id: 'atlas', title: 'Atlas', theme: 'atlas', owner: '@portfolio/shell', states: [...common, 'limit', 'generating', 'checkout-failed', 'expiring'], home: 'atlas-pipeline' },
-  { id: 'pulse', title: 'Pulse', theme: 'pulse', owner: '@portfolio/pulse', states: common, home: 'pulse-intelligence' }
+  { id: 'pulse', title: 'Pulse', theme: 'pulse', owner: '@portfolio/pulse', states: common, home: 'pulse-roster' }
 ];
 
 const shell = '@portfolio/shell';
@@ -144,7 +144,8 @@ export const routes: RouteEntry[] = [
   { id: 'atlas-paywall', system: 'atlas', title: 'Paywall + checkout', href: '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout', zone: 'shell', owner: shell, board: 'AT-paywall', heading: 'Designing for 10', release: '0.1' },
   { id: 'system-design-atlas', system: 'atlas', title: 'Atlas system design', href: '/system-design/atlas', zone: 'shell', owner: shell, board: 'SD-atlas', heading: 'Decisions under load', release: '0.1' },
 
-  { id: 'pulse-intelligence', system: 'pulse', title: 'Intelligence', href: '/pulse', zone: 'pulse', owner: pulse, board: 'PU-intelligence', heading: 'Performance intelligence', release: '0.1', mobile: true },
+  { id: 'pulse-roster', system: 'pulse', title: 'Roster', href: '/pulse', zone: 'pulse', owner: pulse, board: 'PU-roster', heading: 'Hana Rae', release: '0.2', checked: '2026-09-27', mobile: true },
+  { id: 'pulse-intelligence', system: 'pulse', title: 'Intelligence', href: '/pulse/intelligence', zone: 'pulse', owner: pulse, board: 'PU-intelligence', heading: 'Performance intelligence', release: '0.1', mobile: true },
   { id: 'pulse-distribution', system: 'pulse', title: 'Distribution', href: '/pulse/distribution', zone: 'pulse', owner: pulse, board: 'PU-distribution', heading: 'Distribution', release: '0.1' },
   { id: 'pulse-harness', system: 'pulse', title: 'AI harness', href: '/pulse/harness', zone: 'pulse', owner: pulse, board: 'PU-harness', heading: 'AI harness', release: '0.1' },
   { id: 'system-design-pulse', system: 'pulse', title: 'Pulse system design', href: '/system-design/pulse', zone: 'shell', owner: shell, board: 'SD-pulse', heading: 'Decisions under load', release: '0.1' },

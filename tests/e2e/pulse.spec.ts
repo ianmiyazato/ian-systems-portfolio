@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Pulse', () => {
   test('Ask Pulse streams a cited answer with a trace link', async ({ page }) => {
-    await page.goto('/pulse');
+    await page.goto('/pulse/intelligence');
     await page.getByRole('button', { name: 'Why is Seoul moving before LA?' }).click();
     await expect(page.locator('.ai-stream')).toContainText('9–14 hours', { timeout: 10000 });
     await expect(page.locator('.pl-ask .ai-source')).toHaveCount(3);
@@ -12,7 +12,7 @@ test.describe('Pulse', () => {
   });
 
   test('language switch translates the interface', async ({ page }) => {
-    await page.goto('/pulse');
+    await page.goto('/pulse/intelligence');
     await page.getByRole('button', { name: 'KR' }).click();
     await expect(page.getByRole('button', { name: 'KR' })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('퍼포먼스 인텔리전스');
@@ -29,5 +29,31 @@ test.describe('Pulse', () => {
     const reach = await page.locator('.pl-reach strong').textContent();
     await page.getByRole('checkbox').first().uncheck();
     await expect(page.locator('.pl-reach strong')).not.toHaveText(reach!);
+  });
+
+  test('roster: billboard, moment modal, hover-expand card and an approved pitch', async ({ page }) => {
+    await page.goto('/pulse');
+    await expect(page.getByRole('heading', { level: 1, name: 'Hana Rae' })).toBeVisible();
+    await page.getByRole('button', { name: '▶ Watch the moment' }).click();
+    await expect(page.getByRole('dialog', { name: 'The moment · Afterglow 0:24' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    const card = page.locator('[data-anchor="pr-row"] .pr-card').first();
+    await card.getByRole('link').focus();
+    await expect(card).toHaveClass(/is-open/);
+    await expect(card.getByText('Brand fit · Maré Summer 27')).toBeVisible();
+    await card.getByRole('button', { name: 'Pitch to brand' }).click();
+    const pitch = page.getByRole('dialog', { name: 'Pitch Hana Rae to a brand' });
+    await pitch.getByRole('combobox', { name: 'Brand' }).selectOption('atlas-pro');
+    await expect(pitch.getByText('Brand fit · 77%')).toBeVisible();
+    await pitch.getByRole('button', { name: 'Approve and send' }).click();
+    await expect(pitch.getByText(/Sent to Atlas · Pro campaign/)).toBeVisible();
+  });
+
+  test('roster: a filter with no matches shows a designed empty row', async ({ page }) => {
+    await page.goto('/pulse?state=empty');
+    await expect(page.getByRole('button', { name: 'Hip-hop' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByText('No tokyo crossover in Hip-hop this week.')).toBeVisible();
+    await page.getByRole('button', { name: 'Clear the filter' }).first().click();
+    await expect(page.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'true');
   });
 });

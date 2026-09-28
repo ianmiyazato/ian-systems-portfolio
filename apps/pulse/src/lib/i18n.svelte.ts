@@ -1,7 +1,12 @@
 export type Lang = 'EN' | 'KR' | 'JP';
 
 const dict = {
+  roster: { EN: 'Roster', KR: '로스터', JP: 'ロースター' },
   intelligence: { EN: 'Intelligence', KR: '인텔리전스', JP: 'インテリジェンス' },
+  audio: { EN: 'Audio', KR: '오디오', JP: 'オーディオ' },
+  streetTeams: { EN: 'Street teams', KR: '스트리트 팀', JP: 'ストリートチーム' },
+  wallet: { EN: 'Wallet', KR: '월렛', JP: 'ウォレット' },
+  rosterHeadline: { EN: 'Moment of the week', KR: '이번 주의 모먼트', JP: '今週のモーメント' },
   distribution: { EN: 'Distribution', KR: '배포', JP: 'ディストリビューション' },
   harness: { EN: 'AI harness', KR: 'AI 하네스', JP: 'AIハーネス' },
   headline: { EN: 'Performance intelligence', KR: '퍼포먼스 인텔리전스', JP: 'パフォーマンス・インテリジェンス' },

@@ -10,11 +10,13 @@
   import { i18n, type Lang } from '$lib/i18n.svelte';
   import { clock, view } from '$lib/view.svelte';
   import { live } from '$lib/world.svelte';
+  import { params } from '$lib/params.svelte';
   import { markets } from '$lib/data';
 
   let { children } = $props();
   const nav = [
-    { href: `${base}`, key: 'intelligence' },
+    { href: `${base}`, key: 'roster' },
+    { href: `${base}/intelligence`, key: 'intelligence' },
     { href: `${base}/distribution`, key: 'distribution' },
     { href: `${base}/harness`, key: 'harness' }
   ] as const;
@@ -27,7 +29,8 @@
     requestAnimationFrame(() => void import('@portfolio/tokens/fonts/pulse-cjk'));
     const stopWorld = live.start();
     const stopView = view.start();
-    return () => { stopWorld(); stopView(); };
+    const stopParams = params.start();
+    return () => { stopWorld(); stopView(); stopParams(); };
   });
 </script>
 
