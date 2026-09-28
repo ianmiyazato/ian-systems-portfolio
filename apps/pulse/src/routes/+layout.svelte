@@ -3,6 +3,7 @@
   import { page } from '$app/state';
   import { base } from '$app/paths';
   import '@portfolio/tokens/styles.css';
+  import '@portfolio/motion/motion.css';
   import '@portfolio/tokens/fonts/pulse';
   import '@portfolio/overlays/overlays.css';
   import '@portfolio/ai-surface/ai-surface.css';

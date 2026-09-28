@@ -1,0 +1,28 @@
+/*
+ * Motion engine CSS: the entrance keyframe per personality (themes set --enter), the Pulse overlay,
+ * and cross-document view transitions between zones. Transform and opacity only.
+ */
+@keyframes m-rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes m-snap { 0% { opacity: 0; transform: scale(.94); } 70% { opacity: 1; transform: scale(1.02); } 100% { transform: none; } }
+@keyframes m-fade { from { opacity: 0; } }
+@keyframes m-sweep { from { opacity: 0; transform: translateX(-24px); } }
+@keyframes m-bounce { 0% { opacity: 0; transform: translateY(18px) scale(.96); } 60% { opacity: 1; transform: translateY(-4px) scale(1.01); } 100% { transform: none; } }
+@keyframes m-slide { from { opacity: 0; transform: translateX(16px); } }
+@keyframes m-spring { 0% { opacity: 0; transform: translateY(10px) scale(.98); } 70% { transform: translateY(-2px); } 100% { opacity: 1; transform: none; } }
+@keyframes m-pulse { 0% { opacity: 0; transform: scale(.96); } 60% { opacity: 1; transform: scale(1.015); } 100% { transform: none; } }
+
+/* Pulse's overlay personality: it arrives with a small beat. */
+@keyframes ov-pulse { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.94); } 60% { opacity: 1; transform: translate(-50%, -50%) scale(1.015); } 100% { transform: translate(-50%, -50%); } }
+
+/* Opt-in entrance: any element with data-enter animates with its theme's personality. */
+[data-enter] { animation: var(--enter, m-rise) var(--duration, 240ms) var(--ease, ease-out) both; }
+
+/* Moving between zones is a cross-document navigation: cross-fade instead of a white flash. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 220ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  [data-enter] { animation: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

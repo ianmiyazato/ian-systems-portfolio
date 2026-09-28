@@ -30,7 +30,7 @@ export function Picking({ orderId }: { orderId: string }) {
       <section class="ct-pick-list">
         <Link class="ct-back" href="/mare/ops/counter">← Back to lanes</Link>
         {state === 'offline' && <div class="ct-offline" role="status"><b aria-hidden="true">↯</b> Offline · scans queue locally and sync with idempotency keys</div>}
-        <header class="ct-pick-head">
+        <header class="ct-pick-head" style={{ viewTransitionName: `order-${order.id}` }}>
           <h1 class="ct-title">{order.id} · {order.customer}</h1>
           <span class="ct-deadline" data-anchor="ct-deadline">◷ {slaText(order, now).text}</span>
         </header>

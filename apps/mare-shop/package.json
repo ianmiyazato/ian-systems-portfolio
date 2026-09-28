@@ -15,6 +15,7 @@
     "@portfolio/ai-surface": "workspace:*",
     "@portfolio/chrome": "workspace:*",
     "@portfolio/mocks": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@portfolio/world": "workspace:*",
