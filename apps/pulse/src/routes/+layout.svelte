@@ -10,12 +10,17 @@
   import { i18n, type Lang } from '$lib/i18n.svelte';
   import { clock, view } from '$lib/view.svelte';
   import { live } from '$lib/world.svelte';
+  import { params } from '$lib/params.svelte';
   import { markets } from '$lib/data';
 
   let { children } = $props();
   const nav = [
-    { href: `${base}`, key: 'intelligence' },
+    { href: `${base}`, key: 'roster' },
+    { href: `${base}/intelligence`, key: 'intelligence' },
     { href: `${base}/distribution`, key: 'distribution' },
+    { href: `${base}/audio/afterglow`, key: 'audio' },
+    { href: `${base}/street-teams`, key: 'streetTeams' },
+    { href: `${base}/wallet`, key: 'wallet' },
     { href: `${base}/harness`, key: 'harness' }
   ] as const;
   const current = (href: string) => (page.url.pathname.replace(/\/$/, '') || base) === href;
@@ -27,7 +32,8 @@
     requestAnimationFrame(() => void import('@portfolio/tokens/fonts/pulse-cjk'));
     const stopWorld = live.start();
     const stopView = view.start();
-    return () => { stopWorld(); stopView(); };
+    const stopParams = params.start();
+    return () => { stopWorld(); stopView(); stopParams(); };
   });
 </script>
 
@@ -57,6 +63,8 @@
   </div>
 </header>
 {@render children()}
+<!-- The shared now-playing bar (from @portfolio/chrome) keeps playing across Pulse pages. -->
+<im-now-playing source="pulse"></im-now-playing>
 <footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
 <im-decision-lens></im-decision-lens>
 <im-command-palette></im-command-palette>

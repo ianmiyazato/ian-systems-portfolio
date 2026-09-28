@@ -18,7 +18,7 @@ export const portugueseWords = [
 ];
 
 /** US spelling: the common British variants that slip into UI copy. */
-export const britishSpellings = ['practise', 'colour', 'colours', 'favourite', 'behaviour', 'centre', 'catalogue', 'licence', 'cancelled', 'cancelling', 'optimise', 'optimised', 'organise', 'organised', 'recognise', 'recognised', 'analyse', 'analysed', 'modelled', 'modelling', 'labelled', 'labelling', 'travelled', 'fulfil', 'fulfilment', 'judgement', 'grey', 'prioritise', 'summarise', 'personalised', 'apologise'];
+export const britishSpellings = ['practise', 'colour', 'colours', 'favourite', 'behaviour', 'centre', 'catalogue', 'licence', 'cancelled', 'cancelling', 'optimise', 'optimised', 'organise', 'organised', 'recognise', 'recognised', 'analyse', 'analysed', 'modelled', 'modelling', 'labelled', 'labelling', 'travelled', 'fulfil', 'fulfilment', 'judgement', 'grey', 'prioritise', 'summarise', 'personalised', 'apologise', 'favour', 'favours', 'favoured', 'honour', 'neighbour', 'neighbours', 'flavour', 'realise', 'realised', 'utilise', 'minimise', 'maximise', 'emphasise', 'visualise', 'metre', 'theatre', 'programme', 'enrol', 'defence', 'offence', 'traveller'];
 const britishPattern = new RegExp(`\\b(${britishSpellings.join('|')})\\b`, 'gi');
 
 export type Finding = { file: string; line: number; text: string; problem: string };

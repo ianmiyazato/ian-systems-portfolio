@@ -96,7 +96,7 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 - [x] M5 · `/system-design/mare/request-path` with scenario replays
 - [x] M6 · Tidewatch observability, "View trace" everywhere, chaos panel
 - [x] M7 · consumer patterns (shop home, PDP, apps, Academy) + ops-tool patterns
-- [ ] M7b · ten Atlas and Pulse features with the shared now-playing bar
+- [x] M7b · ten Atlas and Pulse features with the shared now-playing bar
 - [ ] M8 · motion system, power-user UX, AI audit
 - [ ] M9 · contract checker, performance HUD, JS budgets, Lighthouse
 - [ ] M10 · Decision Lens and parity completion, README tour, v0.2.0 release

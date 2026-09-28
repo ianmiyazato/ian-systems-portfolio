@@ -73,7 +73,7 @@ export const studies: CaseStudy[] = [
     ],
     metrics: ['Analytics queries 5–10× faster', 'Availability 99.8%'],
     shots: [
-      { src: 'pulse/pulse-intelligence.png', label: 'Intelligence', href: '/pulse' },
+      { src: 'pulse/pulse-intelligence.png', label: 'Intelligence', href: '/pulse/intelligence' },
       { src: 'pulse/pulse-distribution.png', label: 'Distribution', href: '/pulse/distribution' },
       { src: 'pulse/pulse-harness.png', label: 'AI harness', href: '/pulse/harness' }
     ]

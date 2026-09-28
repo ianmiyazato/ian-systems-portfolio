@@ -81,6 +81,7 @@
   <section class="pl-hero small">
     <span class="pl-kicker">Moment → campaign · one evidence trail</span>
     <h1>{i18n.t('distribution')}</h1>
+    <a class="pl-wrapped-link" href="{base}/distribution/campaigns/afterglow/wrapped" data-anchor="pl-wrapped-link">Afterglow campaign · Wrapped is ready (day 7) →</a>
   </section>
   <section class="pl-moment" data-anchor="pl-moment">
     <span class="pl-live"><i></i>{i18n.t('detected')}</span>
