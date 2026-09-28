@@ -66,7 +66,7 @@ export function Events() {
           <h2 id="stream-title">tail</h2>
           <form class="ms-filter" role="search" onSubmit={(event) => { event.preventDefault(); setParams({ key: query || null }); }}>
             <label class="visually-hidden" for="ms-key">filter by key, id or payload</label>
-            <input id="ms-key" value={query} placeholder="key, order, return id…" onInput={(event) => setQuery(event.currentTarget.value)} />
+            <input id="ms-key" data-shortcut-search value={query} placeholder="key, order, return id…" onInput={(event) => setQuery(event.currentTarget.value)} />
             <select aria-label="topic" value={topic} onChange={(event) => setTopic(event.currentTarget.value as Topic | 'all')}>
               <option value="all">all topics</option>
               {topics.map((item) => <option key={item} value={item}>{item}</option>)}

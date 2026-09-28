@@ -117,7 +117,7 @@ function Decision({ onApprove, onSend }: { onApprove: () => void; onSend: () => 
         footer={
           <>
             <button type="button" class="py-btn" onClick={() => closeLayers(['modal', 'sub'])}>Cancel</button>
-            <button type="button" class="py-btn primary" onClick={() => (above ? openLayer({ sub: 'override' }) : onApprove())}>Continue</button>
+            <button type="button" class="py-btn primary" data-shortcut="approve" onClick={() => (above ? openLayer({ sub: 'override' }) : onApprove())}>Continue</button>
           </>
         }
       >

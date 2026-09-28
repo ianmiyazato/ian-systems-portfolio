@@ -29,7 +29,7 @@ function SideNav({ basePath }: { basePath: string }) {
   return (
     <aside class="py-side" data-anchor="py-side">
       <Link class="py-logo" href="/mare/ops/pay"><span aria-hidden="true" />maré pay</Link>
-      <nav aria-label="Maré Pay">
+      <nav aria-label="Maré Pay" data-shortcut-nav>
         {nav.map((item) => (
           <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>
             {item.title}{badges[item.id] && <b>{badges[item.id]}</b>}

@@ -56,10 +56,10 @@ export function Traces({ initialId }: { initialId: string }) {
       <div className="tw-traces">
         <section className="tw-panel" aria-labelledby="list-title" data-anchor="tw-trace-list">
           <header><h2 id="list-title">Recent traces</h2><label className="tw-check"><input type="checkbox" checked={onlySlow} onChange={() => setOnlySlow(!onlySlow)} />over 300 ms</label></header>
-          <label className="tw-search"><span className="visually-hidden">Search traces</span><input value={query} placeholder="trace id, operation or service…" onChange={(event) => setQuery(event.currentTarget.value)} /></label>
+          <label className="tw-search"><span className="visually-hidden">Search traces</span><input data-shortcut-search value={query} placeholder="trace id, operation or service…" onChange={(event) => setQuery(event.currentTarget.value)} /></label>
           <ol className="tw-trace-list">
             {rows.map((item) => (
-              <li key={item.traceId}>
+              <li key={item.traceId} data-nav-row>
                 <ZLink href={`/observability/traces/live?id=${item.traceId}`} aria-current={item.traceId === trace?.traceId ? 'true' : undefined} className={item.status === 'error' ? 'error' : ''}>
                   <span className="mono">{clock(item.at, true)} · {item.traceId}</span>
                   <b>{item.name}</b>
@@ -79,7 +79,7 @@ export function Traces({ initialId }: { initialId: string }) {
                   const depth = depthOf(span, trace.spans);
                   const slow = span.name === SLOW_SPAN && span.duration > 100;
                   return (
-                    <li key={span.spanId}>
+                    <li key={span.spanId} data-nav-row>
                       <button type="button" className={`${slow ? 'slow' : ''} ${selected?.spanId === span.spanId ? 'selected' : ''} ${span.status === 'error' ? 'error' : ''}`} aria-pressed={selected?.spanId === span.spanId} onClick={() => setSpanId(span.spanId)}>
                         <span className="tw-span-name" style={{ paddingLeft: `${depth * 14}px` }}><i style={{ background: colorOf(span.service) }} aria-hidden="true" />{span.name}<small>{span.service}</small></span>
                         <span className="tw-span-track"><i style={{ left: `${(span.start / trace.duration) * 100}%`, width: `${Math.max(0.6, (span.duration / trace.duration) * 100)}%`, background: colorOf(span.service) } as React.CSSProperties} /></span>

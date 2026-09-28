@@ -95,7 +95,7 @@ export function Creators() {
 
       <div class="cc-creator-grid" ref={grid} data-anchor="cc-creator-grid">
         {visible.map((creator, index) => (
-          <button type="button" key={creator.code} data-flip={creator.code} class={`cc-creator ${bumped === creator.code ? 'is-bumped' : ''} ${creator.sales === 0 ? 'is-new' : ''}`} onClick={() => openProfile(creator.code)} aria-label={`${creator.name}, ${creator.sales} sales, rank ${index + 1}`}>
+          <button type="button" key={creator.code} data-flip={creator.code} data-nav-row class={`cc-creator ${bumped === creator.code ? 'is-bumped' : ''} ${creator.sales === 0 ? 'is-new' : ''}`} onClick={() => openProfile(creator.code)} aria-label={`${creator.name}, ${creator.sales} sales, rank ${index + 1}`}>
             <span class="cc-rank" aria-hidden="true">{creator.sales ? index + 1 - invited.length : '·'}</span>
             <span class={`cc-avatar ring level-${creator.level.toLowerCase()}`} style={{ '--hue': creator.hue, viewTransitionName: openCode === creator.code ? undefined : `creator-${creator.code}` }}>{creator.initials}</span>
             <strong>{creator.name}</strong>

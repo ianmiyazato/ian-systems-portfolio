@@ -123,7 +123,7 @@ export function PracticeMix() {
                 {tracks.map((track, index) => {
                   const current = currentId === track.id;
                   return (
-                    <li key={track.id} data-row={track.id} role="row" className={`mx-row ${current ? 'is-current' : ''} ${track.fresh ? 'is-fresh' : ''}`}>
+                    <li key={track.id} data-row={track.id} data-nav-row role="row" className={`mx-row ${current ? 'is-current' : ''} ${track.fresh ? 'is-fresh' : ''}`}>
                       <span role="cell" className="mx-num">
                         {current && ours?.playing ? <span className="mx-eq" role="img" aria-label="Playing"><i /><i /><i /></span> : <span className="mx-index">{index + 1}</span>}
                         <button type="button" className="mx-row-play" onClick={() => play(index)} aria-label={current && ours?.playing ? `Pause ${track.title}` : `Play ${track.title}`}>{current && ours?.playing ? '❚❚' : '▶'}</button>

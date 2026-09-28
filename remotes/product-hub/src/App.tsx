@@ -23,7 +23,7 @@ function Nav({ basePath }: { basePath: string }) {
   return (
     <header class="ph-nav" data-anchor="ph-nav">
       <Link class="ph-logo" href="/mare/ops/product-hub"><span aria-hidden="true" />Product Hub</Link>
-      <nav aria-label="Product Hub">
+      <nav aria-label="Product Hub" data-shortcut-nav>
         {nav.map((item) => <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>)}
       </nav>
       <label class="ph-search"><span class="visually-hidden">Search catalog</span><input placeholder="Search SKU, name, owner…" /><kbd>/</kbd></label>

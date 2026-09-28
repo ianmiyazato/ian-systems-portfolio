@@ -60,7 +60,7 @@ export function Stock() {
       <section class="ct-head ct-stock-head">
         <form class="ct-search" role="search" data-anchor="ct-stock-search" onSubmit={(event) => { event.preventDefault(); if (results[0]) choose(results[0].sku); }}>
           <label class="visually-hidden" for="ct-stock-q">Search product or scan barcode</label>
-          <input id="ct-stock-q" value={query} placeholder="Search product, SKU or color…" autoComplete="off" onInput={(event) => setQuery(event.currentTarget.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(() => setFocused(false), 150)} />
+          <input id="ct-stock-q" data-shortcut-search value={query} placeholder="Search product, SKU or color…" autoComplete="off" onInput={(event) => setQuery(event.currentTarget.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(() => setFocused(false), 150)} />
           <button type="button" class="ct-primary ct-scan-button" onClick={() => openLayer({ modal: 'scan-item' })}><span aria-hidden="true">▣</span> Scan</button>
           {(focused || noResults) && query && (
             <ul class="ct-results" aria-label="Matching products">

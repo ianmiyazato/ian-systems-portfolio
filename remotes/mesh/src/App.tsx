@@ -21,7 +21,7 @@ function MonoNav({ basePath }: { basePath: string }) {
   return (
     <header class="ms-nav" data-anchor="ms-nav">
       <Link class="ms-logo" href="/mare/ops/mesh">integration mesh</Link>
-      <nav aria-label="Integration mesh">{nav.map((item) => <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>)}</nav>
+      <nav aria-label="Integration mesh" data-shortcut-nav>{nav.map((item) => <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>)}</nav>
       <dl class="ms-counters" data-anchor="ms-counters">
         <div><dt>throughput</dt><dd>{perSecond(rate)}</dd></div>
         <div><dt>p95</dt><dd>{outage ? '240ms' : '182ms'}</dd></div>

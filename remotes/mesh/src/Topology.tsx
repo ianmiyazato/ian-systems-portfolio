@@ -65,7 +65,7 @@ export function Topology() {
               {partners.map((partner) => {
                 const circuit = calm ? 'closed' : down && partner.id === 'ligeiro-log' ? 'open' : partner.id === 'ligeiro-log' ? liveCircuit : partner.circuit;
                 return (
-                  <tr key={partner.id}>
+                  <tr key={partner.id} data-nav-row>
                     <td><Link href={`/mare/ops/mesh/partners/${partner.id}`}>{partner.name}</Link></td>
                     <td>{partner.protocol}</td>
                     <td>{partner.p95}</td>

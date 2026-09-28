@@ -99,9 +99,9 @@ export function Catalog() {
                 ))}
               {state !== 'loading' &&
                 rows.map((row) => (
-                  <tr key={row.id} class={`${selected.includes(row.id) ? 'selected' : ''} ${fresh === row.sku ? 'is-arriving' : ''}`}>
+                  <tr key={row.id} data-nav-row class={`${selected.includes(row.id) ? 'selected' : ''} ${fresh === row.sku ? 'is-arriving' : ''}`}>
                     <td class="check"><input type="checkbox" aria-label={`Select ${row.name}`} checked={selected.includes(row.id)} onChange={() => toggle(row.id)} /></td>
-                    <td><Link class="ph-product" href={`/mare/ops/product-hub/products/${row.id}?tab=pricing`}><span class="swatch" data-swatch={row.swatch} />{row.name}</Link></td>
+                    <td><Link class="ph-product" data-nav-open href={`/mare/ops/product-hub/products/${row.id}?tab=pricing`}><span class="swatch" data-swatch={row.swatch} />{row.name}</Link></td>
                     <td class="mono">{row.sku}</td>
                     <td>{row.owner}</td>
                     <td class={`num ${row.stock < 20 ? 'warn' : ''}`}>{row.stock}</td>

@@ -181,9 +181,9 @@ function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardPro
   })();
 
   return (
-    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id}>
+    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id} data-nav-row>
       <header>
-        <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id">{order.id}</Link>
+        <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id" data-nav-open>{order.id}</Link>
         <span class={`ct-pill ${order.type}`}>{order.type === 'pickup' ? 'Pickup' : 'Delivery from store'}</span>
       </header>
       <p class="ct-customer">

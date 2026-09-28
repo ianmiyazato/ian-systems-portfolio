@@ -72,7 +72,7 @@ export function Applications() {
             <tbody>
               {state === 'loading' && [0, 1, 2, 3, 4].map((key) => <tr key={key} aria-hidden="true">{[0, 1, 2, 3, 4, 5].map((cell) => <td key={cell}><i class="skeleton py-sk" /></td>)}</tr>)}
               {state !== 'loading' && rows.map((row) => (
-                <tr key={row.id} class={`${row.id === 'AP-77118' ? 'highlight' : ''} ${fresh === row.id ? 'is-arriving' : ''}`}>
+                <tr key={row.id} data-nav-row class={`${row.id === 'AP-77118' ? 'highlight' : ''} ${fresh === row.id ? 'is-arriving' : ''}`}>
                   <td><Link href={`/mare/ops/pay/applications/${row.id}`}><b>{row.id}</b> · {row.name}</Link></td>
                   <td>{brl(row.amount)}</td>
                   <td>{row.product}</td>

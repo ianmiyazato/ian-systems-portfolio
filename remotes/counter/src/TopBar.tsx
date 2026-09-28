@@ -12,7 +12,7 @@ export function TopBar({ basePath }: { basePath: string }) {
     <header class="ct-bar" data-anchor="ct-topbar">
       <Link class="ct-wordmark" href="/mare/ops/counter">counter</Link>
       <span class="ct-store">{store.name} · {store.code}</span>
-      <nav class="ct-tabs" aria-label="Counter">
+      <nav class="ct-tabs" aria-label="Counter" data-shortcut-nav>
         {nav.map((item) => (
           <Link key={item.id} href={item.href} aria-current={item.current ? 'page' : undefined}>{item.title}</Link>
         ))}

@@ -156,9 +156,9 @@ function AgentRun({ onApprove }: { onApprove: (price: number, edited?: boolean) 
         anchor="ph-agent-run"
         footer={
           <>
-            <button type="button" class="ph-btn" onClick={() => closeLayers(['modal', 'sub'])}>Reject</button>
+            <button type="button" class="ph-btn" data-shortcut="reject" onClick={() => closeLayers(['modal', 'sub'])}>Reject</button>
             <button type="button" class="ph-btn" disabled={!done} onClick={() => openLayer({ sub: 'edit' })} data-anchor="ph-edit-button">Edit proposal</button>
-            <button type="button" class="ph-btn primary" disabled={!done} onClick={() => onApprove(219)}>Approve R$219</button>
+            <button type="button" class="ph-btn primary" data-shortcut="approve" disabled={!done} onClick={() => onApprove(219)}>Approve R$219</button>
           </>
         }
       >
