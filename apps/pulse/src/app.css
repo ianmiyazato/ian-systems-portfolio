@@ -202,7 +202,7 @@
 .pr-fit-bar i { display: block; height: 100%; background: var(--ai); transform-origin: left; transition: transform .35s var(--ease); }
 .pr-fit-parts b { text-align: right; font-family: var(--font-mono); }
 @media (prefers-reduced-motion: reduce) { .pr-eq i { animation: none; transform: scaleY(.6); } .pr-card, .pr-fit-bar i { transition: none; } }
-@media (max-width: 760px) { .pr-bb-copy { padding: 20px; } .pr-track { grid-auto-columns: 72vw; } .pr-fit-parts li { grid-template-columns: 110px 1fr 44px; } }
+@media (max-width: 760px) { .pr-bb-copy { box-sizing: border-box; min-height: 325px; align-content: end; padding: 20px; } .pr-track { grid-auto-columns: 72vw; } .pr-fit-parts li { grid-template-columns: 110px 1fr 44px; } }
 
 /* Audio intelligence ------------------------------------------------------------------------------ */
 .pa-head { display: grid; grid-template-columns: 180px minmax(0, 1fr) auto; gap: 24px; align-items: center; }

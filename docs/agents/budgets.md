@@ -10,7 +10,8 @@
 - **At most 12 production deploys for all of v0.2, counted per project deployment** (a four-zone release is four), and **zero preview deploys**. Deploy at milestone boundaries only, changed zones only (`scripts/changed-apps.sh HEAD^` never adds the shell for a zone-only change, because the production shell already rewrites to production zones).
 - Every `apps/<app>/vercel.json` sets `git.deploymentEnabled` (only `main` may deploy) and an `ignoreCommand` that skips the build when neither the app nor shared code changed. The projects are not Git-connected today (CLI deploys), so these are the guard for the day the GitHub App is installed.
 - Static-first: pre-render everything that can be; no new serverless or edge functions, no ISR, no Vercel image optimization (ship pre-sized SVG/AVIF/WebP, `unoptimized`). Keep each app's static output under 25 MB.
-- Verify locally: `pnpm build`, `pnpm verify:route <path>`, `pnpm e2e`, `pnpm shots`, `pnpm lighthouse`. Lighthouse and screenshots run against local production builds, never against Vercel previews.
+- JavaScript budgets are measured from the production previews as gzip-9 of every script a route loads before network idle: shell ≤130 kB, each ops remote's own bundle ≤180 kB, Astro shop pages ≤60 kB. The three React Flow architecture routes are explicit exceptions; measured results live in [js-budgets.json](js-budgets.json). Run `pnpm js:budget`; the same test is part of `pnpm e2e` in CI.
+- Verify locally: `pnpm build`, `pnpm verify:route <path>`, `pnpm e2e`, `pnpm js:budget`, `pnpm shots`, `pnpm lighthouse`. Lighthouse and screenshots run against local production builds, never against Vercel previews.
 
 ## Supabase (Free)
 

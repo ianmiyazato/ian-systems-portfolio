@@ -39,12 +39,14 @@ test.describe('keyboard shortcuts', () => {
   test('/ focuses search, and the same keys work in other stacks', async ({ page }) => {
     await page.goto('/observability/traces/9f3a2c');
     await expect(page.locator('[data-shortcut-search]')).toBeVisible();
+    await page.waitForFunction(() => document.documentElement.dataset.chrome === 'on');
     await page.keyboard.press('/');
     await expect(page.locator('[data-shortcut-search]')).toBeFocused();
     await page.goto('/pulse');
     await expect(page.getByRole('heading', { level: 1, name: 'Hana Rae' })).toBeVisible();
-    await page.waitForFunction(() => customElements.get('im-shortcuts'));
+    await page.waitForFunction(() => document.documentElement.dataset.chrome === 'on');
     await page.keyboard.press('g');
+    await expect(page.locator('im-shortcuts').getByRole('status')).toContainText('w Wallet');
     await page.keyboard.press('w');
     await expect(page).toHaveURL(/\/pulse\/wallet/);
   });
@@ -53,7 +55,7 @@ test.describe('keyboard shortcuts', () => {
     await page.goto('/mare/ops/product-hub');
     const bar = page.getByRole('region', { name: 'Bulk actions' });
     await expect(bar.getByText('3 selected')).toBeVisible();
-    await page.waitForFunction(() => customElements.get('im-command-palette'));
+    await page.waitForFunction(() => document.documentElement.dataset.chrome === 'on');
     await page.keyboard.press('Control+k');
     const palette = page.getByRole('dialog', { name: 'Command palette' });
     await palette.getByRole('combobox').fill('approve');
@@ -78,5 +80,19 @@ test.describe('keyboard shortcuts', () => {
     await expect(page.locator('.py-app')).toHaveAttribute('data-density', 'compact');
     await page.reload();
     await expect(page.locator('.py-app')).toHaveAttribute('data-density', 'compact');
+  });
+
+  test('Shift+P opens and closes the dev performance HUD with live route metrics', async ({ page }) => {
+    await page.goto('/observability');
+    await page.waitForFunction(() => document.documentElement.dataset.chrome === 'on');
+    await page.keyboard.press('Shift+P');
+    const hud = page.locator('im-perf-hud');
+    await expect(hud).toBeAttached();
+    await expect(hud.getByRole('region', { name: 'Performance HUD' })).toBeVisible();
+    await expect(hud.getByText('Performance · /observability')).toBeVisible();
+    await expect(hud.getByText('JS transferred')).toBeVisible();
+    await expect(hud.getByText('events · last sim minute')).toBeVisible();
+    await hud.getByRole('button', { name: 'Close performance HUD' }).click();
+    await expect(hud.getByRole('region', { name: 'Performance HUD' })).toBeHidden();
   });
 });

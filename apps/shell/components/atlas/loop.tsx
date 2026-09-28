@@ -6,9 +6,10 @@ import { DEFAULT_START, MINUTE, clock } from '@portfolio/world';
 import { ZLink } from '@/components/zone-link';
 import { Layer, closeLayers, openLayer, useDemoState, useParams } from '@/components/overlay';
 import { useSimNow } from '@/lib/world';
-import { loopSeason, weakestArea, type Episode } from '@/lib/atlas';
+import { weakestArea } from '@/lib/atlas';
+import { loopSeason, type Episode } from '@/lib/atlas-loop';
 import { AtlasHeader } from './header';
-import { TitleArt } from './browse';
+import { TitleArt } from './title-art';
 
 const HREF = `/atlas/academy/loops/${loopSeason.slug}`;
 const LABEL = `${loopSeason.company}: The Loop`;

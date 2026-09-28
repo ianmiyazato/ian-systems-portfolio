@@ -2,6 +2,7 @@
   "name": "@portfolio/mocks",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "type": "module",
   "exports": { ".": "./src/index.ts" },
   "scripts": { "build": "tsc --noEmit", "lint": "eslint src --max-warnings=0", "typecheck": "tsc --noEmit", "test": "vitest run" },

@@ -6,7 +6,8 @@ import { DEFAULT_START, MINUTE, clock, duration, parseLocalTime } from '@portfol
 import { ZLink } from '@/components/zone-link';
 import { AiSurface, Layer, closeLayers, openLayer, useDemoState, useParams } from '@/components/overlay';
 import { useSimNow } from '@/lib/world';
-import { mixTracks, mixes, orbitalTrack, pipelineTimeline, type MixTrack } from '@/lib/atlas';
+import { pipelineTimeline } from '@/lib/atlas';
+import { mixTracks, mixes, orbitalTrack, type MixTrack } from '@/lib/atlas-mix';
 import { AtlasHeader } from './header';
 
 const MIX = mixes[0]!;

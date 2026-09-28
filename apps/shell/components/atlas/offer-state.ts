@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { OFFER_CHANNEL, OFFER_KEY, type Application } from '@/lib/atlas';
+import type { Application } from '@/lib/atlas';
+import { OFFER_CHANNEL, OFFER_KEY } from '@/lib/atlas-offers';
 
 /** Accepted offer shared by every Atlas tab (localStorage + BroadcastChannel), like the plan. */
 export function useAcceptedOffer(): [string | null, (id: string | null) => void] {

@@ -100,36 +100,44 @@ export class Shortcuts extends HTMLElement {
   private onKey = (event: KeyboardEvent) => {
     if (this.open && event.key === 'Escape') { event.preventDefault(); this.toggle(false); return; }
     if (event.metaKey || event.ctrlKey || event.altKey || eventIsTyping(event)) return;
-    if (event.key === '?') { event.preventDefault(); this.toggle(!this.open); return; }
-    if (this.open) return;
+    if (this.handle(event.key)) event.preventDefault();
+  };
 
+  /** The key that loaded the engine is handed over here, so the first press still works. */
+  handleKey(key: string) {
+    this.handle(key);
+  }
+
+  private handle(key: string): boolean {
+    if (key === '?') { this.toggle(!this.open); return true; }
+    if (this.open) return false;
     if (this.pendingG) {
       window.clearTimeout(this.pendingG);
       this.pendingG = 0;
       this.hint(null);
-      const view = viewsOf(this.nav()).find((item) => item.letter === event.key.toLowerCase());
-      if (view) { event.preventDefault(); view.link.click(); }
-      return;
+      const view = viewsOf(this.nav()).find((item) => item.letter === key.toLowerCase());
+      if (view) { view.link.click(); return true; }
+      return false;
     }
-    if (topDialog() && event.key !== 'a' && event.key !== 'x') return;
-    switch (event.key) {
-      case 'j': event.preventDefault(); this.moveRow(1); break;
-      case 'k': event.preventDefault(); this.moveRow(-1); break;
+    if (topDialog() && key !== 'a' && key !== 'x') return false;
+    switch (key) {
+      case 'j': this.moveRow(1); return true;
+      case 'k': this.moveRow(-1); return true;
       case '/': {
         const search = document.querySelector<HTMLElement>('[data-shortcut-search], [role="search"] input, input[type="search"]');
-        if (search) { event.preventDefault(); search.focus(); }
-        break;
+        search?.focus();
+        return Boolean(search);
       }
       case 'g':
-        if (!this.nav()) return;
-        event.preventDefault();
+        if (!this.nav()) return false;
         this.hint(`g · ${viewsOf(this.nav()).map((view) => `${view.letter} ${view.label}`).join(' · ')}`);
         this.pendingG = window.setTimeout(() => { this.pendingG = 0; this.hint(null); }, 1500);
-        break;
-      case 'a': if (this.act('approve')) event.preventDefault(); break;
-      case 'x': if (this.act('reject')) event.preventDefault(); break;
+        return true;
+      case 'a': return this.act('approve');
+      case 'x': return this.act('reject');
+      default: return false;
     }
-  };
+  }
 
   toggle(next: boolean) {
     this.open = next;
@@ -144,7 +152,7 @@ export class Shortcuts extends HTMLElement {
     scrim.className = 'scrim';
     scrim.innerHTML = `<section class="panel" role="dialog" aria-modal="true" aria-labelledby="sc-title">
       <header><h2 id="sc-title">Keyboard shortcuts</h2><button type="button" data-close aria-label="Close shortcuts">×</button></header>
-      <h3>Everywhere</h3><dl>${line(['?'], 'Show these shortcuts')}${line(['⌘', 'K'], 'Command palette: screens, actions, chaos, world clock')}${line(['D'], 'Decision Lens')}</dl>
+      <h3>Everywhere</h3><dl>${line(['?'], 'Show these shortcuts')}${line(['⌘', 'K'], 'Command palette: screens, actions, chaos, world clock')}${line(['D'], 'Decision Lens')}${line(['⇧', 'P'], 'Performance HUD: Web Vitals, JS per zone, world event rate')}</dl>
       <h3>Lists</h3><dl>${line(['j'], 'Next row', rows > 0)}${line(['k'], 'Previous row', rows > 0)}${line(['Enter'], 'Open the focused row', rows > 0)}${line(['/'], 'Search', search)}</dl>
       <h3>Views</h3><dl>${views.length ? views.map((view) => line(['g', view.letter], view.label)).join('') : line(['g'], 'Switch views', false)}</dl>
       <h3>Actions</h3><dl>${line(['a'], 'Approve (only where it is safe to)', approve)}${line(['x'], 'Reject', reject)}</dl>

@@ -6,7 +6,8 @@ import { DEFAULT_START, clock, duration, parseLocalTime } from '@portfolio/world
 import { ZLink } from '@/components/zone-link';
 import { AiSurface, Layer, closeLayers, openLayer, useDemoState, useParams } from '@/components/overlay';
 import { useSimNow } from '@/lib/world';
-import { applications, archiveNote, fx, netOf, offers, takeHome, type Offer } from '@/lib/atlas';
+import { applications } from '@/lib/atlas';
+import { archiveNote, fx, netOf, offers, takeHome, type Offer } from '@/lib/atlas-offers';
 import { AtlasHeader } from './header';
 import { useAcceptedOffer, withAcceptedOffer } from './offer-state';
 
