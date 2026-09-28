@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import '@portfolio/tokens/styles.css';
+import '@portfolio/motion/motion.css';
 import '@portfolio/overlays/overlays.css';
 import '@portfolio/ai-surface/ai-surface.css';
 import './globals.css';

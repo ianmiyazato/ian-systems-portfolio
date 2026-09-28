@@ -15,7 +15,7 @@ const principles = [
 const rows = [
   ['Turn ambiguity into a product', 'Decision maps, prototypes, thin vertical slices', 'Maré, Atlas, Pulse', '/work'],
   ['Build the hard platform layer', 'Events, reliability, integrations, data contracts', 'Maré Integration Mesh', '/mare/ops/mesh'],
-  ['Ship an interface people trust', 'Dense operations UI and explainable automation', 'Balcão · Pay · Product Hub', '/mare/ops/pay/applications/AP-77118'],
+  ['Ship an interface people trust', 'Dense operations UI and explainable automation', 'Counter · Pay · Product Hub', '/mare/ops/pay/applications/AP-77118'],
   ['Raise the learning rate', 'Instrumentation, eval gates, scenario replay', 'Pulse AI harness', '/pulse/harness']
 ];
 
@@ -24,7 +24,7 @@ export default function Home() {
     <main className="home">
       <section className="home-hero" data-anchor="home-hero">
         <div className="home-hero-copy">
-          <span className="eyebrow">Backend depth · product judgement · frontend craft</span>
+          <span className="eyebrow">Backend depth · product judgment · frontend craft</span>
           <h1>
             <span>I build the core platform</span> <em>and the product people touch</em> <span>on top of it.</span>
           </h1>

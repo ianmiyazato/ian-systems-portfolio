@@ -4,12 +4,12 @@ import { useState } from 'preact/hooks';
 type Circuit = 'closed' | 'open' | 'half-open';
 
 const mappings = [
-  { from: 'codigo_rastreio', to: 'tracking.id', transform: 'trim()', ok: true },
-  { from: 'status', to: 'tracking.status', transform: 'map(status_codes) · E1 E2 E4 E7', ok: true },
-  { from: 'status = "X9"', to: 'tracking.status', transform: 'unknown code · no mapping', ok: false },
-  { from: 'data_hora', to: 'tracking.occurred_at', transform: "parse('dd/MM/yyyy HH:mm', America/Sao_Paulo)", ok: true },
-  { from: 'cidade', to: 'tracking.location.city', transform: 'titleCase()', ok: true },
-  { from: 'obs', to: 'tracking.note', transform: 'truncate(140)', ok: true }
+  { from: 'trk_no', to: 'tracking.id', transform: 'trim()', ok: true },
+  { from: 'stat_cd', to: 'tracking.status', transform: 'map(status_codes) · E1 E2 E4 E7', ok: true },
+  { from: 'stat_cd = "X9"', to: 'tracking.status', transform: 'unknown code · no mapping', ok: false },
+  { from: 'occ_dt', to: 'tracking.occurred_at', transform: "parse('dd/MM/yyyy HH:mm', America/Sao_Paulo)", ok: true },
+  { from: 'loc_nm', to: 'tracking.location.city', transform: 'titleCase()', ok: true },
+  { from: 'rmk', to: 'tracking.note', transform: 'expand(remark_codes) · truncate(140)', ok: true }
 ];
 
 const requests = [
@@ -74,7 +74,7 @@ export function Partner({ id }: { id: string }) {
         <AiSurface title="map x9 from the partner changelog" meta="confidence 0.93" anchor="ms-mapping-ai"
           sources={[{ label: 'ligeiro changelog v2.14', score: 0.93 }, { label: 'dlq samples · 18', score: 0.9 }, { label: 'canonical.tracking.v3', score: 0.88 }]}
           actions={<><button type="button" class="ai-approve" onClick={() => setDeployed(true)}>approve & deploy</button><button type="button" class="ai-explain">show diff</button></>}>
-          changelog v2.14 (published 15:30) adds x9 = "entrega reagendada". the closest canonical status is delivery_exception with reason rescheduled; customers see "your delivery was rescheduled".
+          changelog v2.14 (published 15:30) adds x9 = "delivery rescheduled". the closest canonical status is delivery_exception with reason rescheduled; customers see "your delivery was rescheduled".
         </AiSurface>
 
         <section class="ms-panel span-2" aria-labelledby="map-title" data-anchor="ms-field-mapping">
@@ -96,7 +96,7 @@ export function Partner({ id }: { id: string }) {
         <section class="ms-panel" aria-labelledby="payload-title" data-anchor="ms-payload">
           <header><h2 id="payload-title">sample payload</h2><span class="ms-muted">evt_7x9a</span></header>
           <pre class="ms-code"><code>
-{'{\n'}  <span class="k">"codigo_rastreio"</span>: <span class="s">"LG8842193BR"</span>,{'\n'}  <span class="k">"status"</span>: <span class="s bad">"X9"</span>,{'\n'}  <span class="k">"data_hora"</span>: <span class="s">"26/09/2026 15:52"</span>,{'\n'}  <span class="k">"cidade"</span>: <span class="s">"campinas"</span>,{'\n'}  <span class="k">"tentativa"</span>: <span class="n">2</span>,{'\n'}  <span class="k">"obs"</span>: <span class="s">"cliente ausente"</span>{'\n}'}
+{'{\n'}  <span class="k">"trk_no"</span>: <span class="s">"LG8842193BR"</span>,{'\n'}  <span class="k">"stat_cd"</span>: <span class="s bad">"X9"</span>,{'\n'}  <span class="k">"occ_dt"</span>: <span class="s">"26/09/2026 15:52"</span>,{'\n'}  <span class="k">"loc_nm"</span>: <span class="s">"CAMPINAS"</span>,{'\n'}  <span class="k">"att_no"</span>: <span class="n">2</span>,{'\n'}  <span class="k">"rmk"</span>: <span class="s">"CUST ABSENT"</span>{'\n}'}
           </code></pre>
         </section>
 

@@ -1,13 +1,36 @@
-import { AiSurface, Banner, Link, useDemoState, useTween } from '@portfolio/remote-runtime';
-import { applications, brl, histogram, REVIEW_BAND } from './data';
+import { AiSurface, Banner, Link, LiveControl, Tween, getWorld, useDemoState, useTween, useWorldEvents, type WorldEvent } from '@portfolio/remote-runtime';
+import { seedOf } from '@portfolio/mocks';
+import { useState } from 'preact/hooks';
+import { applications, bandFor, brl, histogram, REVIEW_BAND, type Application } from './data';
 import { PayCard } from './PayCard';
 import { DeclineLetter } from './Detail';
+import { Recap, RecapChip, useRecap } from './Recap';
+
+/** One in five Maré Pay checkouts from a new customer is a credit application; the score is stable per order. */
+function applicationFrom(event: WorldEvent): Application | null {
+  if (event.topic !== 'orders.placed' || (event.payload.payment !== 'pay-credit' && event.payload.payment !== 'pay-store')) return null;
+  const hash = seedOf(event.payload.orderId);
+  if (hash % 5 !== 0) return null;
+  const score = 470 + (hash % 300);
+  return { id: `AP-${77200 + (hash % 700)}`, name: `${event.payload.customer} ${String.fromCharCode(65 + (hash % 26))}.`, amount: 1000 + (hash % 9) * 500, score, product: event.payload.payment === 'pay-credit' ? 'Credit' : 'Store', age: 'just now', band: bandFor(score) };
+}
 
 export function Applications() {
   const state = useDemoState();
-  const rows = state === 'empty' ? [] : applications;
-  const maxCount = Math.max(...histogram.map((bin) => bin.count));
+  const [live, setLive] = useState<Application[]>(() => getWorld().recent(['orders.placed'], 60).map(applicationFrom).filter((item): item is Application => item !== null).slice(-2).reverse());
+  const [fresh, setFresh] = useState<string | null>(null);
+  useWorldEvents(['orders.placed'], (event) => {
+    const application = applicationFrom(event);
+    if (!application) return;
+    setLive((current) => [application, ...current.filter((item) => item.id !== application.id)].slice(0, 4));
+    setFresh(application.id);
+  });
+  const rows = state === 'empty' ? [] : [...live, ...applications];
+  const inReview = 37 + live.filter((item) => item.band === 'Review').length;
+  const liveBins = histogram.map((bin) => ({ ...bin, count: bin.count + live.filter((item) => item.score >= bin.from && item.score < bin.from + 20).length * 4 }));
+  const maxCount = Math.max(...liveBins.map((bin) => bin.count));
   const sweep = useTween(1, 1400);
+  const recap = useRecap();
   return (
     <main class="py-main">
       <header class="py-hero" data-anchor="py-hero">
@@ -15,10 +38,11 @@ export function Applications() {
           <span class="py-eyebrow">Maré Pay · Credit operations</span>
           <h1>Applications</h1>
           <p>Review-band decisions pair model contributions with policy evidence. Everything else is decided automatically and sampled for audit.</p>
+          <div class="py-hero-row"><LiveControl anchor="py-applications-live" /><RecapChip count={recap.frames.length} since={recap.since} /></div>
         </div>
         <div class="py-hero-cards" aria-hidden="true">
-          <PayCard kind="credito" />
-          <PayCard kind="loja" />
+          <PayCard kind="credit" />
+          <PayCard kind="store" />
         </div>
       </header>
 
@@ -27,14 +51,14 @@ export function Applications() {
           Challenger routing is paused and every 18–24 application goes to manual review until the risk team signs off.
         </Banner>
       )}
-      {state === 'approved' && <Banner tone="success" icon="✓" title="Approved · AP-77118 · Crédito + Loja · R$ 4.000" anchor="py-approved">Virtual card issued in the app; decision, factors and reviewer are in the audit log.</Banner>}
+      {state === 'approved' && <Banner tone="success" icon="✓" title="Approved · AP-77118 · Credit + Store · R$4,000" anchor="py-approved">Virtual card issued in the app; decision, factors and reviewer are in the audit log.</Banner>}
       {state === 'declined' && <DeclineLetter />}
       {state === 'error' && <Banner tone="risk" icon="!" title="Bureau connection failed · new applications are queued" anchor="py-error">Nothing is auto-declined while the bureau is down; the queue drains automatically when it returns.</Banner>}
       {state === 'offline' && <Banner tone="warn" icon="↯" title="Offline · decisions are held locally" anchor="py-offline">Nothing is sent to customers until you reconnect and a second check passes.</Banner>}
-      {state === 'locked' && <Banner tone="info" icon="i" title="Read-only · you are not a credit approver for limits above R$ 2.000" anchor="py-locked">Ask your lead for the Approver role; every request is logged.</Banner>}
+      {state === 'locked' && <Banner tone="info" icon="i" title="Read-only · you are not a credit approver for limits above R$2,000" anchor="py-locked">Ask your lead for the Approver role; every request is logged.</Banner>}
 
       <div class="py-kpis" data-anchor="py-kpis">
-        <div><span>In review</span><strong>37</strong><small>median wait 14 min</small></div>
+        <div><span>In review</span><strong><Tween value={inReview} /></strong><small>median wait 14 min</small></div>
         <div><span>Auto-approved · 7d</span><strong>68%</strong><small>sampled 5% for audit</small></div>
         <div><span>Median score</span><strong>644</strong><small>stable vs last week</small></div>
         <div><span>30+ days past due</span><strong>2.1%</strong><small>target ≤ 2.5%</small></div>
@@ -48,7 +72,7 @@ export function Applications() {
             <tbody>
               {state === 'loading' && [0, 1, 2, 3, 4].map((key) => <tr key={key} aria-hidden="true">{[0, 1, 2, 3, 4, 5].map((cell) => <td key={cell}><i class="skeleton py-sk" /></td>)}</tr>)}
               {state !== 'loading' && rows.map((row) => (
-                <tr key={row.id} class={row.id === 'AP-77118' ? 'highlight' : ''}>
+                <tr key={row.id} data-nav-row class={`${row.id === 'AP-77118' ? 'highlight' : ''} ${fresh === row.id ? 'is-arriving' : ''}`}>
                   <td><Link href={`/mare/ops/pay/applications/${row.id}`}><b>{row.id}</b> · {row.name}</Link></td>
                   <td>{brl(row.amount)}</td>
                   <td>{row.product}</td>
@@ -66,7 +90,7 @@ export function Applications() {
           <header><h2 id="dist-title">Score distribution · 30 days</h2></header>
           <svg class="py-hist" viewBox="0 0 360 170" role="img" aria-label="Histogram of application scores with the 560–620 manual review band highlighted">
             <rect class="band" x={((REVIEW_BAND[0] - 440) / 360) * 360} width={((REVIEW_BAND[1] - REVIEW_BAND[0]) / 360) * 360} y="6" height="138" />
-            {histogram.map((bin, index) => {
+            {liveBins.map((bin, index) => {
               const height = (bin.count / maxCount) * 128 * sweep;
               const inBand = bin.from >= REVIEW_BAND[0] && bin.from < REVIEW_BAND[1];
               return <rect key={bin.from} class={inBand ? 'bar in-band' : 'bar'} x={index * 20 + 2} width="16" y={144 - height} height={height} rx="3" />;
@@ -89,6 +113,7 @@ export function Applications() {
           </AiSurface>
         </section>
       </div>
+      {recap.open && <Recap frames={recap.frames} since={recap.since} />}
     </main>
   );
 }

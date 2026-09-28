@@ -5,7 +5,7 @@ export type Edge = { from: string; to: string; rate: string; health: Health };
 export const nodes: Node[] = [
   { id: 'site', label: 'site', sub: 'checkout · 412/s', x: 90, y: 70, side: 'in', health: 'ok' },
   { id: 'app', label: 'app', sub: 'checkout · 388/s', x: 90, y: 160, side: 'in', health: 'ok' },
-  { id: 'stores', label: 'balcão · 38 stores', sub: 'offline queue · 96/s', x: 90, y: 250, side: 'in', health: 'ok' },
+  { id: 'stores', label: 'counter · 38 stores', sub: 'offline queue · 96/s', x: 90, y: 250, side: 'in', health: 'ok' },
   { id: 'marketplace', label: 'marketplace', sub: 'seller feeds · 61/s', x: 90, y: 340, side: 'in', health: 'ok' },
   { id: 'core', label: 'event bus', sub: 'canonical.order.v4', x: 480, y: 205, side: 'core', health: 'ok' },
   { id: 'fulfillment', label: 'fulfillment', sub: 'lag 41ms', x: 895, y: 45, side: 'out', health: 'ok' },

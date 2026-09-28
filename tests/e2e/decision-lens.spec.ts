@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
-import { screens } from '../../packages/chrome/src/routes';
+import { routes as screens } from '../../packages/routes/src/index';
 
 type Resolution = { id: string; anchor: string; resolved: boolean; visible: boolean };
 
@@ -14,7 +14,8 @@ for (const screen of covered) {
     await page.waitForLoadState('networkidle');
     await page.keyboard.press('d');
     const lens = page.locator('im-decision-lens');
-    await expect(lens.locator('.hotspot').first()).toBeAttached();
+    // Graph-heavy screens (React Flow) can take a few seconds to lay out under a full parallel run.
+    await expect(lens.locator('.hotspot').first()).toBeAttached({ timeout: 15_000 });
     const resolution = await lens.evaluate((element) => (element as unknown as { resolution: () => Promise<Resolution[]> }).resolution());
     expect(resolution.length, 'at least four decisions').toBeGreaterThanOrEqual(4);
     expect(resolution.filter((item) => !item.resolved).map((item) => item.anchor), 'unresolved anchors').toEqual([]);

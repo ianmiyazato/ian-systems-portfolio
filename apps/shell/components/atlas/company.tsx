@@ -34,6 +34,7 @@ export function Company() {
           </section>
           <section className={`at-card span-2 at-locked ${pro ? 'unlocked' : ''}`} aria-labelledby="loop-title" data-anchor="at-loop-intel">
             <h2 id="loop-title">Interview loop intelligence</h2>
+            <ZLink className="at-season-link" href="/atlas/academy/loops/parallax-pay" data-anchor="at-season-link">Watch the loop as a season →</ZLink>
             <div className="at-loop" aria-hidden={!pro}>
               {[['Recruiter', '30 min', '92% pass'], ['Tech screen', 'System design · 60 min', '48% pass'], ['Onsite', '4 rounds incl. ledger design', '37% pass'], ['Offer', 'Median 11 days after onsite', '']].map(([stage, detail, rate]) => <div key={stage}><strong>{stage}</strong><span>{detail}</span><b>{rate}</b></div>)}
             </div>
@@ -51,7 +52,7 @@ export function Company() {
           </section>
           <section className="at-card span-3" aria-labelledby="history-title" data-anchor="at-history">
             <h2 id="history-title">Your history with Parallax Pay</h2>
-            <ol className="at-timeline horizontal"><li className="done"><b>Mar 2025</b>Applied · no reply</li><li className="done"><b>02 Sep</b>Applied with referral</li><li className="done"><b>18 Sep</b>Tech screen</li><li className="now"><b>Thu</b>Onsite</li></ol>
+            <ol className="at-timeline horizontal"><li className="done"><b>Mar 2025</b>Applied · no reply</li><li className="done"><b>Sep 2</b>Applied with referral</li><li className="done"><b>Sep 18</b>Tech screen</li><li className="now"><b>Thu</b>Onsite</li></ol>
           </section>
         </div>
       </main>

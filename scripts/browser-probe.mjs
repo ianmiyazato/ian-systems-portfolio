@@ -1,8 +1,12 @@
 // Browser probe: loads routes in Chromium and fails on console errors, page errors, failed or 4xx/5xx requests.
-// BASE=https://… PATHS='/ /pulse' SHOTS=dir node scripts/browser-probe.mjs
+// Defaults to the local production build (servers start if needed; KEEP=1 leaves them running).
+// PATHS='/ /pulse' SHOTS=dir FULL=1 node scripts/browser-probe.mjs · BASE=https://… for a deployment
 import { chromium } from '@playwright/test';
-const base = process.env.BASE ?? 'https://ian-portfolio-shell.vercel.app';
-const paths = (process.env.PATHS ?? '/ /mare/ops/balcao /mare/shop /pulse /atlas/pipeline').split(' ');
+import { ensureServers } from './lib/servers.mjs';
+const base = process.env.BASE ?? 'http://127.0.0.1:3000';
+const stop = process.env.BASE || process.env.KEEP ? () => {} : await ensureServers();
+if (process.env.KEEP && !process.env.BASE) await ensureServers();
+const paths = (process.env.PATHS ?? '/ /mare/ops/counter /mare/shop /pulse /atlas/pipeline').split(' ');
 const shots = process.env.SHOTS;
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -22,4 +26,5 @@ for (const path of paths) {
   console.log(`${errors.length ? '✗' : '✓'} ${path}${errors.length ? '\n   ' + errors.join('\n   ') : ''}`);
 }
 await browser.close();
+stop();
 process.exit(failures ? 1 : 0);

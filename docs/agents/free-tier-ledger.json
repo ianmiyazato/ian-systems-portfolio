@@ -1,0 +1,15 @@
+{
+  "$comment": "Free-tier ledger for v0.2 (hard limits in docs/agents/budgets.md). Append every deploy and every database change; `pnpm budget` prints the totals.",
+  "limits": { "productionDeploys": 12, "previewDeploys": 0, "supabaseRows": 2000, "supabaseDbMb": 20, "staticOutputMbPerApp": 25 },
+  "vercel": {
+    "projects": ["ian-portfolio-shell", "ian-portfolio-mare-ops", "ian-portfolio-mare-shop", "ian-portfolio-pulse"],
+    "deploys": []
+  },
+  "supabase": {
+    "projectRef": "mtsgotwfnryoljdjsgcd",
+    "snapshots": [
+      { "date": "2026-09-27", "rows": { "campaign_posts": 3, "eval_runs": 1, "events": 3, "integration_events": 2, "orders": 15 }, "dbMb": 11, "buckets": 0, "edgeFunctions": 0, "pgCron": false, "note": "v0.2 baseline, read through the Supabase MCP" }
+    ]
+  },
+  "created": { "projects": 0, "functions": 0, "crons": 0, "storage": 0 }
+}

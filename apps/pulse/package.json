@@ -1,6 +1,6 @@
 {
   "name": "@portfolio/pulse",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,9 +15,11 @@
     "@portfolio/ai-surface": "workspace:*",
     "@portfolio/chrome": "workspace:*",
     "@portfolio/mocks": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
     "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "@sveltejs/adapter-vercel": "6.3.4",
     "@sveltejs/kit": "2.43.1",
     "@sveltejs/vite-plugin-svelte": "6.2.0",

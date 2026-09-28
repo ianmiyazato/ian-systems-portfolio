@@ -1,6 +1,6 @@
 {
   "name": "@portfolio/remote-runtime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -21,7 +21,10 @@
   },
   "dependencies": {
     "@portfolio/ai-surface": "workspace:*",
+    "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
+    "@portfolio/routes": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "@supabase/realtime-js": "2.117.2",
     "preact": "10.29.8"
   },

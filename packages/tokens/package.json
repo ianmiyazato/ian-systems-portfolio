@@ -1,12 +1,13 @@
 {
   "name": "@portfolio/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
     "./styles.css": "./src/styles.css",
     "./themes.css": "./src/themes.css",
+    "./themes.json": "./src/themes.json",
     "./fonts/*": "./src/fonts/*.ts"
   },
   "scripts": {

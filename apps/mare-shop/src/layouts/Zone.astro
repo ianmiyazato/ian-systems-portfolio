@@ -1,10 +1,11 @@
 ---
 import '@portfolio/tokens/styles.css';
+import '@portfolio/motion/motion.css';
 import '@portfolio/overlays/overlays.css';
 import '@portfolio/ai-surface/ai-surface.css';
 
 interface Props { title: string; description: string; context: string; theme?: string; lang?: string }
-const { title, description, context, theme = 'consumer', lang = 'pt-BR' } = Astro.props;
+const { title, description, context, theme = 'consumer', lang = 'en' } = Astro.props;
 ---
 <!doctype html>
 <html lang={lang} data-theme={theme} data-state="live">
@@ -19,7 +20,7 @@ const { title, description, context, theme = 'consumer', lang = 'pt-BR' } = Astr
   <body>
     <im-portfolio-bar context={context}></im-portfolio-bar>
     <slot />
-    <footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+    <footer class="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.2</footer>
     <im-decision-lens></im-decision-lens>
     <im-command-palette></im-command-palette>
     <script>

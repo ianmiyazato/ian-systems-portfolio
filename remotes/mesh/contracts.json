@@ -1,0 +1,4 @@
+{ "consumer": "mesh", "owner": "@portfolio/remote-mesh", "reads": {
+  "delivery.updated": ["orderId", "status", "trackingNumber"],
+  "invoice.issued": ["orderId", "invoice", "status", "rejectionCode", "ncm"]
+} }

@@ -1,6 +1,6 @@
 {
   "name": "ian-systems-portfolio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@10.17.1",
   "engines": {
@@ -20,7 +20,12 @@
     "dev:shell": "turbo dev --filter=@portfolio/shell",
     "deploy:prod": "bash scripts/deploy-all.sh --prod",
     "lighthouse": "node scripts/lighthouse.mjs",
-    "lighthouse:ci": "lhci autorun --config=lighthouserc.cjs"
+    "lighthouse:ci": "lhci autorun --config=lighthouserc.cjs",
+    "verify:route": "node scripts/verify-route.mjs",
+    "shots": "node scripts/shots.mjs",
+    "budget": "node scripts/budget.mjs",
+    "js:budget": "playwright test tests/e2e/budgets.spec.ts --project=chromium --workers=1",
+    "contracts": "WRITE_CONTRACTS=${WRITE_CONTRACTS:-} corepack pnpm --filter @portfolio/events exec vitest run src/compat.test.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

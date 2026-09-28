@@ -1,0 +1,7 @@
+{ "consumer": "counter", "owner": "@portfolio/remote-counter", "reads": {
+  "orders.placed": ["orderId", "fulfillment", "store", "customer", "items[].sku", "items[].size"],
+  "stock.reserved": ["sku", "size", "store", "quantity"],
+  "delivery.updated": ["orderId", "carrier", "status", "etaMinutes"],
+  "returns.created": ["returnId", "orderId", "store", "channel", "sku", "size", "reason", "customer"],
+  "returns.refunded": ["returnId", "store", "method", "amountCents"]
+} }

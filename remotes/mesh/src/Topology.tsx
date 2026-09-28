@@ -1,33 +1,20 @@
-import type { RemoteContext } from '@portfolio/remote-runtime';
-import { AiSurface, Banner, Link, openFeed, startDemoDriver, useDemoState } from '@portfolio/remote-runtime';
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { edges, logScript, nodes, partners, pathFor, type Edge, type LogLine, type Node } from './data';
+import { AiSurface, Banner, Link, LiveControl, useDemoState, useLiveEvents, useSimNow, useWorld } from '@portfolio/remote-runtime';
+import { useMemo } from 'preact/hooks';
+import { edges, nodes, partners, pathFor, type Edge, type LogLine, type Node } from './data';
+import { circuitFor, logLine } from './live';
 
-const clock = (offset: number) => {
-  const seconds = 16 * 3600 + 18 * 60 + 44 + offset;
-  return [Math.floor(seconds / 3600), Math.floor((seconds % 3600) / 60), seconds % 60].map((part) => String(part).padStart(2, '0')).join(':');
-};
-
-export function Topology({ ctx }: { ctx: RemoteContext }) {
+export function Topology() {
   const state = useDemoState();
+  const { world } = useWorld();
+  const now = useSimNow(2000);
   const calm = state === 'calm' || state === 'replayed';
-  const down = state === 'down';
-  const healthOf = (health: Node['health'] | Edge['health'], id: string) => (calm ? 'ok' : down && id === 'ligeiro' ? 'down' : health);
-  const [lines, setLines] = useState<LogLine[]>(() => logScript.slice(0, 5).map((line, index) => ({ ...line, t: clock(index * 3 - 15) })));
-  const counter = useRef(5);
-
-  useEffect(() => {
-    if (state === 'empty' || state === 'loading') return;
-    const feed = openFeed<LogLine>('mesh-log-stream', ctx.data, (message) => {
-      if (message.event === 'log') setLines((current) => [...current.slice(-11), message.payload]);
-    });
-    const stop = startDemoDriver('mesh-log-stream', 2600, () => {
-      const next = logScript[counter.current % logScript.length]!;
-      feed.send('log', { ...next, t: clock(counter.current * 3) });
-      counter.current += 1;
-    });
-    return () => { stop(); feed.close(); };
-  }, [ctx.data, state]);
+  const liveCircuit = circuitFor('ligeiro-log', world, now);
+  const down = state === 'down' || liveCircuit === 'open';
+  const ligeiroHealth: Node['health'] = liveCircuit === 'closed' ? 'ok' : 'warn';
+  const healthOf = (health: Node['health'] | Edge['health'], id: string) => (calm ? 'ok' : down && id === 'ligeiro' ? 'down' : id === 'ligeiro' ? ligeiroHealth : health);
+  // The log tail is the world's event stream, rendered as structured lines (no Supabase channel).
+  const stream = useLiveEvents(['delivery.updated', 'invoice.issued', 'orders.placed', 'returns.refunded'], { limit: 40 });
+  const lines = useMemo(() => stream.items.map(logLine).filter((line): line is LogLine => line !== null).slice(0, 12).reverse(), [stream.items]);
 
   return (
     <main class="ms-main ms-topology">
@@ -38,7 +25,7 @@ export function Topology({ ctx }: { ctx: RemoteContext }) {
       {state === 'locked' && <Banner tone="info" icon="i" title="change freeze · black friday window · read-only" anchor="ms-locked">replays and mapping deploys need an incident commander until 23:59.</Banner>}
 
       <section class="ms-panel ms-graph" aria-labelledby="topo-title" data-anchor="ms-topology">
-        <header><h1 id="topo-title">live topology</h1><span class="ms-muted">packets = sampled events · edge color = health</span></header>
+        <header><h1 id="topo-title">live topology</h1><span class="ms-muted">packets = sampled events (1 in 1,500) · edge color = health</span><LiveControl label="streaming" anchor="ms-topology-live" /></header>
         {state === 'loading' ? <div class="skeleton ms-graph-skeleton" aria-hidden="true" /> : (
           <svg viewBox="0 0 1000 420" role="img" aria-label="Topology: site, app, stores and marketplace publish to the event bus, which feeds fulfillment, e-invoicing and three carriers. Ligeiro Log is degraded.">
             {edges.map((edge) => <path key={`e-${edge.to}-${edge.from}`} class={`edge ${healthOf(edge.health, edge.to)}`} d={pathFor(edge)} />)}
@@ -76,9 +63,9 @@ export function Topology({ ctx }: { ctx: RemoteContext }) {
             <thead><tr><th>partner</th><th>protocol</th><th>p95</th><th>errors</th><th>circuit</th><th>last event</th></tr></thead>
             <tbody>
               {partners.map((partner) => {
-                const circuit = calm ? 'closed' : down && partner.id === 'ligeiro-log' ? 'open' : partner.circuit;
+                const circuit = calm ? 'closed' : down && partner.id === 'ligeiro-log' ? 'open' : partner.id === 'ligeiro-log' ? liveCircuit : partner.circuit;
                 return (
-                  <tr key={partner.id}>
+                  <tr key={partner.id} data-nav-row>
                     <td><Link href={`/mare/ops/mesh/partners/${partner.id}`}>{partner.name}</Link></td>
                     <td>{partner.protocol}</td>
                     <td>{partner.p95}</td>
@@ -96,7 +83,7 @@ export function Topology({ ctx }: { ctx: RemoteContext }) {
           <header><h2 id="log-title">log tail</h2><span class="ms-live"><i />streaming</span></header>
           <ol class="ms-log" aria-live="polite" tabIndex={0} aria-label="Log tail">
             {state === 'empty' ? <li class="ms-muted">no events in the last 5 min · the bus is idle, not broken</li> : lines.map((line, index) => (
-              <li key={`${line.t}-${index}`} class={`lvl-${line.level}`}><time>{line.t}</time><b>{line.level}</b><span>{line.source}</span><p>{line.text}</p></li>
+              <li key={`${line.t}-${index}`} class={`lvl-${line.level} ${index === lines.length - 1 && stream.fresh.length ? 'is-arriving' : ''}`}><time>{line.t}</time><b>{line.level}</b><span>{line.source}</span><p>{line.text}</p></li>
             ))}
           </ol>
         </section>

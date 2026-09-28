@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const remotes = ['balcao', 'product-hub', 'pay', 'circle', 'mesh'];
+const remotes = ['counter', 'product-hub', 'pay', 'circle', 'mesh'];
 
 test('Maré Ops loads five remotes at runtime from their manifests', async ({ page }) => {
   const manifests: string[] = [];

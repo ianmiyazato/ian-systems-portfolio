@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { defineChrome } from '@portfolio/chrome';
 import '@portfolio/tokens/styles.css';
+import '@portfolio/motion/motion.css';
 import '@portfolio/tokens/fonts/portfolio';
 import './style.css';
 import { environment, loadDirectory, probe, type RemoteDirectory } from './federation';
@@ -9,7 +10,7 @@ import { RemoteBoundary, RemoteSlot } from './remote-host';
 
 type Health = Record<string, { ok: boolean; version?: string } | undefined>;
 
-const themes: Record<string, string> = { balcao: 'balcao', 'product-hub': 'product-hub', pay: 'pay', circle: 'circle', mesh: 'mesh' };
+const themes: Record<string, string> = { counter: 'counter', 'product-hub': 'product-hub', pay: 'pay', circle: 'circle', mesh: 'mesh' };
 
 function usePath() {
   const [path, setPath] = useState(location.pathname);
@@ -77,7 +78,7 @@ function App() {
         {dir && !entry && active && <NotFound />}
         {dir && !active && <Index dir={dir} />}
       </main>
-      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.1</footer>
+      <footer className="im-footer">All names are fictitious · data is synthetic · AI behavior is simulated in v0.2</footer>
       <im-decision-lens />
       <im-command-palette />
     </>
@@ -119,6 +120,10 @@ function NotFound() {
     </section>
   );
 }
+
+// v0.2 renamed Balcão to Counter. The shell and vercel.json redirect with a 308; this covers
+// the zone's own preview server so old /mare/ops/balcao links never render a 404.
+if (/^\/mare\/ops\/balcao(\/|$)/.test(location.pathname)) history.replaceState(null, '', location.href.replace('/mare/ops/balcao', '/mare/ops/counter'));
 
 defineChrome();
 createRoot(document.getElementById('root')!).render(

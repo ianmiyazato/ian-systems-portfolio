@@ -49,27 +49,27 @@ export function RemoteSlot({ dir, entry, mode, retry, onReady }: SlotProps) {
   const [state, setState] = useState<{ status: 'loading' | 'ready'; remote?: LoadedRemote; error?: Error }>({ status: 'loading' });
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
     let unmount: (() => void) | undefined;
     setState({ status: 'loading' });
     loadRemote(dir, entry, retry)
       .then((remote) => {
-        if (cancelled || !ref.current) return;
+        if (canceled || !ref.current) return;
         unmount = remote.module.mount(ref.current, {
           name: entry.name,
           basePath: `/mare/ops/${entry.name}`,
           mode,
           environment: environment(),
-          locale: 'pt-BR',
+          locale: 'en-US',
           data: dataConfig(),
           hostVersion
         });
         setState({ status: 'ready', remote });
         onReady?.(remote);
       })
-      .catch((error: Error) => !cancelled && setState({ status: 'loading', error }));
+      .catch((error: Error) => !canceled && setState({ status: 'loading', error }));
     return () => {
-      cancelled = true;
+      canceled = true;
       unmount?.();
     };
     // onReady is intentionally excluded: it only reports upward.

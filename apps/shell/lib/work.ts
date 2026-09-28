@@ -16,7 +16,7 @@ export const studies: CaseStudy[] = [
     slug: 'mare', name: 'Maré', kind: 'Retail platform · five operational systems + consumer', theme: 'portfolio',
     pitch: 'One fashion retailer, five internal systems with five different users, and a consumer site that has to feel effortless on top.',
     problem: [
-      'Store staff, merchandisers, credit analysts, partnership managers and integration engineers were all working in one generic admin, so every screen was optimised for nobody.',
+      'Store staff, merchandisers, credit analysts, partnership managers and integration engineers were all working in one generic admin, so every screen was optimized for nobody.',
       'Underneath, each channel talked to each carrier, tax gateway and payment partner directly. Every new partner multiplied the failure modes.',
       'The job: give each team a product shaped around its work, and give the platform one canonical event contract to stand on.'
     ],
@@ -28,7 +28,7 @@ export const studies: CaseStudy[] = [
     ],
     metrics: ['API latency 450 → ~200 ms', 'Error rate 1.8% → 0.5–0.7%', 'Catalog reads 3–5× faster', 'Deploys 2 → 8–12 per week'],
     shots: [
-      { src: 'balcao/balcao-lanes.png', label: 'Balcão · order lanes', href: '/mare/ops/balcao' },
+      { src: 'counter/counter-lanes.png', label: 'Counter · order lanes', href: '/mare/ops/counter' },
       { src: 'product-hub/product-hub-detail.png', label: 'Product Hub · pricing', href: '/mare/ops/product-hub/products/510233?tab=pricing' },
       { src: 'pay/pay-application-detail.png', label: 'Pay · application', href: '/mare/ops/pay/applications/AP-77118' },
       { src: 'circle/circle-rule-builder.png', label: 'Circle · rule builder', href: '/mare/ops/circle/rules/summer-swim' },
@@ -73,7 +73,7 @@ export const studies: CaseStudy[] = [
     ],
     metrics: ['Analytics queries 5–10× faster', 'Availability 99.8%'],
     shots: [
-      { src: 'pulse/pulse-intelligence.png', label: 'Intelligence', href: '/pulse' },
+      { src: 'pulse/pulse-intelligence.png', label: 'Intelligence', href: '/pulse/intelligence' },
       { src: 'pulse/pulse-distribution.png', label: 'Distribution', href: '/pulse/distribution' },
       { src: 'pulse/pulse-harness.png', label: 'AI harness', href: '/pulse/harness' }
     ]

@@ -1,26 +1,30 @@
-import { themes } from '@portfolio/tokens';
+import { portfolio } from '@portfolio/tokens/themes.json';
 
 export const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
 
-const portfolio = themes.portfolio;
 
 /**
- * Portfolio chrome (lens, palette) keeps one identity in every zone, so reviewers recognise it
+ * Portfolio chrome (lens, palette) keeps one identity in every zone, so reviewers recognize it
  * even inside Mesh's dark console. Values come from the token package, never literals.
  */
 export const chromeVars = `
   --lens-ink:${portfolio.color.ink};--lens-surface:${portfolio.color.surface};--lens-surface-2:${portfolio.color['surface-2']};
   --lens-line:${portfolio.color.line};--lens-muted:${portfolio.color.muted};--lens-accent:${portfolio.color.accent};
   --lens-accent-ink:${portfolio.color['accent-ink']};--lens-orange:${portfolio.color['accent-2']};--lens-ai:${portfolio.color.ai};
-  --lens-success:${portfolio.color.success};--lens-font:${portfolio.font.ui};--lens-display:${portfolio.font.display};--lens-mono:${portfolio.font.mono};
+  --lens-success:${portfolio.color.success};--lens-warn:${portfolio.color.warn};--lens-font:${portfolio.font.ui};--lens-display:${portfolio.font.display};--lens-mono:${portfolio.font.mono};
 `;
 
 export const tagColor: Record<string, string> = {
   Frontend: 'var(--lens-accent)',
+  Design: 'var(--lens-accent)',
+  UX: 'var(--lens-ink)',
   Backend: 'var(--lens-orange)',
+  Architecture: 'var(--lens-orange)',
+  Engineering: 'var(--lens-success)',
   Data: 'var(--lens-success)',
-  AI: 'var(--lens-ai)'
+  AI: 'var(--lens-ai)',
+  'Free-tier': 'var(--lens-warn)'
 };
 
 export function isTypingTarget(target: EventTarget | null) {

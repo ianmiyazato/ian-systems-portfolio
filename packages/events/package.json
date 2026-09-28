@@ -1,16 +1,26 @@
 {
   "name": "@portfolio/events",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts" },
+  "exports": {
+    ".": "./src/index.ts",
+    "./domain": "./src/domain.ts",
+    "./compat": "./src/compat.ts",
+    "./contracts-report.json": "./contracts-report.json",
+    "./schemas/*": "./schemas/*"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "eslint src --max-warnings=0",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run"
   },
-  "dependencies": { "zod": "3.25.76" },
-  "devDependencies": { "vitest": "3.2.4" }
+  "dependencies": {
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "vitest": "3.2.4",
+    "@types/node": "22.18.6"
+  }
 }
-

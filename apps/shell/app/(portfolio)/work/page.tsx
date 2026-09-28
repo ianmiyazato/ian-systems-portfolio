@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ZLink } from '@/components/zone-link';
 import { studies } from '@/lib/work';
 
-export const metadata: Metadata = { title: 'Work', description: 'Three fictitious platforms that show product judgement, frontend craft and distributed-systems depth.' };
+export const metadata: Metadata = { title: 'Work', description: 'Three fictitious platforms that show product judgment, frontend craft and distributed-systems depth.' };
 
 export default function WorkIndex() {
   return (

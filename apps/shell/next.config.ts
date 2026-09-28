@@ -20,8 +20,16 @@ const zones = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays'],
+  transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays', '@portfolio/world', '@portfolio/routes'],
   experimental: { optimizePackageImports: ['@xyflow/react'] },
+  // v0.2 renamed Balcão to Counter; old links keep working (308, query string preserved).
+  async redirects() {
+    return [
+      { source: '/mare/ops/balcao', destination: '/mare/ops/counter', permanent: true },
+      { source: '/mare/ops/balcao/:path*', destination: '/mare/ops/counter/:path*', permanent: true },
+      { source: '/mare/shop/p/:slug', destination: '/mare/shop/products/:slug', permanent: true }
+    ];
+  },
   async rewrites() {
     // beforeFiles: zone prefixes must win over the shell's own dynamic routes.
     const beforeFiles = zones.flatMap(({ url, prefixes, rootSlash }) =>

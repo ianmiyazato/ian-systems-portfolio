@@ -4,21 +4,14 @@ import '../../styles/apps.css';
 import '../../styles/shop.css';
 import Zone from '../../layouts/Zone.astro';
 import Phone from '../../components/Phone.astro';
+import AppsHeader from '../../components/apps/AppsHeader.astro';
 import Screens from '../../components/apps/PayScreens.astro';
 const phones = [['Home', 0], ['Installments', 1], ['Virtual card', 2]] as const;
-const current: string = 'pay';
 const anchors = ['app-pay-0', 'app-pay-1', 'app-pay-2'];
 ---
 <Zone title="Maré Pay app · Maré" description="The customer side of Pay: a card that flips, installments that show the real cost, and a step-up before revealing a card number." context="Maré · Apps" theme="pay">
   <main class="apps">
-    <header class="apps-head" data-anchor="app-head">
-      <div><span class="cs-kicker">Maré apps · three interactive screens</span><h1>Maré Pay app</h1><p>The customer side of Pay: a card that flips, installments that show the real cost, and a step-up before revealing a card number. Swipe inside any phone, or use the dots.</p></div>
-      <nav class="apps-switch" aria-label="Maré apps" data-anchor="app-switch">
-        <a href="/mare/apps/shop" aria-current={current === 'shop' ? 'page' : undefined}>Shopping</a>
-        <a href="/mare/apps/pay" aria-current={current === 'pay' ? 'page' : undefined}>Pay</a>
-        <a href="/mare/apps/circle" aria-current={current === 'circle' ? 'page' : undefined}>Circle</a>
-      </nav>
-    </header>
+    <AppsHeader kicker="Maré apps · three interactive screens" title="Maré Pay app" current="pay">The customer side of Pay: private by default (tap the eye to see amounts), cards in a carousel, a card that flips, installments that show the real cost, and a step-up before revealing a card number. Swipe inside any phone, or use the dots.</AppsHeader>
     <div class="phones">
       {phones.map(([label, start], index) => (
         <div class="phone-wrap">

@@ -3,6 +3,7 @@ import '@portfolio/tokens/fonts/atlas';
 import '@portfolio/tokens/fonts/pulse';
 import { notFound } from 'next/navigation';
 import { SystemDesign } from '@/components/system-design';
+import { WorldControls } from '@/components/world-controls';
 import { ZLink } from '@/components/zone-link';
 import { architectures } from '@/lib/architectures';
 
@@ -30,12 +31,14 @@ export default async function SystemDesignPage({ params }: Props) {
         </div>
         <nav className="sd-projects" aria-label="System design pages">
           {Object.values(architectures).map((item) => <ZLink key={item.project} href={`/system-design/${item.project}`} aria-current={item.project === arch.project ? 'page' : undefined}>{item.name}</ZLink>)}
+          {arch.project === 'mare' && <ZLink href="/system-design/mare/request-path">Request path →</ZLink>}
         </nav>
       </header>
+      <div className="sd-world"><WorldControls anchor="sd-world" /></div>
       <SystemDesign arch={arch} />
       <section className="sd-metrics" data-anchor="sd-metrics" aria-label="Before and after">
         {arch.metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
-        <p className="note">Before → after, measured on the real systems this fictitious design is modelled on.</p>
+        <p className="note">Before → after, measured on the real systems this fictitious design is modeled on.</p>
       </section>
     </main>
   );

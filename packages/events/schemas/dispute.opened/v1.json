@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/dispute.opened",
+  "title": "dispute.opened",
+  "description": "A cardholder opened a dispute.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "dispute.opened"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "disputeId",
+        "account",
+        "amountCents",
+        "reason",
+        "network",
+        "dueDays"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "disputeId": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "not-received",
+            "fraud",
+            "duplicate",
+            "not-as-described"
+          ]
+        },
+        "network": {
+          "type": "string"
+        },
+        "dueDays": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

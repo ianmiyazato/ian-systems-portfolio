@@ -18,3 +18,12 @@
 .tone-info { background: var(--accent-soft); }
 .tone-ai { border-color: color-mix(in srgb, var(--ai) 45%, var(--line)); background: var(--ai-soft); }
 .tone-ai .state-icon { background: var(--ai); color: var(--ai-ink); }
+
+/* Designed not-found: the remote's chrome stays; the body lists every real view. */
+.view-not-found { display: grid; justify-items: start; gap: 12px; max-width: 640px; margin: 48px auto; padding: 32px; border: 1px dashed var(--line); border-radius: var(--radius); background: var(--surface); animation: rise .3s var(--ease) both; }
+.view-not-found-code { color: var(--accent-text); font: 800 56px/1 var(--font-display); letter-spacing: var(--display-tracking); }
+.view-not-found h1 { font-size: 28px; }
+.view-not-found p { color: var(--muted); }
+.view-not-found ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.view-not-found a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--ink); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .view-not-found { animation: none; } }

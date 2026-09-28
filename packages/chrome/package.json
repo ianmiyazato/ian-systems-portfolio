@@ -1,6 +1,6 @@
 {
   "name": "@portfolio/chrome",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -11,6 +11,10 @@
     "./registry": {
       "types": "./dist/registry.d.ts",
       "default": "./dist/registry.js"
+    },
+    "./now-playing": {
+      "types": "./dist/now-playing-store.d.ts",
+      "default": "./dist/now-playing.js"
     }
   },
   "scripts": {
@@ -20,7 +24,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@portfolio/tokens": "workspace:*"
+    "@portfolio/ai-sim": "workspace:*",
+    "@portfolio/routes": "workspace:*",
+    "@portfolio/tokens": "workspace:*",
+    "@portfolio/world": "workspace:*"
   },
   "devDependencies": {
     "typescript": "5.9.2",

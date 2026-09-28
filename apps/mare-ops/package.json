@@ -1,6 +1,6 @@
 {
   "name": "@portfolio/mare-ops",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "@portfolio/chrome": "workspace:*",
-    "@portfolio/remote-balcao": "workspace:*",
+    "@portfolio/motion": "workspace:*",
+    "@portfolio/remote-counter": "workspace:*",
     "@portfolio/remote-circle": "workspace:*",
     "@portfolio/remote-mesh": "workspace:*",
     "@portfolio/remote-pay": "workspace:*",

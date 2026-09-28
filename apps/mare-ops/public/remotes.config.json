@@ -6,7 +6,7 @@
     "production": "/mare/ops/remotes"
   },
   "remotes": [
-    { "name": "balcao", "label": "Balcão", "job": "Store counter", "manifest": "{base}/balcao/mf-manifest.json" },
+    { "name": "counter", "label": "Counter", "job": "Store counter", "manifest": "{base}/counter/mf-manifest.json" },
     { "name": "product-hub", "label": "Product Hub", "job": "HQ merchandising", "manifest": "{base}/product-hub/mf-manifest.json" },
     { "name": "pay", "label": "Pay", "job": "Credit operations", "manifest": "{base}/pay/mf-manifest.json" },
     { "name": "circle", "label": "Circle", "job": "Creator program", "manifest": "{base}/circle/mf-manifest.json" },

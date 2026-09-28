@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/auth.scored",
+  "title": "auth.scored",
+  "description": "An authorization was scored before capture.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "auth.scored"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "authId",
+        "account",
+        "merchant",
+        "amountCents",
+        "score",
+        "action",
+        "latencyMs",
+        "device"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "authId": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "merchant": {
+          "type": "string"
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "approved",
+            "step-up",
+            "blocked",
+            "held"
+          ]
+        },
+        "latencyMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "device": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

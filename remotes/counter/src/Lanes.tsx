@@ -1,0 +1,230 @@
+import { AiSurface, Banner, Link, LiveControl, closeLayers, navigate, openLayer, useDemoState, useLocation, useScreenActions, useSimNow, useWorld } from '@portfolio/remote-runtime';
+import { MINUTE, clock, parseLocalTime } from '@portfolio/world';
+import { deliveryRun, laneTotals, lanes, type CounterOrder } from '@portfolio/mocks';
+import { useState } from 'preact/hooks';
+import type { Action } from './board';
+import { useCounter } from './context';
+import { slaText, withProgress } from './live';
+import { Handover } from './Handover';
+import { CutoffPlan } from './CutoffPlan';
+
+type Filter = 'all' | 'pickup' | 'delivery' | 'late';
+
+export function Lanes() {
+  const { board, act } = useCounter();
+  useScreenActions([{ id: 'ct:cutoff-plan', title: 'Apply the cutoff plan', hint: '3 deliveries would miss 17:00', keywords: 'cutoff plan counter', run: () => openLayer({ modal: 'cutoff-plan' }) }], []);
+  const now = useSimNow();
+  const state = useDemoState();
+  const { params } = useLocation();
+  const [filter, setFilter] = useState<Filter>('all');
+  const modal = params.get('modal');
+  const open = laneTotals.open + board.live - (state === 'empty' ? 18 : 0);
+  const queued = state === 'offline' ? ['MR-904117', 'MR-904115', 'MR-904112'] : [];
+  const reminded = state === 'reminder-sent' ? [...board.reminded, 'MR-904103'] : board.reminded;
+
+  const visible = (order: CounterOrder) =>
+    filter === 'all' || (filter === 'late' ? order.urgent : order.type === filter);
+
+  const filters: Array<[Filter, string, number]> = [
+    ['all', 'All', open],
+    ['pickup', 'Pickup', laneTotals.pickup],
+    ['delivery', 'Delivery', laneTotals.delivery],
+    ['late', 'Late', laneTotals.late]
+  ];
+
+  return (
+    <main class={`ct-main ${state === 'locked' ? 'is-locked' : ''}`} id="counter-lanes">
+      <StateBanners state={state} />
+      <CarrierBanner now={now} />
+      <section class="ct-head">
+        <div>
+          <h1 class="ct-title" data-anchor="ct-title">{state === 'loading' ? 'Loading orders…' : `${open} open orders`}</h1>
+          <p class="ct-sub">Sorted by the next carrier cutoff · updated {clock(now)}</p>
+        </div>
+        <div class="ct-filters" role="group" aria-label="Filter orders" data-anchor="ct-filters">
+          {filters.map(([id, label, count]) => (
+            <button type="button" key={id} class={`ct-filter ${id === 'late' ? 'late' : ''}`} aria-pressed={filter === id} onClick={() => setFilter(id)}>
+              {label} <b>{count}</b>
+            </button>
+          ))}
+        </div>
+        <LiveFeed />
+      </section>
+
+      <div class="ct-lanes" data-anchor="ct-lanes" aria-hidden={state === 'locked' ? true : undefined} inert={state === 'locked'}>
+        {lanes.map((lane) => {
+          const cards = state === 'loading' ? [] : board.orders.map((order) => withProgress(order, now, 'MR-904117')).filter((order) => order.lane === lane.id && visible(order));
+          const empty = state === 'empty' && lane.id === 'to-pick';
+          const shown = empty ? [] : cards;
+          return (
+            <section class="ct-lane" key={lane.id} aria-labelledby={`lane-${lane.id}`} data-lane={lane.id}>
+              <header>
+                <h2 id={`lane-${lane.id}`}>{lane.label}</h2>
+                <span class="ct-count">{empty ? 0 : lane.total + (lane.id === 'to-pick' ? board.live : 0)}</span>
+              </header>
+              {state === 'loading' && [0, 1, 2].map((key) => <div class="ct-card skeleton" key={key} aria-hidden="true" />)}
+              {empty && (
+                <div class="ct-empty" data-anchor="ct-empty-lane">
+                  <span aria-hidden="true">✓</span>
+                  <strong>Nothing to pick</strong>
+                  <p>New orders land here, usually one every 6 min at this hour. You'll hear a chime.</p>
+                </div>
+              )}
+              {shown.map((order, index) => (
+                <OrderCard
+                  key={order.id}
+                  order={order}
+                  fresh={board.fresh.includes(order.id)}
+                  queued={queued.includes(order.id)}
+                  reminded={reminded.includes(order.id)}
+                  anchor={lane.id === 'to-pick' && index === 0 ? 'ct-card' : undefined}
+                  act={act}
+                  now={now}
+                />
+              ))}
+              {state !== 'loading' && !empty && lane.total > cards.length && (
+                <button type="button" class="ct-more">+ {lane.total - Math.min(cards.length, lane.total)} more</button>
+              )}
+            </section>
+          );
+        })}
+      </div>
+
+      {state !== 'loading' && state !== 'locked' && (
+        <div class="ct-ai-strip" data-anchor="ct-ai-strip">
+          <AiSurface inline title="Cutoff plan ready · 3 deliveries would miss 17:00" meta="4 sources · confidence 0.92">
+            Moving two orders to free pickers and one to Via Norte keeps every delivery on today's truck.
+          </AiSurface>
+          <button type="button" class="ct-primary" onClick={() => openLayer({ modal: 'cutoff-plan' })}>Review plan</button>
+        </div>
+      )}
+
+      {state === 'locked' && (
+        <div class="ct-lock" role="dialog" aria-modal="false" aria-labelledby="ct-lock-title" data-anchor="ct-locked">
+          <svg class="ct-lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+          <h2 id="ct-lock-title">Counter locked until your shift starts</h2>
+          <p>Ana's shift starts at 08:00. A shift lead can unlock the counter with a badge scan; the unlock is written to the audit log.</p>
+          <button type="button" class="ct-primary">Scan shift-lead badge</button>
+        </div>
+      )}
+
+      {modal === 'handover' && <Handover orderId={params.get('order') ?? 'MR-904112'} board={board} act={act} />}
+      {modal === 'cutoff-plan' && <CutoffPlan act={act} />}
+    </main>
+  );
+}
+
+/** Chaos → Counter: when the carrier's circuit opens, the counter says so and re-routes. */
+function CarrierBanner({ now }: { now: number }) {
+  const { world } = useWorld();
+  if (!world.isFaulted('carrier-outage', now)) return null;
+  return (
+    <Banner tone="risk" icon="!" title="Ligeiro Log is down · circuit open" anchor="ct-carrier-down" action={<a class="ct-secondary" href="/mare/ops/mesh/partners/ligeiro-log">Open in Mesh</a>}>
+      New deliveries go to Via Norte (18:30, +R$9.20 each). Orders already labeled for Ligeiro wait in the DLQ and replay when it recovers.
+    </Banner>
+  );
+}
+
+function StateBanners({ state }: { state: string }) {
+  if (state === 'offline')
+    return (
+      <div class="ct-offline" role="status" data-anchor="ct-offline">
+        <b aria-hidden="true">↯</b> Offline · 3 actions queued, will sync
+        <small>Scans and handovers keep working; each carries an idempotency key so replays can't double-count.</small>
+      </div>
+    );
+  if (state === 'error')
+    return (
+      <Banner tone="risk" icon="!" title="Order service unreachable · showing lanes cached at 16:14" anchor="ct-error" action={<button type="button" class="ct-secondary" onClick={() => closeLayers(['state'])}>Retry now</button>}>
+        New orders pause until it recovers. Picking and handovers still work offline.
+      </Banner>
+    );
+  if (state === 'reminder-sent')
+    return <Banner tone="success" icon="✓" title="No-show reminder sent to Caio · WhatsApp · 16:19" anchor="ct-reminder">If Caio doesn't reply by 18:00 the order returns to stock automatically.</Banner>;
+  return null;
+}
+
+function LiveFeed() {
+  const { feedStatus: status, emit, acrossTabs, supabaseReady, toggleAcrossTabs } = useCounter();
+  const label = status === 'live' ? 'Live · Supabase Broadcast' : status === 'connecting' ? 'Connecting…' : status === 'error' ? 'Realtime unavailable · local' : 'Live · world simulation';
+  return (
+    <div class="ct-live-group">
+      <div class="ct-live" data-realtime-status={status} data-anchor="ct-live">
+        <i aria-hidden="true" />
+        <span>{label}</span>
+        <button type="button" onClick={emit}>Simulate order</button>
+        <button type="button" class="ct-across" aria-pressed={acrossTabs} disabled={!supabaseReady} title={supabaseReady ? 'Share this board with other browsers over Supabase Broadcast' : 'Supabase is not configured in this build; tabs in this browser still sync'} onClick={toggleAcrossTabs}>
+          Live across tabs
+        </button>
+      </div>
+      <LiveControl anchor="ct-lanes-live" />
+    </div>
+  );
+}
+
+type CardProps = { order: CounterOrder; fresh: boolean; queued: boolean; reminded: boolean; anchor?: string; act: (action: Action) => void; now: number };
+
+function OrderCard({ order, fresh, queued, reminded, anchor, act, now }: CardProps) {
+  const sla = slaText(order, now);
+  const scanned = order.items.filter((item) => item.scanned).length;
+  const complete = scanned === order.items.length;
+  const action = (() => {
+    if (order.lane === 'to-pick') return { label: 'Start picking', run: () => navigate(`/mare/ops/counter/pick/${order.id}`) };
+    if (order.lane === 'picking')
+      return complete
+        ? { label: 'Pack & label', run: () => act({ type: 'move', id: order.id, lane: 'ready', patch: { sla: 'Waiting · just now' } }) }
+        : { label: `Resume picking · ${scanned}/${order.items.length}`, run: () => navigate(`/mare/ops/counter/pick/${order.id}`) };
+    if (order.lane === 'ready')
+      return order.note === 'no-show'
+        ? { label: reminded ? 'Reminder sent' : 'Remind customer', run: () => act({ type: 'remind', id: order.id }), disabled: reminded }
+        : { label: 'Hand over', run: () => openLayer({ modal: 'handover', order: order.id }) };
+    return null;
+  })();
+
+  return (
+    <article class={`ct-card ${fresh ? 'is-fresh' : ''} ${sla.urgent ? 'is-urgent' : ''}`} style={{ viewTransitionName: `order-${order.id}` }} data-anchor={anchor} data-order={order.id} data-nav-row>
+      <header>
+        <Link href={`/mare/ops/counter/pick/${order.id}`} class="ct-id" data-nav-open>{order.id}</Link>
+        <span class={`ct-pill ${order.type}`}>{order.type === 'pickup' ? 'Pickup' : 'Delivery from store'}</span>
+      </header>
+      <p class="ct-customer">
+        {order.customer} · {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
+      </p>
+      <div class="ct-stack" role="img" aria-label={order.items.map((item) => item.name).join(', ')}>
+        {order.items.map((item, index) => (
+          <span key={`${item.sku}-${index}`} class={`swatch ${item.scanned ? 'done' : ''}`} data-swatch={item.swatch} style={{ '--i': index }} />
+        ))}
+      </div>
+      <p class={`ct-sla ${sla.urgent ? 'urgent' : ''}`}>
+        <span aria-hidden="true">{order.lane === 'handed-over' ? '✓' : '◷'}</span>
+        {reminded && order.note === 'no-show' ? 'Reminder sent 16:19 · waiting' : sla.text}
+      </p>
+      {order.id === deliveryRun.orderId && <CourierEta now={now} />}
+      {queued && <p class="ct-queued">Queued · will sync</p>}
+      {action && (
+        <button type="button" class={`ct-action ${order.lane} ${order.note === 'no-show' ? 'remind' : ''}`} onClick={action.run} disabled={action.disabled}>
+          {action.label}
+        </button>
+      )}
+    </article>
+  );
+}
+
+/** Ride-hailing-style live ETA for the delivery on the road: same run and clock as the customer's tracking app. */
+function CourierEta({ now }: { now: number }) {
+  const collected = parseLocalTime(deliveryRun.collected, now)!;
+  const eta = parseLocalTime(deliveryRun.eta, now)!;
+  const progress = Math.min(1, Math.max(0, (now - collected) / (eta - collected)));
+  const left = Math.max(0, Math.ceil((eta - now) / MINUTE - 1e-6));
+  const delivered = progress >= 1;
+  return (
+    <div class={`ct-eta ${delivered ? 'done' : ''}`} data-anchor="ct-courier-eta">
+      <p>
+        <b>{delivered ? `Delivered ${clock(eta)}` : `ETA ${clock(eta)} · ${left} min`}</b>
+        <span>{deliveryRun.courier} · {deliveryRun.carrier}</span>
+      </p>
+      <span class="ct-eta-bar" role="progressbar" aria-label="Delivery progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}><i style={{ transform: `scaleX(${progress})` }} /></span>
+      <a class="ct-eta-link" href="/mare/apps/tracking">See what the customer sees</a>
+    </div>
+  );
+}

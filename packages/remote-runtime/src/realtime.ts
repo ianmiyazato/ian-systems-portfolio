@@ -17,6 +17,8 @@ export function openFeed<T>(topic: string, data: RemoteContext['data'], listener
   let status: 'local' | 'connecting' | 'live' | 'error' = data.mode === 'supabase' && data.supabaseUrl && data.supabaseKey ? 'connecting' : 'local';
   let closed = false;
   let sendRemote: ((event: string, payload: T) => void) | null = null;
+  // Free tier: at most one Supabase message per second per client.
+  let lastRemote = 0;
   let closeRemote: (() => void) | null = null;
   const local = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel(`portfolio:${topic}`) : null;
   const setStatus = (next: typeof status) => {
@@ -30,7 +32,7 @@ export function openFeed<T>(topic: string, data: RemoteContext['data'], listener
   if (status === 'connecting') {
     void import('@supabase/realtime-js').then(({ RealtimeClient }) => {
       if (closed) return;
-      const client = new RealtimeClient(`${data.supabaseUrl!.replace(/^http/, 'ws')}/realtime/v1`, { params: { apikey: data.supabaseKey!, eventsPerSecond: 4 } });
+      const client = new RealtimeClient(`${data.supabaseUrl!.replace(/^http/, 'ws')}/realtime/v1`, { params: { apikey: data.supabaseKey!, eventsPerSecond: 1 } });
       const channel = client.channel(topic, { config: { broadcast: { self: true } } });
       channel.on('broadcast', { event: '*' }, (message) => listener({ event: message.event, payload: message.payload as T }));
       channel.subscribe((next: string) => {
@@ -48,7 +50,12 @@ export function openFeed<T>(topic: string, data: RemoteContext['data'], listener
   return {
     status: () => status,
     send(event, payload) {
-      if (status === 'live' && sendRemote) sendRemote(event, payload);
+      if (status === 'live' && sendRemote) {
+        const now = Date.now();
+        if (now - lastRemote < 1000) return;
+        lastRemote = now;
+        sendRemote(event, payload);
+      }
       else {
         // Local mode: deliver to this tab and every other open tab.
         listener({ event, payload });

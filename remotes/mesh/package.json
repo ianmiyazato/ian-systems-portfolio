@@ -1,6 +1,6 @@
 {
   "name": "@portfolio/remote-mesh",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,10 +11,16 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@portfolio/events": "workspace:*",
     "@portfolio/mocks": "workspace:*",
     "@portfolio/remote-runtime": "workspace:*",
     "@portfolio/tokens": "workspace:*",
+    "@portfolio/world": "workspace:*",
     "preact": "10.29.8"
   },
-  "devDependencies": { "typescript": "5.9.2", "vite": "7.1.7", "vitest": "3.2.4" }
+  "devDependencies": {
+    "typescript": "5.9.2",
+    "vite": "7.1.7",
+    "vitest": "3.2.4"
+  }
 }

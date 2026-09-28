@@ -23,10 +23,11 @@ export function ArenaLibrary() {
       <AtlasHeader active="Arena" />
       <main className="at-main">
         <header className="at-head" data-anchor="at-arena-head">
-          <div><span className="at-eyebrow">Arena · prompt library</span><h1>Practise the interview you&apos;re about to have</h1></div>
+          <div><span className="at-eyebrow">Arena · prompt library</span><h1>Practice the interview you&apos;re about to have</h1></div>
+          <ZLink className="at-btn mx-entry" href="/atlas/arena/mix/today" data-anchor="at-mix-entry"><span aria-hidden="true">▶</span> Your mix today</ZLink>
           <span className="at-quota" data-anchor="at-quota">{plan === 'Pro' ? 'Unlimited sessions' : state === 'limit' ? '0 of 3 free sessions left' : '2 of 3 free sessions left'}</span>
         </header>
-        {state === 'limit' && <p className="at-banner warn" data-anchor="at-limit">Session limit reached for September · resets 1 Oct. <ZLink href="/atlas/academy/designing-for-10x?modal=paywall">Go Pro for unlimited practice</ZLink></p>}
+        {state === 'limit' && <p className="at-banner warn" data-anchor="at-limit">Session limit reached for September · resets Oct 1. <ZLink href="/atlas/academy/designing-for-10x?modal=paywall">Go Pro for unlimited practice</ZLink></p>}
         <div className="at-filters" role="group" aria-label="Filter prompts" data-anchor="at-filters">
           {kinds.map((item) => <button key={item} type="button" aria-pressed={kind === item} onClick={() => setKind(item)}>{item}</button>)}
         </div>

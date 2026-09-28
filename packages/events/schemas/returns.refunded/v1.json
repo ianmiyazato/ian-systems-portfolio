@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mare.example/schemas/returns.refunded",
+  "title": "returns.refunded",
+  "description": "A return was refunded, credited or exchanged.",
+  "type": "object",
+  "required": [
+    "id",
+    "topic",
+    "at",
+    "key",
+    "payload"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "topic": {
+      "const": "returns.refunded"
+    },
+    "at": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "returnId",
+        "orderId",
+        "store",
+        "method",
+        "amountCents",
+        "bonusCents",
+        "installmentsReversed",
+        "staff"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "returnId": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string"
+        },
+        "store": {
+          "type": "string",
+          "pattern": "^#\\d{4}$"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "original-payment",
+            "store-credit",
+            "exchange"
+          ]
+        },
+        "amountCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bonusCents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installmentsReversed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "staff": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

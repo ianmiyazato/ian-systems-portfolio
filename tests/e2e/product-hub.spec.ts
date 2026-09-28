@@ -33,4 +33,50 @@ test.describe('Product Hub', () => {
     await page.goto('/mare/ops/product-hub?state=rejected');
     await expect(page.getByText(/below the 30% floor/)).toBeVisible();
   });
+
+  test('every nav item is a real view; product tabs show their own sections', async ({ page }) => {
+    await page.goto('/mare/ops/product-hub?view=imports');
+    await expect(page).toHaveURL(/\/mare\/ops\/product-hub\/imports$/);
+    for (const [slug, heading] of [['availability', 'Availability'], ['imports', 'Imports'], ['audit', 'Audit']]) {
+      await page.goto(`/mare/ops/product-hub/${slug}`);
+      await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+      await expect(page.locator('.ph-nav [aria-current="page"]')).toHaveText(heading);
+    }
+    await page.goto('/mare/ops/product-hub/products/510233?tab=content');
+    await expect(page.locator('[data-anchor="ph-content"]')).toContainText('Content · 86% complete');
+    await expect(page.locator('[data-anchor="ph-chart"]')).toHaveCount(0);
+  });
+
+  test('availability: a rebalance applies optimistically and can be undone', async ({ page }) => {
+    await page.goto('/mare/ops/product-hub/availability?live=paused');
+    const app = page.locator('tr', { hasText: 'MR-18511' }).locator('td').nth(2);
+    await expect(app).toContainText('5');
+    await page.getByRole('button', { name: 'Review the move' }).click();
+    await page.getByRole('dialog', { name: 'Rebalance allocation' }).getByRole('button', { name: 'Move 6 units' }).click();
+    await expect(app).toContainText('11');
+    await page.locator('[data-anchor="ph-undo-toast"]').getByRole('button', { name: 'Undo' }).click();
+    await expect(app).toContainText('5');
+  });
+
+  test('imports: the error drawer suggests fixes row by row', async ({ page }) => {
+    await page.goto('/mare/ops/product-hub/imports?state=failed');
+    await expect(page.locator('[data-anchor="ph-import-failed"]')).toBeVisible();
+    await page.getByRole('button', { name: 'Review fixes' }).click();
+    const drawer = page.locator('[data-anchor="ph-import-drawer"]');
+    await drawer.getByRole('button', { name: 'Sand' }).first().click();
+    await expect(drawer.locator('tr.accepted')).toHaveCount(1);
+  });
+
+  test('approving a price writes an audit entry with how it was made', async ({ context }) => {
+    const audit = await context.newPage();
+    await audit.goto('/mare/ops/product-hub/audit');
+    const product = await context.newPage();
+    await product.goto('/mare/ops/product-hub/products/510233?modal=agent-run');
+    await product.getByRole('button', { name: 'Approve R$219' }).click();
+    const entry = audit.locator('tr', { hasText: 'Today' });
+    await expect(entry).toContainText('Natural linen shirt R$249 → R$219');
+    await entry.getByRole('button', { name: 'How this was made' }).click();
+    await expect(audit.locator('[data-anchor="ph-provenance"]')).toContainText('ft-pricing-v2');
+  });
 });
+

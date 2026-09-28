@@ -13,7 +13,7 @@ export function Tile() {
             {products.slice(0, 5).map((row) => (
               <tr key={row.id}>
                 <td><span class="swatch" data-swatch={row.swatch} />{row.name}</td>
-                <td>R$ {row.price}</td>
+                <td>R${row.price}</td>
                 <td><Sparkline values={row.spark} /></td>
                 <td><em class={row.status === 'Healthy' ? 'ok' : 'warn'}>{row.status}</em></td>
               </tr>

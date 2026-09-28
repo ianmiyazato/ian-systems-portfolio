@@ -4,7 +4,7 @@ import Track from './Track.astro';
 import { brl, installments, productBySlug, products } from '../../lib/data';
 interface Props { start: number }
 const { start } = Astro.props;
-const shirt = productBySlug('camisa-linho-natural');
+const shirt = productBySlug('natural-linen-shirt');
 ---
 <Track start={start} labels={['home', 'product', 'order tracking']}>
   <div class="screen">
@@ -13,7 +13,7 @@ const shirt = productBySlug('camisa-linho-natural');
     <div class="sa-hero"><i></i><i></i><h2>Linen, sun and salt.</h2></div>
     <div class="sa-tiles">
       {products.slice(0, 4).map((product) => (
-        <a href={`/mare/shop/p/${product.slug}`}><Garment garment={product.garment} swatch={product.swatch} label={product.name} /><b>{product.name}</b><span>{brl(product.price)}</span></a>
+        <a href={`/mare/shop/products/${product.slug}`}><Garment garment={product.garment} swatch={product.swatch} label={product.name} /><b>{product.name}</b><span>{brl(product.price)}</span></a>
       ))}
     </div>
   </div>

@@ -3,11 +3,67 @@
   "framework": "vite",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "buildCommand": "cd ../.. && pnpm run build --filter=@portfolio/mare-ops...",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ../../apps/mare-ops ../../remotes ../../packages ../../decisions ../../pnpm-lock.yaml",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/mare/ops/:path*", "destination": "/mare/ops/index.html" }],
+  "redirects": [
+    {
+      "source": "/mare/ops/balcao",
+      "destination": "/mare/ops/counter",
+      "permanent": true
+    },
+    {
+      "source": "/mare/ops/balcao/:path*",
+      "destination": "/mare/ops/counter/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/mare/ops/:path*",
+      "destination": "/mare/ops/index.html"
+    }
+  ],
   "headers": [
-    { "source": "/mare/ops/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
-    { "source": "/mare/ops/remotes/(.*)/mf-manifest.json", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }, { "key": "Access-Control-Allow-Origin", "value": "*" }] },
-    { "source": "/mare/ops/remotes/(.*)", "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }] }
-  ]
+    {
+      "source": "/mare/ops/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/mare/ops/remotes/(.*)/mf-manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/mare/ops/remotes/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": false,
+      "feat/**": false,
+      "fix/**": false,
+      "docs/**": false,
+      "chore/**": false
+    }
+  }
 }

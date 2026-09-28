@@ -33,8 +33,8 @@ export function Detail({ id }: { id: string }) {
         </div>
       </header>
 
-      {outcome === 'approved' && <Banner tone="success" icon="✓" title="Approved · Crédito + Loja · R$ 4.000 limit" anchor="py-approved">Bruno gets the virtual card in the app now; the physical card ships tomorrow. Decision, factors and reviewer are in the audit log.</Banner>}
-      {outcome === 'pending' && <Banner tone="warn" icon="◷" title="Sent for approval · Renata A. · SLA 2 h" anchor="py-pending">The R$ 6.000 limit is above the review-band maximum. Bruno sees "in review" until Renata decides.</Banner>}
+      {outcome === 'approved' && <Banner tone="success" icon="✓" title="Approved · Credit + Store · R$4,000 limit" anchor="py-approved">Bruno gets the virtual card in the app now; the physical card ships tomorrow. Decision, factors and reviewer are in the audit log.</Banner>}
+      {outcome === 'pending' && <Banner tone="warn" icon="◷" title="Sent for approval · Renata A. · SLA 2 h" anchor="py-pending">The R$6,000 limit is above the review-band maximum. Bruno sees "in review" until Renata decides.</Banner>}
       {declined && <DeclineLetter />}
 
       <div class="py-grid">
@@ -58,9 +58,9 @@ export function Detail({ id }: { id: string }) {
         </section>
 
         <AiSurface title="Model explanation" meta="grounded · 0.91" anchor="py-explanation"
-          sources={[{ label: 'bureau · 14:03', score: 0.95 }, { label: 'Loja history · 14 mo', score: 0.92 }, { label: 'address docs', score: 0.84 }, { label: 'policy 44', score: 0.9 }]}>
-          <p>Bruno pays his Loja card on time and his income is stable, but he uses 82% of existing limits and the proof of address is from another city. Policy 44 routes 560–620 to a person; the mismatch alone would not decline him.</p>
-          <p class="py-suggest">Suggested: approve Crédito + Loja at R$ 4.000 and request an updated address.</p>
+          sources={[{ label: 'bureau · 14:03', score: 0.95 }, { label: 'Store card history · 14 mo', score: 0.92 }, { label: 'address docs', score: 0.84 }, { label: 'policy 44', score: 0.9 }]}>
+          <p>Bruno pays his Store card on time and his income is stable, but he uses 82% of existing limits and the proof of address is from another city. Policy 44 routes 560–620 to a person; the mismatch alone would not decline him.</p>
+          <p class="py-suggest">Suggested: approve Credit + Store at R$4,000 and request an updated address.</p>
         </AiSurface>
 
         <section class="py-panel" aria-labelledby="timeline-title" data-anchor="py-timeline">
@@ -80,7 +80,7 @@ export function Detail({ id }: { id: string }) {
           <ul class="py-docs">
             <li class="ok"><span aria-hidden="true">✓</span><div><strong>ID verified</strong><small>RG · liveness 0.98</small></div></li>
             <li class="warn"><span aria-hidden="true">!</span><div><strong>Address mismatch</strong><small>Bill in Campinas · application in São Paulo</small></div></li>
-            <li class="ok"><span aria-hidden="true">✓</span><div><strong>Income</strong><small>3 payslips · R$ 7.800 / month</small></div></li>
+            <li class="ok"><span aria-hidden="true">✓</span><div><strong>Income</strong><small>3 payslips · R$7,800 / month</small></div></li>
           </ul>
         </section>
       </div>
@@ -97,7 +97,7 @@ export function Detail({ id }: { id: string }) {
 
 function Decision({ onApprove, onSend }: { onApprove: () => void; onSend: () => void }) {
   const { params } = useLocation();
-  const [product, setProduct] = useState<'loja' | 'both'>('both');
+  const [product, setProduct] = useState<'store' | 'both'>('both');
   const [limit, setLimit] = useState(6000);
   const [reason, setReason] = useState('');
   const above = limit > POLICY_MAX_REVIEW;
@@ -117,21 +117,21 @@ function Decision({ onApprove, onSend }: { onApprove: () => void; onSend: () => 
         footer={
           <>
             <button type="button" class="py-btn" onClick={() => closeLayers(['modal', 'sub'])}>Cancel</button>
-            <button type="button" class="py-btn primary" onClick={() => (above ? openLayer({ sub: 'override' }) : onApprove())}>Continue</button>
+            <button type="button" class="py-btn primary" data-shortcut="approve" onClick={() => (above ? openLayer({ sub: 'override' }) : onApprove())}>Continue</button>
           </>
         }
       >
         <fieldset class="py-radios" data-anchor="py-products">
           <legend class="visually-hidden">Products</legend>
-          <label class={product === 'loja' ? 'checked' : ''}>
-            <input type="radio" name="product" checked={product === 'loja'} onChange={() => setProduct('loja')} />
-            <span class="py-mini-card loja" aria-hidden="true" />
-            <strong>Loja only</strong><small>In-store and app purchases · 3× without interest</small>
+          <label class={product === 'store' ? 'checked' : ''}>
+            <input type="radio" name="product" checked={product === 'store'} onChange={() => setProduct('store')} />
+            <span class="py-mini-card store" aria-hidden="true" />
+            <strong>Store only</strong><small>In-store and app purchases · 3× without interest</small>
           </label>
           <label class={product === 'both' ? 'checked' : ''}>
             <input type="radio" name="product" checked={product === 'both'} onChange={() => setProduct('both')} />
-            <span class="py-mini-card credito" aria-hidden="true" />
-            <strong>Crédito + Loja</strong><small>Visa card accepted anywhere, plus Loja benefits</small>
+            <span class="py-mini-card credit" aria-hidden="true" />
+            <strong>Credit + Store</strong><small>Visa card accepted anywhere, plus Store benefits</small>
           </label>
         </fieldset>
         <div class="py-limit" data-anchor="py-limit">
@@ -162,7 +162,7 @@ function Decision({ onApprove, onSend }: { onApprove: () => void; onSend: () => 
           <span class="py-exception">Exception · limit {brl(limit)} above band max {brl(POLICY_MAX_REVIEW)}</span>
           <label class="py-field">
             Reason
-            <textarea rows={4} value={reason} placeholder="e.g. 14 months on time on Loja; income verified; address mismatch explained by a recent move." onInput={(event) => setReason(event.currentTarget.value)} />
+            <textarea rows={4} value={reason} placeholder="e.g. 14 months on time on the Store card; income verified; address mismatch explained by a recent move." onInput={(event) => setReason(event.currentTarget.value)} />
           </label>
           <div class="py-approver" data-anchor="py-approver">
             <span class="py-avatar" aria-hidden="true">RA</span>
@@ -181,7 +181,7 @@ export function DeclineLetter() {
     <section class="py-letter" aria-labelledby="letter-title" data-anchor="py-letter">
       <header><span class="py-pill decline">Declined · AP-77090</span><span class="py-muted">letter preview · sent in the app and by email</span></header>
       <h2 id="letter-title">About your Maré Pay application</h2>
-      <p>Olá Otávio, we couldn't approve a Maré Pay card this time. The main reasons were:</p>
+      <p>Hi Otavio, we couldn't approve a Maré Pay card this time. The main reasons were:</p>
       <ol><li>Several recent credit inquiries (3 in the last 30 days).</li><li>High use of existing credit limits.</li><li>Short credit history with Maré.</li></ol>
       <p>You can apply again in 90 days, or ask us to review this decision with a person. This decision did not use your gender, age, address region or any protected attribute.</p>
     </section>

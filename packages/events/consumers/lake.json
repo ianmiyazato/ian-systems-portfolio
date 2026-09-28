@@ -1,0 +1,15 @@
+{
+  "consumer": "analytics-lake",
+  "owner": "data platform (CDC \u2192 lake)",
+  "reads": {
+    "orders.placed": [
+      "*"
+    ],
+    "payments.captured": [
+      "*"
+    ],
+    "price.changed": [
+      "*"
+    ]
+  }
+}

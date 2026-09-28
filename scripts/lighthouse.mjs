@@ -1,14 +1,18 @@
-// Lighthouse (default mobile config, simulated throttling) against production, median of N runs.
+// Lighthouse (default mobile config, simulated throttling), median of N runs. Free tier: it runs
+// against the local production build (all four zones behind the shell on :3000), never previews.
 // Chromium comes from Playwright and is driven over its debugging port, which also works on WSL
 // where chrome-launcher would try to use a Windows temp directory.
-//   LHCI_BASE=https://… RUNS=3 node scripts/lighthouse.mjs
+//   pnpm build && pnpm lighthouse          # local production build
+//   LHCI_BASE=https://… RUNS=3 node scripts/lighthouse.mjs   # an existing deployment
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 import lighthouse from 'lighthouse';
+import { ensureServers } from './lib/servers.mjs';
 
-const base = process.env.LHCI_BASE ?? 'https://ian-portfolio-shell.vercel.app';
+const base = process.env.LHCI_BASE ?? 'http://127.0.0.1:3000';
+const stopServers = process.env.LHCI_BASE ? () => {} : await ensureServers();
 const runs = Number(process.env.RUNS ?? 3);
-const paths = (process.env.PATHS ?? '/ /work/mare /mare/shop /mare/ops/balcao /pulse').split(' ');
+const paths = (process.env.PATHS ?? '/ /mare/shop /mare/ops/counter /observability /pulse').split(' ');
 const port = 9333;
 const categories = ['performance', 'accessibility', 'best-practices', 'seo'];
 mkdirSync('.lighthouseci', { recursive: true });
@@ -16,6 +20,7 @@ mkdirSync('.lighthouseci', { recursive: true });
 const browser = await chromium.launch({ args: [`--remote-debugging-port=${port}`] });
 const median = (values) => values.sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const results = [];
+const failures = [];
 for (const path of paths) {
   const scores = Object.fromEntries(categories.map((category) => [category, []]));
   let lcp = [];
@@ -28,6 +33,14 @@ for (const path of paths) {
   const row = { path, ...Object.fromEntries(categories.map((category) => [category, median(scores[category])])), lcpMs: Math.round(median(lcp)) };
   results.push(row);
   console.log(JSON.stringify(row));
+  if (row.performance < 90) failures.push(`${path}: performance ${row.performance} < 90`);
+  if (row.accessibility < 95) failures.push(`${path}: accessibility ${row.accessibility} < 95`);
+  if (row['best-practices'] < 95) failures.push(`${path}: best practices ${row['best-practices']} < 95`);
 }
 await browser.close();
-writeFileSync('.lighthouseci/summary.json', JSON.stringify({ base, runs, measuredAt: new Date().toISOString(), results }, null, 2));
+writeFileSync('.lighthouseci/summary.json', JSON.stringify({ base, runs, measuredAt: new Date().toISOString(), results, failures }, null, 2));
+stopServers();
+if (failures.length) {
+  console.error(`Lighthouse thresholds failed:\n${failures.join('\n')}`);
+  process.exitCode = 1;
+}

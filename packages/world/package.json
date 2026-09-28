@@ -1,0 +1,26 @@
+{
+  "name": "@portfolio/world",
+  "version": "0.2.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --max-warnings=0",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@portfolio/events": "workspace:*",
+    "@portfolio/mocks": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.6",
+    "ajv": "8.17.1",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}

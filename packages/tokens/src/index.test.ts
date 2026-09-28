@@ -15,7 +15,7 @@ describe('token contract', () => {
   it.each(themeNames)('%s keeps text pairs at WCAG AA', (name) => {
     const color = themes[name].color as Record<string, string>;
     const pairs: Array<[string, string, number]> = [
-      ['ink', 'ground', 7], ['ink', 'surface', 7], ['muted', 'surface', 4.5], ['muted', 'ground', 4.5],
+      ['ink', 'ground', 7], ['ink', 'surface', 7], ['muted', 'surface', 4.5], ['muted', 'ground', 4.5], ['muted', 'surface-2', 4.5],
       ['accent-text', 'surface', 4.5], ['accent-ink', 'accent', 4.5], ['ai-ink', 'ai', 4.5],
       ['risk', 'surface', 4.5], ['success', 'surface', 4.5], ['warn', 'surface', 4.5]
     ];

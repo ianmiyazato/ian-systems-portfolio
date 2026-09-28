@@ -59,12 +59,15 @@ importers:
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
-      '@portfolio/remote-balcao':
+      '@portfolio/motion':
         specifier: workspace:*
-        version: link:../../remotes/balcao
+        version: link:../../packages/motion
       '@portfolio/remote-circle':
         specifier: workspace:*
         version: link:../../remotes/circle
+      '@portfolio/remote-counter':
+        specifier: workspace:*
+        version: link:../../remotes/counter
       '@portfolio/remote-mesh':
         specifier: workspace:*
         version: link:../../remotes/mesh
@@ -111,12 +114,21 @@ importers:
       '@portfolio/chrome':
         specifier: workspace:*
         version: link:../../packages/chrome
+      '@portfolio/mocks':
+        specifier: workspace:*
+        version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       astro:
         specifier: 5.14.1
         version: 5.14.1(@types/node@22.18.6)(rollup@4.63.5)(typescript@5.9.2)(yaml@2.9.1)
@@ -135,6 +147,9 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
@@ -144,6 +159,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       '@sveltejs/adapter-vercel':
         specifier: 6.3.4
         version: 6.3.4(@sveltejs/kit@2.43.1(@sveltejs/vite-plugin-svelte@6.2.0(svelte@5.39.6(@typescript-eslint/types@8.44.1))(vite@7.1.7(@types/node@22.18.6)(yaml@2.9.1)))(svelte@5.39.6(@typescript-eslint/types@8.44.1))(vite@7.1.7(@types/node@22.18.6)(yaml@2.9.1)))(rollup@4.63.5)
@@ -181,12 +199,21 @@ importers:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@portfolio/routes':
+        specifier: workspace:*
+        version: link:../../packages/routes
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       '@xyflow/react':
         specifier: 12.12.0
         version: 12.12.0(@types/react-dom@19.1.9(@types/react@19.1.16))(@types/react@19.1.16)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -217,9 +244,18 @@ importers:
 
   packages/chrome:
     dependencies:
+      '@portfolio/ai-sim':
+        specifier: workspace:*
+        version: link:../ai-sim
+      '@portfolio/routes':
+        specifier: workspace:*
+        version: link:../routes
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../world
     devDependencies:
       typescript:
         specifier: 5.9.2
@@ -237,6 +273,9 @@ importers:
         specifier: 3.25.76
         version: 3.25.76
     devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
@@ -246,6 +285,15 @@ importers:
       typescript:
         specifier: 5.9.2
         version: 5.9.2
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
+  packages/motion:
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
@@ -262,14 +310,35 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
+  packages/quality:
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
   packages/remote-runtime:
     dependencies:
       '@portfolio/ai-surface':
         specifier: workspace:*
         version: link:../ai-surface
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../motion
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../overlays
+      '@portfolio/routes':
+        specifier: workspace:*
+        version: link:../routes
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../world
       '@supabase/realtime-js':
         specifier: 2.117.2
         version: 2.117.2
@@ -286,6 +355,18 @@ importers:
       vite:
         specifier: 7.1.7
         version: 7.1.7(@types/node@22.18.6)(yaml@2.9.1)
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
+  packages/routes:
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
@@ -347,17 +428,45 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
 
-  remotes/balcao:
+  packages/world:
+    dependencies:
+      '@portfolio/events':
+        specifier: workspace:*
+        version: link:../events
+      '@portfolio/mocks':
+        specifier: workspace:*
+        version: link:../mocks
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
+      ajv:
+        specifier: 8.17.1
+        version: 8.17.1
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
+  remotes/circle:
     dependencies:
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
+      '@portfolio/motion':
+        specifier: workspace:*
+        version: link:../../packages/motion
       '@portfolio/remote-runtime':
         specifier: workspace:*
         version: link:../../packages/remote-runtime
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -372,7 +481,7 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
-  remotes/circle:
+  remotes/counter:
     dependencies:
       '@portfolio/mocks':
         specifier: workspace:*
@@ -383,6 +492,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -399,6 +511,9 @@ importers:
 
   remotes/mesh:
     dependencies:
+      '@portfolio/events':
+        specifier: workspace:*
+        version: link:../../packages/events
       '@portfolio/mocks':
         specifier: workspace:*
         version: link:../../packages/mocks
@@ -408,6 +523,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -433,6 +551,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -458,6 +579,9 @@ importers:
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@portfolio/world':
+        specifier: workspace:*
+        version: link:../../packages/world
       preact:
         specifier: 10.29.8
         version: 10.29.8
@@ -2042,8 +2166,8 @@ packages:
   ajv@6.15.0:
     resolution: {integrity: sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==}
 
-  ajv@8.20.0:
-    resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
+  ajv@8.17.1:
+    resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
   ansi-align@3.0.1:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
@@ -7084,13 +7208,13 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ajv-draft-04@1.0.0(ajv@8.20.0):
+  ajv-draft-04@1.0.0(ajv@8.17.1):
     optionalDependencies:
-      ajv: 8.20.0
+      ajv: 8.17.1
 
-  ajv-i18n@4.2.0(ajv@8.20.0):
+  ajv-i18n@4.2.0(ajv@8.17.1):
     dependencies:
-      ajv: 8.20.0
+      ajv: 8.17.1
 
   ajv@6.15.0:
     dependencies:
@@ -7099,7 +7223,7 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
-  ajv@8.20.0:
+  ajv@8.17.1:
     dependencies:
       fast-deep-equal: 3.1.3
       fast-uri: 3.1.8
@@ -11229,9 +11353,9 @@ snapshots:
   yaml-language-server@1.23.0:
     dependencies:
       '@vscode/l10n': 0.0.18
-      ajv: 8.20.0
-      ajv-draft-04: 1.0.0(ajv@8.20.0)
-      ajv-i18n: 4.2.0(ajv@8.20.0)
+      ajv: 8.17.1
+      ajv-draft-04: 1.0.0(ajv@8.17.1)
+      ajv-i18n: 4.2.0(ajv@8.17.1)
       prettier: 3.9.9
       request-light: 0.5.8
       vscode-json-languageservice: 4.1.8

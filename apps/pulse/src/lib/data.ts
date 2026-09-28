@@ -27,7 +27,7 @@ export const talent = [
 export const corpus: Chunk[] = [
   { id: 'seoul-chorus', text: 'Seoul short-form completion rose 24% after the AERA Tidal chorus clip (00:42-00:57) started trending at 22:10 KST.', score: 0, source: 'market signal · Seoul · 22:10' },
   { id: 'la-lag', text: 'LA audiences typically adopt Seoul-originated clips 9 to 14 hours later when fan pages repost with English captions.', score: 0, source: 'cross-market lag study · 90d' },
-  { id: 'tokyo-bridge', text: 'Tokyo completion favours the bridge (01:18) over the chorus; JP fan pages cut longer clips.', score: 0, source: 'market signal · Tokyo' },
+  { id: 'tokyo-bridge', text: 'Tokyo completion favors the bridge (01:18) over the chorus; JP fan pages cut longer clips.', score: 0, source: 'market signal · Tokyo' },
   { id: 'entity-merge', text: 'AERA, 에아라 and エアラ resolve to one canonical artist across seven platform identities.', score: 0, source: 'entity resolution · v12' },
   { id: 'posting-window', text: 'Engagement peaks at 19:00-22:00 local time in all three markets on weekdays.', score: 0, source: 'posting windows · 30d' },
   { id: 'caption-lang', text: 'Clips with native-language captions retain 31% more viewers past 3 seconds in Seoul and Tokyo.', score: 0, source: 'caption experiment · Aug' }
@@ -44,7 +44,7 @@ export const questions = localized.EN;
 const answers: Record<Lang, Record<string, string>> = {
   EN: {
     [localized.EN[0]]: 'Seoul moved first because the AERA chorus clip started trending there at 22:10 KST [1]. LA usually follows 9–14 hours later, once fan pages repost with English captions [2]. Scheduling the LA post for 19:00 PT catches that wave instead of chasing it.',
-    [localized.EN[1]]: 'Cut the bridge at 01:18 for Tokyo: JP completion favours it over the chorus [1], and native captions keep 31% more viewers past three seconds [2].'
+    [localized.EN[1]]: 'Cut the bridge at 01:18 for Tokyo: JP completion favors it over the chorus [1], and native captions keep 31% more viewers past three seconds [2].'
   },
   KR: {
     [localized.KR[0]]: '에아라의 코러스 클립이 22:10 KST에 서울에서 먼저 트렌딩되었습니다 [1]. LA는 팬 페이지가 영어 자막으로 재게시한 뒤 보통 9–14시간 후에 따라옵니다 [2]. LA 게시를 태평양 시간 19:00으로 잡으면 그 흐름을 탈 수 있습니다.',

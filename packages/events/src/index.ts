@@ -1,3 +1,4 @@
+export * from './domain';
 import { z } from 'zod';
 
 export const eventSchema = z.discriminatedUnion('type', [
