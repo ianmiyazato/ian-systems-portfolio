@@ -19,6 +19,7 @@
     { href: `${base}/intelligence`, key: 'intelligence' },
     { href: `${base}/distribution`, key: 'distribution' },
     { href: `${base}/audio/afterglow`, key: 'audio' },
+    { href: `${base}/street-teams`, key: 'streetTeams' },
     { href: `${base}/harness`, key: 'harness' }
   ] as const;
   const current = (href: string) => (page.url.pathname.replace(/\/$/, '') || base) === href;

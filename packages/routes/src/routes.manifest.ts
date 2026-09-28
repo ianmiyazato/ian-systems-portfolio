@@ -147,6 +147,7 @@ export const routes: RouteEntry[] = [
   { id: 'pulse-roster', system: 'pulse', title: 'Roster', href: '/pulse', zone: 'pulse', owner: pulse, board: 'PU-roster', heading: 'Hana Rae', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'pulse-intelligence', system: 'pulse', title: 'Intelligence', href: '/pulse/intelligence', zone: 'pulse', owner: pulse, board: 'PU-intelligence', heading: 'Performance intelligence', release: '0.1', mobile: true },
   { id: 'pulse-audio', system: 'pulse', title: 'Audio intelligence', href: '/pulse/audio/afterglow', zone: 'pulse', owner: pulse, board: 'PU-audio', heading: 'Afterglow', release: '0.2', checked: '2026-09-27' },
+  { id: 'pulse-street-teams', system: 'pulse', title: 'Street teams', href: '/pulse/street-teams', zone: 'pulse', owner: pulse, board: 'PU-dispatch', heading: 'Street teams', release: '0.2', checked: '2026-09-27' },
   { id: 'pulse-distribution', system: 'pulse', title: 'Distribution', href: '/pulse/distribution', zone: 'pulse', owner: pulse, board: 'PU-distribution', heading: 'Distribution', release: '0.1' },
   { id: 'pulse-harness', system: 'pulse', title: 'AI harness', href: '/pulse/harness', zone: 'pulse', owner: pulse, board: 'PU-harness', heading: 'AI harness', release: '0.1' },
   { id: 'system-design-pulse', system: 'pulse', title: 'Pulse system design', href: '/system-design/pulse', zone: 'shell', owner: shell, board: 'SD-pulse', heading: 'Decisions under load', release: '0.1' },

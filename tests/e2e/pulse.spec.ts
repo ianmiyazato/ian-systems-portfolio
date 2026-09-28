@@ -78,4 +78,26 @@ test.describe('Pulse', () => {
     await expect(page.getByText('Forecast · week 1')).toBeVisible();
     await expect(page.getByText(/Pre-release · no listening data yet/)).toBeVisible();
   });
+
+  test('street teams: replay on the world clock, dispatch, re-route and brief', async ({ page }) => {
+    await page.goto('/pulse/street-teams?t=16:40&live=paused');
+    await expect(page.getByText('Seoul 18:42 KST · replay 22 of 50 min')).toBeVisible();
+    await expect(page.getByText('Needs 6 creators · 2 on site · 2 en route')).toBeVisible();
+    await page.getByRole('button', { name: 'Dispatch 1 more' }).click();
+    await expect(page.getByText('Needs 6 creators · 2 on site · 3 en route')).toBeVisible();
+    await page.getByRole('button', { name: 'Accept re-route' }).click();
+    await expect(page.getByText('Taeyang is now heading to Hongdae exit 9.')).toBeVisible();
+    await expect(page.getByText('Needs 6 creators · 2 on site · 4 en route')).toBeVisible();
+    await page.getByRole('button', { name: 'Broadcast brief' }).click();
+    const brief = page.getByRole('dialog', { name: 'Brief for 6 creators' });
+    await brief.getByRole('button', { name: 'Send to 6 creators' }).click();
+    await expect(brief.getByText(/Brief sent to 6 creators/)).toBeVisible();
+  });
+
+  test('street teams: a weather cancellation releases and pays every creator', async ({ page }) => {
+    await page.goto('/pulse/street-teams?state=error');
+    await expect(page.getByText(/Canceled for heavy rain at 18:05 KST/)).toBeVisible();
+    await expect(page.getByText('released · paid').first()).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Dispatch 1 more' })).toBeDisabled();
+  });
 });
