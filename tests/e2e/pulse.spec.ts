@@ -100,4 +100,27 @@ test.describe('Pulse', () => {
     await expect(page.getByText('released · paid').first()).toBeVisible();
     await expect(page.getByRole('button', { name: 'Dispatch 1 more' })).toBeDisabled();
   });
+
+  test('wallet: private by default, a split everyone signed, and a payout with an FX lock', async ({ page }) => {
+    await page.goto('/pulse/wallet?t=16:18&live=paused');
+    const home = page.getByRole('region', { name: 'Home screen' });
+    await expect(home.getByText('amount hidden')).toBeAttached();
+    await home.getByRole('button', { name: 'Show amounts' }).click();
+    await expect(home.getByText('$18,420.55')).toBeVisible();
+    await expect(page.getByRole('img', { name: /Artist 45%, Label 25%, Producers 20%, Songwriter 10%/ })).toBeVisible();
+    await home.getByRole('button', { name: 'Pay out' }).click();
+    const sheet = page.getByRole('dialog', { name: 'Pay out to KRW' });
+    await expect(sheet.getByText(/Rate locked for \d+ s/)).toBeVisible();
+    await expect(sheet.getByText('₩25,361,953')).toBeVisible();
+    await sheet.getByRole('button', { name: 'Confirm with Face ID' }).click();
+    await expect(sheet.getByText('₩25,361,953 sent')).toBeVisible();
+  });
+
+  test('wallet: an unsigned split blocks the payout', async ({ page }) => {
+    await page.goto('/pulse/wallet?state=locked');
+    await expect(page.getByText('awaiting Seo-yeon')).toBeVisible();
+    const phone = page.getByRole('region', { name: 'Payout screen' });
+    await expect(phone.getByText(/Payout blocked/)).toBeVisible();
+    await expect(phone.getByRole('button', { name: 'Confirm with Face ID' })).toBeDisabled();
+  });
 });
