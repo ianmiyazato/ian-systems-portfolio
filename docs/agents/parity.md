@@ -78,7 +78,8 @@ Every approved screen, the design board it is checked against, and its screensho
 | 70 | `/pulse/street-teams` | PU-dispatch | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-street-teams.png` |
 | 71 | `/pulse/wallet` | PU-wallet | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-wallet.png` |
 | 72 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
-| 73 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
-| 74 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
+| 73 | `/pulse/distribution/campaigns/afterglow/wrapped` | PU-wrapped | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-campaign-wrapped.png` |
+| 74 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 75 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **74/74**.
+Parity: **75/75**.

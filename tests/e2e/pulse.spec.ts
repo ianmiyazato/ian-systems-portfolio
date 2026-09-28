@@ -123,4 +123,27 @@ test.describe('Pulse', () => {
     await expect(phone.getByText(/Payout blocked/)).toBeVisible();
     await expect(phone.getByRole('button', { name: 'Confirm with Face ID' })).toBeDisabled();
   });
+
+  test('campaign wrapped: story cards, hidden earnings, share with the label and export', async ({ page }) => {
+    await page.goto('/pulse/distribution');
+    await page.getByRole('link', { name: /Wrapped is ready/ }).click();
+    await expect(page.getByRole('heading', { level: 1, name: 'Afterglow, wrapped' })).toBeVisible();
+    await page.getByRole('button', { name: 'Pause', exact: true }).click();
+    for (let step = 0; step < 3; step += 1) await page.keyboard.press('ArrowRight');
+    await expect(page.getByText('amount hidden')).toBeAttached();
+    await page.getByRole('button', { name: 'Tap to reveal earnings' }).click();
+    await expect(page.getByRole('heading', { level: 2, name: '$6,380.25' })).toBeVisible();
+    await page.getByRole('button', { name: 'Export as deck' }).click();
+    await expect(page.getByRole('link', { name: 'Download deck (PNG)' })).toHaveAttribute('download', 'afterglow-wrapped-deck.png');
+    await page.getByRole('button', { name: 'Share with the label' }).click();
+    const share = page.getByRole('dialog', { name: 'Share with Haneul Records' });
+    await expect(share.getByText('$6,380.25')).toBeVisible();
+    await share.getByRole('button', { name: 'Share', exact: true }).click();
+    await expect(share.getByText(/Shared with Haneul Records/)).toBeVisible();
+  });
+
+  test('campaign wrapped: a campaign younger than seven days says when it arrives', async ({ page }) => {
+    await page.goto('/pulse/distribution/campaigns/afterglow/wrapped?state=empty');
+    await expect(page.getByRole('heading', { name: 'Wrapped arrives on day 7' })).toBeVisible();
+  });
 });

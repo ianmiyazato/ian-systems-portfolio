@@ -150,6 +150,7 @@ export const routes: RouteEntry[] = [
   { id: 'pulse-street-teams', system: 'pulse', title: 'Street teams', href: '/pulse/street-teams', zone: 'pulse', owner: pulse, board: 'PU-dispatch', heading: 'Street teams', release: '0.2', checked: '2026-09-27' },
   { id: 'pulse-wallet', system: 'pulse', title: 'Talent wallet', href: '/pulse/wallet', zone: 'pulse', owner: pulse, board: 'PU-wallet', heading: 'Wallet', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'pulse-distribution', system: 'pulse', title: 'Distribution', href: '/pulse/distribution', zone: 'pulse', owner: pulse, board: 'PU-distribution', heading: 'Distribution', release: '0.1' },
+  { id: 'pulse-campaign-wrapped', system: 'pulse', title: 'Campaign Wrapped', href: '/pulse/distribution/campaigns/afterglow/wrapped', zone: 'pulse', owner: pulse, board: 'PU-wrapped', heading: 'Afterglow, wrapped', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'pulse-harness', system: 'pulse', title: 'AI harness', href: '/pulse/harness', zone: 'pulse', owner: pulse, board: 'PU-harness', heading: 'AI harness', release: '0.1' },
   { id: 'system-design-pulse', system: 'pulse', title: 'Pulse system design', href: '/system-design/pulse', zone: 'shell', owner: shell, board: 'SD-pulse', heading: 'Decisions under load', release: '0.1' },
 
