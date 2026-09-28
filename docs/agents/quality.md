@@ -16,6 +16,7 @@
 - **Playwright:** 585/585 against local production builds in 8.8 minutes: every manifest route and nav item, 77/77 Decision Lens anchors, 77-route reduced-motion coverage, feature flows, runtime-federation fallbacks and 40 JS budget assertions.
 - **axe** (WCAG 2.1 A/AA): 166/166 route and variation targets, zero serious or critical violations.
 - **Focused regressions:** performance HUD/shortcuts 7/7; AI audit 5/5; Atlas 16/16.
+- **Production release probe** (2026-09-28): deployment blocked before Vercel build by missing/expired team credentials. `/work/v0-2` and `/observability` return 404; the 12-view manifest verifier passes 1/12 because production still serves v0.1. These are deployment-state failures, not failures of the green local or `main` artifacts above.
 
 ## v0.1
 
