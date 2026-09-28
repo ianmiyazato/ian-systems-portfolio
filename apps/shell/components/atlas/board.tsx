@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ZLink } from '@/components/zone-link';
 import { Layer, closeLayers, openLayer, useParams } from '@/components/overlay';
+import { useAcceptedOffer, withAcceptedOffer } from './offer-state';
 import { applications as seed, pipelineTimeline, stages, type Application, type Stage } from '@/lib/atlas';
 import { DEFAULT_START, MINUTE } from '@portfolio/world';
 import { useSimNow } from '@/lib/world';
@@ -31,6 +32,8 @@ export function Board() {
     }));
     setToast(due.at(-1)!.toast);
   }, [now, applied]);
+  const [accepted] = useAcceptedOffer();
+  const view = withAcceptedOffer(apps, accepted);
   const drawer = params.get('drawer');
   const current = apps.find((app) => app.id === drawer);
 
@@ -47,12 +50,12 @@ export function Board() {
       <AtlasHeader active="Pipeline" />
       <main className="at-main">
         <header className="at-head" data-anchor="at-board-head">
-          <div><span className="at-eyebrow">Pipeline · board</span><h1>Applications</h1></div>
+          <div><span className="at-eyebrow">Pipeline · board</span><h1>Applications</h1>{view.archived.length > 0 && <p className="at-muted" role="status">{view.archived.length} processes archived after you accepted an offer · polite notes sent</p>}</div>
           <div className="at-actions"><LiveControl anchor="at-board-live" /><ZLink className="at-btn" href="/atlas/pipeline">Overview</ZLink><button type="button" className="at-btn primary">Add application</button></div>
         </header>
         <div className="at-board" data-anchor="at-board">
           {stages.map((stage) => {
-            const cards = apps.filter((app) => app.stage === stage.id);
+            const cards = view.apps.filter((app) => app.stage === stage.id);
             const coachTarget = coach && stage.id === 'onsite';
             return (
               <section key={stage.id} className={`at-col ${over === stage.id || coachTarget ? 'drop' : ''}`} aria-labelledby={`col-${stage.id}`}

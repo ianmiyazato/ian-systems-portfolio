@@ -34,6 +34,7 @@ export function Company() {
           </section>
           <section className={`at-card span-2 at-locked ${pro ? 'unlocked' : ''}`} aria-labelledby="loop-title" data-anchor="at-loop-intel">
             <h2 id="loop-title">Interview loop intelligence</h2>
+            <ZLink className="at-season-link" href="/atlas/academy/loops/parallax-pay" data-anchor="at-season-link">Watch the loop as a season →</ZLink>
             <div className="at-loop" aria-hidden={!pro}>
               {[['Recruiter', '30 min', '92% pass'], ['Tech screen', 'System design · 60 min', '48% pass'], ['Onsite', '4 rounds incl. ledger design', '37% pass'], ['Offer', 'Median 11 days after onsite', '']].map(([stage, detail, rate]) => <div key={stage}><strong>{stage}</strong><span>{detail}</span><b>{rate}</b></div>)}
             </div>

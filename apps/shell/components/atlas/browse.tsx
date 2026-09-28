@@ -14,7 +14,7 @@ const estimate: Record<Motif, [string, string]> = {
   limit: ['100', 'req/s · burst 20'], search: ['80ms', 'p95 · top 10'], feed: ['1:5k', 'fan-out · 3 s'], retry: ['3×', 'retries · jitter 200ms']
 };
 
-function TitleArt({ motif, focus, label, shape = 'wide' }: { motif: Motif; focus: RubricArea; label: string; shape?: 'wide' | 'tall' | 'cover' }) {
+export function TitleArt({ motif, focus, label, shape = 'wide' }: { motif: Motif; focus: RubricArea; label: string; shape?: 'wide' | 'tall' | 'cover' }) {
   const base: Record<Motif, ReactNode> = {
     ledger: <>{[0, 1, 2, 3].map((row) => <rect key={row} x="70" y={40 + row * 26} width="180" height="18" rx="4" className="ta-shape" />)}</>,
     cache: <><rect x="50" y="60" width="80" height="60" rx="8" className="ta-shape" /><rect x="190" y="60" width="80" height="60" rx="8" className="ta-shape alt" /><path d="M130 90 H190" className="ta-link" /></>,

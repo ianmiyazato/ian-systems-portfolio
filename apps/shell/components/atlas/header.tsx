@@ -3,9 +3,9 @@
 import { ZLink } from '@/components/zone-link';
 import { usePlan } from './plan';
 
-const tabs = [['Pipeline', '/atlas/pipeline'], ['Arena', '/atlas/arena'], ['Academy', '/atlas/academy']] as const;
+const tabs = [['Pipeline', '/atlas/pipeline'], ['Arena', '/atlas/arena'], ['Academy', '/atlas/academy'], ['Mentors', '/atlas/mentors/live'], ['Offers', '/atlas/offers']] as const;
 
-export function AtlasHeader({ active }: { active: 'Pipeline' | 'Arena' | 'Academy' | 'Welcome' }) {
+export function AtlasHeader({ active }: { active: 'Pipeline' | 'Arena' | 'Academy' | 'Offers' | 'Mentors' | 'Welcome' }) {
   const [plan] = usePlan();
   return (
     <header className="at-nav" data-anchor="at-nav">

@@ -11,6 +11,10 @@
     "./registry": {
       "types": "./dist/registry.d.ts",
       "default": "./dist/registry.js"
+    },
+    "./now-playing": {
+      "types": "./dist/now-playing-store.d.ts",
+      "default": "./dist/now-playing.js"
     }
   },
   "scripts": {
