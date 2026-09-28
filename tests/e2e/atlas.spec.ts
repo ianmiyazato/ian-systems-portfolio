@@ -37,4 +37,26 @@ test.describe('Atlas', () => {
     await page.getByRole('button', { name: 'Start free week' }).click();
     await expect(page.locator('[data-anchor="at-checkout-failed"]')).toContainText('Try Pix');
   });
+
+  test('academy browse: billboard, personalized art, continue watching and top 5', async ({ page }) => {
+    await page.goto('/atlas/academy');
+    await expect(page.getByRole('heading', { level: 1, name: 'Payments at scale' })).toBeVisible();
+    await expect(page.getByText('New series · 6 episodes')).toBeVisible();
+    const myList = page.getByRole('button', { name: '+ My list' });
+    await myList.click();
+    await expect(page.getByRole('button', { name: '✓ In my list' })).toHaveAttribute('aria-pressed', 'true');
+    // Artwork follows the weakest rubric area, and the member can see and change why.
+    const continueRow = page.locator('[data-anchor="ab-continue"]');
+    await expect(continueRow.getByRole('img', { name: /Designing for 10×: artwork emphasizing numbers on the diagram/ })).toBeVisible();
+    await page.getByRole('button', { name: 'Failure modes' }).click();
+    await expect(continueRow.getByRole('img', { name: /Designing for 10×: artwork emphasizing where it breaks/ })).toBeVisible();
+    // Focus expands a card at once and offers the matching Arena drill.
+    const card = continueRow.locator('.ab-card').nth(1);
+    await card.getByRole('link', { name: /Caching that stays correct, 12% watched/ }).focus();
+    await expect(card).toHaveClass(/is-expanded/);
+    await page.keyboard.press('Tab');
+    await expect(card.getByRole('link', { name: 'Resume', exact: true })).toBeFocused();
+    await expect(card.getByRole('link', { name: 'Practice in Arena' })).toHaveAttribute('href', /prompt=cache-invalidation/);
+    await expect(page.getByRole('link', { name: /Number 1: Payments at scale/ })).toBeVisible();
+  });
 });

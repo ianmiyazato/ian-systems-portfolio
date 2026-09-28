@@ -1,12 +1,13 @@
 ---
 // Product illustration: an editorial silhouette filled with the product's swatch color.
+// An empty label marks a decorative copy (thumbnails, reels) and hides it from assistive tech.
 import { garmentPaths, type Garment } from '@portfolio/mocks';
 interface Props { garment: Garment; swatch: string; label: string; class?: string; transitionName?: string }
 const { garment, swatch, label, class: className = '', transitionName } = Astro.props;
 const paths = garmentPaths;
 ---
 <figure class={`garment ${className}`} data-swatch={swatch} style={transitionName ? `view-transition-name:${transitionName}` : undefined}>
-  <svg viewBox="0 0 240 230" role="img" aria-label={label}>
+  <svg viewBox="0 0 240 230" role={label ? 'img' : undefined} aria-label={label || undefined} aria-hidden={label ? undefined : 'true'}>
     <path class="garment-shape" d={paths[garment]} />
   </svg>
 </figure>

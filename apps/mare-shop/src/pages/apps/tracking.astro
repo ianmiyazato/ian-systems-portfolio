@@ -1,0 +1,26 @@
+---
+import '@portfolio/tokens/fonts/consumer';
+import '../../styles/apps.css';
+import '../../styles/shop.css';
+import Zone from '../../layouts/Zone.astro';
+import Phone from '../../components/Phone.astro';
+import AppsHeader from '../../components/apps/AppsHeader.astro';
+import TrackingScreen from '../../components/apps/TrackingScreen.astro';
+const phones = [['Live map', 'peek'], ['Courier and order', 'full']] as const;
+---
+<Zone title="Live delivery tracking · Maré" description="Map-first tracking: the courier moves on the real route, the ETA counts down on the shared clock, and a bottom sheet holds the details." context="Maré · Apps">
+  <main class="apps">
+    <AppsHeader kicker="Maré apps · live on the world clock" title="Live delivery tracking" current="tracking">Map first: the courier moves along the route, the ETA counts down on the same clock as Counter and Mesh, and a bottom sheet you can drag holds the courier, progress and order. Drag the handle, or focus it and use the arrow keys.</AppsHeader>
+    <div class="phones">
+      {phones.map(([label, snap], index) => (
+        <div class="phone-wrap">
+          <Phone label={`${label} screen`} anchor={`app-tracking-${index}`}><TrackingScreen snap={snap} uid={`tr${index}`} /></Phone>
+          <p class="phone-caption">{label}</p>
+        </div>
+      ))}
+    </div>
+  </main>
+  <script>
+    import '../../scripts/tracking';
+  </script>
+</Zone>

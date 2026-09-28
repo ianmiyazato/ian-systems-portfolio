@@ -1,0 +1,173 @@
+---
+import '@portfolio/tokens/fonts/consumer';
+import '../../../styles/shop.css';
+import '../../../styles/pdp.css';
+import Zone from '../../../layouts/Zone.astro';
+import Garment from '../../../components/Garment.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import BagDrawer from '../../../components/BagDrawer.astro';
+import { catalogBySlug } from '@portfolio/mocks';
+import { allProducts, boughtWith, brl, galleryViews, installments, reels, reviewsFor, type Product } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return allProducts.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+const { product } = Astro.props as { product: Product };
+const reviews = reviewsFor(product);
+const runsLarge = reviews.fit.large > 50;
+const usual = product.sizes.includes('M') ? 'M' : product.sizes[Math.min(2, product.sizes.length - 1)]!;
+const usualOut = Boolean(product.soldOut?.includes(usual));
+// Default to the usual size, or the nearest available one (S first when the piece runs large).
+const order = [usual, 'S', 'L', 'XS', 'XL', ...product.sizes];
+const defaultSize = product.sizes.indexOf(order.find((size) => product.sizes.includes(size) && !product.soldOut?.includes(size))!);
+const stores = [['Shopping Vila Nova', '2 left · pickup today by 18:00'], ['Centro', '5 in stock · pickup tomorrow'], ['Online', 'Ships tomorrow · Rota Sul Express']];
+const bundle = [product, ...boughtWith(product)];
+const bundleTotal = bundle.reduce((sum, item) => sum + item.price, 0);
+const stars = (value: number) => '★★★★★'.slice(0, Math.round(value)) + '☆☆☆☆☆'.slice(0, 5 - Math.round(value));
+const productReels = reels.filter((reel) => reel.slugs.includes(product.slug)).concat(reels.filter((reel) => !reel.slugs.includes(product.slug))).slice(0, 4);
+---
+<Zone title={`${product.name} · Maré`} description={`${product.name} in ${product.colorName}. ${product.fabric}. ${reviews.average} stars from ${reviews.count} reviews.`} context="Maré · Site">
+  <main class="cs">
+    <SiteHeader />
+    <nav class="pdp-crumbs" aria-label="Breadcrumb"><a href="/mare/shop">Maré</a><span aria-hidden="true">/</span><a href="/mare/shop#picked">{product.department}</a><span aria-hidden="true">/</span><span aria-current="page">{product.name}</span></nav>
+
+    <article class="pdp">
+      <section class="pdp-gallery" aria-label="Product images" data-anchor="pdp-gallery" data-swatch={product.swatch}>
+        <div class="pdp-thumbs" role="tablist" aria-label="Views">
+          {galleryViews.map((view, index) => (
+            <button type="button" role="tab" id={`thumb-${view.id}`} aria-controls={`view-${view.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-view={view.id}>
+              <span class={`pdp-thumb-art v-${view.id}`}>{view.id === 'fabric' ? <i class="pdp-weave" /> : <Garment garment={product.garment} swatch={product.swatch} label="" />}</span>
+              <span class="visually-hidden">{view.label}</span>
+            </button>
+          ))}
+        </div>
+        <div class="pdp-stage" data-stage>
+          {galleryViews.map((view, index) => (
+            <div class={`pdp-view v-${view.id}`} id={`view-${view.id}`} role="tabpanel" aria-labelledby={`thumb-${view.id}`} hidden={index > 0}>
+              {view.id === 'fabric'
+                ? <div class="pdp-weave big" role="img" aria-label={`${product.fabric}, close-up of the weave`} />
+                : <Garment garment={product.garment} swatch={product.swatch} label={`${product.name}, ${product.colorName}, ${view.label.toLowerCase()} view`} transitionName={index === 0 ? `product-${product.slug}` : undefined} />}
+            </div>
+          ))}
+          <button type="button" class="pdp-zoom" data-zoom aria-pressed="false">Zoom</button>
+          <p class="pdp-zoom-hint" aria-hidden="true">Move to look closer</p>
+        </div>
+      </section>
+
+      <div class="pdp-buy" data-anchor="pdp-buy">
+        <span class="cs-kicker">{product.colorName} · {product.fabric}</span>
+        <h1>{product.name}</h1>
+        <a class="pdp-rating" href="#reviews"><span class="pdp-stars" aria-hidden="true">{stars(reviews.average)}</span><b>{reviews.average.toFixed(1)}</b><span>{reviews.count} reviews</span></a>
+        <p class="cs-price big"><b>{brl(product.price)}</b><span>{installments(product.price)} with Maré Pay</span></p>
+
+        <fieldset class="cs-sizes pdp-sizes" data-anchor="cs-sizes">
+          <legend>Size <span class="pdp-size-guide">Your usual: {usual}</span></legend>
+          {product.sizes.map((size, index) => {
+            const out = product.soldOut?.includes(size);
+            return (
+              <label class={out ? 'sold-out' : ''}>
+                <input type="radio" name="size" value={size} checked={index === defaultSize} disabled={out} />
+                <span>{size}{out && <span class="visually-hidden">, sold out</span>}</span>
+              </label>
+            );
+          })}
+        </fieldset>
+        {product.sizes.length > 1 && (
+          <p class={`pdp-fit ${runsLarge ? 'large' : ''}`} data-anchor="pdp-fit" data-runs-large={runsLarge ? 'true' : 'false'}>
+            <span class="pdp-fit-meter" aria-hidden="true"><i style={`left:${runsLarge ? 78 : 50}%`}></i></span>
+            <span data-fit-text>{runsLarge ? `Runs large · ${reviews.fit.large}% of reviewers sized down${usualOut ? ', and M is sold out' : ''}. For your usual M, S fits like your last Maré order.` : usualOut ? `Fits true to size, but ${usual} is sold out. We picked the closest size in stock.` : `Fits true to size for most reviewers. Your usual ${usual} should fit.`}</span>
+          </p>
+        )}
+
+        <div class="pdp-promise" data-anchor="pdp-promise">
+          <p><b data-cutoff>Order within 2 h 12 min</b> for delivery <b>tomorrow</b> by Rota Sul Express. Free over R$299.</p>
+          <p class="muted" data-cutoff-note>Cutoff 18:30 · based on the store's pick capacity, not just stock on hand</p>
+        </div>
+        <ul class="cs-stores" data-anchor="cs-store-stock">
+          {stores.map(([store, note], index) => <li class={index === 0 ? 'near' : ''}><b>{store}</b><span>{note}</span></li>)}
+        </ul>
+        <div class="pdp-actions">
+          <button class="cs-btn primary wide" type="button" data-open="drawer=bag">Add to bag</button>
+          <button class="cs-btn pdp-save" type="button" aria-pressed="false" data-save>Save</button>
+        </div>
+        <aside class="ai-surface ai-inline" data-anchor="cs-complete-look">
+          <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span><span class="ai-meta">co-purchase 0.83</span></header>
+          <p class="ai-body">Complete the look with the {bundle[1]!.name.toLowerCase()}: 38% of people who kept this {product.name.toLowerCase()} kept both.</p>
+        </aside>
+      </div>
+    </article>
+
+    <section class="pdp-band pdp-bundle" aria-labelledby="bundle-title" data-anchor="pdp-bundle">
+      <header><span class="cs-kicker">Frequently bought together</span><h2 id="bundle-title">Wear it the way people do</h2></header>
+      <div class="pdp-bundle-row">
+        <ol>
+          {bundle.map((item, index) => (
+            <li>
+              <label>
+                {index === 0 ? <input type="hidden" data-bundle-price={item.price} data-bundle-fixed /> : <input type="checkbox" checked data-bundle-price={item.price} aria-label={`Include ${item.name}`} />}
+                <Garment garment={item.garment} swatch={item.swatch} label={item.name} />
+                <span><b>{index === 0 ? 'This item: ' : ''}{item.name}</b><small>{brl(item.price)}</small></span>
+              </label>
+            </li>
+          ))}
+        </ol>
+        <div class="pdp-bundle-total">
+          <p><span data-bundle-count>3 items</span><b data-bundle-total>{brl(bundleTotal)}</b><small data-bundle-inst>{installments(bundleTotal)}</small></p>
+          <button class="cs-btn primary" type="button" data-open="drawer=bag" data-bundle-add>Add all 3</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="pdp-band pdp-reviews" id="reviews" aria-labelledby="reviews-title">
+      <header><span class="cs-kicker">Reviews</span><h2 id="reviews-title">{reviews.average.toFixed(1)} out of 5</h2></header>
+      <div class="pdp-reviews-grid">
+        <div class="pdp-histogram" data-anchor="pdp-ratings">
+          <p class="pdp-stars big" aria-hidden="true">{stars(reviews.average)}</p>
+          <p class="muted">{reviews.count} verified buyers</p>
+          <table>
+            <caption class="visually-hidden">Ratings by star</caption>
+            <tbody>
+              {reviews.histogram.map((value, index) => (
+                <tr>
+                  <th scope="row">{5 - index} ★</th>
+                  <td><span class="pdp-bar"><i style={`width:${(value / reviews.count) * 100}%`}></i></span></td>
+                  <td class="num">{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <aside class="ai-surface" data-anchor="pdp-review-summary" aria-label="Simulated AI review summary">
+          <header class="ai-head"><span class="ai-spark" aria-hidden="true"></span><span class="ai-badge">Simulated AI</span><span class="ai-meta">summary of {reviews.count} reviews · checked daily</span></header>
+          <h3 class="ai-title">What buyers say</h3>
+          <p class="ai-body">{reviews.summary}</p>
+          <ul class="ai-sources">{reviews.themes.map(([theme, count]) => <li class="ai-source">{theme} <b>{count}</b></li>)}</ul>
+          <div class="ai-actions"><a class="ai-approve" href="#reviews" data-filter-fit>Read the fit reviews</a><button type="button" class="ai-explain" aria-expanded="false" data-how>How this summary was made</button></div>
+          <p class="pdp-how" hidden data-how-text>Grouped {reviews.count} reviews by topic, quoted only themes mentioned by 8 or more people, and left out reviews we couldn't verify as purchases. A person on the reviews team reads every summary before it goes live.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="pdp-band pdp-reels" aria-labelledby="reels-title" data-anchor="pdp-reels">
+      <header><span class="cs-kicker">Shoppable reels</span><h2 id="reels-title">Seen on Maré creators</h2></header>
+      <ul>
+        {productReels.map((reel) => {
+          const first = catalogBySlug(reel.slugs[0]!)!;
+          return (
+            <li>
+              <a href={`/mare/apps/circle-reel?reel=${reel.id}`} class="pdp-reel">
+                <span class="pdp-reel-art"><Garment garment={first.garment} swatch={first.swatch} label="" /></span>
+                <span class="pdp-reel-top"><b class="cs-story-avatar">{reel.initials}</b>{reel.creator}</span>
+                <span class="pdp-reel-play" aria-hidden="true">▶</span>
+                <span class="pdp-reel-meta"><b>{reel.caption}</b><small>{reel.views} views · shop {reel.slugs.length} items</small></span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <BagDrawer />
+  </main>
+  <script src="../../../scripts/pdp.ts"></script>
+</Zone>

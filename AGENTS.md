@@ -90,12 +90,12 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 ## 6. v0.2 milestones
 
 - [x] M1 · agent ergonomics (routes manifest, verify:route/shots/budget, docs split) and free-tier configuration
-- [ ] M2 · every nav item a real screen (12 broken views), crawler in CI, Counter → Counter with redirects
-- [ ] M3 · US English pass and copy lint
-- [ ] M4 · `packages/world` wired into every system
-- [ ] M5 · `/system-design/mare/request-path` with scenario replays
-- [ ] M6 · Tidewatch observability, "View trace" everywhere, chaos panel
-- [ ] M7 · consumer patterns (shop home, PDP, apps, Academy) + ops-tool patterns
+- [x] M2 · every nav item a real screen (12 broken views), crawler in CI, Balcão → Counter with redirects
+- [x] M3 · US English pass and copy lint
+- [x] M4 · `packages/world` wired into every system
+- [x] M5 · `/system-design/mare/request-path` with scenario replays
+- [x] M6 · Tidewatch observability, "View trace" everywhere, chaos panel
+- [x] M7 · consumer patterns (shop home, PDP, apps, Academy) + ops-tool patterns
 - [ ] M7b · ten Atlas and Pulse features with the shared now-playing bar
 - [ ] M8 · motion system, power-user UX, AI audit
 - [ ] M9 · contract checker, performance HUD, JS budgets, Lighthouse

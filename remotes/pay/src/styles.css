@@ -408,3 +408,27 @@
   .py-factors li { grid-template-columns: 1fr 60px; }
   .py-diverge { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* "What changed since you left" recap: story cards over the Applications queue. */
+.py-hero-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.py-recap-chip { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px 0 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font-weight: 600; font-size: 13px; }
+.py-recap-ring { position: relative; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--surface); font: 700 13px var(--font-mono); isolation: isolate; }
+.py-recap-ring::before { content: ''; position: absolute; inset: -3px; z-index: -1; border-radius: 50%; background: conic-gradient(var(--accent-2), var(--info), var(--accent-2)); }
+.py-recap-ring::after { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 50%; background: var(--surface); }
+.py-recap .ov-body { display: grid; gap: 14px; }
+.py-recap-bars { display: flex; gap: 4px; }
+.py-recap-bars span { flex: 1; height: 4px; overflow: hidden; border-radius: 4px; background: var(--surface-2); }
+.py-recap-bars i { display: block; height: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left; }
+.py-recap-bars i.done { transform: none; }
+.py-recap-bars i.now { animation: py-recap-fill linear forwards; }
+@keyframes py-recap-fill { to { transform: scaleX(1); } }
+.py-recap-card { display: grid; gap: 10px; min-height: 260px; align-content: end; padding: 22px; border-radius: var(--radius); background: linear-gradient(160deg, color-mix(in srgb, var(--info) 14%, var(--surface)), var(--surface)); animation: rise .35s var(--ease) both; }
+.py-recap-card.warn { background: linear-gradient(160deg, color-mix(in srgb, var(--accent-2) 30%, var(--surface)), var(--surface)); }
+.py-recap-card.risk { background: linear-gradient(160deg, var(--risk-soft), var(--surface)); }
+.py-recap-card.ok { background: linear-gradient(160deg, var(--success-soft), var(--surface)); }
+.py-recap-card strong { font: 300 56px/1 var(--font-display); letter-spacing: -.04em; }
+.py-recap-card p { margin: 0; line-height: 1.5; }
+.py-recap-card .py-btn { justify-self: start; }
+.py-recap-nav { display: flex; justify-content: space-between; gap: 8px; }
+.py-recap-nav .py-btn:disabled { border-style: dashed; color: var(--muted); background: var(--surface-2); }
+@media (prefers-reduced-motion: reduce) { .py-recap-card, .py-recap-bars i.now { animation: none; } }

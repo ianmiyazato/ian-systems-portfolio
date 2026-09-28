@@ -98,7 +98,7 @@ export const routes: RouteEntry[] = [
   { id: 'pay-fraud', system: 'pay', title: 'Fraud', href: '/mare/ops/pay/fraud', zone: 'mare-ops', owner: remote('pay'), board: 'PY-fraud', heading: 'Fraud', release: '0.2', checked: '2026-09-27', states: ['degraded', 'loading'] },
   { id: 'pay-models', system: 'pay', title: 'Models', href: '/mare/ops/pay/models', zone: 'mare-ops', owner: remote('pay'), board: 'PY-models', heading: 'Models', release: '0.2', checked: '2026-09-27', states: ['drift'] },
   { id: 'pay-policies', system: 'pay', title: 'Policies', href: '/mare/ops/pay/policies', zone: 'mare-ops', owner: remote('pay'), board: 'PY-policies', heading: 'Policies', release: '0.2', checked: '2026-09-27', states: ['conflict'] },
-  { id: 'pay-customer-app', system: 'pay', title: 'Pay customer app', href: '/mare/apps/pay', zone: 'mare-shop', owner: shop, board: 'PY-app', heading: 'Pay app', release: '0.1', mobile: true },
+  { id: 'pay-customer-app', system: 'pay', title: 'Pay customer app', href: '/mare/apps/pay', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Pay app', release: '0.1', mobile: true },
 
   { id: 'circle-program', system: 'circle', title: 'Program dashboard', href: '/mare/ops/circle', zone: 'mare-ops', owner: remote('circle'), board: 'CI-program', heading: 'creators sold', release: '0.1' },
   { id: 'circle-rule-builder', system: 'circle', title: 'Rule builder', href: '/mare/ops/circle/rules/summer-swim', zone: 'mare-ops', owner: remote('circle'), board: 'CI-rules', heading: 'Rule builder', release: '0.1' },
@@ -107,6 +107,7 @@ export const routes: RouteEntry[] = [
   { id: 'circle-campaigns', system: 'circle', title: 'Campaigns', href: '/mare/ops/circle/campaigns', zone: 'mare-ops', owner: remote('circle'), board: 'CI-campaigns', heading: 'Summer swim drop', release: '0.2', checked: '2026-09-27', states: ['scheduled'] },
   { id: 'circle-payouts', system: 'circle', title: 'Payouts', href: '/mare/ops/circle/payouts', zone: 'mare-ops', owner: remote('circle'), board: 'CI-payouts', heading: 'Payouts', release: '0.2', checked: '2026-09-27', states: ['payout-failed'] },
   { id: 'circle-creator-app', system: 'circle', title: 'Creator app', href: '/mare/apps/circle', zone: 'mare-shop', owner: shop, board: 'CI-app', heading: 'Circle creator app', release: '0.1' },
+  { id: 'circle-reel', system: 'circle', title: 'Shoppable reels', href: '/mare/apps/circle-reel', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Shoppable reels', release: '0.2', checked: '2026-09-27' },
 
   { id: 'mesh-topology', system: 'mesh', title: 'Topology', href: '/mare/ops/mesh', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-topology', heading: 'live topology', release: '0.1' },
   { id: 'mesh-partner', system: 'mesh', title: 'Partner adapter', href: '/mare/ops/mesh/partners/ligeiro-log', zone: 'mare-ops', owner: remote('mesh'), board: 'MS-partner', heading: 'Ligeiro Log', release: '0.1' },
@@ -121,7 +122,9 @@ export const routes: RouteEntry[] = [
   { id: 'observability-slos', system: 'observability', title: 'Tidewatch · SLOs', href: '/observability/slos', zone: 'shell', owner: shell, board: 'TW-slos', heading: 'SLOs', release: '0.2', checked: '2026-09-27' },
 
   { id: 'consumer-app', system: 'consumer', title: 'Shopping app · 3 phones', href: '/mare/apps/shop', zone: 'mare-shop', owner: shop, board: 'CS-app', heading: 'Shopping app', release: '0.1', mobile: true },
-  { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'CS-site', heading: 'Linen, sun and salt', release: '0.1', mobile: true },
+  { id: 'consumer-tracking', system: 'consumer', title: 'Live delivery tracking', href: '/mare/apps/tracking', zone: 'mare-shop', owner: shop, board: 'V2-phones', heading: 'Live delivery tracking', release: '0.2', checked: '2026-09-27' },
+  { id: 'consumer-site', system: 'consumer', title: 'Maré site', href: '/mare/shop', zone: 'mare-shop', owner: shop, board: 'V2-shop', heading: 'Linen, sun and salt', release: '0.1', checked: '2026-09-27', mobile: true },
+  { id: 'consumer-pdp', system: 'consumer', title: 'Product page', href: '/mare/shop/products/linen-midi-dress', zone: 'mare-shop', owner: shop, board: 'V2-pdp', heading: 'Linen midi dress', release: '0.2', checked: '2026-09-27', mobile: true },
 
   { id: 'atlas-onboarding', system: 'atlas', title: 'Onboarding', href: '/atlas/welcome?step=2', zone: 'shell', owner: shell, board: 'AT-onboarding', heading: 'Where do you want to work', release: '0.1' },
   { id: 'atlas-pipeline', system: 'atlas', title: 'Pipeline', href: '/atlas/pipeline', zone: 'shell', owner: shell, board: 'AT-pipeline', heading: 'interviews this week', release: '0.1' },
@@ -131,7 +134,8 @@ export const routes: RouteEntry[] = [
   { id: 'atlas-arena-session', system: 'atlas', title: 'Arena session', href: '/atlas/arena/session/14', zone: 'shell', owner: shell, board: 'AT-session', heading: 'Design a payments ledger', release: '0.1' },
   { id: 'atlas-feedback', system: 'atlas', title: 'Feedback', href: '/atlas/arena/sessions/14', zone: 'shell', owner: shell, board: 'AT-feedback', heading: 'System design feedback', release: '0.1' },
   { id: 'atlas-transcript', system: 'atlas', title: 'Transcript drawer', href: '/atlas/arena/sessions/14?drawer=transcript&t=31:30', zone: 'shell', owner: shell, board: 'AT-transcript', heading: 'System design feedback', release: '0.1' },
-  { id: 'atlas-academy', system: 'atlas', title: 'Academy', href: '/atlas/academy/designing-for-10x', zone: 'shell', owner: shell, board: 'AT-lesson', heading: 'Designing for 10', release: '0.1' },
+  { id: 'atlas-academy-browse', system: 'atlas', title: 'Academy', href: '/atlas/academy', zone: 'shell', owner: shell, board: 'V2-academy', heading: 'Payments at scale', release: '0.2', checked: '2026-09-27' },
+  { id: 'atlas-academy', system: 'atlas', title: 'Academy lesson', href: '/atlas/academy/designing-for-10x', zone: 'shell', owner: shell, board: 'AT-lesson', heading: 'Designing for 10', release: '0.1' },
   { id: 'atlas-paywall', system: 'atlas', title: 'Paywall + checkout', href: '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout', zone: 'shell', owner: shell, board: 'AT-paywall', heading: 'Designing for 10', release: '0.1' },
   { id: 'system-design-atlas', system: 'atlas', title: 'Atlas system design', href: '/system-design/atlas', zone: 'shell', owner: shell, board: 'SD-atlas', heading: 'Decisions under load', release: '0.1' },
 

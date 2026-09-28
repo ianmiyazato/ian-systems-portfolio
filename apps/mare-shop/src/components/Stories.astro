@@ -1,0 +1,173 @@
+---
+// Stories rail + full-screen viewer. Each story is a URL layer (?story=<id>), so a shared link opens it.
+import Garment from './Garment.astro';
+import { catalogBySlug } from '@portfolio/mocks';
+import { stories } from '../lib/data';
+---
+<section class="cs-stories" aria-label="Stories from creators and stores" data-anchor="cs-stories">
+  <ul>
+    {stories.map((story) => (
+      <li>
+        <a class={`cs-story-ring ${story.kind}`} href={`/mare/shop?story=${story.id}`} data-open={`story=${story.id}`} data-story={story.id}>
+          <span class="cs-story-avatar" aria-hidden="true">{story.initials}</span>
+          <span class="cs-story-label">{story.label}{story.kind === 'store' && <b class="cs-live">Live</b>}</span>
+          <span class="visually-hidden" data-seen-label>, new</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+{stories.map((story, index) => (
+  <div class="cs-layer cs-story-layer" data-layer={`story=${story.id}`} data-closes="story" data-story-viewer={story.id} data-next={stories[index + 1]?.id ?? ''} data-prev={stories[index - 1]?.id ?? ''} hidden>
+    <section class="cs-story" role="dialog" aria-modal="true" aria-label={`Story from ${story.label}`} data-anchor={index === 0 ? 'cs-story-viewer' : undefined}>
+      <div class="cs-story-bars" aria-hidden="true">{story.frames.map(() => <span><i></i></span>)}</div>
+      <header>
+        <span class={`cs-story-avatar ${story.kind}`} aria-hidden="true">{story.initials}</span>
+        <b>{story.label}</b>
+        <small>{story.kind === 'store' ? 'live from the store floor' : 'creator · Maré Circle'}</small>
+        <button type="button" class="cs-story-pause" data-story-pause aria-pressed="false">Pause</button>
+        <button type="button" class="cs-story-close" data-close="story" aria-label="Close story">×</button>
+      </header>
+      {story.frames.map((frame, frameIndex) => {
+        const product = catalogBySlug(frame.slug)!;
+        return (
+          <figure class="cs-story-frame" data-frame={frameIndex} hidden={frameIndex > 0} aria-live="polite">
+            <div class="cs-story-art"><Garment garment={product.garment} swatch={product.swatch} label={product.name} /></div>
+            <figcaption>{frame.caption}</figcaption>
+            <a class="cs-story-tag" href={`/mare/shop/products/${product.slug}`}><span aria-hidden="true">●</span>{frame.tag}</a>
+          </figure>
+        );
+      })}
+      <button type="button" class="cs-story-hit prev" data-story-step="-1" aria-label="Previous"></button>
+      <button type="button" class="cs-story-hit next" data-story-step="1" aria-label="Next"></button>
+    </section>
+  </div>
+))}
+
+<script>
+  import { onUrlChange, readParams, setParams } from '@portfolio/overlays';
+
+  const FRAME_MS = 5000;
+  const KEY = 'mare:stories-seen';
+  const seen = new Set<string>();
+  try { JSON.parse(localStorage.getItem(KEY) ?? '[]').forEach((id: string) => seen.add(id)); } catch { /* storage unavailable: every story stays new */ }
+  const paintSeen = () => document.querySelectorAll<HTMLElement>('[data-story]').forEach((ring) => {
+    const isSeen = seen.has(ring.dataset.story!);
+    ring.classList.toggle('seen', isSeen);
+    const label = ring.querySelector('[data-seen-label]');
+    if (label) label.textContent = isSeen ? ', seen' : ', new';
+  });
+  const markSeen = (id: string) => {
+    seen.add(id);
+    try { localStorage.setItem(KEY, JSON.stringify([...seen])); } catch { /* per-viewer convenience only */ }
+    paintSeen();
+  };
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let active: HTMLElement | null = null;
+  let frame = 0;
+  let paused = false;
+  let timer = 0;
+  let started = 0;
+  let remaining = FRAME_MS;
+
+  const frames = () => [...(active?.querySelectorAll<HTMLElement>('[data-frame]') ?? [])];
+  const bars = () => [...(active?.querySelectorAll<HTMLElement>('.cs-story-bars i') ?? [])];
+
+  function show(index: number): void {
+    if (!active) return;
+    const all = frames();
+    if (index < 0) {
+      const prev = active.dataset.prev;
+      if (prev) setParams({ story: prev });
+      else show(0);
+      return;
+    }
+    if (index >= all.length) {
+      const next = active.dataset.next;
+      setParams({ story: next || null });
+      return;
+    }
+    frame = index;
+    all.forEach((node, i) => (node.hidden = i !== index));
+    bars().forEach((bar, i) => {
+      bar.style.animation = 'none';
+      bar.style.transform = `scaleX(${i < index ? 1 : 0})`;
+    });
+    remaining = FRAME_MS;
+    play();
+  }
+
+  function play() {
+    window.clearTimeout(timer);
+    const bar = bars()[frame];
+    if (!bar) return;
+    if (reduce) { bar.style.transform = 'scaleX(1)'; return; }
+    if (paused) return;
+    started = performance.now();
+    void bar.offsetWidth;
+    bar.style.transform = '';
+    bar.style.animation = `story-fill ${remaining}ms linear forwards`;
+    timer = window.setTimeout(() => show(frame + 1), remaining);
+  }
+
+  function pause(next: boolean) {
+    if (!active || paused === next) return;
+    paused = next;
+    const bar = bars()[frame];
+    const button = active.querySelector<HTMLElement>('[data-story-pause]');
+    button?.setAttribute('aria-pressed', String(paused));
+    if (button) button.textContent = paused ? 'Play' : 'Pause';
+    if (paused) {
+      window.clearTimeout(timer);
+      remaining = Math.max(0, remaining - (performance.now() - started));
+      if (bar) bar.style.animationPlayState = 'paused';
+    } else if (bar) {
+      bar.style.animationPlayState = 'running';
+      started = performance.now();
+      timer = window.setTimeout(() => show(frame + 1), remaining);
+    }
+  }
+
+  function sync() {
+    const id = readParams().get('story');
+    const next = id ? document.querySelector<HTMLElement>(`[data-story-viewer="${id}"]`) : null;
+    if (next === active) return;
+    window.clearTimeout(timer);
+    active = next;
+    paused = false;
+    if (!active) return;
+    markSeen(id!);
+    show(0);
+  }
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const step = target.closest<HTMLElement>('[data-story-step]');
+    if (step && active?.contains(step)) show(frame + Number(step.dataset.storyStep));
+    if (target.closest('[data-story-pause]') && active) pause(!paused);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!active) return;
+    if (event.key === 'ArrowRight') show(frame + 1);
+    if (event.key === 'ArrowLeft') show(frame - 1);
+    if (event.key === ' ' && (event.target as HTMLElement).tagName !== 'BUTTON') { event.preventDefault(); pause(!paused); }
+  });
+  // Press and hold pauses, the way story viewers do.
+  let held = false;
+  document.addEventListener('pointerdown', (event) => {
+    if (!active || paused || !(event.target as HTMLElement).closest('.cs-story-hit')) return;
+    held = true;
+    pause(true);
+  });
+  document.addEventListener('pointerup', () => {
+    if (!held) return;
+    held = false;
+    pause(false);
+  });
+
+  paintSeen();
+  onUrlChange(sync);
+  sync();
+</script>
