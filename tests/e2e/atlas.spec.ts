@@ -161,4 +161,27 @@ test.describe('Atlas', () => {
     await page.getByRole('button', { name: 'Find a mentor' }).click();
     await expect(page.getByRole('dialog', { name: 'No mentor free right now' })).toBeVisible();
   });
+
+  test('loop season: episodes, autoplay to the shared player, and an episode modal', async ({ page }) => {
+    await page.goto('/atlas/academy/loops/parallax-pay?t=16:30&live=paused');
+    await expect(page.getByRole('heading', { level: 1, name: 'Parallax Pay: The Loop' })).toBeVisible();
+    await expect(page.getByText('built from 15 member reports · new 16:24')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Next episode in \d/ })).toBeVisible();
+    await page.getByRole('button', { name: 'Stay here' }).click();
+    await expect(page.getByRole('heading', { name: 'Up next: episode 3' })).toBeVisible();
+    await page.getByRole('button', { name: 'Play now' }).click();
+    await expect(page.getByRole('region', { name: 'Now playing' }).getByText('Ep 3 · System design')).toBeVisible();
+    await page.getByRole('button', { name: /Episode 4: Coding/ }).click();
+    const modal = page.getByRole('dialog', { name: 'Episode 4 · Coding' });
+    await expect(modal.getByText('Make it work per merchant and per card.')).toBeVisible();
+    await expect(modal.getByRole('link', { name: 'Practice this in Arena' })).toHaveAttribute('href', /prompt=rate-limiter/);
+  });
+
+  test('loop season still being assembled shows the gaps and a notify toggle', async ({ page }) => {
+    await page.goto('/atlas/academy/loops/parallax-pay?state=generating');
+    await expect(page.getByText('Assembling · 3 of 5 episodes')).toBeVisible();
+    await expect(page.getByRole('button', { name: /Episode 5: Bar raiser, still assembling/ })).toBeDisabled();
+    await page.getByRole('button', { name: 'Notify me when complete' }).click();
+    await expect(page.getByRole('button', { name: '✓ We’ll notify you' })).toHaveAttribute('aria-pressed', 'true');
+  });
 });

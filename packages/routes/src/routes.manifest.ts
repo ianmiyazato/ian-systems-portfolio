@@ -138,6 +138,7 @@ export const routes: RouteEntry[] = [
   { id: 'atlas-wrapped', system: 'atlas', title: 'Atlas Wrapped', href: '/atlas/wrapped', zone: 'shell', owner: shell, board: 'AT-wrapped', heading: 'Atlas Wrapped', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'atlas-offers', system: 'atlas', title: 'Offer wallet', href: '/atlas/offers', zone: 'shell', owner: shell, board: 'AT-offers', heading: 'Offers', release: '0.2', checked: '2026-09-27' },
   { id: 'atlas-live-mock', system: 'atlas', title: 'Live mock', href: '/atlas/mentors/live', zone: 'shell', owner: shell, board: 'AT-live', heading: 'Get a mock now', release: '0.2', checked: '2026-09-27' },
+  { id: 'atlas-loop-season', system: 'atlas', title: 'Loop season', href: '/atlas/academy/loops/parallax-pay', zone: 'shell', owner: shell, board: 'AT-seasons', heading: 'Parallax Pay: The Loop', release: '0.2', checked: '2026-09-27' },
   { id: 'atlas-academy-browse', system: 'atlas', title: 'Academy', href: '/atlas/academy', zone: 'shell', owner: shell, board: 'V2-academy', heading: 'Payments at scale', release: '0.2', checked: '2026-09-27' },
   { id: 'atlas-academy', system: 'atlas', title: 'Academy lesson', href: '/atlas/academy/designing-for-10x', zone: 'shell', owner: shell, board: 'AT-lesson', heading: 'Designing for 10', release: '0.1' },
   { id: 'atlas-paywall', system: 'atlas', title: 'Paywall + checkout', href: '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout', zone: 'shell', owner: shell, board: 'AT-paywall', heading: 'Designing for 10', release: '0.1' },
