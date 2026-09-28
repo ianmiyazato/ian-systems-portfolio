@@ -56,7 +56,7 @@ test.describe('Atlas', () => {
     await expect(card).toHaveClass(/is-expanded/);
     await page.keyboard.press('Tab');
     await expect(card.getByRole('link', { name: 'Resume', exact: true })).toBeFocused();
-    await expect(card.getByRole('link', { name: 'Practice in Arena' })).toHaveAttribute('href', /prompt=cache-invalidation/);
+    await expect(card.getByRole('link', { name: 'Practice in Arena' })).toHaveAttribute('href', /prompt=lru-cache/);
     await expect(page.getByRole('link', { name: /Number 1: Payments at scale/ })).toBeVisible();
   });
 });

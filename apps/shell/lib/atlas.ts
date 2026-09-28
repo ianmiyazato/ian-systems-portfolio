@@ -83,9 +83,9 @@ export const billboard: Title = { id: 'payments-at-scale', title: 'Payments at s
 
 export const continueWatching: Title[] = [
   { id: 'designing-for-10x', title: 'Designing for 10×', kind: 'Lesson', minutes: 14, match: 94, level: 'Senior', motif: 'shard', progress: 0.43, resume: '06:02', drill: 'estimate-storage', blurb: 'Find the shared thing before it becomes the bottleneck.' },
-  { id: 'caching-correct', title: 'Caching that stays correct', kind: 'Lesson', minutes: 18, match: 91, level: 'Senior', motif: 'cache', progress: 0.12, resume: '02:10', drill: 'cache-invalidation', blurb: 'TTL, write-through and the invalidation you will get wrong.' },
-  { id: 'queues-backpressure', title: 'Queues and backpressure', kind: 'Series', episodes: 4, minutes: 52, match: 88, level: 'Mid', motif: 'queue', progress: 0.68, resume: 'Ep 3 · 04:40', drill: 'notification-fanout', blurb: 'When producers win, consumers lose. Design the pushback.' },
-  { id: 'rate-limits', title: 'Rate limits that feel fair', kind: 'Lesson', minutes: 12, match: 86, level: 'Mid', motif: 'limit', progress: 0.3, resume: '03:36', drill: 'api-gateway', blurb: 'Token buckets, quotas and the error message people read.' }
+  { id: 'caching-correct', title: 'Caching that stays correct', kind: 'Lesson', minutes: 18, match: 91, level: 'Senior', motif: 'cache', progress: 0.12, resume: '02:10', drill: 'lru-cache', blurb: 'TTL, write-through and the invalidation you will get wrong.' },
+  { id: 'queues-backpressure', title: 'Queues and backpressure', kind: 'Series', episodes: 4, minutes: 52, match: 88, level: 'Mid', motif: 'queue', progress: 0.68, resume: 'Ep 3 · 04:40', drill: 'queue-backpressure', blurb: 'When producers win, consumers lose. Design the pushback.' },
+  { id: 'rate-limits', title: 'Rate limits that feel fair', kind: 'Lesson', minutes: 12, match: 86, level: 'Mid', motif: 'limit', progress: 0.3, resume: '03:36', drill: 'rate-limiter', blurb: 'Token buckets, quotas and the error message people read.' }
 ];
 
 export const topFive: Title[] = [
