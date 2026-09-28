@@ -4,6 +4,8 @@ One line per merged micro-task, newest first.
 
 ## v0.2
 
+- 2026-09-28 · `chore(release)`: v0.2.0 deployed to production (mare-ops, mare-shop, pulse, then shell; 4/12 production deploys, 0 previews) and verified against the production domain: 585/585 Playwright tests and 12/12 legacy views.
+
 - 2026-09-28 · `docs(release)`: M10 code is merged to `main` after two green e2e runs and the required 179-image screenshot gate. The production attempt created no deployment: CI had no `VERCEL_TOKEN`, the local OAuth token had expired and the connected apps lacked the `miyazato` team scope. A Playwright production probe confirmed the live URL still serves v0.1 (the new shell routes return 404 and 11/12 formerly broken views fail their expected-heading checks), so the ledger correctly remains 0/12 and M10 stays open until the exact recovery command in AGENTS.md is run.
 
 - 2026-09-28 · `chore(release)`: v0.2.0 release candidate. Every workspace package reports 0.2.0, all four rendered footers identify simulated AI as v0.2, and `/work/v0-2` maps all 12 improvements to verified destinations. The README records the measured M9 gates and a chaos → Tidewatch → trace → fix → recover reviewer tour; the complete 179-case screenshot suite and 585-case Playwright suite pass, with 77/77 parity.
