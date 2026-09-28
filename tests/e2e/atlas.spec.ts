@@ -136,4 +136,29 @@ test.describe('Atlas', () => {
     await page.goto('/atlas/pipeline?state=expiring');
     await expect(page.getByRole('link', { name: 'open the offer wallet' })).toBeVisible();
   });
+
+  test('live mock: request, match with an ETA, message, cancel', async ({ page }) => {
+    await page.goto('/atlas/mentors/live?t=16:18&live=paused');
+    await expect(page.getByText('8 mentors online · 16:18 in São Paulo')).toBeVisible();
+    await expect(page.getByText('Demand is high · 1.2×')).toBeVisible();
+    await page.getByRole('button', { name: 'Find a mentor' }).click();
+    const sheet = page.getByRole('dialog', { name: 'Matched with Priya' });
+    await expect(sheet.getByText('4 min')).toBeVisible();
+    await expect(page).toHaveURL(/match=priya/);
+    await sheet.getByRole('button', { name: 'Message' }).click();
+    await sheet.getByRole('button', { name: 'Can we focus on estimation?' }).click();
+    await expect(sheet.getByText('Sent: “Can we focus on estimation?”')).toBeVisible();
+    await sheet.getByRole('button', { name: 'Cancel' }).click();
+    await expect(sheet).toBeHidden();
+  });
+
+  test('live mock: a canceled mentor is rematched, and no supply means a waitlist', async ({ page }) => {
+    await page.goto('/atlas/mentors/live?state=error');
+    await page.getByRole('button', { name: 'Find a mentor' }).click();
+    await expect(page.getByText('Priya had to cancel. Rematching you now, no credits used.')).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Matched with Sam' })).toBeVisible({ timeout: 8000 });
+    await page.goto('/atlas/mentors/live?state=empty');
+    await page.getByRole('button', { name: 'Find a mentor' }).click();
+    await expect(page.getByRole('dialog', { name: 'No mentor free right now' })).toBeVisible();
+  });
 });

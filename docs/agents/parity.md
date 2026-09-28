@@ -66,13 +66,14 @@ Every approved screen, the design board it is checked against, and its screensho
 | 58 | `/atlas/arena/mix/today` | AT-mix | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-mix.png` |
 | 59 | `/atlas/wrapped` | AT-wrapped | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-wrapped.png` |
 | 60 | `/atlas/offers` | AT-offers | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-offers.png` |
-| 61 | `/atlas/academy` | V2-academy | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-academy-browse.png` |
-| 62 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
-| 63 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
-| 64 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
-| 65 | `/pulse` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
-| 66 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
-| 67 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
-| 68 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
+| 61 | `/atlas/mentors/live` | AT-live | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-live-mock.png` |
+| 62 | `/atlas/academy` | V2-academy | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-academy-browse.png` |
+| 63 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
+| 64 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
+| 65 | `/system-design/atlas` | SD-atlas | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/system-design-atlas.png` |
+| 66 | `/pulse` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
+| 67 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
+| 68 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 69 | `/system-design/pulse` | SD-pulse | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/system-design-pulse.png` |
 
-Parity: **68/68**.
+Parity: **69/69**.
