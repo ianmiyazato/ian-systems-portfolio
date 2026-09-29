@@ -191,6 +191,7 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
   }
 
   function go(step: number, { scroll = true, writeUrl = true } = {}) {
+    root.setAttribute('data-engaged', '');
     const target = locate(counts, Math.min(Math.max(step, 1), total));
     const changedScreen = target.screen !== active;
     local[target.screen] = target.step;
@@ -355,6 +356,7 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
   if (params.get('layer') === 'engineering') setLayer(true);
   if (params.get('notes') === '1') setNotes(true);
   if (params.get('present') === '1') setPresent(true);
+  if (params.has('step')) root.setAttribute('data-engaged', '');
   progress();
   animate(active);
   if (start > 1 && startAt.screen > 0 && !html.hasAttribute('data-present')) {
