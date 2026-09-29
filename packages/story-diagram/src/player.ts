@@ -344,6 +344,8 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
 
   // ---- start --------------------------------------------------------------------------------
   const start = parseStep(location.search, total);
+  // ?step=last (from a previous page in the presentation run) or an out-of-range step becomes a real number.
+  if (params.has('step') && params.get('step') !== String(start)) setParam('step', String(start));
   const startAt = locate(counts, start);
   screens.forEach((_, index) => paint(index));
   local[startAt.screen] = startAt.step;
