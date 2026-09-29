@@ -310,6 +310,19 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
     run(command);
   };
 
+  // Reading mode: clicking or focusing something dimmed jumps to the step that is about it.
+  const onReach = (event: Event) => {
+    if (html.hasAttribute('data-present')) return;
+    const target = event.target as Element | null;
+    if (!target || target.closest('[data-cmd], [data-go], .sd-controls')) return;
+    const dimmed = target.closest<HTMLElement>('[data-focus-steps].is-dim');
+    const screen = dimmed?.closest<HTMLElement>('[data-screen]');
+    if (!dimmed || !screen || !root.contains(screen)) return;
+    const index = screens.indexOf(screen);
+    const step = Number(dimmed.dataset.focusSteps!.split(' ')[0]);
+    if (index >= 0 && step > 0) go(flatten(counts, index, step), { scroll: false });
+  };
+
   const onVisibility = () => { hidden = document.visibilityState === 'hidden'; sync(); };
   const onMotionChange = () => animate(active);
   const onResize = () => { if (html.hasAttribute('data-present')) scale(); };
@@ -349,6 +362,8 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
   for (const screen of screens) observer.observe(screen);
   window.addEventListener('keydown', onKey);
   root.addEventListener('click', onClick);
+  root.addEventListener('pointerdown', onReach);
+  root.addEventListener('focusin', onReach);
   document.addEventListener('visibilitychange', onVisibility);
   reducedQuery.addEventListener('change', onMotionChange);
   window.addEventListener('resize', onResize);
@@ -362,6 +377,8 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
       observer.disconnect();
       window.removeEventListener('keydown', onKey);
       root.removeEventListener('click', onClick);
+      root.removeEventListener('pointerdown', onReach);
+      root.removeEventListener('focusin', onReach);
       document.removeEventListener('visibilitychange', onVisibility);
       reducedQuery.removeEventListener('change', onMotionChange);
       window.removeEventListener('resize', onResize);
