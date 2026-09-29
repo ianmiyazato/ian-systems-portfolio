@@ -29,10 +29,10 @@ const order = ['buy', 'build-later', 'open-source', 'build-now'] as const;
             </div>
           ))}
           {dots.map((dot) => (
-            <button type="button" class="sdp-dot-btn" data-dot={dot.id} data-problem={dot.problem} data-side={dot.x > 62 ? 'left' : 'right'} data-focus-steps={dot.problem === 'a' ? '2' : '3'} style={`left: ${10 + dot.x * 0.8}%; bottom: ${12 + dot.y * 0.74}%;`} aria-label={`${dot.row.component}, Problem ${dot.problem.toUpperCase()}: ${dot.row.decision}`} aria-describedby="map-card">
-              <span class="sdp-dot-mark" aria-hidden="true">{dot.problem.toUpperCase()}</span>
+            <div class="sdp-dot-btn" data-side={dot.x > 62 ? 'left' : 'right'} data-problem={dot.problem} data-focus-steps={dot.problem === 'a' ? '2' : '3'} style={`left: ${10 + dot.x * 0.8}%; bottom: ${12 + dot.y * 0.74}%;`}>
+              <button type="button" class="sdp-dot-mark" data-dot={dot.id} data-problem={dot.problem} aria-label={`${dot.row.component}, Problem ${dot.problem.toUpperCase()}: ${dot.row.decision}`} aria-describedby="map-card">{dot.problem.toUpperCase()}</button>
               <span class="sdp-dot-label" aria-hidden="true">{dot.row.component}</span>
-            </button>
+            </div>
           ))}
         </div>
         <p class="sdp-axis sdp-axis-x" aria-hidden="true">How much it makes us different →</p>
