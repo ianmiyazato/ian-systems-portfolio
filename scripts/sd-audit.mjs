@@ -23,7 +23,7 @@ mkdirSync(imgDir, { recursive: true });
 
 // Words a non-technical founder would stop on. The story engine's lint uses the same list.
 const jargon = ['kafka', 'idempot', 'cdc', 'embedding', 'vector', 'schema', 'sql', 'partition', 'microservice', 'api', 'latency', 'p95', 'dlq', 'bff', 'otel', 'opentelemetry', 'rag', 'circuit', 'autoscale', 'canonical', 'ncm', 'etl', 'shard', 'replica', 'throughput', 'saturation', 'middleware', 'queue', 'topic', 'consumer', 'backpressure', 'idempotency', 'rate-limit', 'rate limit', 'webhook', 'edge'];
-const DIAGRAM = '[data-diagram], .rp-canvas, .sd-canvas';
+const DIAGRAM = '[data-diagram], [data-screen][data-active], .rp-canvas, .sd-canvas';
 const NEXT = '[data-step-next], .sd-aside .btn.primary';
 
 const stop = await ensureServers();
