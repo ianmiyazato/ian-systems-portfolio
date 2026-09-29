@@ -192,3 +192,11 @@ test.describe('reduced motion', () => {
     }
   });
 });
+
+test('reading mode: clicking something dimmed jumps to the step about it', async ({ page }) => {
+  await page.goto(PAGE);
+  await expect(page.locator('.sd-node[data-id="store"]')).toHaveClass(/is-dim/);
+  await page.locator('.sd-node[data-id="store"] .sd-box').click();
+  await expect(flow(page)).toHaveAttribute('data-step', '3');
+  await expect(page.locator('.sd-node[data-id="store"]')).toHaveClass(/is-focus/);
+});
