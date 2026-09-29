@@ -1,0 +1,61 @@
+{
+  "id": "metrics-flow",
+  "title": "From a file every minute to one clear decision",
+  "summary": "A results file from every system is checked, stored, compared to normal and explained by AI in a morning report and fast alerts.",
+  "accent": "a",
+  "rows": 2,
+  "nodes": [
+    { "id": "systems", "label": "Systems", "caption": "a results file every minute", "engLabel": "object storage + event", "icon": "file", "col": 1, "row": 1 },
+    { "id": "check", "label": "Check", "caption": "stops wrong or missing numbers", "engLabel": "schema + range checks", "icon": "shield", "col": 4, "row": 1 },
+    { "id": "store", "label": "Store", "caption": "built for fast totals", "engLabel": "columnar, by minute", "icon": "database", "col": 7, "row": 1 },
+    { "id": "compare", "label": "Compare", "caption": "is this normal for now?", "engLabel": "seasonal baseline", "icon": "compare", "col": 10, "row": 1 },
+    { "id": "set-aside", "label": "Set aside", "caption": "with a reason, never lost", "engLabel": "quarantine + reason", "icon": "pause", "col": 4, "row": 2, "tone": "good" },
+    { "id": "people", "label": "People", "caption": "morning report + alerts", "engLabel": "email, chat, BI links", "icon": "bell", "col": 7, "row": 2 },
+    { "id": "explain", "label": "Explain", "caption": "AI writes the sentence", "engLabel": "LLM + number checker", "icon": "sparkle", "col": 10, "row": 2, "tone": "accent" }
+  ],
+  "edges": [
+    { "from": "systems", "to": "check" },
+    { "from": "check", "to": "set-aside" },
+    { "from": "check", "to": "store", "kind": "data" },
+    { "from": "store", "to": "compare", "kind": "data" },
+    { "from": "compare", "to": "explain", "kind": "data" },
+    { "from": "explain", "to": "people", "kind": "ai" }
+  ],
+  "steps": [
+    {
+      "title": "A file arrives",
+      "focus": ["systems", "systems->check"],
+      "caption": "Every system sends a results file every minute: revenue, profit and orders, for every store and product.",
+      "engineering": "File lands in object storage; an event triggers processing; the file name holds the source and minute.",
+      "presenterNote": "It starts with something boring on purpose: a plain results file, every minute, from every system. Boring inputs are easy to trust."
+    },
+    {
+      "title": "We check it",
+      "focus": ["check", "set-aside", "check->set-aside"],
+      "caption": "Wrong or missing numbers are stopped before anyone sees them, and set aside with the reason.",
+      "engineering": "Schema and range validation; bad files are quarantined with a reason; late or duplicate files are handled by source + minute key.",
+      "presenterNote": "Nothing reaches a person until it passes the checks. A bad file is set aside with a reason, so nobody decides anything on broken numbers."
+    },
+    {
+      "title": "We store it",
+      "focus": ["store", "check->store"],
+      "caption": "Kept in a form built for fast totals, by minute, store and product.",
+      "engineering": "Columnar analytics store, partitioned by minute; roll-ups to hour and day.",
+      "presenterNote": "We keep it in a shape made for totals, so a question like revenue by store since two o'clock comes back in seconds."
+    },
+    {
+      "title": "We compare to normal",
+      "focus": ["compare", "store->compare"],
+      "caption": "Is this Monday unusual for this store, at this time? We compare every number to what is normal.",
+      "engineering": "Seasonal baseline per metric × store × hour-of-week, plus deviation bands; simple, explainable rules first.",
+      "presenterNote": "The question is never whether revenue is down. It's whether it's down compared to a normal Monday at two o'clock, for this store."
+    },
+    {
+      "title": "We explain it",
+      "focus": ["explain", "people", "compare->explain", "explain->people"],
+      "caption": "One short report every morning, and an alert within 2 minutes when something breaks.",
+      "engineering": "Numbers computed in SQL; the AI writes only the sentence; a checker verifies every number in the text against the source before sending.",
+      "presenterNote": "Only at the end does AI appear, and it only writes the sentence. The numbers come from the data, and a checker reads the text before anyone else does."
+    }
+  ]
+}

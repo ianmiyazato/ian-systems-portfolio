@@ -1,0 +1,25 @@
+---
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import BuildOrBuy from '../../../components/system-design/BuildOrBuy.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import { buildVsBuy } from '@portfolio/system-design';
+---
+<SystemDesign title="Problem A: build or buy · System design" description="For each part of the metrics pipeline: what we build, what we buy or take as open source, why, and what we give up." accent="a">
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><a href="/system-design/metrics-to-decisions">Problem A</a><span aria-hidden="true">/</span><span>Build or buy</span></nav>
+  <Screen id="a-build" accent="a" anchor="bvb-steps">
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Problem A · build or buy</p>
+      <h1>What we build, what we buy</h1>
+      <p class="sdp-lede">Every choice has a cost. The skill is choosing which cost to accept. Press <kbd>E</kbd> for how we'd swap each part later and what it costs at 10×.</p>
+    </header>
+    <BuildOrBuy table={buildVsBuy.metrics} />
+  </Screen>
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/personal-and-instant"><span>Next</span>Problem B: personal, and still instant →</a>
+    <a href="/system-design/build-vs-buy">The 80/20 map</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-deck';
+</script>

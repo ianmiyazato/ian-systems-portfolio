@@ -1,0 +1,78 @@
+{
+  "problem": "a",
+  "title": "Problem A · from a file every minute to one clear decision",
+  "rows": [
+    {
+      "id": "receiving-files",
+      "component": "Receiving the files",
+      "kind": "build",
+      "decision": "Build (storage + a checker)",
+      "why": "Files are our own and simple; paid connectors charge per row, and 1,440 files a day adds up",
+      "giveUp": "We own fixes when a file's format changes",
+      "swapPlan": "Each source has one small checker function; a managed connector could replace the trigger later without touching the checks.",
+      "costAt10x": "Storage and checking grow in a straight line with the number of files, and checks run in parallel, so nothing needs a redesign.",
+      "difference": 3.6,
+      "difficulty": 2.0
+    },
+    {
+      "id": "analytics-database",
+      "component": "Analytics database",
+      "kind": "buy",
+      "decision": "Buy (managed columnar, for example hosted ClickHouse)",
+      "why": "Running one is a full-time job; standard SQL keeps us portable",
+      "giveUp": "A monthly bill and some vendor dependence",
+      "swapPlan": "Standard SQL and open file formats: the roll-ups can be re-pointed at another columnar store in one migration project.",
+      "costAt10x": "Storage grows 10×, but questions read hourly and daily roll-ups, so compute grows far less than the raw volume.",
+      "difference": 1.6,
+      "difficulty": 4.4
+    },
+    {
+      "id": "metric-definitions",
+      "component": "What revenue and profit mean",
+      "kind": "build",
+      "decision": "Build (one shared definition)",
+      "why": "It's the truth of the business and can't live in a tool we don't control",
+      "giveUp": "Someone must maintain the definitions",
+      "swapPlan": "Definitions live as versioned code in our repository; every database and BI tool reads them, so there is nothing to swap.",
+      "costAt10x": "No change: definitions grow with the number of metrics, not with the volume of data.",
+      "difference": 4.6,
+      "difficulty": 1.8
+    },
+    {
+      "id": "unusual-numbers",
+      "component": "Spotting unusual numbers",
+      "kind": "build",
+      "decision": "Build (simple baselines first)",
+      "why": "Easy to explain, fast, catches most real problems",
+      "giveUp": "Misses subtle patterns that heavy ML might find",
+      "swapPlan": "Baselines sit behind one 'is this unusual?' check; a learned model can replace them metric by metric after running side by side.",
+      "costAt10x": "Baselines are prepared per store and hour of the week, so 10× more stores means 10× small tables that still refresh in minutes.",
+      "difference": 4.0,
+      "difficulty": 2.8
+    },
+    {
+      "id": "ai-writer",
+      "component": "The AI that writes the text",
+      "kind": "buy",
+      "decision": "Buy (hosted model through an API)",
+      "why": "Training our own is slow and costly; our edge is data and checks",
+      "giveUp": "Cost per report; we send only totals, never personal data",
+      "swapPlan": "One prompt and one number checker around a provider-neutral call: switching models is a config change plus an evaluation run.",
+      "costAt10x": "Reports are per team, not per row: 10× more data still means the same number of reports, so AI cost barely moves.",
+      "difference": 2.2,
+      "difficulty": 4.7
+    },
+    {
+      "id": "ad-hoc-exploration",
+      "component": "Ad-hoc exploration",
+      "kind": "buy",
+      "decision": "Buy (standard BI tool, for example Metabase)",
+      "why": "Analysts need freedom; building it is wasted effort",
+      "giveUp": "Two places to look, so the report links into the BI tool",
+      "swapPlan": "It reads the same shared definitions, so another BI tool can replace it without changing a single number.",
+      "costAt10x": "Priced by seat, not by data, so 10× the volume leaves the bill where it is.",
+      "difference": 1.4,
+      "difficulty": 3.6
+    }
+  ]
+}

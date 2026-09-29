@@ -6,7 +6,7 @@
  * Add a screen here first; `pnpm verify:route <href>` then proves it renders its heading.
  */
 export type Zone = 'shell' | 'mare-ops' | 'mare-shop' | 'pulse';
-export type SystemId = 'overview' | 'mare' | 'counter' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'observability' | 'consumer' | 'atlas' | 'pulse';
+export type SystemId = 'overview' | 'system-design' | 'mare' | 'counter' | 'product-hub' | 'pay' | 'circle' | 'mesh' | 'observability' | 'consumer' | 'atlas' | 'pulse';
 
 export type System = {
   id: SystemId;
@@ -34,7 +34,7 @@ export type RouteEntry = {
   /** Text the page's <h1> must contain once rendered (crawler + verify:route). */
   heading: string;
   /** Release that introduced the screen; 0.1 screens are the original 40 artboards. */
-  release: '0.1' | '0.2';
+  release: '0.1' | '0.2' | '0.3';
   /** Case studies and indexes get decisions but are not approved artboards. */
   parity?: false;
   /** Also captured at 390 × 844. */
@@ -49,6 +49,7 @@ const common = ['empty', 'loading', 'error', 'offline', 'locked'];
 
 export const systems: System[] = [
   { id: 'overview', title: 'Overview', theme: 'portfolio', owner: '@portfolio/shell', states: [] },
+  { id: 'system-design', title: 'System design', theme: 'portfolio', owner: '@portfolio/mare-shop', states: [] },
   { id: 'mare', title: 'Maré', theme: 'portfolio', owner: '@portfolio/shell', states: [] },
   { id: 'counter', title: 'Counter', theme: 'counter', owner: '@portfolio/remote-counter', states: [...common, 'reminder-sent', 'picked'], home: 'counter-lanes' },
   { id: 'product-hub', title: 'Product Hub', theme: 'product-hub', owner: '@portfolio/remote-product-hub', states: [...common, 'rejected'], home: 'product-hub-catalog' },
@@ -69,6 +70,9 @@ const remote = (name: string) => `@portfolio/remote-${name}`;
 export const routes: RouteEntry[] = [
   { id: 'home', system: 'overview', title: 'Portfolio home', href: '/', zone: 'shell', owner: shell, board: 'OV-home', heading: 'I build the core platform', release: '0.1', mobile: true },
   { id: 'work-v0-2', system: 'overview', title: 'v0.2 improvement map', href: '/work/v0-2', zone: 'shell', owner: shell, board: 'V2-map', heading: 'Twelve changes', release: '0.2', checked: '2026-09-28' },
+  { id: 'sd-metrics', system: 'system-design', title: 'Problem A · metrics to decisions', href: '/system-design/metrics-to-decisions', zone: 'mare-shop', owner: shop, board: 'SD-A1', heading: 'From a file every minute to one clear decision', release: '0.3', checked: '2026-09-29' },
+  { id: 'sd-metrics-build', system: 'system-design', title: 'Problem A · build or buy', href: '/system-design/metrics-to-decisions/build-or-buy', zone: 'mare-shop', owner: shop, board: 'SD-A3', heading: 'What we build, what we buy', release: '0.3', checked: '2026-09-29' },
+
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
   { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
 

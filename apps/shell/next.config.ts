@@ -17,6 +17,9 @@ const zones = [
   { url: zone('PULSE_URL', 3003), prefixes: ['/pulse'], rootSlash: true }
 ];
 
+// Story pages owned by the Astro zone. The older /system-design/<project> pages stay in the shell until M5.
+const storyPaths = ['/system-design/metrics-to-decisions'];
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -40,7 +43,16 @@ const nextConfig: NextConfig = {
           ])
         : []
     );
-    return { beforeFiles, afterFiles: [], fallback: [] };
+    // The system design story is static Astro in the shop zone (<= 60 kB of JS per page); its
+    // output lives under /mare/system-design, so these paths map rather than pass through.
+    const shop = zone('MARE_SHOP_URL', 3002);
+    const story = shop
+      ? storyPaths.flatMap((path) => [
+          { source: path, destination: `${shop}/mare${path}` },
+          { source: `${path}/:path+`, destination: `${shop}/mare${path}/:path+` }
+        ])
+      : [];
+    return { beforeFiles: [...story, ...beforeFiles], afterFiles: [], fallback: [] };
   }
 };
 

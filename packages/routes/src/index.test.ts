@@ -20,7 +20,7 @@ describe('routes manifest', () => {
   });
 
   it('gives every product system the five required variations', () => {
-    for (const system of systems.filter((item) => !['overview', 'mare'].includes(item.id))) {
+    for (const system of systems.filter((item) => !['overview', 'system-design', 'mare'].includes(item.id))) {
       expect(system.states, system.id).toEqual(expect.arrayContaining(['empty', 'loading', 'error', 'offline', 'locked']));
     }
   });

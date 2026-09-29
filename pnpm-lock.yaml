@@ -126,6 +126,12 @@ importers:
       '@portfolio/overlays':
         specifier: workspace:*
         version: link:../../packages/overlays
+      '@portfolio/story-diagram':
+        specifier: workspace:*
+        version: link:../../packages/story-diagram
+      '@portfolio/system-design':
+        specifier: workspace:*
+        version: link:../../packages/system-design
       '@portfolio/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens

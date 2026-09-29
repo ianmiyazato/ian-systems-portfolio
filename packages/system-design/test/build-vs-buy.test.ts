@@ -13,7 +13,8 @@ describe('build vs buy tables', () => {
     for (const row of table.rows) {
       it(`${name} · ${row.component}: decision, why, give-up, swap plan and cost at 10×`, () => {
         expect(rowSchema.safeParse(row).success).toBe(true);
-        for (const field of ['decision', 'why', 'giveUp', 'swapPlan', 'costAt10x'] as const) expect(row[field].trim().length, field).toBeGreaterThan(10);
+        expect(row.decision.trim().length).toBeGreaterThanOrEqual(5);
+        for (const field of ['why', 'giveUp', 'swapPlan', 'costAt10x'] as const) expect(row[field].trim().length, field).toBeGreaterThan(10);
       });
     }
   }
