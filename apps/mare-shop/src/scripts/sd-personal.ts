@@ -54,12 +54,21 @@ if (demo) {
   const forced = Number(new URLSearchParams(location.search).get('ai'));
 
   let cls = 0;
-  try {
-    new PerformanceObserver((entries) => {
-      for (const entry of entries.getEntries() as Array<PerformanceEntry & { value: number; hadRecentInput: boolean }>) if (!entry.hadRecentInput) cls += entry.value;
-      readout('cls', cls.toFixed(3));
-    }).observe({ type: 'layout-shift', buffered: true });
-  } catch { /* layout-shift is Chromium-only; the readout stays at its measured default */ }
+  let clsObserver: PerformanceObserver | undefined;
+  function measureDemoCls() {
+    cls = 0;
+    readout('cls', '0.000');
+    clsObserver?.disconnect();
+    try {
+      clsObserver = new PerformanceObserver((entries) => {
+        for (const entry of entries.getEntries() as Array<PerformanceEntry & { value: number; hadRecentInput: boolean }>) if (!entry.hadRecentInput) cls += entry.value;
+        readout('cls', cls.toFixed(3));
+      });
+      // Measure instability caused while this demo runs. Buffered entries include the story
+      // player selecting a directly linked presentation slide before the demo becomes visible.
+      clsObserver.observe({ type: 'layout-shift' });
+    } catch { /* layout-shift is Chromium-only; the readout stays at its measured default */ }
+  }
 
   let run = 0;
   let items: Item[] = [];
@@ -144,7 +153,12 @@ if (demo) {
   async function start() {
     run += 1;
     const current = run;
+    // Font loading belongs to page setup, not to the product/AI demo. Waiting here also keeps a
+    // cold, parallel screenshot run from attributing a late font swap to the reserved demo slots.
+    await document.fonts.ready;
+    if (current !== run) return;
     const began = performance.now();
+    measureDemoCls();
     items = [];
     next = 'first';
     loading = false;

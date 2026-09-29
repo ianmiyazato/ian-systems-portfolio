@@ -157,13 +157,15 @@ async function measure(path) {
     return { runningAnimations: running.length, animatedProperties: [...props], domMutationsPerSecond: Math.round(mutations / 2) };
   }, DIAGRAM);
 
-  // 10-second trace while stepping every 2.5 s.
+  // Trace while stepping every 2.5 s through every step of the page (at least 10 s).
+  const totalSteps = await page.evaluate(() => [...document.querySelectorAll('[data-screen]')].reduce((sum, screen) => sum + Number(screen.dataset.steps ?? 1), 0) || 5);
+  const traceMs = Math.max(10_000, totalSteps * 2500);
   const tracePath = join(traceDir, `${label}-${slug}.trace.json`);
   await browser.startTracing(page, { path: tracePath, categories: ['toplevel', 'devtools.timeline', 'disabled-by-default-devtools.timeline.frame', 'blink.user_timing'] });
-  const frameStats = page.evaluate(async () => {
+  const frameStats = page.evaluate(async (duration) => {
     const gaps = [];
     let previous = performance.now();
-    const end = previous + 10_000;
+    const end = previous + duration;
     while (performance.now() < end) {
       await new Promise((resolve) => requestAnimationFrame(resolve));
       const now = performance.now();
@@ -171,11 +173,15 @@ async function measure(path) {
       previous = now;
     }
     const long = gaps.filter((gap) => gap > 25).length;
-    return { frames: gaps.length, fps: Math.round(gaps.length / 10), droppedFrames: long, worstFrameMs: Math.round(Math.max(...gaps)) };
-  });
-  for (let index = 0; index < 4; index += 1) {
+    return { seconds: Math.round(duration / 1000), frames: gaps.length, fps: Math.round(gaps.length / (duration / 1000)), droppedFrames: long, worstFrameMs: Math.round(Math.max(...gaps)) };
+  }, traceMs);
+  // Start from step 1 so every step's animation is inside the trace.
+  await page.keyboard.press('Home').catch(() => undefined);
+  const deck = await page.locator('[data-deck]').count();
+  for (let index = 0; index < Math.max(4, totalSteps - 1); index += 1) {
     await page.waitForTimeout(2500);
-    await page.locator(NEXT).first().click({ timeout: 1000 }).catch(() => undefined);
+    if (deck) await page.keyboard.press('ArrowRight');
+    else await page.locator(NEXT).first().click({ timeout: 1000 }).catch(() => undefined);
   }
   result.frames = await frameStats;
   const buffer = await browser.stopTracing();
@@ -184,7 +190,7 @@ async function measure(path) {
   const mainThreads = new Set(events.filter((event) => event.name === 'thread_name' && event.args?.name === 'CrRendererMain').map((event) => `${event.pid}:${event.tid}`));
   const tasks = events.filter((event) => /RunTask$/.test(event.name) && mainThreads.has(`${event.pid}:${event.tid}`) && event.dur);
   const longTasks = tasks.filter((event) => event.dur > 50_000).map((event) => Math.round(event.dur / 1000));
-  result.trace = { file: tracePath, tasks: tasks.length, longTasksOver50ms: longTasks.length, longestTaskMs: tasks.length ? Math.round(Math.max(...tasks.map((event) => event.dur)) / 1000) : 0, observerLongTasks: await page.evaluate(() => window.__longTasks) };
+  result.trace = { file: tracePath, steps: totalSteps, tasks: tasks.length, longTasksOver50ms: longTasks.length, longestTaskMs: tasks.length ? Math.round(Math.max(...tasks.map((event) => event.dur)) / 1000) : 0, observerLongTasks: await page.evaluate(() => window.__longTasks) };
   result.clsAfterSteps = await page.evaluate(() => Math.round(window.__cls * 1000) / 1000);
 
   // Off-screen and hidden-tab behavior: count animations still running inside the diagram.

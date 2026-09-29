@@ -36,9 +36,9 @@ This public portfolio demonstrates Ian Miyazato's product/design execution, fron
 
 ```text
 ian-systems-portfolio (pnpm + Turborepo)
-├── apps/shell       Next.js 15 · :3000 · /, /work/*, /system-design/*, /atlas/* · proxies every other zone
+├── apps/shell       Next.js 15 · :3000 · /, /work/*, /atlas/*, /observability/* · proxies every other zone
 ├── apps/mare-ops    Vite/React host · :3001 · /mare/ops/* · runtime federation of five remotes
-├── apps/mare-shop   Astro · :3002 · /mare/shop/*, /mare/apps/*
+├── apps/mare-shop   Astro · :3002 · /mare/shop/*, /mare/apps/*, and /system-design/* (static story pages, built under /mare/system-design)
 ├── apps/pulse       SvelteKit · :3003 · /pulse/*
 ├── remotes/*        Counter, Product Hub, Pay, Circle, Mesh · independent Preact builds (mount(el, ctx) → unmount)
 └── packages
@@ -47,6 +47,8 @@ ian-systems-portfolio (pnpm + Turborepo)
     ├── chrome       <im-portfolio-bar>, <im-decision-lens>, <im-command-palette>
     ├── overlays     URL-addressable layer stack
     ├── ai-surface   the one AI suggestion CSS contract
+    ├── story-diagram  in-house SVG story engine: Zod model, plain-language lint, build-time SVG, player (keys, ?step=, focus, packets, presentation mode)
+    ├── system-design  story content: build-vs-buy JSON, stories, deck (notes, timings), report series, cursor catalog, call-script generator
     ├── remote-runtime  defineRemote, router, Layer, AiSurface, hooks, realtime feed
     ├── mocks · ai-sim · events
 ```
@@ -103,6 +105,20 @@ APPS="pulse" pnpm deploy:prod     # production deploy of changed zones only (log
 - [x] M10 · Decision Lens and parity completion, README tour, v0.2.0 release
 
 v0.1 milestones M1–M10 are complete (see [changelog.md](docs/agents/changelog.md)).
+
+### v0.3 · system design for a non-technical audience
+
+Rule: if a non-technical person understands it, a technical person will too. Plain language on the surface, engineering one key away (E).
+
+- [x] M0 · measured audit of the v0.2 pages ([system-design-v1.md](docs/audit/system-design-v1.md), `scripts/sd-audit.mjs`)
+- [x] M1 · `@portfolio/story-diagram`, tests first (model, jargon lint, snapshot, keys, reduced motion, compositor-only motion, off-screen pause, CLS 0)
+- [x] M2 · Problem A: `/system-design/metrics-to-decisions` (+ `/build-or-buy`)
+- [x] M3 · Problem B: `/system-design/personal-and-instant` (+ `/build-or-buy`), speed race and live pagination demo
+- [x] M4 · `/system-design` index, `/system-design/build-vs-buy` 80/20 map, `?present=1` run, [call script](docs/CALL-SCRIPT-SYSTEM-DESIGN.md)
+- [x] M5 · `/system-design/mare` rebuilt as the engineering deep dive; request path, Atlas and Pulse pages retired (308)
+- [x] M6 · quality gates, v2 audit ([system-design-v2.md](docs/audit/system-design-v2.md)), step screenshots, release
+
+To change a story: edit `packages/system-design/data/*` → `pnpm --filter @portfolio/system-design test` (lint, timings, honesty) → `WRITE_CALL_SCRIPT=1 pnpm --filter @portfolio/system-design test` → `pnpm build && pnpm exec playwright test tests/e2e/system-design-story.spec.ts`.
 
 ## 7. Session tool availability
 
