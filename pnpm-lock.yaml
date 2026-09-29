@@ -393,6 +393,25 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
 
+  packages/system-design:
+    dependencies:
+      '@portfolio/story-diagram':
+        specifier: workspace:*
+        version: link:../story-diagram
+      zod:
+        specifier: 3.25.76
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: 22.18.6
+        version: 22.18.6
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.18.6)(happy-dom@20.14.5)(yaml@2.9.1)
+
   packages/tokens:
     dependencies:
       '@fontsource-variable/archivo':
