@@ -83,8 +83,10 @@ html[data-layer='engineering'] [data-eng-only] { display: revert; }
 .sd-step-caption { margin: 0; color: var(--sd-ink); font: 400 21px/1.45 var(--sd-ui); }
 
 /* Stepper */
-.sd-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.sd-rail { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+/* Long rails wrap inside; the arrows stay at the ends of the first line. */
+.sd-stepper { display: flex; align-items: flex-start; gap: 8px; }
+.sd-rail { display: flex; flex: 0 1 auto; flex-wrap: wrap; gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.sd-stepper > .sd-arrow-btn { flex: none; }
 .sd-rail button, .sd-arrow-btn, .sd-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin: 0; border: 1px solid var(--sd-line); border-radius: 999px; background: var(--sd-surface); color: var(--sd-ink); font: 600 15px var(--sd-ui); cursor: pointer; }
 .sd-rail button { padding: 0 16px 0 6px; color: var(--sd-muted); }
 .sd-rail-n { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--sd-soft); color: var(--sd-ink); font: 700 14px var(--sd-mono); }

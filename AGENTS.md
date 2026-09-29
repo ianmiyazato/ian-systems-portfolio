@@ -125,7 +125,8 @@ To change a story: edit `packages/system-design/data/*` → `pnpm --filter @port
 Six CTO-level cases, one backend and one frontend problem per system: [docs/system-design-cases](docs/system-design-cases/README.md).
 
 - [x] M0 · content: Maré, Atlas and Pulse cases, decisions and the cross-system learning map
-- [ ] M1 · turn the cases into story data and routes on `@portfolio/story-diagram` (plain layer = business decision, `E` = technical design)
+- [x] M1 · Maré pilot: `/system-design/mare` hub, `/black-friday` and `/storefront` on `@portfolio/story-diagram`, presentation run and [call script](docs/CALL-SCRIPT-MARE.md)
+- [ ] M2 · Atlas and Pulse on the same pattern ([#55](https://github.com/ianmiyazato/ian-systems-portfolio/issues/55))
 
 ## 7. Session tool availability
 

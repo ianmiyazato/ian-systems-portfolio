@@ -34,7 +34,7 @@ export type RouteEntry = {
   /** Text the page's <h1> must contain once rendered (crawler + verify:route). */
   heading: string;
   /** Release that introduced the screen; 0.1 screens are the original 40 artboards. */
-  release: '0.1' | '0.2' | '0.3';
+  release: '0.1' | '0.2' | '0.3' | '0.4';
   /** Case studies and indexes get decisions but are not approved artboards. */
   parity?: false;
   /** Also captured at 390 × 844. */
@@ -78,7 +78,10 @@ export const routes: RouteEntry[] = [
   { id: 'sd-map', system: 'system-design', title: 'The 80/20 map', href: '/system-design/build-vs-buy', zone: 'mare-shop', owner: shop, board: 'SD-99', heading: 'The 80/20 map', release: '0.3', checked: '2026-09-29' },
 
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
-  { id: 'system-design-mare', system: 'system-design', title: 'Maré · orders under load', href: '/system-design/mare', zone: 'mare-shop', owner: shop, board: 'SD-mare', heading: 'Orders under load', release: '0.1', checked: '2026-09-29' },
+  { id: 'sd-mare', system: 'system-design', title: 'Maré · system design case', href: '/system-design/mare', zone: 'mare-shop', owner: shop, board: 'SD-M0', heading: 'Maré: the biggest week of the year', release: '0.4', checked: '2026-09-29' },
+  { id: 'sd-mare-black-friday', system: 'system-design', title: 'Maré · Black Friday (backend)', href: '/system-design/mare/black-friday', zone: 'mare-shop', owner: shop, board: 'SD-M1', heading: 'Black Friday without losing a sale', release: '0.4', checked: '2026-09-29' },
+  { id: 'sd-mare-storefront', system: 'system-design', title: 'Maré · storefront (frontend)', href: '/system-design/mare/storefront', zone: 'mare-shop', owner: shop, board: 'SD-M4', heading: 'Live truth on a ready-made storefront', release: '0.4', checked: '2026-09-29' },
+  { id: 'system-design-mare', system: 'system-design', title: 'Maré · orders under load', href: '/system-design/mare/orders', zone: 'mare-shop', owner: shop, board: 'SD-mare', heading: 'Orders under load', release: '0.1', checked: '2026-09-29' },
 
   { id: 'counter-lanes', system: 'counter', title: 'Order lanes', href: '/mare/ops/counter', zone: 'mare-ops', owner: remote('counter'), board: 'BA-lanes', heading: 'open orders', release: '0.1', mobile: true },
   { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },

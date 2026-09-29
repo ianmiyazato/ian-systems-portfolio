@@ -3,13 +3,13 @@
  * Engineering deep dive: the v0.1 Maré architecture page rebuilt on the story engine. One focus
  * per step, a plain layer and an engineering layer, and only the real before/after metrics.
  */
-import SystemDesign from '../../layouts/SystemDesign.astro';
-import Story from '../../components/system-design/Story.astro';
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Story from '../../../components/system-design/Story.astro';
 
 const metrics: Array<[string, string]> = [['API latency', '450 → ~200 ms'], ['Error rate', '1.8% → 0.5–0.7%'], ['Recovery time (MTTR)', '2–3 h → 30–45 min'], ['Deploys', '2 → 8–12 per week']];
 ---
 <SystemDesign title="Maré: orders under load · System design" description="Engineering deep dive: how a fictitious retailer's checkout stays fast when partners are slow. Write once, tell everyone, let each part fail alone." accent="a">
-  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><span>Engineering deep dive</span></nav>
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><a href="/system-design/mare">Maré</a><span aria-hidden="true">/</span><span>Engineering deep dive</span></nav>
   <Story story="mare-orders" screen="mare" board="SD-mare" anchors={{ figure: 'sd-mare-flow', panel: 'sd-mare-steps' }}>
     <header class="sdp-head">
       <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Engineering deep dive · Maré</p>
@@ -23,11 +23,12 @@ const metrics: Array<[string, string]> = [['API latency', '450 → ~200 ms'], ['
     <p>Measured on the real systems this fictitious design is modeled on. Everything else on these pages is synthetic.</p>
   </section>
   <nav class="sdp-next" aria-label="Next">
-    <a class="sdp-next-link" href="/system-design"><span>Back to the story</span>Two problems, solved end to end →</a>
+    <a class="sdp-next-link" href="/system-design/mare/black-friday"><span>What it has to survive</span>Black Friday without losing a sale →</a>
+    <a href="/system-design/mare">The Maré case</a>
     <a href="/observability">See an incident in Tidewatch</a>
   </nav>
 </SystemDesign>
 
 <script>
-  import '../../scripts/sd-deck';
+  import '../../../scripts/sd-deck';
 </script>

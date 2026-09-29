@@ -1,11 +1,11 @@
 {
   "home": {
-    "kb": 108.4,
+    "kb": 108.5,
     "budget": 130,
     "group": "shell"
   },
   "work-v0-2": {
-    "kb": 108.4,
+    "kb": 108.5,
     "budget": 130,
     "group": "shell"
   },
@@ -25,7 +25,7 @@
     "group": "shop"
   },
   "sd-personal": {
-    "kb": 10.6,
+    "kb": 10.9,
     "budget": 60,
     "group": "shop"
   },
@@ -40,9 +40,24 @@
     "group": "shop"
   },
   "mare-languages": {
-    "kb": 105.4,
+    "kb": 105.5,
     "budget": 130,
     "group": "shell"
+  },
+  "sd-mare": {
+    "kb": 8.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-mare-black-friday": {
+    "kb": 8.9,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-mare-storefront": {
+    "kb": 9.9,
+    "budget": 60,
+    "group": "shop"
   },
   "system-design-mare": {
     "kb": 8.6,
@@ -115,12 +130,12 @@
     "group": "shell"
   },
   "atlas-pipeline": {
-    "kb": 118.3,
+    "kb": 118.4,
     "budget": 130,
     "group": "shell"
   },
   "atlas-board": {
-    "kb": 127.6,
+    "kb": 127.7,
     "budget": 130,
     "group": "shell"
   },
@@ -140,12 +155,12 @@
     "group": "shell"
   },
   "atlas-feedback": {
-    "kb": 120.5,
+    "kb": 120.6,
     "budget": 130,
     "group": "shell"
   },
   "atlas-transcript": {
-    "kb": 120.5,
+    "kb": 120.6,
     "budget": 130,
     "group": "shell"
   },
@@ -160,7 +175,7 @@
     "group": "shell"
   },
   "atlas-offers": {
-    "kb": 127.9,
+    "kb": 128,
     "budget": 130,
     "group": "shell"
   },
@@ -175,22 +190,22 @@
     "group": "shell"
   },
   "atlas-academy-browse": {
-    "kb": 119.2,
+    "kb": 119.3,
     "budget": 130,
     "group": "shell"
   },
   "atlas-academy": {
-    "kb": 119,
+    "kb": 119.1,
     "budget": 130,
     "group": "shell"
   },
   "atlas-paywall": {
-    "kb": 119,
+    "kb": 119.1,
     "budget": 130,
     "group": "shell"
   },
   "remote-counter": {
-    "kb": 37.1,
+    "kb": 37.2,
     "budget": 180,
     "group": "remote"
   },
@@ -200,7 +215,7 @@
     "group": "host"
   },
   "remote-product-hub": {
-    "kb": 34.9,
+    "kb": 35.1,
     "budget": 180,
     "group": "remote"
   },
@@ -210,7 +225,7 @@
     "group": "host"
   },
   "remote-pay": {
-    "kb": 42.2,
+    "kb": 42.3,
     "budget": 180,
     "group": "remote"
   },
@@ -220,7 +235,7 @@
     "group": "host"
   },
   "remote-circle": {
-    "kb": 32.6,
+    "kb": 32.7,
     "budget": 180,
     "group": "remote"
   },
@@ -230,7 +245,7 @@
     "group": "host"
   },
   "remote-mesh": {
-    "kb": 34.5,
+    "kb": 34.7,
     "budget": 180,
     "group": "remote"
   },

@@ -41,3 +41,7 @@ Lighthouse 12.6.1, default mobile config with simulated throttling, median of 3 
 - **Playwright**: 186 tests (flows, federation with each remote blocked, Decision Lens anchors on all 45 screens, system-design replays, Pulse i18n, Supabase two-tab live orders, axe). Local run 186/186; production run 185/186 on the first attempt with the one failure passing on rerun (a toast mid-animation during the live demo driver), 99/99 axe on the rerun.
 - **Unit**: token contrast (19), registry (45), decision coverage (48), overlays, pricing guardrails, commission math, score contributions, ai-sim, events, mocks/seed drift.
 - **Supabase**: production Balcão in two tabs both reported "Live · Supabase Broadcast" and tab B received the order emitted from tab A.
+
+## v0.4 · Maré case (pilot)
+
+Measured 2026-09-29 on the local production build; details in [system-design-mare-v4.md](../audit/system-design-mare-v4.md). Lighthouse (mobile, median of 3): 99 / 100 / 100 / 100 on all three pages, LCP 1.82 s. Trace: zero long tasks over 50 ms across 31 steps, 60 fps, CLS 0 after load and after every step, axe 0 serious or critical, minimum text 14 px, JS 8.6–9.9 kB gzipped.
