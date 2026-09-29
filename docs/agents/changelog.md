@@ -2,6 +2,11 @@
 
 One line per merged micro-task, newest first.
 
+## v0.4 · system design cases (draft)
+
+- 2026-09-29 · `feat(sd-mare-cases)`: the Maré case on the story engine. `/system-design/mare` is the case hub (context, both problems, real metrics, ten concepts). `/system-design/mare/black-friday` is the backend problem: a seven-step story, the L0–L4 degradation ladder and the business decision with an expected-loss calculator. `/system-design/mare/storefront` is the frontend problem: a seven-step story, a live one-deal demo (stock bands, optimism by band, busy levels, CLS readout) and the business decision. The orders deep dive moves to `/system-design/mare/orders`. Adds the case schema (`data/cases/mare.json`), a 13:25 presentation run and a generated `docs/CALL-SCRIPT-MARE.md`, three Decision Lens files, 25 Maré e2e tests and 62 step screenshots. Atlas and Pulse are tracked in #55.
+- 2026-09-29 · `docs(system-design-cases)`: six CTO-level cases in `docs/system-design-cases/`, one backend and one frontend problem per system. Maré: Black Friday without losing a sale, and live truth on the static storefront. Atlas: regional data planes feeding a global insight compiler, and a real-time voice Arena that survives bad networks. Pulse: moment to agent-proposed, human-approved action, and an evidence-linked live workspace. Each case has component tables (problem, why, alternative, trade-off, metric), trade-offs, a founder-level decision and decision chains. A cross-system learning map closes the set, with a stochastic drill method for studying with AI.
+
 ## v0.3 · system design for a non-technical audience
 
 - 2026-09-29 · `chore(release)`: v0.3 in production. Release PR #50 merged to `main` (8dd7d34) after green quality, e2e and screenshot gates. Deployed mare-shop, then shell: 2 of the task's 3 deploys, 6/12 overall, 0 previews. Production checks: crawler 99/99, story/redirect/lens specs, per-step axe, JS budgets and reduced motion. A year-cached HTML entry for a Maré Ops chunk, dating from v0.2, was purged from the CDN.

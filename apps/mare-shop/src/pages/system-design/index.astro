@@ -1,10 +1,10 @@
 ---
 import SystemDesign from '../../layouts/SystemDesign.astro';
 import Screen from '../../components/system-design/Screen.astro';
-import { deck } from '@portfolio/system-design';
+import { cases, deck } from '@portfolio/system-design';
 
 const deepDives = [
-  { href: '/system-design/mare', title: 'Maré · orders under load', line: 'Checkout, carriers and tax invoices on one event feed: write once, tell everyone, fail alone.' }
+  { href: '/system-design/mare/orders', title: 'Maré · orders under load', line: 'Checkout, carriers and tax invoices on one event feed: write once, tell everyone, fail alone.' }
 ];
 ---
 <SystemDesign title="System design · two problems, solved end to end" description="Two problems explained so anyone can follow: turning a flood of numbers into decisions, and making a product personal while keeping it instant. Plain language first, engineering one key away." accent="a">
@@ -27,6 +27,15 @@ const deepDives = [
     </div>
     <p class="sdp-banner" data-anchor="sd-banner" data-focus-steps="4">{deck.banner}</p>
   </Screen>
+  <section class="sdp-cases" data-anchor="sd-cases" aria-labelledby="cases">
+    <h2 id="cases">System design cases</h2>
+    <p>One company at a time: a problem behind the scenes and a problem on the screen, each ending in a business decision.</p>
+    <a class="sdp-case" href={cases.mare.href}>
+      <span class="sdp-case-kind">{cases.mare.name} · {cases.mare.kind}</span>
+      <span class="sdp-case-title">{cases.mare.title}</span>
+      <span class="sdp-case-problems">{cases.mare.problems.map((problem) => <span data-accent={problem.accent}><span class="sdp-dot" aria-hidden="true"></span>{problem.label}: {problem.title}</span>)}</span>
+    </a>
+  </section>
   <section class="sdp-deep" data-anchor="sd-deep-dives" aria-labelledby="deep-dives">
     <h2 id="deep-dives">Engineering deep dives</h2>
     <p>For engineers who want every hop: the same story engine, with the engineering layer doing more of the work.</p>

@@ -12,9 +12,10 @@ import { renderControls } from '@portfolio/story-diagram';
 import { presentationSequence } from '@portfolio/system-design';
 import Zone from './Zone.astro';
 
-interface Props { title: string; description: string; accent?: 'a' | 'b'; wide?: boolean }
+interface Props { title: string; description: string; accent?: 'a' | 'b'; wide?: boolean; sequence?: Array<{ href: string; steps: number }> }
 const { title, description, accent = 'a' } = Astro.props;
-const sequence = JSON.stringify(presentationSequence());
+// The presentation run this page belongs to: the v0.3 story by default, or a case's own run.
+const sequence = JSON.stringify(Astro.props.sequence ?? presentationSequence());
 ---
 <Zone title={title} description={description} context="System design" theme="portfolio">
   <Fragment slot="head">

@@ -1,0 +1,64 @@
+---
+/**
+ * The Maré case (v0.4 pilot): the company in three lines, its two problems (one behind the
+ * scenes, one on the screen), the real before → after metrics and what the case teaches.
+ * Presentation runs hub → Black Friday → storefront.
+ */
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import { caseSequence, cases } from '@portfolio/system-design';
+
+const mare = cases.mare;
+---
+<SystemDesign title="Maré: the biggest week of the year · System design" description="A system design case for a fictitious fashion retailer: Black Friday without losing a sale (backend) and live truth on a ready-made storefront (frontend), each ending in a business decision." accent="a" sequence={caseSequence('mare')}>
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><span>Maré</span></nav>
+  <Screen id="mare-hub" label={mare.title} anchor="sd-mare-hub-steps" class="sdp-intro">
+    <header class="sdp-head" data-focus-steps="1">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>System design case · {mare.kind}</p>
+      <h1>{mare.title}</h1>
+      <p class="sdp-lede">{mare.lede} Press <kbd>E</kbd> on any page for the engineering, or <kbd>F</kbd> to present.</p>
+    </header>
+    <dl class="sdp-context" data-focus-steps="1" data-present-steps="1" data-anchor="sd-mare-context">
+      {mare.context.map((item) => <div><dt>{item.label}</dt><dd>{item.text}</dd></div>)}
+    </dl>
+    <div class="sdp-problems" data-present-steps="2 3">
+      {mare.problems.map((problem, index) => (
+        <a class="sdp-problem" href={problem.href} data-accent={problem.accent} data-focus-steps={String(index + 2)} data-anchor={`sd-mare-${problem.id}`}>
+          <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>{problem.label}</p>
+          <h2>{problem.title}</h2>
+          <p class="sdp-who">{problem.question}</p>
+          <ul>{problem.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+          <span class="sdp-problem-cta">{problem.cta} →</span>
+        </a>
+      ))}
+    </div>
+  </Screen>
+
+  <section class="sdp-metrics" data-anchor="sd-mare-metrics" aria-labelledby="mare-metrics">
+    <h2 id="mare-metrics">What the platform already delivered</h2>
+    <dl>{mare.metrics.map((metric) => <div><dt>{metric.label}</dt><dd>{metric.value}</dd></div>)}</dl>
+    <p>Measured on the real systems this fictitious design is modeled on. Everything else on these pages is synthetic or illustrative.</p>
+  </section>
+
+  <section class="sdp-concepts" data-anchor="sd-mare-concepts" aria-labelledby="mare-concepts">
+    <h2 id="mare-concepts">What this case teaches</h2>
+    <ol>{mare.concepts.map((concept) => <li><strong>{concept.title}</strong><span>{concept.line}</span></li>)}</ol>
+  </section>
+
+  <section class="sdp-deep" data-anchor="sd-mare-deeper" aria-labelledby="mare-deeper">
+    <h2 id="mare-deeper">Go deeper</h2>
+    <ul>
+      <li><a href="/system-design/mare/orders">Orders under load</a><span>The order backbone Black Friday stands on: write once, tell everyone, fail alone.</span></li>
+      <li><a href={mare.doc}>The full written case</a><span>Component tables, alternatives, trade-offs and decision chains.</span></li>
+    </ul>
+  </section>
+
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/mare/black-friday"><span>Backend problem</span>Black Friday without losing a sale →</a>
+    <a href="/system-design">All system design</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-deck';
+</script>

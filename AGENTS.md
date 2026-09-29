@@ -120,6 +120,14 @@ Rule: if a non-technical person understands it, a technical person will too. Pla
 
 To change a story: edit `packages/system-design/data/*` → `pnpm --filter @portfolio/system-design test` (lint, timings, honesty) → `WRITE_CALL_SCRIPT=1 pnpm --filter @portfolio/system-design test` → `pnpm build && pnpm exec playwright test tests/e2e/system-design-story.spec.ts`.
 
+### v0.4 · system design cases (draft)
+
+Six CTO-level cases, one backend and one frontend problem per system: [docs/system-design-cases](docs/system-design-cases/README.md).
+
+- [x] M0 · content: Maré, Atlas and Pulse cases, decisions and the cross-system learning map
+- [x] M1 · Maré pilot: `/system-design/mare` hub, `/black-friday` and `/storefront` on `@portfolio/story-diagram`, presentation run and [call script](docs/CALL-SCRIPT-MARE.md)
+- [ ] M2 · Atlas and Pulse on the same pattern ([#55](https://github.com/ianmiyazato/ian-systems-portfolio/issues/55))
+
 ## 7. Session tool availability
 
 Recorded 2026-09-27 (v0.2 session, Claude Code):

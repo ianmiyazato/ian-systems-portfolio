@@ -1,0 +1,40 @@
+---
+/**
+ * The business decision for one problem, in the five questions a founder asks: what we decide,
+ * why, what changes, what we give up and what happens if we're wrong. The backend decision adds
+ * the "is it worth it?" math as its own step.
+ */
+import { cases } from '@portfolio/system-design';
+import Worth from './Worth.astro';
+
+interface Props { side: 'backend' | 'frontend'; worth?: boolean }
+const { side, worth = false } = Astro.props;
+const item = cases.mare.decisions[side];
+const giveUpStep = worth ? '4' : '3';
+const prefix = side === 'backend' ? 'sd-bf' : 'sd-sf';
+---
+<div class:list={['sdp-decision', { 'has-worth': worth }]}>
+  <section class="sdp-decision-card sdp-decision-main" data-focus-steps="1" data-present-steps="1" data-anchor={`${prefix}-decision`}>
+    <p class="sdp-decision-label">We decide to</p>
+    <p class="sdp-decision-text">{item.decision}</p>
+    <p class="sdp-decision-instead"><span>Instead of</span> {item.alternative}</p>
+    <p class="sdp-decision-label">Why now</p>
+    <p class="sdp-decision-why">{item.why}</p>
+  </section>
+  <section class="sdp-decision-card" data-focus-steps="2" data-present-steps="2" data-anchor={`${prefix}-changes`}>
+    <p class="sdp-decision-label">What changes</p>
+    <ul class="sdp-decision-list">{item.changes.map((line) => <li>{line}</li>)}</ul>
+  </section>
+  {worth && (
+    <section class="sdp-decision-card sdp-decision-worth" data-focus-steps="3" data-present-steps="3">
+      <p class="sdp-decision-label">Is it worth it?</p>
+      <Worth />
+    </section>
+  )}
+  <section class="sdp-decision-card sdp-decision-giveup" data-focus-steps={giveUpStep} data-present-steps={giveUpStep} data-anchor={`${prefix}-giveup`}>
+    <p class="sdp-decision-label">What we give up</p>
+    <ul class="sdp-decision-list">{item.giveUp.map((line) => <li>{line}</li>)}</ul>
+    <p class="sdp-decision-label sdp-decision-wrong-label">If we get it wrong</p>
+    <ul class="sdp-decision-list sdp-decision-wrong">{item.wrong.map((line) => <li>{line}</li>)}</ul>
+  </section>
+</div>

@@ -290,7 +290,7 @@ Arrows walk the steps across pages, `N` shows the presenter notes, and the talk 
 
 ## Reviewer tour: chaos → trace → fix → recover
 
-1. **See how orders stay safe** · [/system-design/mare](https://ian-portfolio-shell.vercel.app/system-design/mare): step through write once, one feed, a slow partner failing alone, and replay.
+1. **See how orders stay safe** · [/system-design/mare/orders](https://ian-portfolio-shell.vercel.app/system-design/mare/orders): step through write once, one feed, a slow partner failing alone, and replay. The [Maré case](https://ian-portfolio-shell.vercel.app/system-design/mare) builds on it: Black Friday without losing a sale, and live truth on a ready-made storefront.
 2. **Inject chaos from anywhere** · press `⌘K` / `Ctrl+K`, run **Chaos: saturate the Orders DB pool**, then open [Tidewatch Problems](https://ian-portfolio-shell.vercel.app/observability). The same fault opens the circuit in Mesh, slows Pay scoring and warns Counter.
 3. **Follow the evidence** · open [trace `9f3a2c`](https://ian-portfolio-shell.vercel.app/observability/traces/9f3a2c): the waterfall highlights the DB wait, the deploy marker lines up with the regression, and logs are correlated by trace id.
 4. **Fix it** · return to [problem P-812](https://ian-portfolio-shell.vercel.app/observability) and choose **Roll back #812** or **Raise pool to 64**. The action creates its own trace with a **View trace** link.

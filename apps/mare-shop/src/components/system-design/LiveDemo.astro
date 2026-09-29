@@ -1,0 +1,84 @@
+---
+/**
+ * The live proof for the storefront problem: one deal on Black Friday night, simulated in the
+ * browser. Stock drops as others buy and the page shows a band, not a count; add to bag is
+ * instant with plenty left and confirmed with a few left; the busy level swaps extras for the
+ * simpler twins already in the HTML. Every state has its space reserved, so nothing jumps.
+ */
+const personal = [
+  { name: 'Linen shirt dress', meta: 'sand · M', tone: '#D8C3A0' },
+  { name: 'Linen wide trousers', meta: 'ivory · M', tone: '#EDE6D6' },
+  { name: 'Linen midi skirt', meta: 'stone · M', tone: '#B9B0A2' }
+];
+const bestsellers = [
+  { name: 'Knit polo', meta: 'navy · bestseller', tone: '#2E3F5C' },
+  { name: 'Denim midi skirt', meta: 'indigo · bestseller', tone: '#44587E' },
+  { name: 'Satin slip dress', meta: 'rose · bestseller', tone: '#D9A6A0' }
+];
+const levels = [
+  { id: 0, name: 'Normal' },
+  { id: 1, name: 'Lean' },
+  { id: 2, name: 'Focused' },
+  { id: 3, name: 'Line' },
+  { id: 4, name: 'Checkout only' }
+];
+const STOCK = 45;
+---
+<div class="lv" data-live-demo data-level="0" data-stock={STOCK} data-anchor="sd-sf-demo">
+  <div class="demo-head">
+    <h3>Try it: one deal on Black Friday night</h3>
+    <button type="button" class="sdp-btn lv-reset" data-lv-reset>Reset the demo</button>
+  </div>
+  <div class="lv-body">
+    <article class="lv-page" aria-label="Product page, simulated">
+      <div class="lv-product">
+        <div class="lv-photo" style="--lv-tone: #D8C3A0">
+          <p class="lv-banner" data-lv-banner aria-live="polite">We're busy. Your bag is safe.</p>
+          <span class="lv-video" data-lv-video>▶ Video playing</span>
+        </div>
+        <div class="lv-info">
+          <p class="lv-name">Linen midi dress</p>
+          <p class="lv-price"><s>R$499.90</s> <strong>R$249.90</strong></p>
+          <p class="lv-band" data-lv-band="in" data-focus-steps="1">In stock</p>
+          <div class="lv-actions" data-focus-steps="2">
+            <button type="button" class="sdp-btn lv-add" data-lv-add>Add to bag</button>
+            <button type="button" class="lv-checkout" data-lv-checkout>Go to checkout</button>
+          </div>
+          <p class="lv-status" data-lv-status aria-live="polite">&nbsp;</p>
+          <p class="lv-bag">Bag <strong data-lv-bag>0</strong> · reserved for 20 min</p>
+        </div>
+      </div>
+      <p class="lv-filters"><span class="lv-twin" data-lv-twin="filters-all">Filters: size · color · price · fabric · length</span><span class="lv-twin" data-lv-twin="filters-few">Filters: size · color</span></p>
+      <div class="lv-row">
+        <section class="lv-twin" data-lv-twin="personal" aria-label="Picked for you">
+          <p class="lv-row-title">Picked for you</p>
+          <ul>{personal.map((item) => <li><span class="lv-swatch" style={`--lv-tone: ${item.tone}`}></span><span class="lv-card-name">{item.name}</span><span class="lv-card-meta">{item.meta}</span></li>)}</ul>
+        </section>
+        <section class="lv-twin" data-lv-twin="best" aria-label="Bestsellers this week">
+          <p class="lv-row-title">Bestsellers this week</p>
+          <ul>{bestsellers.map((item) => <li><span class="lv-swatch" style={`--lv-tone: ${item.tone}`}></span><span class="lv-card-name">{item.name}</span><span class="lv-card-meta">{item.meta}</span></li>)}</ul>
+        </section>
+      </div>
+    </article>
+    <div class="lv-side">
+      <div class="lv-control" data-focus-steps="1">
+        <p class="lv-control-label">Other shoppers</p>
+        <button type="button" class="sdp-btn" data-lv-others>Others buy 10</button>
+      </div>
+      <fieldset class="lv-levels" data-focus-steps="3">
+        <legend class="lv-control-label">Busy level</legend>
+        <div class="lv-level-buttons">
+          {levels.map((level) => <button type="button" class="lv-level" data-lv-level={level.id} data-name={level.name} aria-label={`Level ${level.id}, ${level.name}`} aria-pressed={level.id === 0 ? 'true' : 'false'}>L{level.id}</button>)}
+        </div>
+        <p class="lv-level-name" data-lv-level-name aria-hidden="true">L0 · Normal</p>
+      </fieldset>
+      <dl class="demo-readout lv-readout" aria-label="Live readout">
+        <div><dt>Shoppers on this deal</dt><dd>10,000</dd><dd class="demo-sub">simulated</dd></div>
+        <div><dt>Asks reaching our systems</dt><dd>1 every 2 s</dd><dd class="demo-sub">without the shared answer: 2,000 a second</dd></div>
+        <div><dt>Exact stock, hidden</dt><dd data-readout="stock">{STOCK}</dd><dd class="demo-sub">shoppers see the band</dd></div>
+        <div><dt>Layout shift (CLS)</dt><dd data-readout="cls">0.000</dd><dd class="demo-sub">0 means nothing jumped</dd></div>
+      </dl>
+    </div>
+  </div>
+  <p class="demo-note">Simulated in your browser. Bands: In stock above 20, Few left from 1 to 20. “Asks reaching our systems” assumes shoppers refresh every 5 s and one shared answer lasts 2 s.</p>
+</div>

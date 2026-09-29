@@ -1,0 +1,144 @@
+{
+  "system": "mare",
+  "name": "Maré",
+  "kind": "Fashion retail · Brazil",
+  "href": "/system-design/mare",
+  "doc": "https://github.com/ianmiyazato/ian-systems-portfolio/blob/main/docs/system-design-cases/mare.md",
+  "title": "Maré: the biggest week of the year",
+  "lede": "A fashion retailer that sells through a site, an app and 38 stores. Two decisions decide how much it earns on Black Friday: one behind the scenes, one on the screen.",
+  "context": [
+    { "label": "What it sells", "text": "Fashion in reais, online and in 38 stores, with its own store card and a creator program." },
+    { "label": "Why this week", "text": "Black Friday packs a large share of the quarter's sales into a few hours, and the busiest minute is at midnight." },
+    { "label": "What already works", "text": "Checkout saves each order once and tells every other part on one feed, so a slow partner fails alone." }
+  ],
+  "metrics": [
+    { "label": "API latency", "value": "450 → ~200 ms" },
+    { "label": "Error rate", "value": "1.8% → 0.5–0.7%" },
+    { "label": "Uptime", "value": "99.5 → 99.9%" },
+    { "label": "Recovery time (MTTR)", "value": "2–3 h → 30–45 min" }
+  ],
+  "problems": [
+    {
+      "id": "backend",
+      "accent": "a",
+      "label": "Backend problem",
+      "title": "Black Friday without losing a sale",
+      "question": "How do we protect and grow sales on the busiest night of the year, at a cost we chose on purpose?",
+      "bullets": ["Not every click is worth the same: protect paying first", "A fair line beats a crash when checkout is full", "Decide in October what switches off in November"],
+      "href": "/system-design/mare/black-friday",
+      "cta": "See the Black Friday plan"
+    },
+    {
+      "id": "frontend",
+      "accent": "b",
+      "label": "Frontend problem",
+      "title": "Live truth on a ready-made storefront",
+      "question": "How do we keep pages fast and cheap while never showing a price or stock that checkout will reject?",
+      "bullets": ["Keep the fast ready-made pages exactly as they are", "Make only price, stock and the bag live", "Design the busy version of every page in advance"],
+      "href": "/system-design/mare/storefront",
+      "cta": "See the storefront plan"
+    }
+  ],
+  "ladder": {
+    "label": "Illustrative triggers",
+    "levels": [
+      { "level": "L0", "name": "Normal", "off": "Nothing. Every feature is on.", "notice": "Nothing", "trigger": "—" },
+      { "level": "L1", "name": "Lean", "off": "Personal suggestions become this week's bestsellers. Videos stop playing on their own.", "notice": "Slightly less personal pages", "trigger": "Checkout p95 over target for 2 min, or the extras pool saturated · automatic" },
+      { "level": "L2", "name": "Focused", "off": "Search keeps its most used filters. New store-card applications and office exports pause.", "notice": "Fewer filters", "trigger": "Checkout error budget burning 14.4× · a person approves" },
+      { "level": "L3", "name": "Line", "off": "New checkouts wait in a fair line. Every bag stays reserved while its owner waits.", "notice": "A short line with a wait time", "trigger": "Checkout concurrency at the load-tested admission limit" },
+      { "level": "L4", "name": "Checkout only", "off": "Browsing is served from saved pages. Everything except orders waits for later.", "notice": "“We're busy. Your bag is safe.”", "trigger": "Orders database or payments in partial failure" }
+    ]
+  },
+  "worth": {
+    "label": "Illustrative inputs",
+    "perMinute": { "min": 50000, "max": 400000, "step": 10000, "value": 150000 },
+    "minutes": { "min": 5, "max": 60, "step": 5, "value": 20 },
+    "without": { "min": 5, "max": 60, "step": 5, "value": 30 },
+    "with": 5,
+    "cost": { "min": 100000, "max": 1500000, "step": 50000, "value": 400000 }
+  },
+  "decisions": {
+    "backend": {
+      "decision": "Pay for Black Friday readiness, sized by the sales an outage would cost, and agree in advance what switches off first.",
+      "alternative": "Keep sizing everything for an average day.",
+      "why": "Sales at five past midnight are worth many ordinary minutes, and the failures that matter (hot deals, payment slowdowns, a flood of connections) only appear at that scale.",
+      "changes": ["Sales per minute at the peak", "Share of checkouts that succeed", "Payments approved", "Items sold twice: zero", "Cost per successful order"],
+      "giveUp": ["A higher bill for about one week", "Suggestions and some filters off at the peak", "Some shoppers wait in a line", "Weeks of engineering before the event instead of new features"],
+      "wrong": ["Too little: the site fails at the most valuable minute of the year, and those sales don't come back.", "Too much: money spent on capacity that sits idle. The “is it worth it” math is how to find the middle."]
+    },
+    "frontend": {
+      "decision": "Keep the storefront ready-made. Make only price, stock, the bag and busy mode live, show stock honestly, and let pages simplify on a plan.",
+      "alternative": "Rebuild the storefront to build every page on request.",
+      "why": "The most expensive disappointment in retail is finding out at payment that an item is gone. The second is a page that breaks while checkout itself is fine.",
+      "changes": ["Add to bag → paid, at the peak", "“No longer available” at checkout", "Checkout responsiveness on real phones", "Cost per visit (more stays on nearby servers)"],
+      "giveUp": ["Exact stock counts become simple bands", "Extras disappear at the peak, by design", "No marketing trackers on checkout", "Time spent on simpler twins nobody sees on a good day"],
+      "wrong": ["Fully ready-made: we sell sold-out items, cancel orders and pay for it in support and reputation.", "Built on every request: our own computers carry all the traffic, the bill rises, and the site is slowest exactly when it matters."]
+    }
+  },
+  "concepts": [
+    { "title": "Capacity planning", "line": "Concurrency = throughput × time (Little's law): where the first wall is, before a load test finds it." },
+    { "title": "Admission control", "line": "Why waiting time explodes near full use, and why a fair line beats scaling forever." },
+    { "title": "Hot keys", "line": "Locks, sharded counters and why the hardest scaling problem is often one row." },
+    { "title": "Idempotency", "line": "Safe to retry makes every other resilience technique possible." },
+    { "title": "Outbox and backpressure", "line": "A spike becomes a queue that catches up; checkout never waits." },
+    { "title": "Bulkheads and retry budgets", "line": "Stopping one failure from becoming every failure." },
+    { "title": "Graceful degradation", "line": "Decide what to switch off in advance; build the busy version as a real screen." },
+    { "title": "Cache hierarchies", "line": "Ready-made at the edge, a two-second shared answer, and when staleness is a feature." },
+    { "title": "SLOs in money", "line": "Sales per minute, burn rates and error budgets as the language with the business." },
+    { "title": "Cost as a design input", "line": "Expected-loss arithmetic, and paying for the peak only while it happens." }
+  ],
+  "screens": [
+    {
+      "id": "mare-hub", "board": "SD-M0", "href": "/system-design/mare", "title": "Maré: the biggest week of the year",
+      "steps": [
+        { "title": "One retailer, one week", "caption": "A fashion retailer in Brazil, and the one week that decides its quarter.", "presenterNote": "Maré sells fashion online and in 38 stores, and one week decides its quarter. Everything here is fictitious, but the problems are real.", "seconds": 30 },
+        { "title": "Behind the scenes", "caption": "Protect and grow sales on the busiest night of the year, at a cost we chose.", "presenterNote": "The first problem is behind the scenes: how do we keep selling at midnight on Black Friday without paying for that capacity all year?", "seconds": 25 },
+        { "title": "On the screen", "caption": "Keep pages fast and cheap, and never show a price or stock that checkout will reject.", "presenterNote": "The second is on the screen: the store is fast because it's ready-made, so how do we keep that and still tell the truth about stock?", "seconds": 25 }
+      ]
+    },
+    { "id": "mare-bf-flow", "board": "SD-M1", "href": "/system-design/mare/black-friday", "title": "Black Friday without losing a sale", "diagram": "mare-black-friday", "seconds": [30, 30, 30, 25, 30, 25, 25] },
+    {
+      "id": "mare-bf-ladder", "board": "SD-M2", "href": "/system-design/mare/black-friday", "title": "The plan for a bad night",
+      "steps": [
+        { "title": "Level 1 · Lean", "caption": "The first thing to go is what shoppers miss least: personal suggestions become bestsellers.", "presenterNote": "Level one happens on its own. Suggestions become bestsellers and most shoppers never notice.", "seconds": 20 },
+        { "title": "Level 2 · Focused", "caption": "Search keeps its most used filters, and anything that can wait until Monday waits.", "presenterNote": "Level two pauses what can wait until Monday, like new store-card applications and office exports.", "seconds": 20 },
+        { "title": "Level 3 · Line", "caption": "New checkouts wait in a fair line, and every bag stays reserved while its owner waits.", "presenterNote": "Level three is the waiting line. The promise is simple: your bag is safe while you wait.", "seconds": 20 },
+        { "title": "Level 4 · Checkout only", "caption": "If something big fails, browsing runs from saved pages and only orders are taken live.", "presenterNote": "Level four is the last resort: we stop everything except taking orders, and we've rehearsed it.", "seconds": 20 }
+      ]
+    },
+    {
+      "id": "mare-bf-decision", "board": "SD-M3", "href": "/system-design/mare/black-friday", "title": "The decision: pay for the peak, on purpose",
+      "steps": [
+        { "title": "The decision", "caption": "Pay for readiness, sized by what an outage would cost, and agree in advance what switches off first.", "presenterNote": "The decision isn't technical: it's whether to pay for the peak, and how much, and what we agree to give up.", "seconds": 25 },
+        { "title": "What changes", "caption": "Sales per minute at the peak, checkouts that succeed, payments approved, and zero items sold twice.", "presenterNote": "These are the numbers it moves, and sales per minute at the peak is the one that matters most.", "seconds": 20 },
+        { "title": "Is it worth it?", "caption": "Compare the sales an outage would likely cost with what readiness costs. Move the sliders.", "presenterNote": "This is the whole argument in one line: keep spending while every R$1 of readiness removes more than R$1 of expected loss.", "seconds": 35 },
+        { "title": "What we give up", "caption": "A bigger bill for one week, fewer extras at the peak, and some shoppers in a short line.", "presenterNote": "And this is the price, said out loud, so nobody is surprised on the night.", "seconds": 20 }
+      ]
+    },
+    { "id": "mare-sf-flow", "board": "SD-M4", "href": "/system-design/mare/storefront", "title": "Live truth on a ready-made storefront", "diagram": "mare-storefront", "seconds": [25, 30, 25, 25, 25, 20, 20] },
+    {
+      "id": "mare-sf-demo", "board": "SD-M5", "href": "/system-design/mare/storefront", "title": "Try it: one deal on Black Friday night",
+      "steps": [
+        { "title": "Watch the stock", "caption": "Others are buying. The band changes, the page never jumps, and our systems are asked once every 2 seconds.", "presenterNote": "Press the button a few times: the stock drops, the band changes, and nothing on the page moves.", "seconds": 30 },
+        { "title": "Add to bag", "caption": "With plenty left it's instant. With a few left it says reserving and confirms.", "presenterNote": "Now add it to the bag, first with plenty in stock and then with only a few left.", "seconds": 25 },
+        { "title": "Turn up the pressure", "caption": "Raise the busy level and watch the page get simpler while the buy button keeps working.", "presenterNote": "Finally, turn up the pressure: the page gets simpler, and buying still works at every level.", "seconds": 30 }
+      ]
+    },
+    {
+      "id": "mare-sf-decision", "board": "SD-M6", "href": "/system-design/mare/storefront", "title": "The decision: keep what works, make the truth live",
+      "steps": [
+        { "title": "The decision", "caption": "Keep the store ready-made, make only the fast-changing parts live, and design the busy version in advance.", "presenterNote": "The frontend decision is mostly about what we don't do: we don't rebuild a storefront that already works.", "seconds": 25 },
+        { "title": "What changes", "caption": "More bags become paid orders at the peak, and far fewer shoppers hear “no longer available” at payment.", "presenterNote": "The numbers it moves are about trust at the moment of paying.", "seconds": 20 },
+        { "title": "What we give up", "caption": "Exact stock counts, some extras at the peak, and marketing trackers on the checkout page.", "presenterNote": "And the price is honest too: less precise scarcity, fewer extras at the peak, and less tracking on checkout.", "seconds": 20 }
+      ]
+    }
+  ],
+  "bridge": {
+    "seconds": 30,
+    "points": [
+      "Both decisions protect the same number: sales per minute at the peak.",
+      "The backend decides what to protect and what to give up; the frontend makes giving up look calm instead of broken.",
+      "Atlas and Pulse follow the same pattern: one decision behind the scenes, one on the screen."
+    ]
+  }
+}

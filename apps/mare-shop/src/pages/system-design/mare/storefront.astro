@@ -1,0 +1,49 @@
+---
+/**
+ * Maré frontend problem: live truth on a ready-made storefront. The plan as a story, a live
+ * demo of one deal on Black Friday night, and the business decision.
+ */
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Decision from '../../../components/system-design/Decision.astro';
+import LiveDemo from '../../../components/system-design/LiveDemo.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import Story from '../../../components/system-design/Story.astro';
+import { caseSequence, cases } from '@portfolio/system-design';
+
+const problem = cases.mare.problems[1]!;
+---
+<SystemDesign title="Live truth on a ready-made storefront · Maré · System design" description="Maré's frontend problem in plain language: keep the fast ready-made storefront, make only price, stock and the bag live, show stock honestly, and design the busy version of every page in advance." accent="b" sequence={caseSequence('mare')}>
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><a href="/system-design/mare">Maré</a><span aria-hidden="true">/</span><span>Frontend problem</span></nav>
+  <Story story="mare-storefront" screen="mare-sf-flow" board="SD-M4" anchors={{ figure: 'sd-sf-flow', panel: 'sd-sf-steps' }}>
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Maré · frontend problem</p>
+      <h1>{problem.title}</h1>
+      <p class="sdp-lede">{problem.question} The storefront already works, so we keep it and make only the fast-changing parts live. Press <kbd>E</kbd> for the engineering.</p>
+    </header>
+  </Story>
+
+  <Screen id="mare-sf-demo" accent="b" anchor="sd-sf-demo-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Live demo</p>
+      <h2>Others are buying. Nothing on the page jumps.</h2>
+    </header>
+    <LiveDemo />
+  </Screen>
+
+  <Screen id="mare-sf-decision" accent="b" anchor="sd-sf-decision-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>The business decision</p>
+      <h2>Keep what works. Make the truth live.</h2>
+    </header>
+    <Decision side="frontend" />
+  </Screen>
+
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/mare"><span>Back to the case</span>Maré: the biggest week of the year →</a>
+    <a href="/system-design/mare/orders">Engineering deep dive: orders under load</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-mare-sf';
+</script>
