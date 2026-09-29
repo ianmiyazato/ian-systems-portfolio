@@ -119,22 +119,24 @@ async function measure(path) {
     const host = document.querySelector(selector);
     if (!host) return null;
     const last = new Map();
-    let maxJump = 0; let jumps = 0; let maxConcurrent = 0;
+    let maxJump = 0; let jumps = 0; let maxConcurrent = 0; let frame = 0;
     const end = performance.now() + 3000;
     while (performance.now() < end) {
+      frame += 1;
       await new Promise((resolve) => requestAnimationFrame(resolve));
-      const moving = [...host.querySelectorAll('circle, [data-packet]')].filter((node) => node.getAnimations().some((animation) => animation.playState === 'running'));
+      // Only visible packets count: a packet that restarts its lap at opacity 0 has not visibly jumped.
+      const moving = [...host.querySelectorAll('circle, [data-packet]')].filter((node) => node.getAnimations().some((animation) => animation.playState === 'running') && Number(getComputedStyle(node).opacity) > 0.1);
       maxConcurrent = Math.max(maxConcurrent, moving.length);
       for (const node of moving) {
         const box = node.getBoundingClientRect();
         const point = [box.x + box.width / 2, box.y + box.height / 2];
         const previous = last.get(node);
-        if (previous) {
+        if (previous && previous.visibleFrame === frame - 1) {
           const distance = Math.hypot(point[0] - previous[0], point[1] - previous[1]);
           maxJump = Math.max(maxJump, distance);
           if (distance > 60) jumps += 1;
         }
-        last.set(node, point);
+        last.set(node, Object.assign(point, { visibleFrame: frame }));
       }
     }
     return { maxConcurrent, maxJumpPx: Math.round(maxJump), jumps };
