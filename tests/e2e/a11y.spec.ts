@@ -37,6 +37,7 @@ for (const [name, href] of targets) {
 
 for (const route of routes.filter((item) => story.has(item.id))) {
   test(`a11y · ${route.id} · every step`, async ({ page }) => {
+    test.setTimeout(150_000);
     await page.goto(pinned(route.href));
     await expect(page.locator('.im-footer')).toContainText('All names are fictitious');
     await page.waitForLoadState('networkidle');

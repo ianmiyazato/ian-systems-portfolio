@@ -12,7 +12,7 @@
       "swapPlan": "Each source has one small checker function; a managed connector could replace the trigger later without touching the checks.",
       "costAt10x": "Storage and checking grow in a straight line with the number of files, and checks run in parallel, so nothing needs a redesign.",
       "difference": 3.6,
-      "difficulty": 2.0
+      "difficulty": 2.1
     },
     {
       "id": "analytics-database",
@@ -24,7 +24,7 @@
       "swapPlan": "Standard SQL and open file formats: the roll-ups can be re-pointed at another columnar store in one migration project.",
       "costAt10x": "Storage grows 10×, but questions read hourly and daily roll-ups, so compute grows far less than the raw volume.",
       "difference": 1.6,
-      "difficulty": 4.4
+      "difficulty": 4.3
     },
     {
       "id": "metric-definitions",
@@ -36,7 +36,7 @@
       "swapPlan": "Definitions live as versioned code in our repository; every database and BI tool reads them, so there is nothing to swap.",
       "costAt10x": "No change: definitions grow with the number of metrics, not with the volume of data.",
       "difference": 4.6,
-      "difficulty": 1.8
+      "difficulty": 1.4
     },
     {
       "id": "unusual-numbers",
@@ -60,7 +60,7 @@
       "swapPlan": "One prompt and one number checker around a provider-neutral call: switching models is a config change plus an evaluation run.",
       "costAt10x": "Reports are per team, not per row: 10× more data still means the same number of reports, so AI cost barely moves.",
       "difference": 2.2,
-      "difficulty": 4.7
+      "difficulty": 4.6
     },
     {
       "id": "ad-hoc-exploration",

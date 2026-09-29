@@ -70,10 +70,12 @@ const remote = (name: string) => `@portfolio/remote-${name}`;
 export const routes: RouteEntry[] = [
   { id: 'home', system: 'overview', title: 'Portfolio home', href: '/', zone: 'shell', owner: shell, board: 'OV-home', heading: 'I build the core platform', release: '0.1', mobile: true },
   { id: 'work-v0-2', system: 'overview', title: 'v0.2 improvement map', href: '/work/v0-2', zone: 'shell', owner: shell, board: 'V2-map', heading: 'Twelve changes', release: '0.2', checked: '2026-09-28' },
+  { id: 'sd-index', system: 'system-design', title: 'System design · two problems', href: '/system-design', zone: 'mare-shop', owner: shop, board: 'SD-00', heading: 'Two problems, solved end to end', release: '0.3', checked: '2026-09-29' },
   { id: 'sd-metrics', system: 'system-design', title: 'Problem A · metrics to decisions', href: '/system-design/metrics-to-decisions', zone: 'mare-shop', owner: shop, board: 'SD-A1', heading: 'From a file every minute to one clear decision', release: '0.3', checked: '2026-09-29' },
   { id: 'sd-metrics-build', system: 'system-design', title: 'Problem A · build or buy', href: '/system-design/metrics-to-decisions/build-or-buy', zone: 'mare-shop', owner: shop, board: 'SD-A3', heading: 'What we build, what we buy', release: '0.3', checked: '2026-09-29' },
   { id: 'sd-personal', system: 'system-design', title: 'Problem B · personal and instant', href: '/system-design/personal-and-instant', zone: 'mare-shop', owner: shop, board: 'SD-B1', heading: 'Personal, and still instant', release: '0.3', checked: '2026-09-29' },
   { id: 'sd-personal-build', system: 'system-design', title: 'Problem B · build or buy', href: '/system-design/personal-and-instant/build-or-buy', zone: 'mare-shop', owner: shop, board: 'SD-B3', heading: 'What we build, what we buy', release: '0.3', checked: '2026-09-29' },
+  { id: 'sd-map', system: 'system-design', title: 'The 80/20 map', href: '/system-design/build-vs-buy', zone: 'mare-shop', owner: shop, board: 'SD-99', heading: 'The 80/20 map', release: '0.3', checked: '2026-09-29' },
 
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
   { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
