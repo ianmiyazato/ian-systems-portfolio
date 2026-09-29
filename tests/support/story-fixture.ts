@@ -2,14 +2,13 @@
 // with two steps, the deck controls and a spacer tall enough to scroll the diagram away.
 // The player is bundled with esbuild, so the tests need no app build or server.
 import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { build } from 'esbuild';
-import { parseDiagram } from '../src/model';
-import { renderControls, renderStory } from '../src/render';
-import sample from './fixtures/sample.json';
+import { parseDiagram } from '../../packages/story-diagram/src/model';
+import { renderControls, renderStory } from '../../packages/story-diagram/src/render';
 
-const here = dirname(fileURLToPath(import.meta.url));
+const here = join(__dirname, '../../packages/story-diagram/test');
+const sample: unknown = JSON.parse(readFileSync(join(here, 'fixtures/sample.json'), 'utf8'));
 
 export async function fixtureHtml() {
   const bundle = await build({ entryPoints: [join(here, 'fixture-entry.ts')], bundle: true, write: false, format: 'esm', target: 'es2022' });

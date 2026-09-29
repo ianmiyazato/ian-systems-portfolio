@@ -25,7 +25,7 @@ describe('renderDiagram', () => {
 
   it('matches the structural snapshot', () => {
     const svg = parse(renderDiagram(diagram)).querySelector('svg')!;
-    expect(outline(svg).join('\n')).toMatchSnapshot();
+    expect(outline(svg as unknown as Element).join('\n')).toMatchSnapshot();
   });
 
   it('scales with a viewBox on a 12-column grid and never sets a pixel size', () => {
@@ -64,7 +64,7 @@ describe('renderDiagram', () => {
   });
 
   it('throws when a label will not fit its node', () => {
-    const tooLong = parseDiagram({ ...structuredClone(sample), nodes: sample.nodes.map((node, index) => (index === 0 ? { ...node, label: 'An extremely long label' } : node)) });
+    const tooLong = parseDiagram({ ...structuredClone(sample), nodes: sample.nodes.map((node, index) => (index === 0 ? { ...node, label: 'Understanding all' } : node)) });
     expect(() => renderDiagram(tooLong)).toThrow(/does not fit/);
   });
 });
