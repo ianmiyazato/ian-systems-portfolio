@@ -2,6 +2,11 @@
 
 One line per merged micro-task, newest first.
 
+## v0.3 · system design for a non-technical audience
+
+- 2026-09-29 · `feat(story-diagram)`: `@portfolio/story-diagram`, the in-house story engine. It has a Zod model on a 12-column grid, a plain-language lint, deterministic build-time SVG and a small player. The player handles keys, `?step=`, focus, at most three packets, off-screen/hidden/P pause, reduced motion and presentation mode. Tests came first: 26 unit tests and 9 Playwright contracts on a self-contained fixture.
+- 2026-09-29 · `docs(audit)`: measured audit of the four v0.2 system design pages (`docs/audit/system-design-v1.md`, `scripts/sd-audit.mjs`).
+
 ## v0.2
 
 - 2026-09-28 · `chore(release)`: v0.2.0 deployed to production (mare-ops, mare-shop, pulse, then shell; 4/12 production deploys, 0 previews) and verified against the production domain: 585/585 Playwright tests and 12/12 legacy views.
