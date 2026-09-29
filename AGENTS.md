@@ -1,8 +1,8 @@
 # Systems portfolio operating manual
 
-> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.2.0 deployed and verified 2026-09-28: the full Playwright suite (585 tests: crawler, flows, Decision Lens anchors, axe, reduced motion, JS budgets) passes against the production domain, and all 12 legacy `?view=` links resolve.
+> **Production:** https://ian-portfolio-shell.vercel.app serves every zone under one domain (the shell rewrites to `ian-portfolio-mare-ops`, `ian-portfolio-mare-shop`, `ian-portfolio-pulse`). v0.3 (system design for a non-technical audience) deployed and verified 2026-09-29 from `main` 8dd7d34: mare-shop, then shell. Against the production domain: crawler 99/99 routes, the system design story, redirect and Decision Lens specs, per-step axe, JS budgets and reduced motion all pass. Present it with https://ian-portfolio-shell.vercel.app/system-design?present=1.
 >
-> **Free-tier ledger (v0.2):** 4/12 production deploys · 0/0 preview deploys · 24/2,000 Supabase rows · 11/20 MB · 0 new projects, functions, crons or storage. Run `pnpm budget` for live totals.
+> **Free-tier ledger:** 6/12 production deploys (v0.3 used 2 of its 3) · 0/0 preview deploys · 24/2,000 Supabase rows · 11/20 MB · 0 new projects, functions, crons or storage. Run `pnpm budget` for live totals.
 
 This file is the index. Detail lives in `docs/agents/`:
 
@@ -135,7 +135,8 @@ Recorded 2026-09-27 (v0.2 session, Claude Code):
 
 ## 8. Known gaps / next steps
 
-- **CI deploys still need `VERCEL_TOKEN`.** v0.2.0 was deployed from an authenticated CLI session (2026-09-28). The `main` workflow's production job skips until a token exists: create one at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`. In this sandbox `~/.local/share` is read-only, so the CLI needs `--global-config <writable dir>` to refresh or store a login.
+- **CI deploys still need `VERCEL_TOKEN`.** v0.2.0 and v0.3 were deployed from the CLI (v0.3 with a user-provided token passed only through the environment, never stored). The `main` workflow's production job skips until a token exists: create one at https://vercel.com/account/tokens and run `gh secret set VERCEL_TOKEN --repo ianmiyazato/ian-systems-portfolio`. In this sandbox `~/.local/share` is read-only, so the CLI needs `--global-config <writable dir>` to refresh or store a login.
+- **Stale CDN entries behind pinned zone URLs.** On 2026-09-29 the shell served `/mare/ops/assets/provenance-*.js` as a year-cached HTML page (cached since the v0.2 release), which broke Maré Ops navigation in production. `vercel cache purge --type cdn --yes` on the mare-ops and shell projects fixed it without a deploy. If a zone asset returns HTML through the shell, purge first, then check the shell's `*_URL` env vars.
 - **Chrome DevTools MCP** needs Chrome stable (absent; no sudo). Fix: install Google Chrome, or `claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath ~/.cache/ms-playwright/chromium-1187/chrome-linux/chrome`.
 - **`@lhci/cli` on WSL** cannot launch Chrome (EACCES on the Windows temp dir); `pnpm lighthouse` uses the Lighthouse Node API over Playwright's Chromium instead. `pnpm lighthouse:ci` works on plain Linux.
 - **adapter-vercel + `paths.base`** writes prerender overrides without the base; `apps/pulse/scripts/fix-vercel-overrides.mjs` re-keys them. Remove once fixed upstream.

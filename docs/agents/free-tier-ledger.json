@@ -1,20 +1,94 @@
 {
   "$comment": "Free-tier ledger for v0.2 (hard limits in docs/agents/budgets.md). Append every deploy and every database change; `pnpm budget` prints the totals.",
-  "limits": { "productionDeploys": 12, "previewDeploys": 0, "supabaseRows": 2000, "supabaseDbMb": 20, "staticOutputMbPerApp": 25 },
+  "limits": {
+    "productionDeploys": 12,
+    "previewDeploys": 0,
+    "supabaseRows": 2000,
+    "supabaseDbMb": 20,
+    "staticOutputMbPerApp": 25
+  },
   "vercel": {
-    "projects": ["ian-portfolio-shell", "ian-portfolio-mare-ops", "ian-portfolio-mare-shop", "ian-portfolio-pulse"],
+    "projects": [
+      "ian-portfolio-shell",
+      "ian-portfolio-mare-ops",
+      "ian-portfolio-mare-shop",
+      "ian-portfolio-pulse"
+    ],
     "deploys": [
-      { "date": "2026-09-28", "kind": "production", "apps": ["mare-ops"], "reason": "v0.2.0 release (ian-portfolio-mare-g37438wbq.vercel.app)" },
-      { "date": "2026-09-28", "kind": "production", "apps": ["mare-shop"], "reason": "v0.2.0 release (ian-portfolio-mare-shop-mxm47tlk7.vercel.app)" },
-      { "date": "2026-09-28", "kind": "production", "apps": ["pulse"], "reason": "v0.2.0 release (ian-portfolio-pulse-pi18p461n.vercel.app)" },
-      { "date": "2026-09-28", "kind": "production", "apps": ["shell"], "reason": "v0.2.0 release (ian-portfolio-shell-b90182dly.vercel.app)" }
+      {
+        "date": "2026-09-28",
+        "kind": "production",
+        "apps": [
+          "mare-ops"
+        ],
+        "reason": "v0.2.0 release (ian-portfolio-mare-g37438wbq.vercel.app)"
+      },
+      {
+        "date": "2026-09-28",
+        "kind": "production",
+        "apps": [
+          "mare-shop"
+        ],
+        "reason": "v0.2.0 release (ian-portfolio-mare-shop-mxm47tlk7.vercel.app)"
+      },
+      {
+        "date": "2026-09-28",
+        "kind": "production",
+        "apps": [
+          "pulse"
+        ],
+        "reason": "v0.2.0 release (ian-portfolio-pulse-pi18p461n.vercel.app)"
+      },
+      {
+        "date": "2026-09-28",
+        "kind": "production",
+        "apps": [
+          "shell"
+        ],
+        "reason": "v0.2.0 release (ian-portfolio-shell-b90182dly.vercel.app)"
+      },
+      {
+        "date": "2026-09-29",
+        "kind": "production",
+        "apps": [
+          "mare-shop"
+        ],
+        "reason": "v0.3 system design story, deploy 1 of the task's 3 (ian-portfolio-mare-shop-hj31jpmwk.vercel.app, main 8dd7d34)"
+      },
+      {
+        "date": "2026-09-29",
+        "kind": "production",
+        "apps": [
+          "shell"
+        ],
+        "reason": "v0.3 system design story, deploy 2 of the task's 3 (ian-portfolio-shell-670l6tzdh.vercel.app, main 8dd7d34)"
+      }
     ]
   },
   "supabase": {
     "projectRef": "mtsgotwfnryoljdjsgcd",
     "snapshots": [
-      { "date": "2026-09-27", "rows": { "campaign_posts": 3, "eval_runs": 1, "events": 3, "integration_events": 2, "orders": 15 }, "dbMb": 11, "buckets": 0, "edgeFunctions": 0, "pgCron": false, "note": "v0.2 baseline, read through the Supabase MCP" }
+      {
+        "date": "2026-09-27",
+        "rows": {
+          "campaign_posts": 3,
+          "eval_runs": 1,
+          "events": 3,
+          "integration_events": 2,
+          "orders": 15
+        },
+        "dbMb": 11,
+        "buckets": 0,
+        "edgeFunctions": 0,
+        "pgCron": false,
+        "note": "v0.2 baseline, read through the Supabase MCP"
+      }
     ]
   },
-  "created": { "projects": 0, "functions": 0, "crons": 0, "storage": 0 }
+  "created": {
+    "projects": 0,
+    "functions": 0,
+    "crons": 0,
+    "storage": 0
+  }
 }

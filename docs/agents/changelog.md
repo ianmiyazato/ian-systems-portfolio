@@ -4,6 +4,7 @@ One line per merged micro-task, newest first.
 
 ## v0.3 · system design for a non-technical audience
 
+- 2026-09-29 · `chore(release)`: v0.3 in production. Release PR #50 merged to `main` (8dd7d34) after green quality, e2e and screenshot gates. Deployed mare-shop, then shell: 2 of the task's 3 deploys, 6/12 overall, 0 previews. Production checks: crawler 99/99, story/redirect/lens specs, per-step axe, JS budgets and reduced motion. A year-cached HTML entry for a Maré Ops chunk, dating from v0.2, was purged from the CDN.
 - 2026-09-29 · `fix(sd-demo)`: the live pagination demo starts its CLS observer only after the page, fonts and 16:9 presentation geometry are stable, and ignores queued entries older than that measured run. Direct presentation links now measure product and AI updates rather than inherited page setup; an eight-run parallel stress gate holds the visible readout at `0.000`.
 - 2026-09-29 · `test(system-design)`: v2 audit, seven-route trace/axe/CLS evidence, Lighthouse medians, 43-route JS budget ledger and 72 deterministic step screenshots at 1440 × 900 and 1920 × 1080. All seven system-design routes are 8.5–10.6 kB gzipped; the React Flow exceptions are removed.
 - 2026-09-29 · `fix(sd-older-pages)`: `/system-design/mare` rebuilt on the story engine as the engineering deep dive (six steps, real before/after metrics). Request path, Atlas and Pulse system design pages retired with 308 redirects. React Flow and the world-clock controls removed from the shell, and all of `/system-design/*` is now served by the static zone.
