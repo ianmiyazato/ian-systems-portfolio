@@ -55,9 +55,10 @@
 .sd-arrow path { fill: var(--sd-edge); }
 .sd-arrow-hi path { fill: var(--sd-accent); }
 
-/* Focus: one idea per step. */
+/* Focus: one idea per step. Diagrams always focus; page content dims once the reader steps
+   through (or presents), so a plain visit reads at full contrast. */
 .sd-node, .sd-edge, [data-focus-steps] { opacity: 1; }
-.is-dim { opacity: .25 !important; }
+:is(.sd-node, .sd-edge).is-dim, [data-engaged] .is-dim, html[data-present] .is-dim { opacity: .25 !important; }
 
 /* Packets: at most three, only on focused edges. Reduced motion parks them mid-edge. */
 .sd-packet { fill: var(--sd-accent); stroke: var(--sd-surface); stroke-width: 2.5; opacity: 0; }

@@ -152,7 +152,7 @@ export function renderCaptions(steps: StepText[]): string {
   const total = steps.length;
   const blocks = steps.map((step, index) => `<div class="sd-caption-block${index === 0 ? '' : ' is-off'}" data-step-only="${index + 1}"${index === 0 ? '' : ' aria-hidden="true"'}>`
     + `<p class="sd-step-kicker">Step ${index + 1} of ${total}</p>`
-    + `<h3 class="sd-step-title">${escapeHtml(step.title)}</h3>`
+    + `<p class="sd-step-title">${escapeHtml(step.title)}</p>`
     + (step.caption ? `<p class="sd-step-caption">${escapeHtml(step.caption)}</p>` : '')
     + (step.engineering ? `<p class="sd-step-eng"><span class="sd-eng-tag">Engineering</span>${escapeHtml(step.engineering)}</p>` : '')
     + '</div>').join('');
