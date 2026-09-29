@@ -122,6 +122,17 @@ for (const [name, table] of Object.entries(buildVsBuy)) {
 test.describe('Problem B · speed', () => {
   test.skip(!routes.some((route) => route.href === '/system-design/personal-and-instant'), 'not built yet');
 
+  test('presentation mode is in place before first paint, so the demo CLS stays 0', async ({ page }) => {
+    await page.goto('/system-design/personal-and-instant?present=1&step=8&ai=300');
+    const demo = page.locator('[data-anchor="sd-demo"]');
+    await expect(page.locator('html')).toHaveAttribute('data-present', '');
+    await expect(demo.locator('[data-readout="ai"]')).toContainText('300 ms');
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(900);
+    await expect(demo.locator('[data-readout="cls"]')).toHaveText('0.000');
+    expect(await cls(page)).toBe(0);
+  });
+
   test('the race plays both lanes on one clock, and reduced motion shows the finish', async ({ page }) => {
     await page.goto('/system-design/personal-and-instant?step=5');
     const race = page.locator('[data-anchor="sd-race"]');

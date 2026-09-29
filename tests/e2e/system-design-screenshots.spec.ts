@@ -21,6 +21,8 @@ for (const route of story) {
         await page.goto(`${route.href}?present=1&step=${step}&ai=300`);
         await page.evaluate(() => document.fonts.ready);
         await page.waitForTimeout(step === 1 ? 900 : 600);
+        const clsReadout = page.locator('[data-readout="cls"]:visible');
+        if (await clsReadout.count()) await expect(clsReadout).toHaveText('0.000');
         // The audience's view: controls hide while the mouse is still.
         await page.evaluate(() => document.documentElement.setAttribute('data-idle', ''));
         await page.screenshot({ path: `docs/screenshots/system-design/steps/${route.id}-${String(step).padStart(2, '0')}-${width}.jpg`, quality: 82 });
