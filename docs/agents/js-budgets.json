@@ -9,20 +9,45 @@
     "budget": 130,
     "group": "shell"
   },
+  "sd-index": {
+    "kb": 8.5,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-metrics": {
+    "kb": 8.8,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-metrics-build": {
+    "kb": 8.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-personal": {
+    "kb": 10.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-personal-build": {
+    "kb": 8.6,
+    "budget": 60,
+    "group": "shop"
+  },
+  "sd-map": {
+    "kb": 8.9,
+    "budget": 60,
+    "group": "shop"
+  },
   "mare-languages": {
     "kb": 105.4,
     "budget": 130,
     "group": "shell"
   },
   "system-design-mare": {
-    "kb": 169.7,
-    "budget": null,
-    "group": "shell"
-  },
-  "system-design-request-path": {
-    "kb": 125.6,
-    "budget": 130,
-    "group": "shell"
+    "kb": 8.6,
+    "budget": 60,
+    "group": "shop"
   },
   "pay-customer-app": {
     "kb": 5.6,
@@ -40,17 +65,17 @@
     "group": "shop"
   },
   "observability-problems": {
-    "kb": 129.1,
+    "kb": 129.2,
     "budget": 130,
     "group": "shell"
   },
   "observability-trace": {
-    "kb": 126.8,
+    "kb": 126.9,
     "budget": 130,
     "group": "shell"
   },
   "observability-logs": {
-    "kb": 125.3,
+    "kb": 125.4,
     "budget": 130,
     "group": "shell"
   },
@@ -60,7 +85,7 @@
     "group": "shell"
   },
   "observability-ai-audit": {
-    "kb": 124.4,
+    "kb": 124.5,
     "budget": 130,
     "group": "shell"
   },
@@ -100,17 +125,17 @@
     "group": "shell"
   },
   "atlas-company": {
-    "kb": 116.1,
+    "kb": 116.2,
     "budget": 130,
     "group": "shell"
   },
   "atlas-arena-setup": {
-    "kb": 120,
+    "kb": 120.1,
     "budget": 130,
     "group": "shell"
   },
   "atlas-arena-session": {
-    "kb": 120,
+    "kb": 120.1,
     "budget": 130,
     "group": "shell"
   },
@@ -130,7 +155,7 @@
     "group": "shell"
   },
   "atlas-wrapped": {
-    "kb": 125.9,
+    "kb": 126,
     "budget": 130,
     "group": "shell"
   },
@@ -140,7 +165,7 @@
     "group": "shell"
   },
   "atlas-live-mock": {
-    "kb": 123.9,
+    "kb": 124,
     "budget": 130,
     "group": "shell"
   },
@@ -164,18 +189,8 @@
     "budget": 130,
     "group": "shell"
   },
-  "system-design-atlas": {
-    "kb": 169.7,
-    "budget": null,
-    "group": "shell"
-  },
-  "system-design-pulse": {
-    "kb": 169.7,
-    "budget": null,
-    "group": "shell"
-  },
   "remote-counter": {
-    "kb": 36.9,
+    "kb": 37.1,
     "budget": 180,
     "group": "remote"
   },
@@ -185,7 +200,7 @@
     "group": "host"
   },
   "remote-product-hub": {
-    "kb": 34.7,
+    "kb": 34.9,
     "budget": 180,
     "group": "remote"
   },
@@ -195,7 +210,7 @@
     "group": "host"
   },
   "remote-pay": {
-    "kb": 42,
+    "kb": 42.2,
     "budget": 180,
     "group": "remote"
   },
@@ -205,7 +220,7 @@
     "group": "host"
   },
   "remote-circle": {
-    "kb": 32.4,
+    "kb": 32.6,
     "budget": 180,
     "group": "remote"
   },
@@ -215,7 +230,7 @@
     "group": "host"
   },
   "remote-mesh": {
-    "kb": 34.3,
+    "kb": 34.5,
     "budget": 180,
     "group": "remote"
   },

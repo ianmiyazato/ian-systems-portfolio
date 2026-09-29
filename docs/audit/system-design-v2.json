@@ -1,0 +1,498 @@
+[
+  {
+    "path": "/system-design",
+    "slug": "system-design",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-1440.png",
+      "img/system-design-v2-system-design-1920.png",
+      "img/system-design-v2-system-design-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 0,
+      "textNodes": 29,
+      "minText": 14,
+      "under14": 0,
+      "under16": 15,
+      "overlaps": 18,
+      "overlapSamples": [
+        "Step 1 of 4 × Step 2 of 4",
+        "Step 1 of 4 × Step 3 of 4",
+        "Step 1 of 4 × Step 4 of 4",
+        "Two problems × Problem A",
+        "Two problems × Problem B"
+      ],
+      "chromaticColors": 2,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 0,
+      "maxJumpPx": 0,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 0,
+      "animatedProperties": [],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 10,
+      "frames": 602,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 24
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design.trace.json",
+      "steps": 4,
+      "tasks": 2147,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 2,
+      "observerLongTasks": [
+        53
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1254
+    }
+  },
+  {
+    "path": "/system-design/metrics-to-decisions",
+    "slug": "system-design-metrics-to-decisions",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-metrics-to-decisions-1440.png",
+      "img/system-design-v2-system-design-metrics-to-decisions-1920.png",
+      "img/system-design-v2-system-design-metrics-to-decisions-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1200 388",
+      "svgCount": 1,
+      "textNodes": 57,
+      "minText": 14,
+      "under14": 0,
+      "under16": 24,
+      "overlaps": 37,
+      "overlapSamples": [
+        "a results fileevery minu × object storage+ event",
+        "stops wrong ormissing nu × schema + rangechecks",
+        "built for fasttotals × columnar, byminute",
+        "is this normalfor now? × seasonalbaseline",
+        "with a reason,never lost × quarantine +reason"
+      ],
+      "chromaticColors": 2,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 2,
+      "maxJumpPx": 2,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 20,
+      "frames": 1201,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 21
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-metrics-to-decisions.trace.json",
+      "steps": 8,
+      "tasks": 5641,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 3,
+      "observerLongTasks": [
+        68
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 869
+    }
+  },
+  {
+    "path": "/system-design/metrics-to-decisions/build-or-buy",
+    "slug": "system-design-metrics-to-decisions-build-or-buy",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-metrics-to-decisions-build-or-buy-1440.png",
+      "img/system-design-v2-system-design-metrics-to-decisions-build-or-buy-1920.png",
+      "img/system-design-v2-system-design-metrics-to-decisions-build-or-buy-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 0,
+      "textNodes": 53,
+      "minText": 14,
+      "under14": 0,
+      "under16": 28,
+      "overlaps": 9,
+      "overlapSamples": [
+        "Step 1 of 3 × Step 2 of 3",
+        "Step 1 of 3 × Step 3 of 3",
+        "What we build × What we buy",
+        "What we build × What we give up",
+        "What defines the busines × Heavy machinery everyone"
+      ],
+      "chromaticColors": 2,
+      "jargon": [
+        "sql",
+        "api",
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 0,
+      "maxJumpPx": 0,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 0,
+      "animatedProperties": [],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 10,
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 2,
+      "worstFrameMs": 26
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-metrics-to-decisions-build-or-buy.trace.json",
+      "steps": 3,
+      "tasks": 2022,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 6,
+      "observerLongTasks": []
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1577
+    }
+  },
+  {
+    "path": "/system-design/personal-and-instant",
+    "slug": "system-design-personal-and-instant",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-personal-and-instant-1440.png",
+      "img/system-design-v2-system-design-personal-and-instant-1920.png",
+      "img/system-design-v2-system-design-personal-and-instant-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1200 388",
+      "svgCount": 1,
+      "textNodes": 37,
+      "minText": 14,
+      "under14": 0,
+      "under16": 18,
+      "overlaps": 23,
+      "overlapSamples": [
+        "what you do,with consent × client events",
+        "linen, neutraltones, mid × profile fromembeddings",
+        "items like theones you l × vectorsimilarity",
+        "in stock, yoursize, near × re-rank: stock,size, dis",
+        "on your photo,after a si × 3rd-partytry-on API"
+      ],
+      "chromaticColors": 1,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 2,
+      "maxJumpPx": 2,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 20,
+      "frames": 1201,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 24
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-personal-and-instant.trace.json",
+      "steps": 8,
+      "tasks": 5118,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 5,
+      "observerLongTasks": [
+        60
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 541
+    }
+  },
+  {
+    "path": "/system-design/personal-and-instant/build-or-buy",
+    "slug": "system-design-personal-and-instant-build-or-buy",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-personal-and-instant-build-or-buy-1440.png",
+      "img/system-design-v2-system-design-personal-and-instant-build-or-buy-1920.png",
+      "img/system-design-v2-system-design-personal-and-instant-build-or-buy-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 0,
+      "textNodes": 53,
+      "minText": 14,
+      "under14": 0,
+      "under16": 28,
+      "overlaps": 9,
+      "overlapSamples": [
+        "Step 1 of 3 × Step 2 of 3",
+        "Step 1 of 3 × Step 3 of 3",
+        "What we build × What we buy",
+        "What we build × What we give up",
+        "Ours: how suggestions ar × Bought or open source: p"
+      ],
+      "chromaticColors": 2,
+      "jargon": [
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 0,
+      "maxJumpPx": 0,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 0,
+      "animatedProperties": [],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 10,
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 21
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-personal-and-instant-build-or-buy.trace.json",
+      "steps": 3,
+      "tasks": 2017,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 3,
+      "observerLongTasks": []
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1504
+    }
+  },
+  {
+    "path": "/system-design/build-vs-buy",
+    "slug": "system-design-build-vs-buy",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-build-vs-buy-1440.png",
+      "img/system-design-v2-system-design-build-vs-buy-1920.png",
+      "img/system-design-v2-system-design-build-vs-buy-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 0,
+      "textNodes": 40,
+      "minText": 14,
+      "under14": 0,
+      "under16": 27,
+      "overlaps": 20,
+      "overlapSamples": [
+        "What revenue and profit  × Tracking what people do",
+        "Suggestion ranking × Understanding products",
+        "Step 1 of 4 × Step 2 of 4",
+        "Step 1 of 4 × Step 3 of 4",
+        "Step 1 of 4 × Step 4 of 4"
+      ],
+      "chromaticColors": 3,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 0,
+      "maxJumpPx": 0,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 0,
+      "animatedProperties": [],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 10,
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 22
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-build-vs-buy.trace.json",
+      "steps": 4,
+      "tasks": 2158,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 2,
+      "observerLongTasks": []
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 735
+    }
+  },
+  {
+    "path": "/system-design/mare",
+    "slug": "system-design-mare",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v2-system-design-mare-1440.png",
+      "img/system-design-v2-system-design-mare-1920.png",
+      "img/system-design-v2-system-design-mare-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1200 584",
+      "svgCount": 1,
+      "textNodes": 56,
+      "minText": 14,
+      "under14": 0,
+      "under16": 27,
+      "overlaps": 53,
+      "overlapSamples": [
+        "site, app and38 stores × channels +offline queue",
+        "writes theorder once × order service,idempotent",
+        "tells everyoneelse × event bus ·order.v4",
+        "catches upafter spikes × consumers scaleon lag",
+        "suggests,people approve × agents +approval log"
+      ],
+      "chromaticColors": 2,
+      "jargon": [
+        "api",
+        "latency",
+        "queue"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 2,
+      "maxJumpPx": 2,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 15,
+      "frames": 901,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 21
+    },
+    "trace": {
+      "file": "/tmp/system-design-v2-system-design-mare.trace.json",
+      "steps": 6,
+      "tasks": 4560,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 4,
+      "observerLongTasks": [
+        52
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 764
+    }
+  }
+]

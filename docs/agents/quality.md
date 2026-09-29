@@ -1,5 +1,12 @@
 # Quality results (measured, not estimated)
 
+## v0.3 · system design
+
+- **Audit** (`LABEL=system-design-v2 node scripts/sd-audit.mjs`, local production build, 2026-09-29): all seven live routes have zero console errors, CLS 0, zero serious/critical axe violations, zero traced tasks over 50 ms, 60 fps, no packet jumps and zero animations running off-screen or in a hidden tab. Full before/after evidence: [system-design-v2.md](../audit/system-design-v2.md).
+- **Lighthouse 12.6.1** (mobile simulated throttling, median of 3): `/system-design` 100 performance / 100 accessibility / 1.813 s LCP; Problem A 100 / 100 / 1.813 s; Problem B 99 / 100 / 1.814 s. Best practices and SEO are 100 on all three.
+- **JavaScript budgets:** 43/43 repository checks pass. The seven system-design routes measure 8.5–10.6 kB gzipped against 60 kB; the retired React Flow exceptions are gone. Full results: [js-budgets.json](js-budgets.json).
+- **Focused Playwright:** story behavior 40/40 including presentation-mode demo CLS; axe 7/7 route suites across every step; screenshots 14/14 jobs producing 72 frames; manifest verifier 7/7; redirects 3/3.
+
 ## v0.2
 
 - **JavaScript budgets** (`pnpm js:budget`, local production builds, 2026-09-28): 40/40 checks pass. Largest budgeted shell route: `/observability` at 129.1/130 kB gzip; largest Astro page: `/mare/shop/products/linen-midi-dress` at 13.4/60 kB; largest ops remote: Pay at 42.0/180 kB. The three React Flow architecture routes are documented exceptions at 169.7 kB. Full results: [js-budgets.json](js-budgets.json).
