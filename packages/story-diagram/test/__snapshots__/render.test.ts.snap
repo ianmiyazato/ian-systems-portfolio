@@ -23,7 +23,7 @@ exports[`renderDiagram > matches the structural snapshot 1`] = `
       path class=sd-edge-line data-path-for=check->quarantine
       path class=sd-edge-hi
   g class=sd-nodes
-    g class=sd-node is-focus data-id=source data-tone=ink data-focus-steps=1
+    g class=sd-node is-focus data-id=source data-anchor=sample-source data-tone=ink data-focus-steps=1
       rect class=sd-ring
       rect class=sd-box
       path class=sd-icon
@@ -32,26 +32,7 @@ exports[`renderDiagram > matches the structural snapshot 1`] = `
         tspan
       text class=sd-eng
         tspan
-    g class=sd-node is-dim data-id=check data-tone=ink data-focus-steps=2
-      rect class=sd-ring
-      rect class=sd-box
-      path class=sd-icon
-      text class=sd-label sd-plain
-      text class=sd-caption sd-plain
-        tspan
-        tspan
-      text class=sd-eng
-        tspan
-    g class=sd-node is-dim data-id=store data-tone=ink data-focus-steps=3
-      rect class=sd-ring
-      rect class=sd-box
-      path class=sd-icon
-      text class=sd-label sd-plain
-      text class=sd-caption sd-plain
-        tspan
-      text class=sd-eng
-        tspan
-    g class=sd-node is-dim data-id=explain data-tone=accent data-focus-steps=3
+    g class=sd-node is-dim data-id=check data-anchor=sample-check data-tone=ink data-focus-steps=2
       rect class=sd-ring
       rect class=sd-box
       path class=sd-icon
@@ -61,7 +42,26 @@ exports[`renderDiagram > matches the structural snapshot 1`] = `
         tspan
       text class=sd-eng
         tspan
-    g class=sd-node is-dim data-id=quarantine data-tone=giveup data-focus-steps=2
+    g class=sd-node is-dim data-id=store data-anchor=sample-store data-tone=ink data-focus-steps=3
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=explain data-anchor=sample-explain data-tone=accent data-focus-steps=3
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=quarantine data-anchor=sample-quarantine data-tone=giveup data-focus-steps=2
       rect class=sd-ring
       rect class=sd-box
       path class=sd-icon
