@@ -13,7 +13,7 @@ export type Effect = (context: EffectContext) => Animation[] | void;
 export type DeckOptions = {
   /** Effects by screen id, run each time a step on that screen becomes current. */
   effects?: Record<string, Effect>;
-  /** The presentation run: pages in order with their step counts. Arrow keys cross pages in presentation mode. */
+  /** The presentation run: pages in order with their step counts (or data-sequence JSON on the root). Arrow keys cross pages in presentation mode. */
   sequence?: Array<{ href: string; steps: number }>;
 };
 
@@ -82,6 +82,8 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
       else block.setAttribute('aria-hidden', 'true');
     }
     for (const note of screen.querySelectorAll<HTMLElement>('[data-note]')) note.classList.toggle('is-on', note.dataset.note === String(step));
+    // Presentation mode shows one part of a long screen per step; reading mode shows it all.
+    for (const part of screen.querySelectorAll<HTMLElement>('[data-present-steps]')) part.classList.toggle('is-present-off', !part.dataset.presentSteps!.split(' ').includes(String(step)));
     for (const button of screen.querySelectorAll<HTMLElement>('[data-go]')) {
       if (button.dataset.go === String(step)) button.setAttribute('aria-current', 'step');
       else button.removeAttribute('aria-current');
@@ -204,7 +206,7 @@ export function mountDeck(root: HTMLElement, options: DeckOptions = {}): Deck {
   }
 
   // ---- presentation -------------------------------------------------------------------------
-  const sequence = options.sequence ?? [];
+  const sequence: Array<{ href: string; steps: number }> = options.sequence ?? (root.dataset.sequence ? JSON.parse(root.dataset.sequence) : []);
   const here = sequence.findIndex((page) => page.href.replace(/\/$/, '') === location.pathname.replace(/\/$/, ''));
 
   function carry(href: string, step: string) {

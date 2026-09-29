@@ -115,6 +115,7 @@ html[data-present], html[data-present] body { overflow: hidden; background: var(
 html[data-present] im-portfolio-bar, html[data-present] .im-footer, html[data-present] im-decision-lens { display: none !important; }
 html[data-present] [data-deck] > :not([data-screen]):not(.sd-controls) { display: none !important; }
 html[data-present] [data-screen]:not([data-active]) { display: none !important; }
+html[data-present] .is-present-off { display: none !important; }
 html[data-present] [data-screen][data-active] {
   position: fixed; top: 50%; left: 50%; z-index: 50; box-sizing: border-box;
   display: flex; flex-direction: column; gap: 22px;

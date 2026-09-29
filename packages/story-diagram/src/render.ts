@@ -106,7 +106,7 @@ function renderNode(diagram: Diagram, node: StoryNode) {
   const label = wrap(node.label, inner, 'label', 1, `${where} label`);
   const caption = wrap(node.caption, inner, 'caption', 2, `${where} caption`);
   const eng = wrap(node.engLabel, inner, 'eng', 2, `${where} engLabel`);
-  return `<g class="sd-node${focusClass(diagram, node.id)}" data-id="${node.id}" data-tone="${node.tone}" data-focus-steps="${focusSteps(diagram, node.id)}" transform="translate(${r(box.x)} ${r(box.y)})">`
+  return `<g class="sd-node${focusClass(diagram, node.id)}" data-id="${node.id}" data-anchor="${diagram.id}-${node.id}" data-tone="${node.tone}" data-focus-steps="${focusSteps(diagram, node.id)}" transform="translate(${r(box.x)} ${r(box.y)})">`
     + `<rect class="sd-ring" x="-7" y="-7" width="${box.w + 14}" height="${box.h + 14}" rx="25"/>`
     + `<rect class="sd-box" width="${box.w}" height="${box.h}" rx="18"/>`
     + `<path class="sd-icon" transform="translate(${INSET} 18) scale(1.25)" d="${icons[node.icon]}"/>`
@@ -134,29 +134,47 @@ export function renderDiagram(diagram: Diagram): string {
     + '</g></svg>';
 }
 
-export type StoryOptions = { screen: string; eyebrow?: string; board?: string };
+export type StepText = { title: string; caption?: string; engineering?: string; presenterNote: string };
+export type StoryOptions = { screen: string; board?: string; head?: string; anchors?: { figure?: string; panel?: string } };
 
-/** One screen: the diagram, the step rail, one caption per step (plain + engineering) and presenter notes. */
-export function renderStory(diagram: Diagram, options: StoryOptions): string {
-  const total = diagram.steps.length;
-  const rail = diagram.steps.map((step, index) => `<li><button type="button" data-go="${index + 1}"${index === 0 ? ' aria-current="step"' : ''}><span class="sd-rail-n">${index + 1}</span><span class="sd-rail-t">${escapeHtml(step.title)}</span></button></li>`).join('');
-  const captions = diagram.steps.map((step, index) => `<div class="sd-caption-block${index === 0 ? '' : ' is-off'}" data-step-only="${index + 1}"${index === 0 ? '' : ' aria-hidden="true"'}>`
-    + `<p class="sd-step-kicker">Step ${index + 1} of ${total}</p>`
-    + `<h3 class="sd-step-title">${escapeHtml(step.title)}</h3>`
-    + `<p class="sd-step-caption">${escapeHtml(step.caption)}</p>`
-    + `<p class="sd-step-eng"><span class="sd-eng-tag">Engineering</span>${escapeHtml(step.engineering)}</p>`
-    + '</div>').join('');
-  const notes = diagram.steps.map((step, index) => `<p data-note="${index + 1}">${escapeHtml(step.presenterNote)}</p>`).join('');
-  return `<section class="sd-screen sd-story" data-screen="${escapeHtml(options.screen)}" data-steps="${total}" data-accent="${diagram.accent}" data-step="1"${options.board ? ` data-board="${escapeHtml(options.board)}"` : ''} aria-label="${escapeHtml(diagram.title)}">`
-    + `<figure class="sd-figure" data-diagram>${renderDiagram(diagram)}</figure>`
-    + '<div class="sd-panel">'
-    + `<div class="sd-captions" aria-live="polite">${captions}</div>`
-    + '<div class="sd-stepper">'
+/** The numbered step rail with previous/next, shared by diagram and non-diagram screens. */
+export function renderStepper(steps: Array<Pick<StepText, 'title'>>): string {
+  const rail = steps.map((step, index) => `<li><button type="button" data-go="${index + 1}"${index === 0 ? ' aria-current="step"' : ''}><span class="sd-rail-n">${index + 1}</span><span class="sd-rail-t">${escapeHtml(step.title)}</span></button></li>`).join('');
+  return '<div class="sd-stepper">'
     + '<button type="button" class="sd-arrow-btn" data-cmd="prev" aria-label="Previous step">←</button>'
     + `<ol class="sd-rail" aria-label="Steps">${rail}</ol>`
     + '<button type="button" class="sd-arrow-btn" data-cmd="next" data-step-next aria-label="Next step">→</button>'
-    + '</div></div>'
-    + `<div class="sd-notes" aria-label="Presenter notes">${notes}</div>`
+    + '</div>';
+}
+
+/** One caption per step, stacked in one grid cell so switching never moves the page. */
+export function renderCaptions(steps: StepText[]): string {
+  const total = steps.length;
+  const blocks = steps.map((step, index) => `<div class="sd-caption-block${index === 0 ? '' : ' is-off'}" data-step-only="${index + 1}"${index === 0 ? '' : ' aria-hidden="true"'}>`
+    + `<p class="sd-step-kicker">Step ${index + 1} of ${total}</p>`
+    + `<h3 class="sd-step-title">${escapeHtml(step.title)}</h3>`
+    + (step.caption ? `<p class="sd-step-caption">${escapeHtml(step.caption)}</p>` : '')
+    + (step.engineering ? `<p class="sd-step-eng"><span class="sd-eng-tag">Engineering</span>${escapeHtml(step.engineering)}</p>` : '')
+    + '</div>').join('');
+  return `<div class="sd-captions" aria-live="polite">${blocks}</div>`;
+}
+
+export function renderNotes(steps: Array<Pick<StepText, 'presenterNote'>>): string {
+  return `<div class="sd-notes" aria-label="Presenter notes">${steps.map((step, index) => `<p data-note="${index + 1}">${escapeHtml(step.presenterNote)}</p>`).join('')}</div>`;
+}
+
+const anchor = (value?: string) => (value ? ` data-anchor="${escapeHtml(value)}"` : '');
+
+/** One screen: the diagram, the step rail, one caption per step (plain + engineering) and presenter notes. */
+export function renderStory(diagram: Diagram, options: StoryOptions): string {
+  return `<section class="sd-screen sd-story" data-screen="${escapeHtml(options.screen)}" data-steps="${diagram.steps.length}" data-accent="${diagram.accent}" data-step="1"${options.board ? ` data-board="${escapeHtml(options.board)}"` : ''} aria-label="${escapeHtml(diagram.title)}">`
+    + (options.head ?? '')
+    + `<figure class="sd-figure" data-diagram${anchor(options.anchors?.figure)}>${renderDiagram(diagram)}</figure>`
+    + `<div class="sd-panel"${anchor(options.anchors?.panel)}>`
+    + renderCaptions(diagram.steps)
+    + renderStepper(diagram.steps)
+    + '</div>'
+    + renderNotes(diagram.steps)
     + '</section>';
 }
 
