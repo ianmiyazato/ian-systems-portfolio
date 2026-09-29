@@ -166,3 +166,50 @@ test.describe('Problem B · speed', () => {
     await expect(demo.locator('[data-readout="cls"]')).toHaveText('0.000');
   });
 });
+
+test.describe('index, map and presentation run', () => {
+  test.skip(!routes.some((route) => route.href === '/system-design/build-vs-buy'), 'not built yet');
+
+  test('the index shows both problems, the 80/20 banner and the deep dives', async ({ page }) => {
+    await page.goto('/system-design');
+    await expect(page.locator('[data-problem-card]')).toHaveCount(2);
+    await expect(page.locator('[data-problem-card="a"]')).toContainText('Turning a flood of numbers into decisions');
+    await expect(page.locator('[data-problem-card="b"]')).toContainText('Personal, and still instant');
+    await expect(page.locator('[data-anchor="sd-banner"]')).toContainText('Build what makes you different. Buy what everyone needs.');
+    await expect(page.locator('[data-anchor="sd-deep-dives"] a').first()).toBeVisible();
+  });
+
+  test('the map has one dot per build-vs-buy row, and each dot shows its card', async ({ page }) => {
+    await page.goto('/system-design/build-vs-buy');
+    const rows = [...buildVsBuy.metrics.rows, ...buildVsBuy.personalization.rows];
+    await expect(page.locator('[data-dot]')).toHaveCount(rows.length);
+    for (const title of ['Buy', 'Build later', 'Use open source', 'Build now']) await expect(page.locator('[data-anchor="sd-map"]')).toContainText(title);
+    const row = rows.find((item) => item.id === 'suggestion-ranking')!;
+    await page.locator('[data-dot="suggestion-ranking"]').focus();
+    const card = page.locator('[data-anchor="sd-map-card"]');
+    await expect(card).toContainText(row.component);
+    await expect(card).toContainText(row.giveUp);
+    await page.locator('[data-dot="analytics-database"]').hover();
+    await expect(card).toContainText('Analytics database');
+    await expect(page.locator('[data-anchor="sd-questions"] li')).toHaveCount(4);
+  });
+
+  test('presentation mode plays all eight screens across pages with the arrow keys', async ({ page }) => {
+    await page.goto('/system-design?present=1');
+    await expect(page.locator('html')).toHaveAttribute('data-present', '');
+    const boards: string[] = [];
+    for (let press = 0; press < 40; press += 1) {
+      const board = await page.locator('[data-screen][data-active]').getAttribute('data-board');
+      if (board && boards.at(-1) !== board) boards.push(board);
+      if (new URL(page.url()).pathname === '/system-design/build-vs-buy' && (await page.locator('[data-screen][data-active]').getAttribute('data-step')) === '4') break;
+      await page.keyboard.press('ArrowRight');
+      await page.waitForLoadState('domcontentloaded');
+      await expect(page.locator('html')).toHaveAttribute('data-present', '');
+    }
+    expect(boards).toEqual(['SD-00', 'SD-A1', 'SD-A2', 'SD-A3', 'SD-B1', 'SD-B2', 'SD-B3', 'SD-99']);
+    // Back from the first step of a page lands on the last step of the previous one.
+    await page.goto('/system-design/build-vs-buy?present=1&step=1');
+    await page.keyboard.press('ArrowLeft');
+    await expect(page).toHaveURL(/personal-and-instant\/build-or-buy\?present=1&step=3/);
+  });
+});
