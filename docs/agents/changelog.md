@@ -2,6 +2,17 @@
 
 One line per merged micro-task, newest first.
 
+## v0.3 · system design for a non-technical audience
+
+- 2026-09-29 · `fix(sd-demo)`: the live pagination demo starts its CLS observer only after the page, fonts and 16:9 presentation geometry are stable, and ignores queued entries older than that measured run. Direct presentation links now measure product and AI updates rather than inherited page setup; an eight-run parallel stress gate holds the visible readout at `0.000`.
+- 2026-09-29 · `test(system-design)`: v2 audit, seven-route trace/axe/CLS evidence, Lighthouse medians, 43-route JS budget ledger and 72 deterministic step screenshots at 1440 × 900 and 1920 × 1080. All seven system-design routes are 8.5–10.6 kB gzipped; the React Flow exceptions are removed.
+- 2026-09-29 · `fix(sd-older-pages)`: `/system-design/mare` rebuilt on the story engine as the engineering deep dive (six steps, real before/after metrics). Request path, Atlas and Pulse system design pages retired with 308 redirects. React Flow and the world-clock controls removed from the shell, and all of `/system-design/*` is now served by the static zone.
+- 2026-09-29 · `feat(sd-map)`: `/system-design` index (SD-00: two problem cards, the 80/20 banner, engineering deep dives) and `/system-design/build-vs-buy` (SD-99: the 80/20 map generated from both build-vs-buy tables, pop-in dots with cards, How I decide). `?present=1` plays all eight screens across pages; `docs/CALL-SCRIPT-SYSTEM-DESIGN.md` is generated from the presenter notes.
+- 2026-09-29 · `feat(sd-problem-b)`: `/system-design/personal-and-instant` (SD-B1 four-step flow, SD-B2 speed race, four techniques and a live demo: 2,000 products from static cursor files, about 20 recycled rows, a simulated AI slot with an 800 ms fallback, and a live readout) and `/personal-and-instant/build-or-buy` (SD-B3). Clicking a dimmed element now jumps to its step.
+- 2026-09-29 · `feat(sd-problem-a)`: `/system-design/metrics-to-decisions` (SD-A1 flow + SD-A2 report and honesty) and `/metrics-to-decisions/build-or-buy` (SD-A3), static Astro served through the shell. Adds `@portfolio/system-design` (build-vs-buy JSON, stories, deck with notes and timings, report series), Decision Lens files, and per-step axe for story pages.
+- 2026-09-29 · `feat(story-diagram)`: `@portfolio/story-diagram`, the in-house story engine. It has a Zod model on a 12-column grid, a plain-language lint, deterministic build-time SVG and a small player. The player handles keys, `?step=`, focus, at most three packets, off-screen/hidden/P pause, reduced motion and presentation mode. Tests came first: 26 unit tests and 9 Playwright contracts on a self-contained fixture.
+- 2026-09-29 · `docs(audit)`: measured audit of the four v0.2 system design pages (`docs/audit/system-design-v1.md`, `scripts/sd-audit.mjs`).
+
 ## v0.2
 
 - 2026-09-28 · `chore(release)`: v0.2.0 deployed to production (mare-ops, mare-shop, pulse, then shell; 4/12 production deploys, 0 previews) and verified against the production domain: 585/585 Playwright tests and 12/12 legacy views.

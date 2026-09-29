@@ -1,0 +1,144 @@
+/*
+ * Story engine. Four meaningful colors only: ink, one accent per problem (A blue, B coral),
+ * green for good or safe, amber for what we give up. Motion is opacity, transform and
+ * offset-distance, never layout. Transitions switch on after the first paint (.sd-ready), so
+ * the page loads in its final state with nothing moving.
+ */
+[data-deck] {
+  --sd-a: #3553FF;
+  --sd-b: #E4572E;
+  --sd-good: #0F8A5F;
+  --sd-giveup: #A06400;
+  --sd-ink: var(--ink, #0D1B2A);
+  --sd-muted: var(--muted, #4E5B6B);
+  --sd-line: var(--line, #D3DAE3);
+  --sd-edge: #8A96A6;
+  --sd-surface: var(--surface, #FFFFFF);
+  --sd-soft: var(--surface-2, #F6F8FB);
+  --sd-accent: var(--sd-a);
+  --sd-ease: cubic-bezier(.2, .8, .2, 1);
+  --sd-display: var(--font-display, 'Bricolage Grotesque Variable', system-ui, sans-serif);
+  --sd-ui: var(--font-ui, 'Geist Variable', system-ui, sans-serif);
+  --sd-mono: var(--font-mono, 'Geist Mono Variable', ui-monospace, monospace);
+}
+[data-accent='a'] { --sd-accent: var(--sd-a); }
+[data-accent='b'] { --sd-accent: var(--sd-b); }
+
+.sd-screen { position: relative; scroll-margin-top: 72px; }
+.sd-story { display: grid; gap: 18px; }
+.sd-figure { margin: 0; }
+.sd-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Nodes */
+.sd-box { fill: var(--sd-surface); stroke: var(--sd-ink); stroke-width: 1.5; }
+.sd-ring { fill: color-mix(in srgb, var(--sd-accent) 9%, transparent); stroke: color-mix(in srgb, var(--sd-accent) 55%, transparent); stroke-width: 2.5; opacity: 0; }
+.sd-icon { fill: none; stroke: var(--sd-ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sd-label { fill: var(--sd-ink); font-family: var(--sd-display); font-weight: 700; letter-spacing: -.01em; }
+.sd-caption { fill: var(--sd-muted); font-family: var(--sd-ui); }
+.sd-eng { fill: var(--sd-ink); font-family: var(--sd-mono); visibility: hidden; }
+.sd-node[data-tone='accent'] .sd-box { stroke: var(--sd-accent); stroke-width: 2.5; }
+.sd-node[data-tone='accent'] .sd-icon { stroke: var(--sd-accent); }
+.sd-node[data-tone='good'] .sd-box { stroke: var(--sd-good); stroke-width: 2; }
+.sd-node[data-tone='good'] .sd-icon { stroke: var(--sd-good); }
+.sd-node[data-tone='giveup'] .sd-box { stroke: var(--sd-giveup); stroke-dasharray: 6 5; }
+.sd-node[data-tone='giveup'] .sd-icon { stroke: var(--sd-giveup); }
+.sd-node.is-focus .sd-ring { opacity: 1; }
+
+/* Edges: the kind is a dash pattern, never another color. */
+.sd-edge path { fill: none; }
+.sd-edge-line { stroke: var(--sd-edge); stroke-width: 2; }
+.sd-edge-hi { stroke: var(--sd-accent); stroke-width: 3; opacity: 0; }
+.sd-edge[data-kind='data'] path { stroke-dasharray: 8 6; }
+.sd-edge[data-kind='ai'] path { stroke-dasharray: .5 7; stroke-linecap: round; }
+.sd-edge[data-kind='ai'] .sd-edge-hi { stroke-width: 4; }
+.sd-edge.is-focus .sd-edge-hi { opacity: 1; }
+.sd-arrow path { fill: var(--sd-edge); }
+.sd-arrow-hi path { fill: var(--sd-accent); }
+
+/* Focus: one idea per step. Diagrams always focus; page content dims once the reader steps
+   through (or presents), so a plain visit reads at full contrast. */
+.sd-node, .sd-edge, [data-focus-steps] { opacity: 1; }
+:is(.sd-node, .sd-edge).is-dim, [data-engaged] .is-dim, html[data-present] .is-dim { opacity: .25 !important; }
+
+/* Packets: at most three, only on focused edges. Reduced motion parks them mid-edge. */
+.sd-packet { fill: var(--sd-accent); stroke: var(--sd-surface); stroke-width: 2.5; opacity: 0; }
+.sd-packet.is-static { opacity: 1; }
+
+/* Engineering layer */
+html[data-layer='engineering'] .sd-eng { visibility: visible; }
+html[data-layer='engineering'] .sd-caption { visibility: hidden; }
+.sd-step-eng { display: none; margin: 10px 0 0; color: var(--sd-ink); font: 500 15px/1.5 var(--sd-mono); }
+html[data-layer='engineering'] .sd-step-eng { display: block; }
+.sd-eng-tag { display: inline-block; margin-right: 10px; padding: 2px 8px; border: 1px solid var(--sd-ink); border-radius: 999px; font: 600 14px/1.3 var(--sd-mono); letter-spacing: .02em; text-transform: uppercase; vertical-align: 2px; }
+[data-eng-only] { display: none; }
+html[data-layer='engineering'] [data-eng-only] { display: revert; }
+
+/* Captions stack in one cell, so switching steps never moves the page. */
+.sd-panel { display: grid; gap: 16px; }
+.sd-captions { display: grid; }
+.sd-caption-block { grid-area: 1 / 1; max-width: 62ch; }
+.sd-caption-block.is-off { opacity: 0; visibility: hidden; }
+.sd-step-kicker { margin: 0 0 6px; color: var(--sd-muted); font: 600 14px/1.4 var(--sd-mono); letter-spacing: .08em; text-transform: uppercase; }
+.sd-step-title { margin: 0 0 8px; color: var(--sd-ink); font: 700 30px/1.1 var(--sd-display); letter-spacing: -.02em; }
+.sd-step-caption { margin: 0; color: var(--sd-ink); font: 400 21px/1.45 var(--sd-ui); }
+
+/* Stepper */
+.sd-stepper { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sd-rail { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.sd-rail button, .sd-arrow-btn, .sd-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin: 0; border: 1px solid var(--sd-line); border-radius: 999px; background: var(--sd-surface); color: var(--sd-ink); font: 600 15px var(--sd-ui); cursor: pointer; }
+.sd-rail button { padding: 0 16px 0 6px; color: var(--sd-muted); }
+.sd-rail-n { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--sd-soft); color: var(--sd-ink); font: 700 14px var(--sd-mono); }
+.sd-rail button[aria-current='step'] { border-color: var(--sd-ink); background: var(--sd-ink); color: var(--sd-surface); }
+.sd-rail button[aria-current='step'] .sd-rail-n { background: var(--sd-accent); color: #FFFFFF; }
+.sd-arrow-btn { justify-content: center; width: 44px; padding: 0; font-size: 20px; }
+.sd-rail button:focus-visible, .sd-arrow-btn:focus-visible, .sd-toggle:focus-visible { outline: 3px solid var(--sd-accent); outline-offset: 2px; }
+
+/* Deck toolbar */
+.sd-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; width: fit-content; max-width: 100%; padding: 6px; border: 1px solid var(--sd-line); border-radius: 999px; background: var(--sd-surface); }
+.sd-toggle { padding: 0 14px; font-size: 14px; }
+.sd-toggle[aria-pressed='true'] { border-color: var(--sd-ink); background: var(--sd-ink); color: var(--sd-surface); }
+.sd-toggle kbd { padding: 1px 6px; border: 1px solid currentColor; border-radius: 6px; font: 600 14px var(--sd-mono); opacity: .8; }
+.sd-progress { min-width: 100px; color: var(--sd-muted); font: 600 14px var(--sd-mono); text-align: center; }
+.sd-controls-sep { width: 1px; height: 24px; margin: 0 4px; background: var(--sd-line); }
+
+/* Presenter notes: only on request (N). */
+.sd-notes { display: none; }
+.sd-notes p { display: none; margin: 0; }
+.sd-notes p.is-on { display: block; }
+html[data-notes] [data-screen][data-active] > .sd-notes { display: block; margin-top: 12px; padding: 14px 18px; border-radius: 14px; background: var(--sd-ink); color: var(--sd-surface); font: 500 18px/1.5 var(--sd-ui); }
+
+/* Transitions start after the first paint. */
+.sd-ready :is(.sd-node, .sd-edge, [data-focus-steps]) { transition: opacity .45s var(--sd-ease); }
+.sd-ready :is(.sd-ring, .sd-edge-hi, .sd-caption-block) { transition: opacity .35s var(--sd-ease); }
+
+/* Presentation mode: one 16:9 stage, big type, controls only while the mouse moves. */
+html[data-present], html[data-present] body { overflow: hidden; background: var(--sd-surface, #FFFFFF); }
+html[data-present] im-portfolio-bar, html[data-present] .im-footer, html[data-present] im-decision-lens { display: none !important; }
+html[data-present] [data-deck] > :not([data-screen]):not(.sd-controls) { display: none !important; }
+html[data-present] [data-screen]:not([data-active]) { display: none !important; }
+html[data-present] .is-present-off { display: none !important; }
+html[data-present] [data-screen][data-active] {
+  position: fixed; top: 50%; left: 50%; z-index: 50; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 22px;
+  width: 1600px; height: 900px; margin: 0; padding: 52px 80px 44px; overflow: hidden;
+  background: var(--sd-surface); transform: translate(-50%, -50%) scale(var(--sd-scale, 1)); transform-origin: center;
+}
+html[data-present] .sd-figure { display: flex; flex: 1 1 auto; justify-content: center; min-height: 0; }
+html[data-present] .sd-figure .sd-svg { width: auto; max-width: 100%; height: 100%; }
+html[data-present] .sd-step-title { font-size: 38px; }
+html[data-present] .sd-step-caption { font-size: 27px; }
+html[data-present] .sd-step-eng { font-size: 19px; }
+html[data-present] [data-screen][data-active] > .sd-notes { position: absolute; right: 80px; bottom: 96px; left: 80px; z-index: 2; margin: 0; }
+html[data-present] .sd-controls { position: fixed; bottom: 18px; left: 50%; z-index: 60; transform: translateX(-50%); box-shadow: 0 12px 40px rgba(13, 27, 42, .18); transition: opacity .25s var(--sd-ease); }
+html[data-present][data-idle] .sd-controls { opacity: 0; pointer-events: none; }
+html[data-present][data-idle], html[data-present][data-idle] * { cursor: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-ready :is(.sd-node, .sd-edge, .sd-ring, .sd-edge-hi, .sd-caption-block, [data-focus-steps]), html[data-present] .sd-controls { transition: none; }
+}
+@media (max-width: 720px) {
+  .sd-step-title { font-size: 24px; }
+  .sd-step-caption { font-size: 18px; }
+  .sd-rail-t { display: none; }
+  .sd-rail button { padding: 0 6px; }
+}

@@ -17,6 +17,8 @@
     "@portfolio/mocks": "workspace:*",
     "@portfolio/motion": "workspace:*",
     "@portfolio/overlays": "workspace:*",
+    "@portfolio/story-diagram": "workspace:*",
+    "@portfolio/system-design": "workspace:*",
     "@portfolio/tokens": "workspace:*",
     "@portfolio/world": "workspace:*",
     "astro": "5.14.1"

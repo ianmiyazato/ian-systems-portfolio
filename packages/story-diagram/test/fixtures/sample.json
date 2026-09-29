@@ -1,0 +1,25 @@
+{
+  "id": "sample",
+  "title": "A tiny story",
+  "summary": "Numbers arrive, get checked, stored and explained.",
+  "accent": "a",
+  "rows": 2,
+  "nodes": [
+    { "id": "source", "label": "Results", "caption": "every minute", "engLabel": "object storage", "icon": "file", "col": 1, "row": 1 },
+    { "id": "check", "label": "Check", "caption": "stops bad numbers", "engLabel": "schema + ranges", "icon": "shield", "col": 4, "row": 1 },
+    { "id": "store", "label": "Store", "caption": "fast totals", "engLabel": "columnar store", "icon": "database", "col": 7, "row": 1 },
+    { "id": "explain", "label": "Explain", "caption": "one short report", "engLabel": "LLM + checker", "icon": "sparkle", "col": 10, "row": 1, "tone": "accent" },
+    { "id": "quarantine", "label": "Set aside", "caption": "with a reason", "engLabel": "quarantine bucket", "icon": "pause", "col": 4, "row": 2, "tone": "giveup" }
+  ],
+  "edges": [
+    { "from": "source", "to": "check" },
+    { "from": "check", "to": "store", "kind": "data" },
+    { "from": "store", "to": "explain", "kind": "ai" },
+    { "from": "check", "to": "quarantine" }
+  ],
+  "steps": [
+    { "title": "A file arrives", "focus": ["source", "source->check"], "caption": "Every system sends a results file every minute.", "engineering": "File lands in object storage; an event triggers processing.", "presenterNote": "Everything starts with a plain file. Nothing fancy." },
+    { "title": "We check it", "focus": ["check", "quarantine", "check->quarantine", "check->store"], "caption": "Wrong or missing numbers are stopped before anyone sees them.", "engineering": "Schema and range validation; bad files are quarantined with a reason.", "presenterNote": "Bad numbers never reach a person." },
+    { "title": "We explain it", "focus": ["store", "explain", "store->explain"], "caption": "One short report every morning.", "engineering": "Numbers computed in SQL; the model writes only the sentence.", "presenterNote": "The AI writes words, never numbers." }
+  ]
+}

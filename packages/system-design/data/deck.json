@@ -1,0 +1,381 @@
+{
+  "title": "Two problems, solved end to end",
+  "problems": [
+    {
+      "id": "a",
+      "label": "Problem A · engineering + AI",
+      "title": "Turning a flood of numbers into decisions",
+      "who": "For the people who run the business: finance, operations and store managers.",
+      "bullets": [
+        "Every system sends its numbers every minute, and we check them before anyone sees them.",
+        "Each number is compared to what's normal for that store, day and hour.",
+        "AI writes a one-page morning report and fast alerts, and never makes up a number."
+      ],
+      "href": "/system-design/metrics-to-decisions",
+      "cta": "Follow a file to a decision"
+    },
+    {
+      "id": "b",
+      "label": "Problem B · frontend + product + AI",
+      "title": "Personal, and still instant",
+      "who": "For every shopper, on the site and in the app.",
+      "bullets": [
+        "It learns from what you view, save and buy, and which store is near you.",
+        "It suggests similar items you can actually get: in stock, in your size, nearby.",
+        "Pages stay fast while AI works, and a virtual fitting room opens once you pick a size."
+      ],
+      "href": "/system-design/personal-and-instant",
+      "cta": "Watch the speed race"
+    }
+  ],
+  "banner": "Build what makes you different. Buy what everyone needs. Every choice gives something up; the skill is choosing what to give up.",
+  "chips": {
+    "label": "Illustrative targets",
+    "items": [
+      {
+        "value": "1,440",
+        "text": "1,440 files a day, per system"
+      },
+      {
+        "value": "< 2 min",
+        "text": "< 2 min from a problem to an alert"
+      },
+      {
+        "value": "1 page",
+        "text": "1 page morning report"
+      },
+      {
+        "value": "0",
+        "text": "0 numbers written by the AI itself"
+      }
+    ]
+  },
+  "report": {
+    "headline": "Revenue in São Paulo stores is 12% below a normal Monday since 14:00",
+    "cause": "Likely cause: card terminals failing at 3 stores since 13:52.",
+    "suggestion": "Suggested: switch them to the backup payment provider.",
+    "sources": [
+      "Revenue by store, per minute",
+      "Card terminal status, per store",
+      "Normal Monday baseline, 8 weeks"
+    ],
+    "honesty": [
+      {
+        "title": "Numbers come first",
+        "plain": "Every number is calculated from the stored data before the AI sees anything.",
+        "engineering": "SQL over the analytics store; results passed to the model as a typed payload."
+      },
+      {
+        "title": "The AI only writes the sentence",
+        "plain": "It receives the finished numbers and turns them into one clear sentence. It can't add new ones.",
+        "engineering": "Prompt carries only the payload of totals; no personal data; temperature 0."
+      },
+      {
+        "title": "A checker reads it before you do",
+        "plain": "Every number in the text is matched against the source. One mismatch and the report doesn't go out.",
+        "engineering": "Extract numbers from the text, compare with the payload within tolerance, fail closed and alert a person."
+      }
+    ]
+  },
+  "race": {
+    "label": "Illustrative targets",
+    "axis": 5,
+    "lanes": [
+      {
+        "id": "simple",
+        "title": "Done the simple way",
+        "segments": [
+          {
+            "label": "Load every product",
+            "from": 0,
+            "to": 1.8
+          },
+          {
+            "label": "Wait for the AI",
+            "from": 1.8,
+            "to": 4.0
+          },
+          {
+            "label": "Show it all",
+            "from": 4.0,
+            "to": 4.8
+          }
+        ],
+        "result": {
+          "at": 4.8,
+          "text": "4.8 s of blank screen"
+        }
+      },
+      {
+        "id": "ours",
+        "title": "How we build it",
+        "segments": [
+          {
+            "label": "Frame",
+            "from": 0,
+            "to": 0.2
+          },
+          {
+            "label": "First 12 products",
+            "from": 0.2,
+            "to": 0.6
+          },
+          {
+            "label": "Your picks slide in",
+            "from": 0.6,
+            "to": 1.2
+          },
+          {
+            "label": "Next page loads before you scroll",
+            "from": 1.2,
+            "to": 2.4,
+            "background": true
+          }
+        ],
+        "result": {
+          "at": 0.6,
+          "text": "Useful at 0.6 s"
+        }
+      }
+    ]
+  },
+  "techniques": [
+    {
+      "title": "Page by page, not all at once",
+      "plain": "24 items and a bookmark to the next page.",
+      "engineering": "Cursor pagination, a stable sort key and no deep offset scans."
+    },
+    {
+      "title": "Draw only what's on screen",
+      "plain": "About 20 rows kept in the page and recycled as you scroll.",
+      "engineering": "List virtualization with overscan; heights reserved so nothing jumps."
+    },
+    {
+      "title": "AI never blocks the page",
+      "plain": "Suggestions fill a reserved space; if the AI is slow, show bestsellers in your size.",
+      "engineering": "Streamed server rendering, fixed-height slots (no layout shift), 800 ms timeout with a cached fallback."
+    },
+    {
+      "title": "Save the common answers",
+      "plain": "The first page is prepared in advance and served from a nearby cache.",
+      "engineering": "Edge-cached first page, idle-time prefetch of the next cursor, and stale-while-revalidate."
+    }
+  ],
+  "bridge": {
+    "seconds": 45,
+    "points": [
+      "Problem A is what a performance-intelligence platform does every day across creators and platforms.",
+      "Problem B is how fans and brands would experience it.",
+      "The build-vs-buy map is how a founding engineer spends a small team's time."
+    ]
+  },
+  "screens": [
+    {
+      "id": "intro",
+      "board": "SD-00",
+      "href": "/system-design",
+      "title": "Two problems, solved end to end",
+      "steps": [
+        {
+          "title": "Two problems",
+          "caption": "Two problems, each solved end to end, in plain language first.",
+          "presenterNote": "I want to show you two problems I'd expect to solve in the first months, end to end. Everything is in plain language, and the engineering is one key away.",
+          "seconds": 30
+        },
+        {
+          "title": "Problem A",
+          "caption": "Turning a flood of numbers into decisions.",
+          "presenterNote": "The first is about numbers: turning a flood of results files into one clear decision every morning.",
+          "seconds": 15
+        },
+        {
+          "title": "Problem B",
+          "caption": "Personal, and still instant.",
+          "presenterNote": "The second is about people: making the product feel personal without ever making it slow.",
+          "seconds": 15
+        },
+        {
+          "title": "Build or buy",
+          "caption": "Build what makes you different. Buy what everyone needs.",
+          "presenterNote": "And across both, the real founding-engineer skill: deciding what to build, what to buy, and what we give up.",
+          "seconds": 20
+        }
+      ]
+    },
+    {
+      "id": "a-flow",
+      "board": "SD-A1",
+      "href": "/system-design/metrics-to-decisions",
+      "title": "From a file every minute to one clear decision",
+      "diagram": "metrics-flow",
+      "seconds": [
+        30,
+        30,
+        25,
+        30,
+        35
+      ]
+    },
+    {
+      "id": "a-report",
+      "board": "SD-A2",
+      "href": "/system-design/metrics-to-decisions",
+      "title": "What people see, and how we keep the AI honest",
+      "steps": [
+        {
+          "title": "The morning report",
+          "caption": "One sentence, a chart with the normal range shaded, and the moment things changed.",
+          "presenterNote": "This is what a manager actually sees: one sentence, a chart with the normal range shaded, and the moment things changed.",
+          "seconds": 35
+        },
+        {
+          "title": "Likely cause, suggested fix",
+          "caption": "The AI proposes a cause and a fix; a person approves it.",
+          "presenterNote": "Then the likely cause and a suggested fix, which a person approves. The AI proposes and people decide.",
+          "seconds": 25
+        },
+        {
+          "title": "How we keep the AI honest",
+          "caption": "Numbers first, the AI writes only the sentence, and a checker reads it before you do.",
+          "presenterNote": "This is how we keep it honest: numbers first, the AI writes only the sentence, and a checker reads it before you do.",
+          "seconds": 35
+        }
+      ]
+    },
+    {
+      "id": "a-build",
+      "board": "SD-A3",
+      "href": "/system-design/metrics-to-decisions/build-or-buy",
+      "title": "Problem A: what we build, what we buy",
+      "steps": [
+        {
+          "title": "What we build",
+          "caption": "What defines the business stays ours: the checks, the meaning of revenue and profit, and what counts as unusual.",
+          "presenterNote": "Here's what we build ourselves: the things that define the business, like what revenue means and how we spot unusual numbers.",
+          "seconds": 30
+        },
+        {
+          "title": "What we buy",
+          "caption": "Heavy machinery everyone needs is bought: the database, the AI model and the dashboards.",
+          "presenterNote": "And here's what we buy: the database, the AI model and the dashboards, because running those well is someone else's full-time job.",
+          "seconds": 25
+        },
+        {
+          "title": "What we give up",
+          "caption": "Every choice has a cost, in amber. We choose which cost to accept.",
+          "presenterNote": "Every line has a cost in amber. Buying means a bill and some dependence, and building means we own every fix.",
+          "seconds": 25
+        }
+      ]
+    },
+    {
+      "id": "b-flow",
+      "board": "SD-B1",
+      "href": "/system-design/personal-and-instant",
+      "title": "Personal, and still instant",
+      "diagram": "personal-flow",
+      "seconds": [
+        30,
+        25,
+        35,
+        25
+      ]
+    },
+    {
+      "id": "b-speed",
+      "board": "SD-B2",
+      "href": "/system-design/personal-and-instant",
+      "title": "The speed race",
+      "steps": [
+        {
+          "title": "The race",
+          "caption": "The same page, built two ways, on the same five-second clock.",
+          "presenterNote": "Here's the trade-off drawn honestly: the same page built the simple way and the way I'd build it, on the same five-second clock.",
+          "seconds": 30
+        },
+        {
+          "title": "Useful at 0.6 s",
+          "caption": "4.8 seconds of blank screen, or something useful at 0.6 seconds.",
+          "presenterNote": "The simple way shows nothing for almost five seconds. Ours is useful at 0.6 seconds, and the AI picks slide in when they're ready.",
+          "seconds": 20
+        },
+        {
+          "title": "Four techniques",
+          "caption": "Page by page, only what's on screen, AI never blocks, common answers prepared.",
+          "presenterNote": "Four techniques do it: load page by page, draw only what's on screen, never let AI block the page, and prepare the common answers in advance.",
+          "seconds": 35
+        },
+        {
+          "title": "Try it live",
+          "caption": "2,000 products in your browser, with a simulated AI slot and a live readout.",
+          "presenterNote": "And this isn't a slide: 2,000 products are loading page by page in your browser, with a simulated AI slot that gives up after 800 milliseconds.",
+          "seconds": 50
+        }
+      ]
+    },
+    {
+      "id": "b-build",
+      "board": "SD-B3",
+      "href": "/system-design/personal-and-instant/build-or-buy",
+      "title": "Problem B: what we build, what we buy",
+      "steps": [
+        {
+          "title": "What we build",
+          "caption": "Ours: how suggestions are ranked and how fast every page feels.",
+          "presenterNote": "We build the two things a shopper actually feels: which suggestions come first, and how fast every page is.",
+          "seconds": 25
+        },
+        {
+          "title": "What we buy",
+          "caption": "Bought or open source: product understanding, the fitting room, tracking and images.",
+          "presenterNote": "Everything that's hard but generic we buy or take as open source: understanding products, the fitting room, tracking and images.",
+          "seconds": 25
+        },
+        {
+          "title": "What we give up",
+          "caption": "Costs per product, per try-on and per month, each one limited on purpose.",
+          "presenterNote": "Each choice has a price, and each price has a limit we chose: the fitting room only opens after a size is picked.",
+          "seconds": 25
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "board": "SD-99",
+      "href": "/system-design/build-vs-buy",
+      "title": "The 80/20 map",
+      "steps": [
+        {
+          "title": "The map",
+          "caption": "Across: how much it makes us different. Up: how hard it is to do well.",
+          "presenterNote": "This is the one picture I use to spend a small team's time: across, how much something makes us different, and up, how hard it is to do well.",
+          "seconds": 25
+        },
+        {
+          "title": "Problem A",
+          "caption": "What defines the business is built now; the heavy machinery is bought.",
+          "presenterNote": "Problem A lands in build now for what defines the business, and buy for the heavy machinery.",
+          "seconds": 20
+        },
+        {
+          "title": "Problem B",
+          "caption": "Suggestion ranking is built later: a ready tool first, ours once there is data.",
+          "presenterNote": "Problem B puts suggestion ranking in build later: start with a ready tool while there's no data, then replace it.",
+          "seconds": 20
+        },
+        {
+          "title": "How I decide",
+          "caption": "Four questions decide every dot.",
+          "presenterNote": "Four questions decide every dot: is it why customers choose us, is it hard and generic, can we swap it later, and what does it cost at ten times the volume?",
+          "seconds": 35
+        }
+      ]
+    }
+  ],
+  "questions": [
+    "Is it why customers choose us?",
+    "Is it hard and generic?",
+    "Can we swap it later?",
+    "What does it cost at 10×?"
+  ]
+}

@@ -1,0 +1,301 @@
+[
+  {
+    "path": "/system-design/mare",
+    "slug": "system-design-mare",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v1-system-design-mare-1440.png",
+      "img/system-design-v1-system-design-mare-1920.png",
+      "img/system-design-v1-system-design-mare-reduced.png"
+    ],
+    "clsAfterLoad": 0.394,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 12,
+      "textNodes": 39,
+      "minText": 7.3,
+      "under14": 28,
+      "under16": 39,
+      "overlaps": 0,
+      "overlapSamples": [],
+      "chromaticColors": 2,
+      "jargon": [
+        "idempot",
+        "api",
+        "latency",
+        "dlq",
+        "circuit",
+        "autoscale",
+        "canonical",
+        "queue",
+        "idempotency",
+        "rate-limit",
+        "rate limit",
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 12,
+      "maxJumpPx": 1,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 12,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "frames": 602,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 24
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-mare.trace.json",
+      "tasks": 3200,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 7,
+      "observerLongTasks": [
+        67
+      ]
+    },
+    "clsAfterSteps": 0.394,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 6
+    },
+    "hiddenRunning": 6,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 479
+    }
+  },
+  {
+    "path": "/system-design/mare/request-path",
+    "slug": "system-design-mare-request-path",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v1-system-design-mare-request-path-1440.png",
+      "img/system-design-v1-system-design-mare-request-path-1920.png",
+      "img/system-design-v1-system-design-mare-request-path-reduced.png"
+    ],
+    "clsAfterLoad": 0.014,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1410 880",
+      "svgCount": 1,
+      "textNodes": 91,
+      "minText": 9.1,
+      "under14": 91,
+      "under16": 91,
+      "overlaps": 0,
+      "overlapSamples": [],
+      "chromaticColors": 3,
+      "jargon": [
+        "kafka",
+        "idempot",
+        "cdc",
+        "schema",
+        "api",
+        "latency",
+        "p95",
+        "dlq",
+        "bff",
+        "otel",
+        "opentelemetry",
+        "circuit",
+        "throughput",
+        "saturation",
+        "middleware",
+        "queue",
+        "topic",
+        "consumer",
+        "idempotency",
+        "rate-limit",
+        "rate limit",
+        "webhook",
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 1,
+      "maxJumpPx": 9,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 3
+    },
+    "frames": {
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 18
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-mare-request-path.trace.json",
+      "tasks": 3297,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 4,
+      "observerLongTasks": [
+        65
+      ]
+    },
+    "clsAfterSteps": 0.014,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 1
+    },
+    "hiddenRunning": 1,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1301
+    }
+  },
+  {
+    "path": "/system-design/atlas",
+    "slug": "system-design-atlas",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v1-system-design-atlas-1440.png",
+      "img/system-design-v1-system-design-atlas-1920.png",
+      "img/system-design-v1-system-design-atlas-reduced.png"
+    ],
+    "clsAfterLoad": 0.015,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 12,
+      "textNodes": 33,
+      "minText": 7.3,
+      "under14": 24,
+      "under16": 33,
+      "overlaps": 1,
+      "overlapSamples": [
+        "entitlements × Pipeline service"
+      ],
+      "chromaticColors": 2,
+      "jargon": [
+        "idempot",
+        "webhook",
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 6,
+      "maxJumpPx": 2,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 6,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 22
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-atlas.trace.json",
+      "tasks": 3047,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 7,
+      "observerLongTasks": [
+        51
+      ]
+    },
+    "clsAfterSteps": 0.015,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 3
+    },
+    "hiddenRunning": 3,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 400
+    }
+  },
+  {
+    "path": "/system-design/pulse",
+    "slug": "system-design-pulse",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-v1-system-design-pulse-1440.png",
+      "img/system-design-v1-system-design-pulse-1920.png",
+      "img/system-design-v1-system-design-pulse-reduced.png"
+    ],
+    "clsAfterLoad": 0.012,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 10,
+      "textNodes": 31,
+      "minText": 7.3,
+      "under14": 21,
+      "under16": 31,
+      "overlaps": 0,
+      "overlapSamples": [],
+      "chromaticColors": 2,
+      "jargon": [
+        "rag"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 12,
+      "maxJumpPx": 2,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 12,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 20
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-pulse.trace.json",
+      "tasks": 3322,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 6,
+      "observerLongTasks": []
+    },
+    "clsAfterSteps": 0.012,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 9
+    },
+    "hiddenRunning": 9,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 389
+    }
+  }
+]

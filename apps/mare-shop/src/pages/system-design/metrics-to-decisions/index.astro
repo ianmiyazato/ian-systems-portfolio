@@ -1,0 +1,76 @@
+---
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Chips from '../../../components/system-design/Chips.astro';
+import ReportChart from '../../../components/system-design/ReportChart.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import Story from '../../../components/system-design/Story.astro';
+import { deck } from '@portfolio/system-design';
+
+const { report } = deck;
+// The sentence the checker reads: every number in it is matched against the source.
+const checked = report.headline.split(/(\d+%|\d{2}:\d{2})/).map((part, index) => ({ part, number: index % 2 === 1 }));
+---
+<SystemDesign title="From a file every minute to one clear decision · System design" description="Problem A in plain language: a results file every minute is checked, stored, compared to normal and explained by AI in one morning report and fast alerts." accent="a">
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><span>Problem A</span></nav>
+  <Story story="metrics-flow" screen="a-flow" board="SD-A1" anchors={{ figure: 'sd-flow', panel: 'sd-flow-steps' }}>
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Problem A · engineering + AI</p>
+      <h1>From a file every minute to one clear decision</h1>
+      <p class="sdp-lede">Internal systems write a results file every minute: revenue, profit, orders. We check it, store it, compare it to normal, and have AI explain what changed, in a short daily report plus fast alerts.</p>
+      <Chips />
+    </header>
+  </Story>
+
+  <Screen id="a-report" accent="a" anchor="sd-report-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Problem A · what people see</p>
+      <h2>One page every morning. One alert within 2 minutes.</h2>
+    </header>
+    <div class="sdp-report">
+      <article class="sdp-report-card" data-anchor="sd-report-card" data-present-steps="1 2" aria-label="Morning report">
+        <div class="sdp-report-top">
+          <span class="sdp-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" /></svg>Simulated AI</span>
+          <span class="sdp-report-meta">Alert · Monday 14:02</span>
+        </div>
+        <p class="sdp-report-headline">{report.headline}</p>
+        <ReportChart />
+        <div class="sdp-report-cause" data-focus-steps="2">
+          <p><strong>{report.cause}</strong></p>
+          <p>{report.suggestion}</p>
+          <div class="sdp-approve">
+            <button type="button" class="sdp-btn" data-approve>Approve the switch</button>
+            <span class="sdp-approved" data-approved hidden>✓ Approved by you · simulated, nothing was switched</span>
+          </div>
+        </div>
+        <div class="sdp-sources">
+          <p>Sources</p>
+          <ul>{report.sources.map((source) => <li>{source}</li>)}</ul>
+        </div>
+      </article>
+      <div class="sdp-honesty" data-anchor="sd-honesty" data-focus-steps="3" data-present-steps="3">
+        <h3>How we keep the AI honest</h3>
+        <ol>
+          {report.honesty.map((item, index) => (
+            <li>
+              <span class="sdp-honesty-n">{index + 1}</span>
+              <div><p class="sdp-honesty-title">{item.title}</p><p>{item.plain}</p><p class="sdp-eng-line" data-eng-only>{item.engineering}</p></div>
+            </li>
+          ))}
+        </ol>
+        <p class="sdp-checked">
+          {checked.map((item) => (item.number ? <mark>{item.part}<span aria-hidden="true">✓</span></mark> : item.part))}
+        </p>
+        <p class="sdp-checked-note">Each highlighted number matched the source. Nothing else in the sentence is a number.</p>
+      </div>
+    </div>
+  </Screen>
+
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/metrics-to-decisions/build-or-buy"><span>Next</span>What we build, what we buy, and what we give up →</a>
+    <a href="/system-design">All system design</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-metrics';
+</script>

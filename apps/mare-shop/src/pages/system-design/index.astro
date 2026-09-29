@@ -1,0 +1,40 @@
+---
+import SystemDesign from '../../layouts/SystemDesign.astro';
+import Screen from '../../components/system-design/Screen.astro';
+import { deck } from '@portfolio/system-design';
+
+const deepDives = [
+  { href: '/system-design/mare', title: 'Maré · orders under load', line: 'Checkout, carriers and tax invoices on one event feed: write once, tell everyone, fail alone.' }
+];
+---
+<SystemDesign title="System design · two problems, solved end to end" description="Two problems explained so anyone can follow: turning a flood of numbers into decisions, and making a product personal while keeping it instant. Plain language first, engineering one key away." accent="a">
+  <Screen id="intro" label="Two problems, solved end to end" anchor="sd-intro-steps" class="sdp-intro">
+    <header class="sdp-head" data-focus-steps="1">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>System design · for founders and engineers</p>
+      <h1>{deck.title}</h1>
+      <p class="sdp-lede">Plain language first. Press <kbd>E</kbd> on any page for the engineering behind each step, or <kbd>F</kbd> to present.</p>
+    </header>
+    <div class="sdp-problems">
+      {deck.problems.map((problem) => (
+        <a class="sdp-problem" href={problem.href} data-problem-card={problem.id} data-accent={problem.id} data-focus-steps={problem.id === 'a' ? '2' : '3'} data-anchor={`sd-problem-${problem.id}`}>
+          <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>{problem.label}</p>
+          <h2>{problem.title}</h2>
+          <p class="sdp-who">{problem.who}</p>
+          <ul>{problem.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+          <span class="sdp-problem-cta">{problem.cta} →</span>
+        </a>
+      ))}
+    </div>
+    <p class="sdp-banner" data-anchor="sd-banner" data-focus-steps="4">{deck.banner}</p>
+  </Screen>
+  <section class="sdp-deep" data-anchor="sd-deep-dives" aria-labelledby="deep-dives">
+    <h2 id="deep-dives">Engineering deep dives</h2>
+    <p>For engineers who want every hop: the same story engine, with the engineering layer doing more of the work.</p>
+    <ul>{deepDives.map((item) => <li><a href={item.href}>{item.title}</a><span>{item.line}</span></li>)}</ul>
+    <p class="sdp-deep-map"><a href="/system-design/build-vs-buy">The 80/20 map: every build-or-buy choice on one page →</a></p>
+  </section>
+</SystemDesign>
+
+<script>
+  import '../../scripts/sd-deck';
+</script>

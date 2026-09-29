@@ -6,16 +6,12 @@ import { routes } from '../../packages/routes/src/index';
 /**
  * JS budgets (gzip): everything a page view downloads until the network is idle, without interaction.
  * Shell pages ≤ 130 kB, each ops remote ≤ 180 kB of its own code, Astro shop pages ≤ 60 kB.
- * Code that only loads on use (palette, lens, HUD, shortcuts, provenance) is correctly excluded. Pages built on React Flow or chart libraries are listed exceptions
+ * Code that only loads on use (palette, lens, HUD, shortcuts, provenance) is correctly excluded. Chart-library pages may be listed as exceptions
  * (docs/agents/budgets.md). Sizes are gzip -9 of the bytes actually loaded, so they don't depend on
  * how the preview servers compress. WRITE_BUDGETS=1 records the table.
  */
 const BUDGET = { shell: 130, remote: 180, shop: 60 } as const;
-export const exceptions: Record<string, string> = {
-  'system-design-mare': 'React Flow',
-  'system-design-atlas': 'React Flow',
-  'system-design-pulse': 'React Flow'
-};
+export const exceptions: Record<string, string> = {};
 const remotes = ['counter', 'product-hub', 'pay', 'circle', 'mesh'] as const;
 const results: Record<string, { kb: number; budget: number | null; group: string }> = {};
 

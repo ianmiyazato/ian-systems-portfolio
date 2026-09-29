@@ -1,0 +1,11 @@
+---
+/** A diagram screen: build-time SVG from the story model, with an optional header slot. */
+import { renderStory } from '@portfolio/story-diagram';
+import { stories, type StoryId } from '@portfolio/system-design';
+
+interface Props { story: StoryId; screen: string; board: string; anchors?: { figure?: string; panel?: string } }
+const { story, screen, board, anchors } = Astro.props;
+const head = Astro.slots.has('default') ? await Astro.slots.render('default') : '';
+const html = renderStory(stories[story], { screen, board, head, anchors });
+---
+<Fragment set:html={html} />

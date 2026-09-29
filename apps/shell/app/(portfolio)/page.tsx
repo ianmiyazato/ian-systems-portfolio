@@ -31,7 +31,7 @@ export default function Home() {
           <p>Systems work is product work. The best architecture makes the next human decision faster, safer and easier to explain. Every screen here shows why it was built that way: press <kbd>D</kbd>.</p>
           <div className="home-actions">
             <Link className="btn primary" href="/work">Explore the work</Link>
-            <Link className="btn" href="/system-design/mare">Replay a system</Link>
+            <Link className="btn" href="/system-design">See the system design</Link>
           </div>
         </div>
         <div className="home-orbit" aria-hidden="true">

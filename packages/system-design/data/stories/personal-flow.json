@@ -1,0 +1,50 @@
+{
+  "id": "personal-flow",
+  "title": "Personal suggestions a shopper can actually get",
+  "summary": "What a shopper does becomes a short description of their taste, which finds similar items that are in stock, in their size and nearby, with a virtual fitting room at the end.",
+  "accent": "b",
+  "rows": 2,
+  "nodes": [
+    { "id": "signals", "label": "Signals", "caption": "what you do, with consent", "engLabel": "client events", "icon": "eye", "col": 1, "row": 1 },
+    { "id": "taste", "label": "Your taste", "caption": "linen, neutral tones, midi, M", "engLabel": "profile from embeddings", "icon": "user", "col": 4, "row": 1 },
+    { "id": "similar", "label": "Similar", "caption": "items like the ones you love", "engLabel": "vector similarity", "icon": "layers", "col": 7, "row": 1 },
+    { "id": "can-get", "label": "You can get", "caption": "in stock, your size, near you", "engLabel": "re-rank: stock, size, distance", "icon": "box", "col": 10, "row": 1, "tone": "accent" },
+    { "id": "try-on", "label": "Try it on", "caption": "on your photo, after a size", "engLabel": "3rd-party try-on API", "icon": "shirt", "col": 10, "row": 2 }
+  ],
+  "edges": [
+    { "from": "signals", "to": "taste", "kind": "data" },
+    { "from": "taste", "to": "similar", "kind": "ai" },
+    { "from": "similar", "to": "can-get" },
+    { "from": "can-get", "to": "try-on" }
+  ],
+  "steps": [
+    {
+      "title": "Signals",
+      "focus": ["signals", "signals->taste"],
+      "caption": "Viewed 12 items today, stayed 40 s on linen dresses, saved 3 favorites, bought size M last month, near the Vila Nova store.",
+      "engineering": "Client events with consent; dwell time and saves weighted higher than views.",
+      "presenterNote": "Every signal is something the shopper already did: what they looked at, lingered on, saved and bought, and which store is close."
+    },
+    {
+      "title": "Your taste",
+      "focus": ["taste", "taste->similar"],
+      "caption": "linen · neutral tones · midi · size M. A short description of your taste that anyone could read out loud.",
+      "engineering": "A per-user profile built from recent product embeddings, weighted by signal strength and recency.",
+      "presenterNote": "From that we build a short description of their taste that you could read out loud: linen, neutral tones, midi, size M."
+    },
+    {
+      "title": "Only what you can get",
+      "focus": ["similar", "can-get", "similar->can-get"],
+      "caption": "Similar items that are in stock, in your size, near you. Nothing you would fall for and then fail to buy.",
+      "engineering": "Vector similarity, then re-ranked by stock-in-size, pickup distance and margin; business rules are versioned.",
+      "presenterNote": "Here's the product point: a suggestion that's out of stock or not in your size feels smart and sells nothing, so we only show what they can actually get."
+    },
+    {
+      "title": "Try it on",
+      "focus": ["try-on", "can-get->try-on"],
+      "caption": "See it on your photo before buying. It opens once you pick a size, so every try is a serious one.",
+      "engineering": "A third-party try-on service, opened only after a size is chosen, to control cost per try.",
+      "presenterNote": "Finally a virtual fitting room, which we buy rather than build, and only open once a size is chosen, because every try costs money."
+    }
+  ]
+}

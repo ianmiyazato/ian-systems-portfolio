@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { matchView, navItems, overlayParams, parityRoutes, remoteViews, resolveScreen, routes, systems } from './index';
 
 describe('routes manifest', () => {
-  it('keeps the 40 approved v0.1 artboards', () => {
-    expect(parityRoutes.filter((route) => route.release === '0.1')).toHaveLength(40);
+  it('keeps the approved v0.1 artboards (40, less the Atlas and Pulse system design pages retired in v0.3)', () => {
+    expect(parityRoutes.filter((route) => route.release === '0.1')).toHaveLength(38);
   });
 
   it('uses unique ids and hrefs', () => {
@@ -20,7 +20,7 @@ describe('routes manifest', () => {
   });
 
   it('gives every product system the five required variations', () => {
-    for (const system of systems.filter((item) => !['overview', 'mare'].includes(item.id))) {
+    for (const system of systems.filter((item) => !['overview', 'system-design', 'mare'].includes(item.id))) {
       expect(system.states, system.id).toEqual(expect.arrayContaining(['empty', 'loading', 'error', 'offline', 'locked']));
     }
   });

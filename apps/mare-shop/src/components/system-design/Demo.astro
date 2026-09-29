@@ -1,0 +1,46 @@
+---
+/**
+ * The live proof: 2,000 synthetic products paged 24 at a time from static cursor files, drawn
+ * with about 20 recycled rows, and a reserved "Picked for you" slot filled by a simulated AI
+ * (random 200–1,500 ms) with an 800 ms fallback to cached bestsellers in your size.
+ */
+import { catalog, formatBRL } from '@portfolio/system-design';
+
+const items = catalog();
+const slim = (item: (typeof items)[number]) => ({ name: item.name, price: formatBRL(item.price), tone: item.tone, store: item.store });
+// What the simulated AI returns: linen, neutral tones, midi, size M, near Vila Nova.
+const picks = items.filter((item) => item.name.startsWith('Linen') && item.sizes.includes('M') && item.store === 'Vila Nova' && ['sand', 'ivory', 'stone'].includes(item.toneName)).slice(0, 3).map(slim);
+// The cached answer: this week's bestsellers in size M.
+const bestsellers = items.filter((item) => item.sizes.includes('M')).slice(0, 3).map(slim);
+---
+<div class="demo" data-anchor="sd-demo" data-focus-steps="4" data-present-steps="4" data-picks-json={JSON.stringify(picks)} data-best-json={JSON.stringify(bestsellers)} data-base="/system-design/personal-and-instant/catalog/">
+  <div class="demo-head">
+    <h3>Try it: 2,000 products, page by page</h3>
+    <button type="button" class="sdp-btn demo-restart" data-demo-restart>Restart the demo</button>
+  </div>
+  <div class="demo-body">
+    <div class="demo-main">
+      <section class="demo-picks" data-picks aria-live="polite" aria-label="Suggestions">
+        <div class="demo-picks-head">
+          <p class="demo-picks-title" data-picks-title>Finding picks for you…</p>
+          <span class="sdp-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" /></svg>Simulated AI</span>
+        </div>
+        <ul class="demo-picks-row" data-picks-row>
+          {[0, 1, 2].map(() => <li class="demo-card is-skeleton"><span class="demo-swatch"></span><span class="demo-card-name">&nbsp;</span><span class="demo-card-meta">&nbsp;</span></li>)}
+        </ul>
+        <p class="demo-why" data-picks-why>Why these: you saved linen dresses, you wear M, Vila Nova is nearby.</p>
+      </section>
+      <div class="demo-list" data-demo-list tabindex="0" role="region" aria-label="All products, 24 per page">
+        <div class="demo-spacer" data-demo-spacer role="list" aria-label="Products"></div>
+      </div>
+    </div>
+    <dl class="demo-readout" aria-label="Live readout">
+      <div><dt>Items in memory</dt><dd data-readout="memory">0</dd><dd class="demo-sub">of 2,000</dd></div>
+      <div><dt>Rows drawn</dt><dd data-readout="rows">0</dd><dd class="demo-sub">recycled as you scroll</dd></div>
+      <div><dt>Time to first product</dt><dd data-readout="first">–</dd><dd class="demo-sub">from the start of the demo</dd></div>
+      <div><dt>Layout shift (CLS)</dt><dd data-readout="cls">0.000</dd><dd class="demo-sub">0 means nothing jumped</dd></div>
+      <div class="demo-ai"><dt>AI</dt><dd data-readout="ai">waiting…</dd></div>
+    </dl>
+  </div>
+  <p class="demo-note">Simulated AI with a random 200–1,500 ms answer time. After 800 ms we stop waiting and show bestsellers in your size; a late answer never moves the page.</p>
+</div>

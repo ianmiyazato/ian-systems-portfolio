@@ -1,0 +1,71 @@
+---
+/**
+ * SD-99: the 80/20 map. Every dot is a row of data/build-vs-buy/*.json, placed by how much it
+ * makes us different (across) and how hard it is to do well (up), so the map can never disagree
+ * with the cards.
+ */
+import SystemDesign from '../../layouts/SystemDesign.astro';
+import Screen from '../../components/system-design/Screen.astro';
+import { deck, kindLabel, mapDots, quadrants } from '@portfolio/system-design';
+
+const dots = mapDots();
+const order = ['buy', 'build-later', 'open-source', 'build-now'] as const;
+// Dots sit inside a margin so quadrant titles in the corners stay clear.
+---
+<SystemDesign title="The 80/20 map · System design" description="Every build-or-buy choice from both problems on one map: how much it makes us different against how hard it is to do well, and the four questions behind each dot." accent="a">
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><span>The 80/20 map</span></nav>
+  <Screen id="map" label="The 80/20 map" anchor="sd-map-steps">
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Build vs buy · both problems</p>
+      <h1>The 80/20 map</h1>
+    </header>
+    <div class="sdp-map-layout">
+      <div class="sdp-map" data-anchor="sd-map">
+        <p class="sdp-axis sdp-axis-y" aria-hidden="true">How hard it is to do well →</p>
+        <div class="sdp-map-grid" data-focus-steps="1 2 3">
+          {order.map((id) => (
+            <div class="sdp-quad" data-quadrant={id}>
+              <p class="sdp-quad-title">{quadrants[id].title}</p>
+            </div>
+          ))}
+          {dots.map((dot) => (
+            <div class="sdp-dot-btn" data-side={dot.x > 62 ? 'left' : 'right'} data-problem={dot.problem} data-focus-steps={dot.problem === 'a' ? '2' : '3'} style={`left: ${10 + dot.x * 0.8}%; bottom: ${12 + dot.y * 0.74}%;`}>
+              <button type="button" class="sdp-dot-mark" data-dot={dot.id} data-problem={dot.problem} aria-label={`${dot.row.component}, Problem ${dot.problem.toUpperCase()}: ${dot.row.decision}`} aria-describedby="map-card">{dot.problem.toUpperCase()}</button>
+              <span class="sdp-dot-label" aria-hidden="true">{dot.row.component}</span>
+            </div>
+          ))}
+        </div>
+        <p class="sdp-axis sdp-axis-x" aria-hidden="true">How much it makes us different →</p>
+      </div>
+      <aside class="sdp-map-side">
+        <div class="sdp-map-card" id="map-card" data-anchor="sd-map-card" aria-live="polite">
+          <p class="sdp-map-hint" data-card-empty>Point at a dot, or tab to it, to see its card.</p>
+          {dots.map((dot) => (
+            <div class="sdp-card-body" data-card={dot.id} hidden>
+              <p class="sdp-eyebrow"><span class="sdp-dot" data-accent={dot.problem} aria-hidden="true"></span>Problem {dot.problem.toUpperCase()} · {kindLabel[dot.row.kind]} · {quadrants[dot.quadrant].title}</p>
+              <h3>{dot.row.component}</h3>
+              <p class="bvb-decision">{dot.row.decision}</p>
+              <p class="bvb-why"><span class="bvb-label">Why</span><span>{dot.row.why}</span></p>
+              <p class="bvb-giveup"><span class="bvb-label">We give up</span><span>{dot.row.giveUp}</span></p>
+              <p class="sdp-eng-line" data-eng-only>Swap plan: {dot.row.swapPlan}</p>
+              <p class="sdp-eng-line" data-eng-only>Cost at 10×: {dot.row.costAt10x}</p>
+            </div>
+          ))}
+        </div>
+        <div class="sdp-questions" data-anchor="sd-questions" data-focus-steps="4">
+          <h2>How I decide</h2>
+          <ol>{deck.questions.map((question) => <li>{question}</li>)}</ol>
+        </div>
+      </aside>
+    </div>
+  </Screen>
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design"><span>Back to the start</span>Two problems, solved end to end →</a>
+    <a href="/system-design/metrics-to-decisions/build-or-buy">Problem A cards</a>
+    <a href="/system-design/personal-and-instant/build-or-buy">Problem B cards</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../scripts/sd-map';
+</script>

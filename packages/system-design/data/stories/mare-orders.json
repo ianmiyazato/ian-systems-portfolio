@@ -1,0 +1,71 @@
+{
+  "id": "mare-orders",
+  "title": "Maré: orders under load",
+  "summary": "Checkout writes each order once and announces it on one feed; the warehouse, carriers, invoices and an assistant each listen and fail alone.",
+  "accent": "a",
+  "rows": 3,
+  "nodes": [
+    { "id": "shoppers", "label": "Shoppers", "caption": "site, app and 38 stores", "engLabel": "channels + offline queue", "icon": "people", "col": 1, "row": 1 },
+    { "id": "checkout", "label": "Checkout", "caption": "writes the order once", "engLabel": "order service, idempotent", "icon": "bag", "col": 4, "row": 1, "tone": "accent" },
+    { "id": "feed", "label": "Order feed", "caption": "tells everyone else", "engLabel": "event bus · order.v4", "icon": "layers", "col": 7, "row": 1 },
+    { "id": "warehouse", "label": "Warehouse", "caption": "catches up after spikes", "engLabel": "consumers scale on lag", "icon": "box", "col": 10, "row": 1 },
+    { "id": "assistant", "label": "Assistant", "caption": "suggests, people approve", "engLabel": "agents + approval log", "icon": "sparkle", "col": 4, "row": 2 },
+    { "id": "carriers", "label": "Carriers", "caption": "each behind its own fuse", "engLabel": "adapter + circuit breaker", "icon": "truck", "col": 7, "row": 2 },
+    { "id": "invoices", "label": "Invoices", "caption": "safe to send twice", "engLabel": "idempotent batch", "icon": "file", "col": 10, "row": 2 },
+    { "id": "parked", "label": "Parked", "caption": "failed orders wait safely", "engLabel": "DLQ + dry-run replay", "icon": "pause", "col": 7, "row": 3, "tone": "good" }
+  ],
+  "edges": [
+    { "from": "shoppers", "to": "checkout" },
+    { "from": "checkout", "to": "feed", "kind": "data" },
+    { "from": "feed", "to": "warehouse", "kind": "data" },
+    { "from": "feed", "to": "carriers", "kind": "data" },
+    { "from": "feed", "to": "invoices", "kind": "data" },
+    { "from": "carriers", "to": "parked" },
+    { "from": "feed", "to": "assistant", "kind": "ai" },
+    { "from": "assistant", "to": "checkout", "kind": "ai" }
+  ],
+  "steps": [
+    {
+      "title": "Checkout writes once",
+      "focus": ["shoppers", "checkout", "shoppers->checkout"],
+      "caption": "A shopper pays and checkout saves the order once, then answers right away, whatever the partners are doing.",
+      "engineering": "The order service writes once under an idempotency key; the edge dedupes retries from phones, stores and partners.",
+      "presenterNote": "Checkout does one thing and answers immediately. It never waits for a carrier or the tax office."
+    },
+    {
+      "title": "Everyone else is told",
+      "focus": ["feed", "checkout->feed"],
+      "caption": "The order is announced once on a shared feed, and every other part listens instead of being called.",
+      "engineering": "Transactional outbox to the event bus; one canonical order.v4 contract, versioned and contract-tested.",
+      "presenterNote": "Instead of checkout calling five systems, it announces the order once and they all listen."
+    },
+    {
+      "title": "Busy days become a queue",
+      "focus": ["warehouse", "feed->warehouse"],
+      "caption": "On Black Friday the warehouse falls a few minutes behind and catches up, and checkout never slows down.",
+      "engineering": "Consumers autoscale on lag; a spike becomes backlog instead of timeouts.",
+      "presenterNote": "A spike becomes a short line, not an outage."
+    },
+    {
+      "title": "A slow partner fails alone",
+      "focus": ["carriers", "parked", "feed->carriers", "carriers->parked"],
+      "caption": "When a carrier stops answering, only its orders wait, set aside safely until it recovers.",
+      "engineering": "One adapter per carrier with a circuit breaker; failures park in a DLQ with their keys and replay after a dry run.",
+      "presenterNote": "One slow carrier used to break checkout for everyone. Now only that carrier's orders wait, and nothing is lost."
+    },
+    {
+      "title": "Safe to send twice",
+      "focus": ["invoices", "feed->invoices"],
+      "caption": "Tax invoices can be sent again after an outage without ever creating a duplicate.",
+      "engineering": "Idempotent batch keyed by invoice number; the authority's timeouts become retries, not duplicates.",
+      "presenterNote": "Anything that talks to the outside world has to be safe to repeat."
+    },
+    {
+      "title": "AI suggests, people approve",
+      "focus": ["assistant", "feed->assistant", "assistant->checkout"],
+      "caption": "An assistant watches the feed, spots problems and suggests a fix; a person approves every change.",
+      "engineering": "Agents consume the same events; proposals carry retrieved context and pass an approval step with an audit log.",
+      "presenterNote": "The assistant saves the digging, and a person keeps the decision."
+    }
+  ]
+}
