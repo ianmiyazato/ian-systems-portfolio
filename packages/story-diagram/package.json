@@ -1,0 +1,27 @@
+{
+  "name": "@portfolio/story-diagram",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./model": "./src/model.ts",
+    "./player": "./src/player.ts",
+    "./story.css": "./src/story.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint src test --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "happy-dom": "20.14.5",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}
