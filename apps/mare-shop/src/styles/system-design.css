@@ -277,13 +277,13 @@ html[data-present] .sdp-banner { padding: 22px 28px; font-size: 29px; }
 .sdp-quad[data-quadrant^='build'] { text-align: right; }
 .sdp-quad-title { margin: 0; color: var(--ink); font: 800 24px var(--font-display); letter-spacing: -.02em; }
 .sdp-quad-line { margin: 0; color: var(--muted); font-size: 15px; }
-.sdp-dot-btn { position: absolute; z-index: 1; display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; transform: translate(-17px, 17px); }
+.sdp-dot-btn { position: absolute; z-index: 1; display: flex; align-items: center; gap: 8px; color: var(--ink); pointer-events: none; transform: translate(-17px, 17px); }
+.sdp-dot-mark { pointer-events: auto; cursor: pointer; }
 .sdp-dot-btn[data-side='left'] { flex-direction: row-reverse; transform: translate(calc(-100% + 17px), 17px); }
-.sdp-dot-mark { display: grid; flex: none; place-items: center; width: 34px; height: 34px; border: 3px solid var(--surface); border-radius: 50%; background: var(--sd-a); color: #FFFFFF; font: 800 14px var(--font-display); box-shadow: 0 4px 14px rgba(13, 27, 42, .18); }
-.sdp-dot-btn[data-problem='b'] .sdp-dot-mark { background: var(--sd-b); color: var(--ink); }
+.sdp-dot-mark { display: grid; flex: none; place-items: center; box-sizing: border-box; width: 34px; height: 34px; margin: 0; padding: 0; border: 3px solid var(--surface); border-radius: 50%; background: var(--sd-a); color: #FFFFFF; font: 800 14px var(--font-display); box-shadow: 0 4px 14px rgba(13, 27, 42, .18); }
+.sdp-dot-mark[data-problem='b'] { background: var(--sd-b); color: var(--ink); }
 .sdp-dot-label { padding: 2px 8px; border-radius: 8px; background: color-mix(in srgb, var(--surface) 88%, transparent); font: 700 15px var(--font-ui); white-space: nowrap; }
-.sdp-dot-btn[data-current] .sdp-dot-mark, .sdp-dot-btn:focus-visible .sdp-dot-mark { outline: 3px solid var(--ink); outline-offset: 2px; }
-.sdp-dot-btn:focus-visible { outline: none; }
+.sdp-dot-mark[data-current], .sdp-dot-mark:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .sdp-map-side { display: grid; gap: 18px; }
 .sdp-map-card { box-sizing: border-box; min-height: 330px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
 .sdp-map-hint { margin: 0; color: var(--muted); font-size: 17px; }
