@@ -1,0 +1,28 @@
+---
+/**
+ * System design pages: static HTML, the portfolio theme and fonts, the story engine's CSS, and
+ * one deck per page. The presentation run is embedded as data, so the browser never loads the
+ * content package or its schemas.
+ */
+import '@portfolio/tokens/fonts/portfolio';
+import '@portfolio/story-diagram/story.css';
+import '../styles/system-design.css';
+import { portfolioFontPreloads } from '@portfolio/tokens/fonts/portfolio-preload';
+import { renderControls } from '@portfolio/story-diagram';
+import { presentationSequence } from '@portfolio/system-design';
+import Zone from './Zone.astro';
+
+interface Props { title: string; description: string; accent?: 'a' | 'b'; wide?: boolean }
+const { title, description, accent = 'a' } = Astro.props;
+const sequence = JSON.stringify(presentationSequence());
+---
+<Zone title={title} description={description} context="System design" theme="portfolio">
+  <Fragment slot="head">
+    {portfolioFontPreloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+  </Fragment>
+  <main class="sdp" data-deck data-accent={accent} data-sequence={sequence}>
+    <slot name="head" />
+    <Fragment set:html={renderControls()} />
+    <slot />
+  </main>
+</Zone>

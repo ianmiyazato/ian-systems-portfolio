@@ -1,0 +1,78 @@
+{
+  "problem": "b",
+  "title": "Problem B · personal, and still instant",
+  "rows": [
+    {
+      "id": "suggestion-ranking",
+      "component": "Suggestion ranking",
+      "kind": "build",
+      "decision": "Build (our rules on top of similarity)",
+      "why": "This is what makes suggestions sell; a generic tool doesn't know our stores and sizes",
+      "giveUp": "We tune and test it ourselves. With no data yet, start with a ready tool, then replace it",
+      "swapPlan": "Ranking sits behind one 'suggest for this person' call: a ready tool answers first, and ours replaces it once there is enough history to test against.",
+      "costAt10x": "Results are cached per person for a few minutes, so 10× shoppers means about 10× cheap lookups, not 10× heavy computations.",
+      "difference": 4.8,
+      "difficulty": 4.2
+    },
+    {
+      "id": "understanding-products",
+      "component": "Understanding products",
+      "kind": "buy",
+      "decision": "Buy (hosted model for image + text meaning)",
+      "why": "Solved problem; our edge is how we use it",
+      "giveUp": "Cost per product, paid once when a product is added",
+      "swapPlan": "Results are stored with each product, so changing models means processing the catalog once more, in the background.",
+      "costAt10x": "Cost follows the catalog, not the traffic: 10× shoppers costs nothing extra, and 10× products costs 10× once.",
+      "difference": 2.0,
+      "difficulty": 4.3
+    },
+    {
+      "id": "fitting-room",
+      "component": "Virtual fitting room",
+      "kind": "buy",
+      "decision": "Buy (specialist try-on service)",
+      "why": "Very hard computer vision, not our core business",
+      "giveUp": "Cost per try-on, so it only opens after a size is chosen",
+      "swapPlan": "One button and one contract (photo, product and size in; picture out), so another provider plugs into the same button.",
+      "costAt10x": "Cost grows with try-ons, not visitors; waiting for a chosen size keeps try-ons to shoppers who are close to buying.",
+      "difference": 2.6,
+      "difficulty": 4.9
+    },
+    {
+      "id": "tracking",
+      "component": "Tracking what people do",
+      "kind": "open-source",
+      "decision": "Open source, self-hosted (for example PostHog)",
+      "why": "Standard events, full control of customer data",
+      "giveUp": "Some upkeep instead of a fully managed service",
+      "swapPlan": "Events follow one shared contract, so the same stream can feed a managed service instead if the upkeep grows.",
+      "costAt10x": "Storage grows 10×; raw events are kept 90 days and summaries longer, so the bill grows slower than traffic.",
+      "difference": 1.6,
+      "difficulty": 2.2
+    },
+    {
+      "id": "page-speed",
+      "component": "Page speed",
+      "kind": "build",
+      "decision": "Build",
+      "why": "Speed is felt on every visit; no tool can make our pages fast for us",
+      "giveUp": "More frontend work, measured by performance budgets in every release",
+      "swapPlan": "Nothing to swap: the budgets and techniques are ours, and the hosting underneath can change without touching them.",
+      "costAt10x": "Prepared first pages and page-by-page loading keep each visit's cost flat, so 10× visitors is mostly 10× cache hits.",
+      "difference": 4.3,
+      "difficulty": 2.3
+    },
+    {
+      "id": "images",
+      "component": "Images",
+      "kind": "buy",
+      "decision": "Buy (image service with the right size per phone)",
+      "why": "Solved and cheap",
+      "giveUp": "A monthly bill, kept small by preparing common sizes in advance",
+      "swapPlan": "Every image address goes through one helper, so moving to another service is one change plus a cache warm-up.",
+      "costAt10x": "Common sizes are prepared once and cached, so 10× visitors mostly means cache hits, not new work.",
+      "difference": 1.2,
+      "difficulty": 3.2
+    }
+  ]
+}

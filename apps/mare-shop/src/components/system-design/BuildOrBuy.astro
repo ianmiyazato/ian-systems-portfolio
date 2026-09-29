@@ -1,0 +1,26 @@
+---
+/**
+ * Build-or-buy cards, rendered from data/build-vs-buy/*.json. Plain layer: decision, why and
+ * what we give up (amber). Engineering layer: how we would swap it, and cost at 10×.
+ * Step 1 focuses what we build, step 2 what we buy, step 3 lights up what every choice costs.
+ */
+import { kindLabel, type Table } from '@portfolio/system-design';
+
+interface Props { table: Table }
+const { table } = Astro.props;
+---
+<ul class="bvb-grid" data-anchor="bvb-cards">
+  {table.rows.map((row) => (
+    <li class="bvb-card" data-row={row.id} data-anchor={`bvb-${row.id}`} data-kind={row.kind} data-focus-steps={row.kind === 'build' ? '1 3' : '2 3'}>
+      <p class="bvb-kind">{kindLabel[row.kind]}</p>
+      <h3 data-field="component">{row.component}</h3>
+      <p class="bvb-decision" data-field="decision">{row.decision}</p>
+      <p class="bvb-why"><span class="bvb-label">Why</span><span data-field="why">{row.why}</span></p>
+      <p class="bvb-giveup"><span class="bvb-label">We give up</span><span data-field="giveUp">{row.giveUp}</span></p>
+      <dl class="bvb-eng" data-eng-only>
+        <dt>Swap plan</dt><dd data-field="swapPlan">{row.swapPlan}</dd>
+        <dt>Cost at 10×</dt><dd data-field="costAt10x">{row.costAt10x}</dd>
+      </dl>
+    </li>
+  ))}
+</ul>

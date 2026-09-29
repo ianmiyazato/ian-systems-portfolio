@@ -1,0 +1,40 @@
+---
+/**
+ * The morning report chart: the normal range for a Monday as a shaded band, today's line, and a
+ * 14:00 marker. Built at build time; the line draws itself by scaling its clip (transform only).
+ */
+import { reportSeries } from '@portfolio/system-design';
+
+const series = reportSeries();
+const W = 720;
+const H = 300;
+const plot = { left: 16, right: W - 16, top: 20, bottom: H - 44 };
+const max = Math.max(...series.high) * 1.08;
+const x = (index: number) => plot.left + (index / (series.times.length - 1)) * (plot.right - plot.left);
+const y = (value: number) => plot.bottom - (value / max) * (plot.bottom - plot.top);
+const pt = (index: number, value: number) => `${x(index).toFixed(1)},${y(value).toFixed(1)}`;
+const band = `M${series.high.map((value, index) => pt(index, value)).join(' L')} L${series.low.map((value, index) => pt(index, value)).reverse().join(' L')} Z`;
+const today = `M${series.today.map((value, index) => pt(index, value)).join(' L')}`;
+const ticks = series.times.map((time, index) => ({ time, index })).filter((item) => item.time.endsWith(':00') && Number(item.time.slice(0, 2)) % 2 === 0);
+const marker = x(series.breakIndex);
+const last = series.today.length - 1;
+---
+<figure class="sdp-chart" data-anchor="sd-report-chart" data-focus-steps="1">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="report-chart-title">
+    <title id="report-chart-title">Revenue from São Paulo stores today, inside the normal Monday range until 14:00, then about 12% below it.</title>
+    <defs>
+      <clipPath id="report-wipe"><rect data-chart-wipe x={plot.left - 4} y="0" width={plot.right - plot.left + 12} height={H} /></clipPath>
+    </defs>
+    <path class="sdp-chart-band" d={band} />
+    <text class="sdp-chart-note" x={x(47)} y={y(series.high[47]!) - 12} text-anchor="middle">Normal Monday</text>
+    <line class="sdp-chart-marker" x1={marker} x2={marker} y1={plot.top - 8} y2={plot.bottom} />
+    <text class="sdp-chart-note sdp-chart-strong" x={marker + 8} y={plot.top + 8}>14:00</text>
+    <g clip-path="url(#report-wipe)">
+      <path class="sdp-chart-today" d={today} />
+      <circle class="sdp-chart-dot" cx={x(last)} cy={y(series.today[last]!)} r="5" />
+      <text class="sdp-chart-note sdp-chart-strong" x={x(last) - 8} y={y(series.today[last]!) + 28} text-anchor="end">Today, −12%</text>
+    </g>
+    <line class="sdp-chart-axis" x1={plot.left} x2={plot.right} y1={plot.bottom} y2={plot.bottom} />
+    {ticks.map((tick) => <text class="sdp-chart-tick" x={x(tick.index)} y={H - 14} text-anchor={tick.index === 0 ? 'start' : tick.index === last ? 'end' : 'middle'}>{tick.time}</text>)}
+  </svg>
+</figure>

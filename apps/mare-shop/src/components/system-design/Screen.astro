@@ -1,0 +1,20 @@
+---
+/**
+ * A non-diagram screen: the page's own content, then the same captions, stepper and presenter
+ * notes as a diagram screen. Elements inside mark their steps with data-focus-steps.
+ */
+import { renderCaptions, renderNotes, renderStepper } from '@portfolio/story-diagram';
+import { screenById } from '@portfolio/system-design';
+
+interface Props { id: string; accent?: 'a' | 'b'; label?: string; anchor?: string; class?: string }
+const { id, accent, label, anchor, class: className } = Astro.props;
+const screen = screenById(id);
+---
+<section class:list={['sd-screen', 'sdp-screen', className]} data-screen={id} data-steps={screen.steps.length} data-step="1" data-board={screen.board} data-accent={accent} aria-label={label ?? screen.title}>
+  <slot />
+  <div class="sd-panel" data-anchor={anchor}>
+    <Fragment set:html={renderCaptions(screen.steps)} />
+    <Fragment set:html={renderStepper(screen.steps)} />
+  </div>
+  <Fragment set:html={renderNotes(screen.steps)} />
+</section>
