@@ -118,3 +118,51 @@ for (const [name, table] of Object.entries(buildVsBuy)) {
     await expect(page.locator(`[data-row="${table.rows[0]!.id}"] [data-field="swapPlan"]`)).toBeVisible();
   });
 }
+
+test.describe('Problem B · speed', () => {
+  test.skip(!routes.some((route) => route.href === '/system-design/personal-and-instant'), 'not built yet');
+
+  test('the race plays both lanes on one clock, and reduced motion shows the finish', async ({ page }) => {
+    await page.goto('/system-design/personal-and-instant?step=5');
+    const race = page.locator('[data-anchor="sd-race"]');
+    await expect.poll(() => race.evaluate((node) => node.getAnimations({ subtree: true }).length)).toBeGreaterThan(4);
+    await expect(race).toContainText('4.8 s of blank screen');
+    await expect(race).toContainText('Useful at 0.6 s');
+    await expect(page.locator('[data-anchor="sd-race-label"]')).toContainText('Illustrative targets');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/system-design/personal-and-instant?step=5');
+    expect(await race.evaluate((node) => node.getAnimations({ subtree: true }).filter((animation) => animation.playState === 'running').length)).toBe(0);
+    const scale = await page.locator('[data-race-segment]').first().evaluate((node) => getComputedStyle(node).transform);
+    expect(scale === 'none' || scale.startsWith('matrix(1, 0, 0, 1')).toBe(true);
+  });
+
+  test('the demo pages 2,000 products, draws about 20 rows and falls back when the AI is slow', async ({ page }) => {
+    await page.goto('/system-design/personal-and-instant?step=8&ai=1300');
+    const demo = page.locator('[data-anchor="sd-demo"]');
+    await demo.scrollIntoViewIfNeeded();
+    await expect(demo.locator('[data-readout="first"]')).toHaveText(/\d+ ms/);
+    await expect(demo.locator('[data-readout="memory"]')).toHaveText('24');
+    const drawn = Number(await demo.locator('[data-readout="rows"]').textContent());
+    expect(drawn).toBeGreaterThan(8);
+    expect(drawn).toBeLessThanOrEqual(24);
+    await expect(demo.locator('[data-picks]')).toContainText('Bestsellers in your size', { timeout: 3000 });
+    await expect(demo.locator('[data-readout="ai"]')).toContainText('fallback', { timeout: 3000 });
+    const slot = await demo.locator('[data-picks]').boundingBox();
+    await page.waitForTimeout(900);
+    expect((await demo.locator('[data-picks]').boundingBox())!.height).toBe(slot!.height);
+    const list = demo.locator('[data-demo-list]');
+    for (let index = 0; index < 6; index += 1) await list.evaluate((node) => node.scrollBy(0, 900));
+    await expect.poll(async () => Number(await demo.locator('[data-readout="memory"]').textContent())).toBeGreaterThan(24);
+    expect(await demo.locator('[data-demo-row]').count()).toBeLessThanOrEqual(24);
+    await expect(demo.locator('[data-readout="cls"]')).toHaveText('0.000');
+  });
+
+  test('a fast AI fills the reserved slot with picks, without moving anything', async ({ page }) => {
+    await page.goto('/system-design/personal-and-instant?step=8&ai=300');
+    const demo = page.locator('[data-anchor="sd-demo"]');
+    await demo.scrollIntoViewIfNeeded();
+    await expect(demo.locator('[data-picks]')).toContainText('Picked for you', { timeout: 3000 });
+    await expect(demo.locator('[data-readout="ai"]')).toContainText('300 ms');
+    await expect(demo.locator('[data-readout="cls"]')).toHaveText('0.000');
+  });
+});
