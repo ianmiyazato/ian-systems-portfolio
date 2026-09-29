@@ -17,7 +17,9 @@ const zones = [
   { url: zone('PULSE_URL', 3003), prefixes: ['/pulse'], rootSlash: true }
 ];
 
-// Story pages owned by the Astro zone. The older /system-design/<project> pages stay in the shell until M5.
+// Story pages owned by the Astro zone: exact pages, and prefixes with everything under them.
+// The older /system-design/<project> pages stay in the shell until they are rebuilt or retired.
+const storyPages = ['/system-design', '/system-design/build-vs-buy'];
 const storyPaths = ['/system-design/metrics-to-decisions', '/system-design/personal-and-instant'];
 
 const nextConfig: NextConfig = {
@@ -47,10 +49,13 @@ const nextConfig: NextConfig = {
     // output lives under /mare/system-design, so these paths map rather than pass through.
     const shop = zone('MARE_SHOP_URL', 3002);
     const story = shop
-      ? storyPaths.flatMap((path) => [
-          { source: path, destination: `${shop}/mare${path}` },
-          { source: `${path}/:path+`, destination: `${shop}/mare${path}/:path+` }
-        ])
+      ? [
+          ...storyPages.map((path) => ({ source: path, destination: `${shop}/mare${path}` })),
+          ...storyPaths.flatMap((path) => [
+            { source: path, destination: `${shop}/mare${path}` },
+            { source: `${path}/:path+`, destination: `${shop}/mare${path}/:path+` }
+          ])
+        ]
       : [];
     return { beforeFiles: [...story, ...beforeFiles], afterFiles: [], fallback: [] };
   }

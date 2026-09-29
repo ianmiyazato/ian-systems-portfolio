@@ -26,7 +26,7 @@ kbd{padding:1px 5px;border:1px solid currentColor;border-radius:4px;font:600 10p
 
 const links: Array<[string, string]> = [
   ['Work', '/work'],
-  ['Systems', '/system-design/mare'],
+  ['Systems', '/system-design'],
   ['Design languages', '/work/mare/languages']
 ];
 
