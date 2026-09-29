@@ -51,17 +51,40 @@ if (demo) {
   const picks = JSON.parse(demo.dataset.picksJson ?? '[]') as Item[];
   const bestsellers = JSON.parse(demo.dataset.bestJson ?? '[]') as Item[];
   const base = demo.dataset.base!;
-  const forced = Number(new URLSearchParams(location.search).get('ai'));
+  const params = new URLSearchParams(location.search);
+  const forced = Number(params.get('ai'));
+
+  const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  async function waitForStoryLayout() {
+    const screen = demo!.closest<HTMLElement>('[data-screen]');
+    if (!screen || params.get('present') !== '1') return;
+    for (let frame = 0; frame < 120; frame += 1) {
+      const scale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sd-scale')) || 1;
+      const rect = screen.getBoundingClientRect();
+      if (getComputedStyle(screen).position === 'fixed' && Math.abs(rect.width - 1600 * scale) < 1) {
+        await nextFrame();
+        await nextFrame();
+        return;
+      }
+      await nextFrame();
+    }
+  }
 
   let cls = 0;
+  let clsStartedAt = 0;
   let clsObserver: PerformanceObserver | undefined;
   function measureDemoCls() {
     cls = 0;
+    clsStartedAt = performance.now();
     readout('cls', '0.000');
     clsObserver?.disconnect();
     try {
       clsObserver = new PerformanceObserver((entries) => {
-        for (const entry of entries.getEntries() as Array<PerformanceEntry & { value: number; hadRecentInput: boolean }>) if (!entry.hadRecentInput) cls += entry.value;
+        for (const entry of entries.getEntries() as Array<PerformanceEntry & { value: number; hadRecentInput: boolean }>) {
+          // Chromium can deliver a layout-shift entry queued before this observer was attached.
+          // The readout is deliberately scoped to instability after this demo run starts.
+          if (!entry.hadRecentInput && entry.startTime >= clsStartedAt) cls += entry.value;
+        }
         readout('cls', cls.toFixed(3));
       });
       // Measure instability caused while this demo runs. Buffered entries include the story
@@ -153,9 +176,12 @@ if (demo) {
   async function start() {
     run += 1;
     const current = run;
-    // Font loading belongs to page setup, not to the product/AI demo. Waiting here also keeps a
-    // cold, parallel screenshot run from attributing a late font swap to the reserved demo slots.
+    // CSS/font loading and the story player's initial presentation paint belong to page setup,
+    // not to the product/AI demo. `document.fonts.ready` can resolve before a late stylesheet has
+    // declared its font faces, so wait for the window load event first, then fonts and two frames.
+    if (document.readyState !== 'complete') await new Promise<void>((resolve) => window.addEventListener('load', () => resolve(), { once: true }));
     await document.fonts.ready;
+    await waitForStoryLayout();
     if (current !== run) return;
     const began = performance.now();
     measureDemoCls();
