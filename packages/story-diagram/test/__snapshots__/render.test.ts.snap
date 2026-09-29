@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderDiagram > matches the structural snapshot 1`] = `
+"svg class=sd-svg data-diagram-svg=
+  title
+  desc
+  defs
+    marker class=sd-arrow
+      path
+    marker class=sd-arrow-hi
+      path
+  g class=sd-edges
+    g class=sd-edge is-focus data-id=source->check data-kind=flow data-focus-steps=1
+      path class=sd-edge-line data-path-for=source->check
+      path class=sd-edge-hi
+    g class=sd-edge is-dim data-id=check->store data-kind=data data-focus-steps=2
+      path class=sd-edge-line data-path-for=check->store
+      path class=sd-edge-hi
+    g class=sd-edge is-dim data-id=store->explain data-kind=ai data-focus-steps=3
+      path class=sd-edge-line data-path-for=store->explain
+      path class=sd-edge-hi
+    g class=sd-edge is-dim data-id=check->quarantine data-kind=flow data-focus-steps=2
+      path class=sd-edge-line data-path-for=check->quarantine
+      path class=sd-edge-hi
+  g class=sd-nodes
+    g class=sd-node is-focus data-id=source data-tone=ink data-focus-steps=1
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=check data-tone=ink data-focus-steps=2
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=store data-tone=ink data-focus-steps=3
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=explain data-tone=accent data-focus-steps=3
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+        tspan
+      text class=sd-eng
+        tspan
+    g class=sd-node is-dim data-id=quarantine data-tone=giveup data-focus-steps=2
+      rect class=sd-ring
+      rect class=sd-box
+      path class=sd-icon
+      text class=sd-label sd-plain
+      text class=sd-caption sd-plain
+        tspan
+      text class=sd-eng
+        tspan
+        tspan
+  g class=sd-packets
+    circle class=sd-packet
+    circle class=sd-packet
+    circle class=sd-packet"
+`;

@@ -1,12 +1,12 @@
 import { expect, test, type Page } from '@playwright/test';
-import { fixtureHtml } from '../../packages/story-diagram/test/fixture';
+import { fixtureHtml } from '../support/story-fixture';
 
 /**
  * The story engine in a real browser, on a self-contained fixture page (no app build needed):
  * keyboard and ?step= control, presentation mode, reduced motion, compositor-only animation,
  * pausing off-screen and in hidden tabs, at most three packets on focused edges, and CLS 0.
  */
-const URL = 'http://story.test/fixture';
+const PAGE = 'http://story.test/fixture';
 let html = '';
 
 test.beforeAll(async () => {
@@ -28,7 +28,7 @@ const stepParam = (page: Page) => new URL(page.url()).searchParams.get('step');
 const running = (page: Page, selector: string) => page.evaluate((scope) => document.querySelector(scope)!.getAnimations({ subtree: true }).filter((animation) => animation.playState === 'running').length, selector);
 
 test('arrows, Space, Home and End walk every step across screens, and the URL follows', async ({ page }) => {
-  await page.goto(URL);
+  await page.goto(PAGE);
   await expect(flow(page)).toHaveAttribute('data-step', '1');
   await page.keyboard.press('ArrowRight');
   await expect(flow(page)).toHaveAttribute('data-step', '2');
@@ -50,7 +50,7 @@ test('arrows, Space, Home and End walk every step across screens, and the URL fo
 });
 
 test('each step is reachable by URL and focuses one idea', async ({ page }) => {
-  await page.goto(`${URL}?step=3`);
+  await page.goto(`${PAGE}?step=3`);
   await expect(flow(page)).toHaveAttribute('data-step', '3');
   await expect(page.locator('.sd-node[data-id="store"]')).toHaveClass(/is-focus/);
   await expect(page.locator('.sd-node[data-id="source"]')).toHaveClass(/is-dim/);
@@ -60,7 +60,7 @@ test('each step is reachable by URL and focuses one idea', async ({ page }) => {
 });
 
 test('E toggles the engineering layer and P pauses every animation', async ({ page }) => {
-  await page.goto(URL);
+  await page.goto(PAGE);
   await expect(page.locator('[data-screen="flow"] [data-step-only="1"] .sd-step-eng')).toBeHidden();
   await page.keyboard.press('e');
   await expect(page.locator('html')).toHaveAttribute('data-layer', 'engineering');
@@ -79,7 +79,7 @@ test('E toggles the engineering layer and P pauses every animation', async ({ pa
 });
 
 test('presentation mode: one screen at a time, notes on N, controls hide until the mouse moves', async ({ page }) => {
-  await page.goto(`${URL}?present=1`);
+  await page.goto(`${PAGE}?present=1`);
   await expect(page.locator('html')).toHaveAttribute('data-present', '');
   await expect(flow(page)).toBeVisible();
   await expect(page.locator('[data-screen="cards"]')).toBeHidden();
@@ -100,8 +100,8 @@ test('presentation mode: one screen at a time, notes on N, controls hide until t
 });
 
 test('animations only touch transform, opacity or offset-distance', async ({ page }) => {
-  await page.goto(URL);
-  for (let step = 0; step < 4; step += 1) {
+  await page.goto(PAGE);
+  for (let step = 1; step <= 5; step += 1) {
     const found = await page.evaluate(() => {
       const allowed = new Set(['transform', 'opacity', 'offset-distance', 'offsetDistance', 'none']);
       const bad: string[] = [];
@@ -117,20 +117,23 @@ test('animations only touch transform, opacity or offset-distance', async ({ pag
       return { bad: [...new Set(bad)], count: document.getAnimations().length };
     });
     expect(found.bad).toEqual([]);
-    expect(found.count).toBeGreaterThan(0);
+    // Diagram steps always have packets moving; the card screen only fades.
+    if (step <= 3) expect(found.count).toBeGreaterThan(0);
     await page.keyboard.press('ArrowRight');
     await page.waitForTimeout(250);
   }
 });
 
 test('at most three packets move, only along focused edges', async ({ page }) => {
-  await page.goto(`${URL}?step=2`);
+  await page.goto(`${PAGE}?step=2`);
   await page.waitForTimeout(400);
   const packets = await page.evaluate(() => {
-    const focused = [...document.querySelectorAll('.sd-edge.is-focus path.sd-edge-line')].map((path) => path.getAttribute('d'));
+    // Compare the number sequences: browsers may re-serialize the path string.
+    const numbers = (text: string) => (text.match(/-?\d+(\.\d+)?/g) ?? []).map(Number).join(',');
+    const focused = [...document.querySelectorAll('.sd-edge.is-focus path.sd-edge-line')].map((path) => numbers(path.getAttribute('d')!));
     return [...document.querySelectorAll<SVGElement>('.sd-packet')]
       .filter((packet) => packet.getAnimations().some((animation) => animation.playState === 'running'))
-      .map((packet) => ({ path: getComputedStyle(packet).offsetPath, onFocused: focused.some((d) => getComputedStyle(packet).offsetPath.includes(d!)) }));
+      .map((packet) => ({ path: getComputedStyle(packet).offsetPath, onFocused: focused.includes(numbers(getComputedStyle(packet).offsetPath)) }));
   });
   expect(packets.length).toBeGreaterThan(0);
   expect(packets.length).toBeLessThanOrEqual(3);
@@ -138,7 +141,7 @@ test('at most three packets move, only along focused edges', async ({ page }) =>
 });
 
 test('animations pause off-screen and in a hidden tab', async ({ page }) => {
-  await page.goto(URL);
+  await page.goto(PAGE);
   await expect.poll(() => running(page, '[data-screen="flow"]')).toBeGreaterThan(0);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await expect.poll(() => running(page, '[data-screen="flow"]')).toBe(0);
@@ -157,7 +160,7 @@ test('animations pause off-screen and in a hidden tab', async ({ page }) => {
 });
 
 test('CLS stays 0 while loading and while steps animate', async ({ page }) => {
-  await page.goto(URL);
+  await page.goto(PAGE);
   await page.waitForTimeout(500);
   for (let step = 0; step < 4; step += 1) {
     await page.keyboard.press('ArrowRight');
@@ -167,17 +170,19 @@ test('CLS stays 0 while loading and while steps animate', async ({ page }) => {
 });
 
 test.describe('reduced motion', () => {
-  test.use({ reducedMotion: 'reduce' });
+  test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  });
 
   test('shows each step final state at once, with nothing hidden', async ({ page }) => {
-    await page.goto(URL);
+    await page.goto(PAGE);
     for (const step of [1, 2, 3]) {
       if (step > 1) await page.keyboard.press('ArrowRight');
       expect(await running(page, '[data-deck]')).toBe(0);
       const state = await page.evaluate(() => ({
         focus: [...document.querySelectorAll('[data-screen="flow"] .is-focus')].map((node) => getComputedStyle(node).opacity),
         packets: [...document.querySelectorAll<SVGElement>('.sd-packet')].filter((packet) => getComputedStyle(packet).opacity === '1').length,
-        caption: document.querySelector<HTMLElement>('[data-screen="flow"] [data-step-only]:not([hidden])')?.innerText ?? ''
+        caption: document.querySelector<HTMLElement>('[data-screen="flow"] [data-step-only]:not(.is-off)')?.innerText ?? ''
       }));
       expect(state.focus.length).toBeGreaterThan(0);
       expect(new Set(state.focus)).toEqual(new Set(['1']));
