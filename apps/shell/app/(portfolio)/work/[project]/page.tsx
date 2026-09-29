@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import { ZLink } from '@/components/zone-link';
 import { studies, studyBySlug } from '@/lib/work';
 
+// Maré keeps its engineering deep dive; Atlas and Pulse point at the system design story.
+const systemDesign: Record<string, string> = { mare: '/system-design/mare', atlas: '/system-design', pulse: '/system-design/metrics-to-decisions' };
+
 type Props = { params: Promise<{ project: string }> };
 
 export function generateStaticParams() {
@@ -27,7 +30,7 @@ export default async function CaseStudy({ params }: Props) {
         <p>{study.pitch}</p>
         <div className="case-actions">
           <ZLink className="btn primary" href={study.shots[0]!.href}>Open the live product</ZLink>
-          <ZLink className="btn" href={`/system-design/${study.slug}`}>See the system design</ZLink>
+          <ZLink className="btn" href={systemDesign[study.slug] ?? '/system-design'}>See the system design</ZLink>
         </div>
       </header>
       <section className="case-grid">
@@ -56,8 +59,8 @@ export default async function CaseStudy({ params }: Props) {
           ))}
         </div>
       </section>
-      <ZLink className="case-next" href={`/system-design/${study.slug}`} data-anchor="case-system-design">
-        <span className="eyebrow">Next</span><strong>Replay {study.name}&apos;s architecture under load →</strong>
+      <ZLink className="case-next" href={systemDesign[study.slug] ?? '/system-design'} data-anchor="case-system-design">
+        <span className="eyebrow">Next</span><strong>{study.slug === 'mare' ? `See ${study.name}'s orders under load →` : 'See the system design story →'}</strong>
       </ZLink>
     </main>
   );

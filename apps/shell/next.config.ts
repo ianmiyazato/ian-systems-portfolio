@@ -17,22 +17,20 @@ const zones = [
   { url: zone('PULSE_URL', 3003), prefixes: ['/pulse'], rootSlash: true }
 ];
 
-// Story pages owned by the Astro zone: exact pages, and prefixes with everything under them.
-// The older /system-design/<project> pages stay in the shell until they are rebuilt or retired.
-const storyPages = ['/system-design', '/system-design/build-vs-buy'];
-const storyPaths = ['/system-design/metrics-to-decisions', '/system-design/personal-and-instant'];
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@portfolio/tokens', '@portfolio/ai-sim', '@portfolio/events', '@portfolio/mocks', '@portfolio/overlays', '@portfolio/world', '@portfolio/routes'],
-  experimental: { optimizePackageImports: ['@xyflow/react'] },
   // v0.2 renamed Balcão to Counter; old links keep working (308, query string preserved).
   async redirects() {
     return [
       { source: '/mare/ops/balcao', destination: '/mare/ops/counter', permanent: true },
       { source: '/mare/ops/balcao/:path*', destination: '/mare/ops/counter/:path*', permanent: true },
-      { source: '/mare/shop/p/:slug', destination: '/mare/shop/products/:slug', permanent: true }
+      { source: '/mare/shop/p/:slug', destination: '/mare/shop/products/:slug', permanent: true },
+      // v0.3 rebuilt system design as two stories; pages that could not reach the bar were retired.
+      { source: '/system-design/mare/request-path', destination: '/system-design/mare', permanent: true },
+      { source: '/system-design/atlas', destination: '/system-design', permanent: true },
+      { source: '/system-design/pulse', destination: '/system-design/metrics-to-decisions', permanent: true }
     ];
   },
   async rewrites() {
@@ -45,16 +43,13 @@ const nextConfig: NextConfig = {
           ])
         : []
     );
-    // The system design story is static Astro in the shop zone (<= 60 kB of JS per page); its
-    // output lives under /mare/system-design, so these paths map rather than pass through.
+    // System design is static Astro in the shop zone (<= 60 kB of JS per page); its output lives
+    // under /mare/system-design, so these paths map rather than pass through.
     const shop = zone('MARE_SHOP_URL', 3002);
     const story = shop
       ? [
-          ...storyPages.map((path) => ({ source: path, destination: `${shop}/mare${path}` })),
-          ...storyPaths.flatMap((path) => [
-            { source: path, destination: `${shop}/mare${path}` },
-            { source: `${path}/:path+`, destination: `${shop}/mare${path}/:path+` }
-          ])
+          { source: '/system-design', destination: `${shop}/mare/system-design` },
+          { source: '/system-design/:path+', destination: `${shop}/mare/system-design/:path+` }
         ]
       : [];
     return { beforeFiles: [...story, ...beforeFiles], afterFiles: [], fallback: [] };

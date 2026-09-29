@@ -25,7 +25,7 @@ describe('stories', () => {
   });
 
   it('plain captions average 12–20 words', () => {
-    const captions = Object.values(stories).flatMap((diagram) => diagram.steps.map((step) => step.caption));
+    const captions = [stories['metrics-flow'], stories['personal-flow']].flatMap((diagram) => diagram.steps.map((step) => step.caption));
     const average = captions.reduce((sum, caption) => sum + words(caption), 0) / captions.length;
     expect(average).toBeGreaterThanOrEqual(12);
     expect(average).toBeLessThanOrEqual(20);

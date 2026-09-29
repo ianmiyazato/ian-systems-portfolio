@@ -78,9 +78,7 @@ export const routes: RouteEntry[] = [
   { id: 'sd-map', system: 'system-design', title: 'The 80/20 map', href: '/system-design/build-vs-buy', zone: 'mare-shop', owner: shop, board: 'SD-99', heading: 'The 80/20 map', release: '0.3', checked: '2026-09-29' },
 
   { id: 'mare-languages', system: 'mare', title: 'Five design languages', href: '/work/mare/languages', zone: 'shell', owner: shell, board: 'OV-languages', heading: 'five design languages', release: '0.1' },
-  { id: 'system-design-mare', system: 'mare', title: 'Maré system design', href: '/system-design/mare', zone: 'shell', owner: shell, board: 'SD-mare', heading: 'Decisions under load', release: '0.1' },
-
-  { id: 'system-design-request-path', system: 'mare', title: 'Request path · live', href: '/system-design/mare/request-path', zone: 'shell', owner: shell, board: 'V2-arch', heading: 'Every hop, live', release: '0.2', checked: '2026-09-27' },
+  { id: 'system-design-mare', system: 'system-design', title: 'Maré · orders under load', href: '/system-design/mare', zone: 'mare-shop', owner: shop, board: 'SD-mare', heading: 'Orders under load', release: '0.1', checked: '2026-09-29' },
 
   { id: 'counter-lanes', system: 'counter', title: 'Order lanes', href: '/mare/ops/counter', zone: 'mare-ops', owner: remote('counter'), board: 'BA-lanes', heading: 'open orders', release: '0.1', mobile: true },
   { id: 'counter-picking', system: 'counter', title: 'Picking mode', href: '/mare/ops/counter/pick/MR-904117', zone: 'mare-ops', owner: remote('counter'), board: 'BA-picking', heading: 'MR-904117', release: '0.1', mobile: true },
@@ -152,7 +150,6 @@ export const routes: RouteEntry[] = [
   { id: 'atlas-academy-browse', system: 'atlas', title: 'Academy', href: '/atlas/academy', zone: 'shell', owner: shell, board: 'V2-academy', heading: 'Payments at scale', release: '0.2', checked: '2026-09-27' },
   { id: 'atlas-academy', system: 'atlas', title: 'Academy lesson', href: '/atlas/academy/designing-for-10x', zone: 'shell', owner: shell, board: 'AT-lesson', heading: 'Designing for 10', release: '0.1' },
   { id: 'atlas-paywall', system: 'atlas', title: 'Paywall + checkout', href: '/atlas/academy/designing-for-10x?modal=paywall&sub=checkout', zone: 'shell', owner: shell, board: 'AT-paywall', heading: 'Designing for 10', release: '0.1' },
-  { id: 'system-design-atlas', system: 'atlas', title: 'Atlas system design', href: '/system-design/atlas', zone: 'shell', owner: shell, board: 'SD-atlas', heading: 'Decisions under load', release: '0.1' },
 
   { id: 'pulse-roster', system: 'pulse', title: 'Roster', href: '/pulse', zone: 'pulse', owner: pulse, board: 'PU-roster', heading: 'Hana Rae', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'pulse-intelligence', system: 'pulse', title: 'Intelligence', href: '/pulse/intelligence', zone: 'pulse', owner: pulse, board: 'PU-intelligence', heading: 'Performance intelligence', release: '0.1', mobile: true },
@@ -162,7 +159,6 @@ export const routes: RouteEntry[] = [
   { id: 'pulse-distribution', system: 'pulse', title: 'Distribution', href: '/pulse/distribution', zone: 'pulse', owner: pulse, board: 'PU-distribution', heading: 'Distribution', release: '0.1' },
   { id: 'pulse-campaign-wrapped', system: 'pulse', title: 'Campaign Wrapped', href: '/pulse/distribution/campaigns/afterglow/wrapped', zone: 'pulse', owner: pulse, board: 'PU-wrapped', heading: 'Afterglow, wrapped', release: '0.2', checked: '2026-09-27', mobile: true },
   { id: 'pulse-harness', system: 'pulse', title: 'AI harness', href: '/pulse/harness', zone: 'pulse', owner: pulse, board: 'PU-harness', heading: 'AI harness', release: '0.1' },
-  { id: 'system-design-pulse', system: 'pulse', title: 'Pulse system design', href: '/system-design/pulse', zone: 'shell', owner: shell, board: 'SD-pulse', heading: 'Decisions under load', release: '0.1' },
 
   { id: 'work-index', system: 'overview', title: 'Work index', href: '/work', zone: 'shell', owner: shell, board: 'OV-work', heading: 'Three platforms', release: '0.1', parity: false },
   { id: 'work-mare', system: 'mare', title: 'Maré case study', href: '/work/mare', zone: 'shell', owner: shell, board: 'OV-case', heading: 'Maré', release: '0.1', parity: false },

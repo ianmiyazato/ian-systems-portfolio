@@ -304,3 +304,13 @@ html[data-present] .sdp-map-card { min-height: 280px; }
   .sdp-quad-title { font-size: 18px; }
   .sdp-quad-line { display: none; }
 }
+
+/* Deep dive · before → after (real metrics only) */
+.sdp-metrics { display: grid; gap: 12px; }
+.sdp-metrics h2 { margin: 0; font: 800 24px var(--font-display); letter-spacing: -.015em; }
+.sdp-metrics dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.sdp-metrics dl div { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.sdp-metrics dt { color: var(--muted); font: 600 14px var(--font-mono); }
+.sdp-metrics dd { margin: 8px 0 0; font: 800 24px var(--font-display); letter-spacing: -.015em; }
+.sdp-metrics > p { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 900px) { .sdp-metrics dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
