@@ -27,7 +27,7 @@ export function TidewatchState({ children }: { children: ReactNode }) {
           <h1>Nothing has reported from maré · production yet</h1>
           <p className="tw-muted">Tidewatch builds its service flow, problems and SLOs from OpenTelemetry spans. Point one service's exporter here and the first trace appears within a minute.</p>
           <pre><code>OTEL_EXPORTER_OTLP_ENDPOINT=https://ingest.tidewatch.example{'\n'}OTEL_SERVICE_NAME=orders-api{'\n'}OTEL_TRACES_SAMPLER=parentbased_traceidratio{'\n'}OTEL_TRACES_SAMPLER_ARG=0.1</code></pre>
-          <p><ZLink className="tw-link" href="/system-design/mare/request-path">See which services the request path touches →</ZLink></p>
+          <p><ZLink className="tw-link" href="/system-design/mare">See how orders stay safe under load →</ZLink></p>
         </section>
       </main>
     );
