@@ -1,0 +1,70 @@
+---
+/**
+ * The speed race: the same page built two ways on one 0–5 s axis (illustrative targets). The
+ * resting markup is the finished race; the player's effect replays it from zero with transforms
+ * and opacity only, so reduced motion and no-JS both show the whole result.
+ */
+import { deck } from '@portfolio/system-design';
+
+const { race } = deck;
+const W = 1200;
+const x0 = 236;
+const x1 = 1170;
+const perSecond = (x1 - x0) / race.axis;
+const x = (seconds: number) => x0 + seconds * perSecond;
+const laneY = [118, 300];
+const simpleTones = ['#C9D1DC', '#AEB8C5', '#0D1B2A'];
+const oursFill = (index: number) => ['sd-race-frame', 'sd-race-first', 'sd-race-picks', 'sd-race-next'][index] ?? 'sd-race-first';
+const [simple, ours] = race.lanes as [typeof race.lanes[number], typeof race.lanes[number]];
+---
+<figure class="sdp-race" data-anchor="sd-race" data-focus-steps="1 2" data-present-steps="1 2">
+  <svg viewBox={`0 0 ${W} 420`} role="img" aria-labelledby="race-title">
+    <title id="race-title">{`${simple.title}: ${simple.segments.map((s) => `${s.label} until ${s.to} s`).join(', ')}; ${simple.result.text}. ${ours.title}: ${ours.segments.map((s) => `${s.label} by ${s.to} s`).join(', ')}; ${ours.result.text}.`}</title>
+    {[0, 1, 2, 3, 4, 5].map((second) => (
+      <g class="sd-race-tick">
+        <line x1={x(second)} x2={x(second)} y1="44" y2="382" />
+        <text x={x(second)} y="410" text-anchor="middle">{second} s</text>
+      </g>
+    ))}
+
+    <!-- Lane 1: done the simple way -->
+    <text class="sd-race-lane" x={x0} y={laneY[0]! - 46}>{simple.title}</text>
+    <text class="sd-race-result" x={x1} y={laneY[0]! - 46} text-anchor="end">{simple.result.text}</text>
+    <g class="sd-race-mock" transform={`translate(20 ${laneY[0]! - 58})`}>
+      <rect class="sd-race-screen" width="176" height="116" rx="12" />
+      <text class="sd-race-blank" x="88" y="64" text-anchor="middle">blank</text>
+      <g data-race-reveal={simple.result.at}>
+        <rect class="sd-race-screen-fill" width="176" height="116" rx="12" />
+        {[0, 1, 2].map((col) => [0, 1].map((row) => <rect class="sd-race-product" x={14 + col * 52} y={16 + row * 44} width="44" height="36" rx="6" />))}
+      </g>
+    </g>
+    {simple.segments.map((segment, index) => (
+      <g>
+        <rect data-race-segment data-from={segment.from} data-to={segment.to} x={x(segment.from)} y={laneY[0]! - 22} width={(segment.to - segment.from) * perSecond - 3} height="44" rx="8" fill={simpleTones[index]} />
+        <text class:list={['sd-race-in', { 'sd-race-in-light': index === 2 }]} data-race-label={segment.from} x={x(segment.from) + 14} y={laneY[0]! + 6}>{segment.label}</text>
+      </g>
+    ))}
+    <line class="sd-race-mark" x1={x(simple.result.at)} x2={x(simple.result.at)} y1={laneY[0]! - 32} y2={laneY[0]! + 32} />
+
+    <!-- Lane 2: how we build it -->
+    <text class="sd-race-lane" x={x0} y={laneY[1]! - 46}>{ours.title}</text>
+    <text class="sd-race-result sd-race-good" x={x1} y={laneY[1]! - 46} text-anchor="end">{ours.result.text}</text>
+    <g class="sd-race-mock" transform={`translate(20 ${laneY[1]! - 58})`}>
+      <rect class="sd-race-screen" width="176" height="116" rx="12" />
+      <rect class="sd-race-bar" data-race-reveal="0.2" x="10" y="10" width="156" height="12" rx="4" />
+      <g data-race-reveal="0.6">{[0, 1, 2].map((col) => <rect class="sd-race-product" x={14 + col * 52} y="30" width="44" height="36" rx="6" />)}</g>
+      <rect class="sd-race-pickstrip" data-race-reveal="1.2" x="14" y="76" width="148" height="28" rx="6" />
+    </g>
+    {ours.segments.map((segment, index) => (
+      <g>
+        <rect class={oursFill(index)} data-race-segment data-from={segment.from} data-to={segment.to} x={x(segment.from)} y={laneY[1]! - 22} width={Math.max(4, (segment.to - segment.from) * perSecond - 3)} height="44" rx="8" />
+        <circle class="sd-race-pin" cx={x(segment.from) + 4} cy={laneY[1]! + (index % 2 === 0 ? 40 : 66)} r="3.5" data-race-label={segment.from} />
+        <text class="sd-race-out" data-race-label={segment.from} x={x(segment.from) + 14} y={laneY[1]! + (index % 2 === 0 ? 46 : 72)}>{segment.label}</text>
+      </g>
+    ))}
+    <line class="sd-race-mark sd-race-good-line" x1={x(ours.result.at)} x2={x(ours.result.at)} y1={laneY[1]! - 32} y2={laneY[1]! + 32} />
+
+    <line class="sd-race-head" data-race-head x1={x0} x2={x0} y1="44" y2="382" />
+  </svg>
+  <figcaption class="sdp-illustrative" data-anchor="sd-race-label">{race.label} · the same page, the same AI, one clock</figcaption>
+</figure>

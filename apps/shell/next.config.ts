@@ -18,7 +18,7 @@ const zones = [
 ];
 
 // Story pages owned by the Astro zone. The older /system-design/<project> pages stay in the shell until M5.
-const storyPaths = ['/system-design/metrics-to-decisions'];
+const storyPaths = ['/system-design/metrics-to-decisions', '/system-design/personal-and-instant'];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
