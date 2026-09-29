@@ -38,8 +38,8 @@
     },
     "packets": {
       "maxConcurrent": 12,
-      "maxJumpPx": 96,
-      "jumps": 10
+      "maxJumpPx": 1,
+      "jumps": 0
     },
     "motion": {
       "runningAnimations": 12,
@@ -50,19 +50,18 @@
       "domMutationsPerSecond": 0
     },
     "frames": {
-      "frames": 601,
+      "frames": 602,
       "fps": 60,
       "droppedFrames": 0,
-      "worstFrameMs": 20
+      "worstFrameMs": 24
     },
     "trace": {
       "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-mare.trace.json",
-      "tasks": 3522,
+      "tasks": 3200,
       "longTasksOver50ms": 0,
-      "longestTaskMs": 8,
+      "longestTaskMs": 7,
       "observerLongTasks": [
-        88,
-        57
+        67
       ]
     },
     "clsAfterSteps": 0.394,
@@ -131,7 +130,7 @@
       "jumps": 0
     },
     "motion": {
-      "runningAnimations": 3,
+      "runningAnimations": 2,
       "animatedProperties": [
         "offsetDistance",
         "opacity"
@@ -142,23 +141,23 @@
       "frames": 601,
       "fps": 60,
       "droppedFrames": 0,
-      "worstFrameMs": 20
+      "worstFrameMs": 18
     },
     "trace": {
       "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-mare-request-path.trace.json",
-      "tasks": 3303,
+      "tasks": 3297,
       "longTasksOver50ms": 0,
-      "longestTaskMs": 6,
+      "longestTaskMs": 4,
       "observerLongTasks": [
-        66
+        65
       ]
     },
     "clsAfterSteps": 0.014,
     "offscreenRunning": {
       "visible": false,
-      "running": 4
+      "running": 1
     },
-    "hiddenRunning": 4,
+    "hiddenRunning": 1,
     "axe": [],
     "reducedMotion": {
       "running": 0,
@@ -197,8 +196,8 @@
     },
     "packets": {
       "maxConcurrent": 6,
-      "maxJumpPx": 212,
-      "jumps": 10
+      "maxJumpPx": 2,
+      "jumps": 0
     },
     "motion": {
       "runningAnimations": 6,
@@ -212,14 +211,16 @@
       "frames": 601,
       "fps": 60,
       "droppedFrames": 0,
-      "worstFrameMs": 20
+      "worstFrameMs": 22
     },
     "trace": {
       "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-atlas.trace.json",
-      "tasks": 3032,
+      "tasks": 3047,
       "longTasksOver50ms": 0,
-      "longestTaskMs": 8,
-      "observerLongTasks": []
+      "longestTaskMs": 7,
+      "observerLongTasks": [
+        51
+      ]
     },
     "clsAfterSteps": 0.015,
     "offscreenRunning": {
@@ -261,8 +262,8 @@
     },
     "packets": {
       "maxConcurrent": 12,
-      "maxJumpPx": 190,
-      "jumps": 15
+      "maxJumpPx": 2,
+      "jumps": 0
     },
     "motion": {
       "runningAnimations": 12,
@@ -275,17 +276,15 @@
     "frames": {
       "frames": 601,
       "fps": 60,
-      "droppedFrames": 1,
-      "worstFrameMs": 32
+      "droppedFrames": 0,
+      "worstFrameMs": 20
     },
     "trace": {
       "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/610271a2-1e71-4de6-bbe4-8390b05cf9df/scratchpad/system-design-v1-system-design-pulse.trace.json",
-      "tasks": 3401,
+      "tasks": 3322,
       "longTasksOver50ms": 0,
-      "longestTaskMs": 8,
-      "observerLongTasks": [
-        62
-      ]
+      "longestTaskMs": 6,
+      "observerLongTasks": []
     },
     "clsAfterSteps": 0.012,
     "offscreenRunning": {
