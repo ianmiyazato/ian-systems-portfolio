@@ -1,0 +1,225 @@
+[
+  {
+    "path": "/system-design/mare",
+    "slug": "system-design-mare",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-mare-v4-system-design-mare-1440.png",
+      "img/system-design-mare-v4-system-design-mare-1920.png",
+      "img/system-design-mare-v4-system-design-mare-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": null,
+      "svgCount": 0,
+      "textNodes": 23,
+      "minText": 14,
+      "under14": 0,
+      "under16": 12,
+      "overlaps": 9,
+      "overlapSamples": [
+        "Step 1 of 3 × Step 2 of 3",
+        "Step 1 of 3 × Step 3 of 3",
+        "One retailer, one week × Behind the scenes",
+        "One retailer, one week × On the screen",
+        "A fashion retailer in Br × Protect and grow sales o"
+      ],
+      "chromaticColors": 2,
+      "jargon": [
+        "idempot",
+        "api",
+        "latency",
+        "shard",
+        "throughput",
+        "queue",
+        "backpressure",
+        "idempotency",
+        "edge"
+      ],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 0,
+      "maxJumpPx": 0,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 0,
+      "animatedProperties": [],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 10,
+      "frames": 601,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 21
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/7fd60e05-32c1-49af-90ca-34734c21f533/scratchpad/system-design-mare-v4-system-design-mare.trace.json",
+      "steps": 3,
+      "tasks": 2071,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 2,
+      "observerLongTasks": [
+        52
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1493
+    }
+  },
+  {
+    "path": "/system-design/mare/black-friday",
+    "slug": "system-design-mare-black-friday",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-mare-v4-system-design-mare-black-friday-1440.png",
+      "img/system-design-mare-v4-system-design-mare-black-friday-1920.png",
+      "img/system-design-mare-v4-system-design-mare-black-friday-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1200 584",
+      "svgCount": 1,
+      "textNodes": 70,
+      "minText": 14,
+      "under14": 0,
+      "under16": 33,
+      "overlaps": 74,
+      "overlapSamples": [
+        "site, app and 38 stores  × push waves staggered byc",
+        "prices set in advance,se × CDN + price book flip +b",
+        "only when checkout is fu × waiting room · signedtok",
+        "kept free for people pay × T0 pool · four synchrono",
+        "suggestions, videos andr × T3 pool · first to switc"
+      ],
+      "chromaticColors": 3,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 2,
+      "maxJumpPx": 1,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 38,
+      "frames": 2251,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 20
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/7fd60e05-32c1-49af-90ca-34734c21f533/scratchpad/system-design-mare-v4-system-design-mare-black-friday.trace.json",
+      "steps": 15,
+      "tasks": 9966,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 6,
+      "observerLongTasks": [
+        68
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1118
+    }
+  },
+  {
+    "path": "/system-design/mare/storefront",
+    "slug": "system-design-mare-storefront",
+    "consoleErrors": [],
+    "screenshots": [
+      "img/system-design-mare-v4-system-design-mare-storefront-1440.png",
+      "img/system-design-mare-v4-system-design-mare-storefront-1920.png",
+      "img/system-design-mare-v4-system-design-mare-storefront-reduced.png"
+    ],
+    "clsAfterLoad": 0,
+    "diagram": {
+      "found": true,
+      "viewBox": "0 0 1200 584",
+      "svgCount": 1,
+      "textNodes": 64,
+      "minText": 14,
+      "under14": 0,
+      "under16": 31,
+      "overlaps": 72,
+      "overlapSamples": [
+        "on a phone, on mobile da × field LCP · INP · CLS",
+        "photos, words and price, × Astro static shell · CDN",
+        "price, stock and bag in  × GET /live batched · 2 se",
+        "asked once every twoseco × coalescing: N viewers, 1",
+        "instant when plenty,care × optimism by stock band +"
+      ],
+      "chromaticColors": 2,
+      "jargon": [],
+      "legend": false
+    },
+    "packets": {
+      "maxConcurrent": 2,
+      "maxJumpPx": 1,
+      "jumps": 0
+    },
+    "motion": {
+      "runningAnimations": 2,
+      "animatedProperties": [
+        "offsetDistance",
+        "opacity"
+      ],
+      "domMutationsPerSecond": 0
+    },
+    "frames": {
+      "seconds": 33,
+      "frames": 1951,
+      "fps": 60,
+      "droppedFrames": 0,
+      "worstFrameMs": 21
+    },
+    "trace": {
+      "file": "/tmp/claude-1000/-home-ianmiyazato-professional-portfolio-systems-portfolio/7fd60e05-32c1-49af-90ca-34734c21f533/scratchpad/system-design-mare-v4-system-design-mare-storefront.trace.json",
+      "steps": 13,
+      "tasks": 8487,
+      "longTasksOver50ms": 0,
+      "longestTaskMs": 8,
+      "observerLongTasks": [
+        64
+      ]
+    },
+    "clsAfterSteps": 0,
+    "offscreenRunning": {
+      "visible": false,
+      "running": 0
+    },
+    "hiddenRunning": 0,
+    "axe": [],
+    "reducedMotion": {
+      "running": 0,
+      "textLength": 1003
+    }
+  }
+]

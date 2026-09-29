@@ -16,7 +16,8 @@ for (const [from, to] of [
 }
 
 test('system design · the Maré deep dive steps through six ideas with an engineering layer', async ({ page }) => {
-  await page.goto('/system-design/mare');
+  // v0.4: /system-design/mare is the Maré case; the deep dive moved one level down.
+  await page.goto('/system-design/mare/orders');
   await expect(page.getByRole('heading', { level: 1, name: 'Orders under load' })).toBeVisible();
   const screen = page.locator('[data-screen="mare"]');
   await expect(screen).toHaveAttribute('data-steps', '6');

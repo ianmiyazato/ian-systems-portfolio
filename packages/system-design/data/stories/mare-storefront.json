@@ -1,0 +1,79 @@
+{
+  "id": "mare-storefront",
+  "title": "Maré: live truth on a ready-made storefront",
+  "summary": "The ready-made pages stay; only price, stock and the bag are live, in one small shared request; stock is shown honestly; adding to the bag is instant only when it's safe; busy mode is designed; checkout stays light; speed is measured in sales.",
+  "accent": "b",
+  "rows": 3,
+  "nodes": [
+    { "id": "shopper", "label": "Shopper", "caption": "on a phone, on mobile data", "engLabel": "field LCP · INP · CLS", "icon": "user", "col": 1, "span": 3, "row": 1 },
+    { "id": "page", "label": "Ready-made page", "caption": "photos, words and price, built ahead", "engLabel": "Astro static shell · CDN for days", "icon": "layers", "col": 4, "span": 3, "row": 1 },
+    { "id": "live", "label": "Live details", "caption": "price, stock and bag in one small ask", "engLabel": "GET /live batched · 2 s edge cache", "icon": "bolt", "col": 7, "span": 3, "row": 1, "tone": "accent" },
+    { "id": "systems", "label": "Our systems", "caption": "asked once every two seconds", "engLabel": "coalescing: N viewers, 1 call", "icon": "database", "col": 10, "span": 3, "row": 1 },
+    { "id": "bag", "label": "Add to bag", "caption": "instant when plenty, careful when scarce", "engLabel": "optimism by stock band + idem key", "icon": "bag", "col": 4, "span": 3, "row": 2 },
+    { "id": "bands", "label": "Honest stock", "caption": "in stock, few left or sold out", "engLabel": "stock bands, not exact counts", "icon": "check", "col": 7, "span": 3, "row": 2 },
+    { "id": "busy", "label": "Busy mode", "caption": "simpler pages, same buy button", "engLabel": "tier registry · level header", "icon": "shield", "col": 10, "span": 3, "row": 2, "tone": "good" },
+    { "id": "measure", "label": "Speed in reais", "caption": "slow moments priced in lost sales", "engLabel": "field data + traceparent → sales", "icon": "compare", "col": 1, "span": 3, "row": 3 },
+    { "id": "checkout", "label": "Checkout", "caption": "light, fast, nothing extra", "engLabel": "own bundle · no third-party tags", "icon": "card", "col": 4, "span": 3, "row": 3 }
+  ],
+  "edges": [
+    { "from": "shopper", "to": "page" },
+    { "from": "page", "to": "live" },
+    { "from": "live", "to": "systems", "kind": "data" },
+    { "from": "live", "to": "bands", "kind": "data" },
+    { "from": "page", "to": "bag" },
+    { "from": "systems", "to": "busy", "kind": "data" },
+    { "from": "bag", "to": "checkout" },
+    { "from": "shopper", "to": "measure", "kind": "data" }
+  ],
+  "steps": [
+    {
+      "title": "Keep what works",
+      "focus": ["shopper", "page", "shopper->page"],
+      "caption": "The store's pages are built ahead of time and served from nearby, which is why they're fast and cheap. That stays exactly as it is.",
+      "engineering": "Static-first Astro with small islands, a 60 kB JS budget and CLS 0; HTML cached for days and purged by surrogate key; the Black Friday price book is baked in.",
+      "presenterNote": "The current storefront is fast because it's ready-made. The job is to keep that and fix only what it can't do."
+    },
+    {
+      "title": "Only a small part is live",
+      "focus": ["live", "systems", "page->live", "live->systems"],
+      "caption": "Price, stock and the bag come in one small request per page. Ten thousand shoppers on one deal ask our systems once every 2 seconds.",
+      "engineering": "One batched /live call for the visible SKUs; about 2 s of edge micro-cache with request coalescing; the price book version in the HTML is confirmed by the live slot.",
+      "presenterNote": "Only the parts that change every second are live, and one shared answer serves everyone looking at the same deal."
+    },
+    {
+      "title": "Honest stock",
+      "focus": ["bands", "live->bands"],
+      "caption": "Stock shows as in stock, few left or sold out. It's always true, and the exact count is checked the moment you add to bag.",
+      "engineering": "Bands cache well and rarely change; the reservation is the only exact read. A precise '3 left' that is wrong half the time costs more trust than it earns.",
+      "presenterNote": "A precise number that's often wrong is worse than a simple one that's always right."
+    },
+    {
+      "title": "Add to bag, safely",
+      "focus": ["bag", "page->bag"],
+      "caption": "When there's plenty, the bag updates instantly. When only a few are left, it says reserving and confirms, so we never promise what's gone.",
+      "engineering": "Optimistic UI for In stock, confirmed for Few left; a client-generated idempotency key per click; a bag mirror in localStorage reconciled with the server.",
+      "presenterNote": "Instant feels great until it's wrong, so the page is instant only when it's safe to be."
+    },
+    {
+      "title": "Busy mode is designed",
+      "focus": ["busy", "systems->busy"],
+      "caption": "When our systems are under pressure, the page swaps extras for simpler versions it already has. Nothing breaks, and buying still works.",
+      "engineering": "Level L0–L4 arrives in a response header; each island declares a tier; fallbacks are rendered at build time, so degrading fetches nothing new.",
+      "presenterNote": "Every extra on the page has a calm, simpler twin ready, so a busy night looks simpler, not broken."
+    },
+    {
+      "title": "The buy path stays light",
+      "focus": ["checkout", "bag->checkout"],
+      "caption": "Checkout loads nothing extra, not even marketing trackers, and starts loading while the bag is open, so paying feels instant.",
+      "engineering": "An isolated checkout bundle with no third-party tags (server-side events instead); checkout and payment fields are prefetched when the bag drawer opens.",
+      "presenterNote": "The path to paying is the one place where nothing is allowed to slow us down."
+    },
+    {
+      "title": "Speed measured in reais",
+      "focus": ["measure", "shopper->measure"],
+      "caption": "We measure speed on real phones and link it to sales, so we know which slow moment costs money and fix that one first.",
+      "engineering": "Field LCP, INP and CLS by page, busy level and device, joined to the funnel; traceparent on live, bag and checkout calls links each one to Tidewatch.",
+      "presenterNote": "Speed only matters when it costs sales, so we measure it in reais, not milliseconds."
+    }
+  ]
+}

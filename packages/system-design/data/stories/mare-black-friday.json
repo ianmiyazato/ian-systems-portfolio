@@ -1,0 +1,83 @@
+{
+  "id": "mare-black-friday",
+  "title": "Maré: Black Friday without losing a sale",
+  "summary": "Pages and prices are ready before midnight; a fair line protects checkout; hot deals are split into small piles; two payment providers; checkout does four things; extras switch off first; one screen shows sales per minute.",
+  "accent": "a",
+  "rows": 3,
+  "nodes": [
+    { "id": "shoppers", "label": "Shoppers", "caption": "site, app and 38 stores at midnight", "engLabel": "push waves staggered by cohort", "icon": "people", "col": 1, "span": 3, "row": 1 },
+    { "id": "pages", "label": "Ready-made pages", "caption": "prices set in advance, served nearby", "engLabel": "CDN + price book flip + bot rules", "icon": "layers", "col": 4, "span": 3, "row": 1 },
+    { "id": "line", "label": "Fair waiting line", "caption": "only when checkout is full", "engLabel": "waiting room · signed tokens", "icon": "clock", "col": 7, "span": 3, "row": 1 },
+    { "id": "checkout", "label": "Checkout lane", "caption": "kept free for people paying", "engLabel": "T0 pool · four synchronous steps", "icon": "bag", "col": 10, "span": 3, "row": 1, "tone": "accent" },
+    { "id": "extras", "label": "Extras", "caption": "suggestions, videos and reviews", "engLabel": "T3 pool · first to switch off", "icon": "sparkle", "col": 1, "span": 3, "row": 2, "tone": "giveup" },
+    { "id": "stock", "label": "Stock counter", "caption": "hot deals split into small piles", "engLabel": "Redis sharded counters + TTL", "icon": "box", "col": 4, "span": 3, "row": 2 },
+    { "id": "pay", "label": "Two ways to pay", "caption": "if one slows down, use the other", "engLabel": "payment router · two acquirers", "icon": "card", "col": 7, "span": 3, "row": 2 },
+    { "id": "order", "label": "Order record", "caption": "saved once, then everyone is told", "engLabel": "Postgres + PgBouncer + outbox", "icon": "database", "col": 10, "span": 3, "row": 2 },
+    { "id": "plan", "label": "Plan for trouble", "caption": "what switches off, and in what order", "engLabel": "flags L0–L4 · burn-rate triggers", "icon": "list", "col": 1, "span": 3, "row": 3, "tone": "good" },
+    { "id": "room", "label": "War room", "caption": "sales per minute against forecast", "engLabel": "ClickHouse + traces + SLOs", "icon": "compare", "col": 4, "span": 3, "row": 3 },
+    { "id": "feed", "label": "Order feed", "caption": "warehouse and invoices catch up", "engLabel": "Kafka order.v4 · scale on lag", "icon": "truck", "col": 10, "span": 3, "row": 3 }
+  ],
+  "edges": [
+    { "from": "shoppers", "to": "pages" },
+    { "from": "pages", "to": "line" },
+    { "from": "line", "to": "checkout" },
+    { "from": "pages", "to": "stock" },
+    { "from": "checkout", "to": "pay" },
+    { "from": "checkout", "to": "order" },
+    { "from": "order", "to": "feed", "kind": "data" },
+    { "from": "feed", "to": "room", "kind": "data" },
+    { "from": "room", "to": "plan" },
+    { "from": "plan", "to": "extras" }
+  ],
+  "steps": [
+    {
+      "title": "Ready before midnight",
+      "focus": ["shoppers", "pages", "shoppers->pages"],
+      "caption": "Deal pages and prices are prepared days before and served from nearby, so the midnight rush barely touches our own computers.",
+      "engineering": "Static pages on the CDN with the Black Friday price book pre-rendered and switched on by edge config at 00:00; push notifications go out in cohorts over 10 minutes.",
+      "presenterNote": "The biggest spike of the night is the one we send ourselves, so we stagger the notifications and prepare every page before midnight."
+    },
+    {
+      "title": "A fair line, not a crash",
+      "focus": ["line", "checkout", "pages->line", "line->checkout"],
+      "caption": "When checkout is full, new shoppers wait in a short, honest line, and the items in their bag stay reserved while they wait.",
+      "engineering": "Admission control at a load-tested concurrency limit; signed first-come tokens; the bag reservation is extended while a shopper is queued.",
+      "presenterNote": "Past a certain point, letting more people in makes checkout slower for everyone. A short line sells more than an error page."
+    },
+    {
+      "title": "Your dress is really yours",
+      "focus": ["stock", "pages->stock"],
+      "caption": "Each hot deal is split into small piles, so thousands can grab one at the same moment and nobody buys an item that's already gone.",
+      "engineering": "Stock split across Redis counters, each decremented atomically with a 20-minute reservation; a Postgres ledger fed by events is the truth; a rebalancer moves units.",
+      "presenterNote": "Selling the same dress twice means refunds and angry customers for weeks, so we'd rather sell the last few a few seconds later."
+    },
+    {
+      "title": "Two ways to pay",
+      "focus": ["pay", "checkout->pay"],
+      "caption": "Payments run through two providers. If one starts failing, new payments move to the other within a minute.",
+      "engineering": "Routing on 1-minute approval rate and response time per acquirer; if fraud scoring slows, it falls back to rules with lower order caps.",
+      "presenterNote": "On the night, a payment problem is the most expensive failure there is, so there's always a second way to take the money."
+    },
+    {
+      "title": "Checkout does four things",
+      "focus": ["checkout", "order", "feed", "checkout->order", "order->feed"],
+      "caption": "Checkout confirms the item, the price and the payment, saves the order and answers. Warehouse and invoices catch up right after.",
+      "engineering": "Reservation, price book version, payment authorization, then one transaction with the outbox row; order.v4 consumers autoscale on lag and fall behind safely.",
+      "presenterNote": "Anything checkout waits for can break it, so it waits for four things and everything else catches up afterwards."
+    },
+    {
+      "title": "Extras switch off first",
+      "focus": ["extras", "plan", "plan->extras"],
+      "caption": "Under pressure, suggestions and videos switch off first, in an order agreed in October. The buy button never switches off.",
+      "engineering": "Degradation ladder L0–L4 as feature flags per tier, stepped up by error-budget burn; fallbacks are pre-rendered; L1 is automatic, higher levels need a person.",
+      "presenterNote": "We decide what to give up while we're calm, not at midnight, and we rehearse it before the night."
+    },
+    {
+      "title": "Sales per minute, live",
+      "focus": ["room", "feed->room", "room->plan"],
+      "caption": "One screen shows sales per minute against the forecast, so the team sees trouble before customers feel it.",
+      "engineering": "Order events stream into ClickHouse; a synthetic checkout runs every minute; traces link the browser to the database; fast-burn alerts at 14.4×.",
+      "presenterNote": "The number everyone watches is sales per minute, because that's what an outage actually costs."
+    }
+  ]
+}

@@ -15,76 +15,79 @@ Every approved screen, the design board it is checked against, and its screensho
 | 7 | `/system-design/personal-and-instant/build-or-buy` | SD-B3 | System design | 0.3 | — | ✅ 2026-09-29 | — |
 | 8 | `/system-design/build-vs-buy` | SD-99 | System design | 0.3 | — | ✅ 2026-09-29 | — |
 | 9 | `/work/mare/languages` | OV-languages | Maré | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mare/mare-languages.png` |
-| 10 | `/system-design/mare` | SD-mare | System design | 0.1 | — | ✅ 2026-09-29 | — |
-| 11 | `/mare/ops/counter` | BA-lanes | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-lanes.png` |
-| 12 | `/mare/ops/counter/pick/MR-904117` | BA-picking | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-picking.png` |
-| 13 | `/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party` | BA-handover | Counter | 0.1 | modal=handover sub=third-party | ✅ 2026-09-26 | `docs/screenshots/counter/counter-handover.png` |
-| 14 | `/mare/ops/counter?modal=cutoff-plan&sub=why` | BA-cutoff | Counter | 0.1 | modal=cutoff-plan sub=why | ✅ 2026-09-26 | `docs/screenshots/counter/counter-cutoff-plan.png` |
-| 15 | `/mare/ops/counter/returns` | BA-returns | Counter | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/counter/counter-returns.png` |
-| 16 | `/mare/ops/counter/stock` | BA-stock | Counter | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/counter/counter-stock.png` |
-| 17 | `/mare/ops/product-hub` | PH-catalog | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-catalog.png` |
-| 18 | `/mare/ops/product-hub/products/510233?tab=pricing` | PH-detail | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-detail.png` |
-| 19 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | PH-agent-run | Product Hub | 0.1 | modal=agent-run sub=edit | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-agent-run.png` |
-| 20 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | PH-onboarding | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-onboarding.png` |
-| 21 | `/mare/ops/product-hub/availability` | PH-availability | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-availability.png` |
-| 22 | `/mare/ops/product-hub/imports` | PH-imports | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-imports.png` |
-| 23 | `/mare/ops/product-hub/audit` | PH-audit | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-audit.png` |
-| 24 | `/mare/ops/pay` | PY-applications | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-applications.png` |
-| 25 | `/mare/ops/pay/applications/AP-77118` | PY-detail | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-application-detail.png` |
-| 26 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | PY-decision | Pay | 0.1 | modal=decision sub=override | ✅ 2026-09-26 | `docs/screenshots/pay/pay-decision.png` |
-| 27 | `/mare/ops/pay/accounts` | PY-accounts | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-accounts.png` |
-| 28 | `/mare/ops/pay/disputes` | PY-disputes | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-disputes.png` |
-| 29 | `/mare/ops/pay/collections` | PY-collections | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-collections.png` |
-| 30 | `/mare/ops/pay/fraud` | PY-fraud | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-fraud.png` |
-| 31 | `/mare/ops/pay/models` | PY-models | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-models.png` |
-| 32 | `/mare/ops/pay/policies` | PY-policies | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-policies.png` |
-| 33 | `/mare/apps/pay` | V2-phones | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-customer-app.png` |
-| 34 | `/mare/ops/circle` | CI-program | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-program.png` |
-| 35 | `/mare/ops/circle/rules/summer-swim` | CI-rules | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-rule-builder.png` |
-| 36 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | CI-leak | Circle | 0.1 | modal=leak sub=rotate | ✅ 2026-09-26 | `docs/screenshots/circle/circle-leak.png` |
-| 37 | `/mare/ops/circle/creators` | CI-creators | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-creators.png` |
-| 38 | `/mare/ops/circle/campaigns` | CI-campaigns | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-campaigns.png` |
-| 39 | `/mare/ops/circle/payouts` | CI-payouts | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-payouts.png` |
-| 40 | `/mare/apps/circle` | CI-app | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-creator-app.png` |
-| 41 | `/mare/apps/circle-reel` | V2-phones | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-reel.png` |
-| 42 | `/mare/ops/mesh` | MS-topology | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-topology.png` |
-| 43 | `/mare/ops/mesh/partners/ligeiro-log` | MS-partner | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-partner.png` |
-| 44 | `/mare/ops/mesh/dlq?modal=replay&sub=transform` | MS-dlq | Mesh | 0.1 | modal=replay sub=transform | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-dlq-replay.png` |
-| 45 | `/mare/ops/mesh/invoices/MR-904117` | MS-invoices | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-invoice-chain.png` |
-| 46 | `/mare/ops/mesh/events` | MS-events | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-events.png` |
-| 47 | `/mare/ops/mesh/contracts` | MS-contracts | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-contracts.png` |
-| 48 | `/observability` | V2-apm | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-problems.png` |
-| 49 | `/observability/traces/9f3a2c` | V2-trace | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-trace.png` |
-| 50 | `/observability/logs` | TW-logs | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-logs.png` |
-| 51 | `/observability/slos` | TW-slos | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-slos.png` |
-| 52 | `/observability/ai-audit` | TW-ai-audit | Tidewatch | 0.2 | — | ✅ 2026-09-28 | `docs/screenshots/observability/observability-ai-audit.png` |
-| 53 | `/mare/apps/shop` | CS-app | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-app.png` |
-| 54 | `/mare/apps/tracking` | V2-phones | Consumer | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-tracking.png` |
-| 55 | `/mare/shop` | V2-shop | Consumer | 0.1 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-site.png` |
-| 56 | `/mare/shop/products/linen-midi-dress` | V2-pdp | Consumer | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-pdp.png` |
-| 57 | `/atlas/welcome?step=2` | AT-onboarding | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-onboarding.png` |
-| 58 | `/atlas/pipeline` | AT-pipeline | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-pipeline.png` |
-| 59 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | AT-board | Atlas | 0.1 | drawer=parallax-pay sub=log-outcome | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-board.png` |
-| 60 | `/atlas/companies/parallax-pay` | AT-company | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-company.png` |
-| 61 | `/atlas/arena?modal=setup&prompt=payments-ledger` | AT-arena | Atlas | 0.1 | modal=setup | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-setup.png` |
-| 62 | `/atlas/arena/session/14` | AT-session | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-session.png` |
-| 63 | `/atlas/arena/sessions/14` | AT-feedback | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-feedback.png` |
-| 64 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | AT-transcript | Atlas | 0.1 | drawer=transcript | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-transcript.png` |
-| 65 | `/atlas/arena/mix/today` | AT-mix | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-mix.png` |
-| 66 | `/atlas/wrapped` | AT-wrapped | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-wrapped.png` |
-| 67 | `/atlas/offers` | AT-offers | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-offers.png` |
-| 68 | `/atlas/mentors/live` | AT-live | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-live-mock.png` |
-| 69 | `/atlas/academy/loops/parallax-pay` | AT-seasons | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-loop-season.png` |
-| 70 | `/atlas/academy` | V2-academy | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-academy-browse.png` |
-| 71 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
-| 72 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
-| 73 | `/pulse` | PU-roster | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-roster.png` |
-| 74 | `/pulse/intelligence` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
-| 75 | `/pulse/audio/afterglow` | PU-audio | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-audio.png` |
-| 76 | `/pulse/street-teams` | PU-dispatch | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-street-teams.png` |
-| 77 | `/pulse/wallet` | PU-wallet | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-wallet.png` |
-| 78 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
-| 79 | `/pulse/distribution/campaigns/afterglow/wrapped` | PU-wrapped | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-campaign-wrapped.png` |
-| 80 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
+| 10 | `/system-design/mare` | SD-M0 | System design | 0.4 | — | ✅ 2026-09-29 | — |
+| 11 | `/system-design/mare/black-friday` | SD-M1 | System design | 0.4 | — | ✅ 2026-09-29 | — |
+| 12 | `/system-design/mare/storefront` | SD-M4 | System design | 0.4 | — | ✅ 2026-09-29 | — |
+| 13 | `/system-design/mare/orders` | SD-mare | System design | 0.1 | — | ✅ 2026-09-29 | — |
+| 14 | `/mare/ops/counter` | BA-lanes | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-lanes.png` |
+| 15 | `/mare/ops/counter/pick/MR-904117` | BA-picking | Counter | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/counter/counter-picking.png` |
+| 16 | `/mare/ops/counter?modal=handover&order=MR-904112&sub=third-party` | BA-handover | Counter | 0.1 | modal=handover sub=third-party | ✅ 2026-09-26 | `docs/screenshots/counter/counter-handover.png` |
+| 17 | `/mare/ops/counter?modal=cutoff-plan&sub=why` | BA-cutoff | Counter | 0.1 | modal=cutoff-plan sub=why | ✅ 2026-09-26 | `docs/screenshots/counter/counter-cutoff-plan.png` |
+| 18 | `/mare/ops/counter/returns` | BA-returns | Counter | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/counter/counter-returns.png` |
+| 19 | `/mare/ops/counter/stock` | BA-stock | Counter | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/counter/counter-stock.png` |
+| 20 | `/mare/ops/product-hub` | PH-catalog | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-catalog.png` |
+| 21 | `/mare/ops/product-hub/products/510233?tab=pricing` | PH-detail | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-detail.png` |
+| 22 | `/mare/ops/product-hub/products/510233?modal=agent-run&sub=edit` | PH-agent-run | Product Hub | 0.1 | modal=agent-run sub=edit | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-agent-run.png` |
+| 23 | `/mare/ops/product-hub/marketplace/onboarding/linho-co?step=mapping` | PH-onboarding | Product Hub | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/product-hub/product-hub-onboarding.png` |
+| 24 | `/mare/ops/product-hub/availability` | PH-availability | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-availability.png` |
+| 25 | `/mare/ops/product-hub/imports` | PH-imports | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-imports.png` |
+| 26 | `/mare/ops/product-hub/audit` | PH-audit | Product Hub | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/product-hub/product-hub-audit.png` |
+| 27 | `/mare/ops/pay` | PY-applications | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-applications.png` |
+| 28 | `/mare/ops/pay/applications/AP-77118` | PY-detail | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-application-detail.png` |
+| 29 | `/mare/ops/pay/applications/AP-77118?modal=decision&sub=override` | PY-decision | Pay | 0.1 | modal=decision sub=override | ✅ 2026-09-26 | `docs/screenshots/pay/pay-decision.png` |
+| 30 | `/mare/ops/pay/accounts` | PY-accounts | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-accounts.png` |
+| 31 | `/mare/ops/pay/disputes` | PY-disputes | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-disputes.png` |
+| 32 | `/mare/ops/pay/collections` | PY-collections | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-collections.png` |
+| 33 | `/mare/ops/pay/fraud` | PY-fraud | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-fraud.png` |
+| 34 | `/mare/ops/pay/models` | PY-models | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-models.png` |
+| 35 | `/mare/ops/pay/policies` | PY-policies | Pay | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pay/pay-policies.png` |
+| 36 | `/mare/apps/pay` | V2-phones | Pay | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pay/pay-customer-app.png` |
+| 37 | `/mare/ops/circle` | CI-program | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-program.png` |
+| 38 | `/mare/ops/circle/rules/summer-swim` | CI-rules | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-rule-builder.png` |
+| 39 | `/mare/ops/circle?modal=leak&code=MARI15&sub=rotate` | CI-leak | Circle | 0.1 | modal=leak sub=rotate | ✅ 2026-09-26 | `docs/screenshots/circle/circle-leak.png` |
+| 40 | `/mare/ops/circle/creators` | CI-creators | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-creators.png` |
+| 41 | `/mare/ops/circle/campaigns` | CI-campaigns | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-campaigns.png` |
+| 42 | `/mare/ops/circle/payouts` | CI-payouts | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-payouts.png` |
+| 43 | `/mare/apps/circle` | CI-app | Circle | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/circle/circle-creator-app.png` |
+| 44 | `/mare/apps/circle-reel` | V2-phones | Circle | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/circle/circle-reel.png` |
+| 45 | `/mare/ops/mesh` | MS-topology | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-topology.png` |
+| 46 | `/mare/ops/mesh/partners/ligeiro-log` | MS-partner | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-partner.png` |
+| 47 | `/mare/ops/mesh/dlq?modal=replay&sub=transform` | MS-dlq | Mesh | 0.1 | modal=replay sub=transform | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-dlq-replay.png` |
+| 48 | `/mare/ops/mesh/invoices/MR-904117` | MS-invoices | Mesh | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/mesh/mesh-invoice-chain.png` |
+| 49 | `/mare/ops/mesh/events` | MS-events | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-events.png` |
+| 50 | `/mare/ops/mesh/contracts` | MS-contracts | Mesh | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/mesh/mesh-contracts.png` |
+| 51 | `/observability` | V2-apm | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-problems.png` |
+| 52 | `/observability/traces/9f3a2c` | V2-trace | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-trace.png` |
+| 53 | `/observability/logs` | TW-logs | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-logs.png` |
+| 54 | `/observability/slos` | TW-slos | Tidewatch | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/observability/observability-slos.png` |
+| 55 | `/observability/ai-audit` | TW-ai-audit | Tidewatch | 0.2 | — | ✅ 2026-09-28 | `docs/screenshots/observability/observability-ai-audit.png` |
+| 56 | `/mare/apps/shop` | CS-app | Consumer | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/consumer/consumer-app.png` |
+| 57 | `/mare/apps/tracking` | V2-phones | Consumer | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-tracking.png` |
+| 58 | `/mare/shop` | V2-shop | Consumer | 0.1 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-site.png` |
+| 59 | `/mare/shop/products/linen-midi-dress` | V2-pdp | Consumer | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/consumer/consumer-pdp.png` |
+| 60 | `/atlas/welcome?step=2` | AT-onboarding | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-onboarding.png` |
+| 61 | `/atlas/pipeline` | AT-pipeline | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-pipeline.png` |
+| 62 | `/atlas/pipeline/board?drawer=parallax-pay&sub=log-outcome` | AT-board | Atlas | 0.1 | drawer=parallax-pay sub=log-outcome | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-board.png` |
+| 63 | `/atlas/companies/parallax-pay` | AT-company | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-company.png` |
+| 64 | `/atlas/arena?modal=setup&prompt=payments-ledger` | AT-arena | Atlas | 0.1 | modal=setup | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-setup.png` |
+| 65 | `/atlas/arena/session/14` | AT-session | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-arena-session.png` |
+| 66 | `/atlas/arena/sessions/14` | AT-feedback | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-feedback.png` |
+| 67 | `/atlas/arena/sessions/14?drawer=transcript&t=31:30` | AT-transcript | Atlas | 0.1 | drawer=transcript | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-transcript.png` |
+| 68 | `/atlas/arena/mix/today` | AT-mix | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-mix.png` |
+| 69 | `/atlas/wrapped` | AT-wrapped | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-wrapped.png` |
+| 70 | `/atlas/offers` | AT-offers | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-offers.png` |
+| 71 | `/atlas/mentors/live` | AT-live | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-live-mock.png` |
+| 72 | `/atlas/academy/loops/parallax-pay` | AT-seasons | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-loop-season.png` |
+| 73 | `/atlas/academy` | V2-academy | Atlas | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/atlas/atlas-academy-browse.png` |
+| 74 | `/atlas/academy/designing-for-10x` | AT-lesson | Atlas | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-academy.png` |
+| 75 | `/atlas/academy/designing-for-10x?modal=paywall&sub=checkout` | AT-paywall | Atlas | 0.1 | modal=paywall sub=checkout | ✅ 2026-09-26 | `docs/screenshots/atlas/atlas-paywall.png` |
+| 76 | `/pulse` | PU-roster | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-roster.png` |
+| 77 | `/pulse/intelligence` | PU-intelligence | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-intelligence.png` |
+| 78 | `/pulse/audio/afterglow` | PU-audio | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-audio.png` |
+| 79 | `/pulse/street-teams` | PU-dispatch | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-street-teams.png` |
+| 80 | `/pulse/wallet` | PU-wallet | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-wallet.png` |
+| 81 | `/pulse/distribution` | PU-distribution | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-distribution.png` |
+| 82 | `/pulse/distribution/campaigns/afterglow/wrapped` | PU-wrapped | Pulse | 0.2 | — | ✅ 2026-09-27 | `docs/screenshots/pulse/pulse-campaign-wrapped.png` |
+| 83 | `/pulse/harness` | PU-harness | Pulse | 0.1 | — | ✅ 2026-09-26 | `docs/screenshots/pulse/pulse-harness.png` |
 
-Parity: **80/80**.
+Parity: **83/83**.

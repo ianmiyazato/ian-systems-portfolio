@@ -1,0 +1,42 @@
+---
+/**
+ * "Is it worth it?": expected sales lost to an outage, with and without readiness, against the
+ * cost of readiness. Server-rendered with the defaults; sd-mare-bf.ts recomputes on input.
+ * Every input is illustrative.
+ */
+import { cases, expectedLoss } from '@portfolio/system-design';
+
+const { worth } = cases.mare;
+const brl = (value: number) => `R$${Math.round(value).toLocaleString('en-US')}`;
+const start = expectedLoss({ perMinute: worth.perMinute.value, minutes: worth.minutes.value, without: worth.without.value, with: worth.with, cost: worth.cost.value });
+const inputs = [
+  { key: 'perMinute', label: 'Sales per minute at the peak', range: worth.perMinute, format: 'brl' },
+  { key: 'minutes', label: 'Minutes down if it breaks', range: worth.minutes, format: 'min' },
+  { key: 'without', label: 'Chance it breaks without readiness', range: worth.without, format: 'pct' },
+  { key: 'cost', label: 'What readiness costs', range: worth.cost, format: 'brl' }
+] as const;
+const show = (format: string, value: number) => (format === 'brl' ? brl(value) : format === 'min' ? `${value} min` : `${value}%`);
+---
+<form class="sdp-worth" data-worth data-with={worth.with} data-anchor="sd-bf-worth" aria-label="Is it worth it?">
+  <div class="sdp-worth-inputs">
+    {inputs.map((input) => (
+      <label class="sdp-worth-input">
+        <span class="sdp-worth-label">{input.label}</span>
+        <output data-worth-show={input.key} data-format={input.format}>{show(input.format, input.range.value)}</output>
+        <input type="range" name={input.key} min={input.range.min} max={input.range.max} step={input.range.step} value={input.range.value} />
+      </label>
+    ))}
+    <p class="sdp-worth-fixed">With readiness, the chance it breaks falls to <strong>{worth.with}%</strong>.</p>
+  </div>
+  <dl class="sdp-worth-out" aria-live="polite">
+    <div><dt>Expected sales lost, without readiness</dt><dd data-worth-out="without">{brl(start.without)}</dd></div>
+    <div><dt>Expected sales lost, with readiness</dt><dd data-worth-out="with">{brl(start.with)}</dd></div>
+    <div><dt>Readiness costs</dt><dd data-worth-out="cost">{brl(start.cost)}</dd></div>
+    <div class="sdp-worth-verdict" data-worth-verdict={start.worth ? 'yes' : 'no'}>
+      <dt>Verdict</dt>
+      <dd data-worth-out="verdict">{start.worth ? `Worth it: avoids ${brl(start.avoided)} for ${brl(start.cost)}` : `Not at these numbers: avoids ${brl(start.avoided)} for ${brl(start.cost)}`}</dd>
+    </div>
+  </dl>
+  <p class="sdp-worth-formula" data-eng-only>Expected loss = chance × minutes down × sales per minute. Keep spending while every R$1 of readiness removes more than R$1 of expected loss.</p>
+  <p class="sdp-illustrative">{worth.label}</p>
+</form>

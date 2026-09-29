@@ -1,0 +1,25 @@
+---
+/**
+ * The degradation ladder: five levels decided in October. Level 0 stays in view; each step
+ * focuses one level. Triggers are the engineering layer (E) and are illustrative.
+ */
+import { cases } from '@portfolio/system-design';
+
+const { ladder } = cases.mare;
+---
+<div class="sdp-ladder" data-anchor="sd-bf-ladder">
+  <div class="sdp-ladder-head" aria-hidden="true">
+    <span>Level</span><span>What switches off</span><span>What shoppers notice</span><span data-eng-only>Trigger</span>
+  </div>
+  <ol class="sdp-ladder-list">
+    {ladder.levels.map((level, index) => (
+      <li class="sdp-ladder-row" data-level={level.level} data-focus-steps={index === 0 ? undefined : String(index)} data-anchor={`sd-bf-ladder-${level.level.toLowerCase()}`}>
+        <p class="sdp-ladder-level"><span class="sdp-ladder-n">{level.level}</span><strong>{level.name}</strong></p>
+        <p class="sdp-ladder-off"><span class="sdp-ladder-label">What switches off</span>{level.off}</p>
+        <p class="sdp-ladder-notice"><span class="sdp-ladder-label">What shoppers notice</span>{level.notice}</p>
+        <p class="sdp-ladder-trigger" data-eng-only><span class="sdp-ladder-label">Trigger</span>{level.trigger}</p>
+      </li>
+    ))}
+  </ol>
+  <p class="sdp-illustrative">{ladder.label}</p>
+</div>

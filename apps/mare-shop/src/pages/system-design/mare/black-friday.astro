@@ -1,0 +1,49 @@
+---
+/**
+ * Maré backend problem: Black Friday without losing a sale. The plan as a story (plain layer,
+ * E for engineering), the degradation ladder, and the business decision with its math.
+ */
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Decision from '../../../components/system-design/Decision.astro';
+import Ladder from '../../../components/system-design/Ladder.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import Story from '../../../components/system-design/Story.astro';
+import { caseSequence, cases } from '@portfolio/system-design';
+
+const problem = cases.mare.problems[0]!;
+---
+<SystemDesign title="Black Friday without losing a sale · Maré · System design" description="Maré's backend problem in plain language: protect and grow sales on the busiest night of the year, at a cost chosen on purpose. A fair line, hot deals split into piles, two ways to pay, and a plan for what switches off first." accent="a" sequence={caseSequence('mare')}>
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><a href="/system-design/mare">Maré</a><span aria-hidden="true">/</span><span>Backend problem</span></nav>
+  <Story story="mare-black-friday" screen="mare-bf-flow" board="SD-M1" anchors={{ figure: 'sd-bf-flow', panel: 'sd-bf-steps' }}>
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Maré · backend problem</p>
+      <h1>{problem.title}</h1>
+      <p class="sdp-lede">{problem.question} Not every click is worth the same, so the plan protects paying first. Press <kbd>E</kbd> for the engineering behind each step.</p>
+    </header>
+  </Story>
+
+  <Screen id="mare-bf-ladder" accent="a" anchor="sd-bf-ladder-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>The plan for a bad night</p>
+      <h2>Decided in October. Rehearsed. Level 1 happens on its own.</h2>
+    </header>
+    <Ladder />
+  </Screen>
+
+  <Screen id="mare-bf-decision" accent="a" anchor="sd-bf-decision-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>The business decision</p>
+      <h2>Pay for the peak, on purpose.</h2>
+    </header>
+    <Decision side="backend" worth />
+  </Screen>
+
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/mare/storefront"><span>Frontend problem</span>Live truth on a ready-made storefront →</a>
+    <a href="/system-design/mare">The Maré case</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-mare-bf';
+</script>

@@ -4,11 +4,11 @@
  * notes as a diagram screen. Elements inside mark their steps with data-focus-steps.
  */
 import { renderCaptions, renderNotes, renderStepper } from '@portfolio/story-diagram';
-import { screenById } from '@portfolio/system-design';
+import { caseScreenById, screenById } from '@portfolio/system-design';
 
 interface Props { id: string; accent?: 'a' | 'b'; label?: string; anchor?: string; class?: string }
 const { id, accent, label, anchor, class: className } = Astro.props;
-const screen = screenById(id);
+const screen = caseScreenById(id) ?? screenById(id);
 ---
 <section class:list={['sd-screen', 'sdp-screen', className]} data-screen={id} data-steps={screen.steps.length} data-step="1" data-board={screen.board} data-accent={accent} aria-label={label ?? screen.title}>
   <slot />
