@@ -1,0 +1,46 @@
+---
+import SystemDesign from '../../../layouts/SystemDesign.astro';
+import Demo from '../../../components/system-design/Demo.astro';
+import Race from '../../../components/system-design/Race.astro';
+import Screen from '../../../components/system-design/Screen.astro';
+import Story from '../../../components/system-design/Story.astro';
+import { deck } from '@portfolio/system-design';
+---
+<SystemDesign title="Personal, and still instant · System design" description="Problem B in plain language: suggestions from what a shopper does, filtered to what they can actually get, with pages that stay fast while AI works. Includes a live pagination demo." accent="b">
+  <nav slot="head" class="sdp-crumbs" aria-label="System design"><a href="/system-design">System design</a><span aria-hidden="true">/</span><span>Problem B</span></nav>
+  <Story story="personal-flow" screen="b-flow" board="SD-B1" anchors={{ figure: 'sd-personal-flow', panel: 'sd-personal-steps' }}>
+    <header class="sdp-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Problem B · frontend + product + AI</p>
+      <h1>Personal, and still instant</h1>
+      <p class="sdp-lede sdp-point">Suggestions that ignore stock, size or distance feel smart and sell nothing.</p>
+    </header>
+  </Story>
+
+  <Screen id="b-speed" accent="b" anchor="sd-speed-steps">
+    <header class="sdp-screen-head">
+      <p class="sdp-eyebrow"><span class="sdp-dot" aria-hidden="true"></span>Problem B · the trade-off</p>
+      <h2>Slow loading is the known trade-off. Handling it is the point.</h2>
+    </header>
+    <Race />
+    <ol class="sdp-techniques" data-anchor="sd-techniques" data-focus-steps="3" data-present-steps="3">
+      {deck.techniques.map((item, index) => (
+        <li>
+          <span class="sdp-technique-n">{index + 1}</span>
+          <h3>{item.title}</h3>
+          <p>{item.plain}</p>
+          <p class="sdp-eng-line" data-eng-only>{item.engineering}</p>
+        </li>
+      ))}
+    </ol>
+    <Demo />
+  </Screen>
+
+  <nav class="sdp-next" aria-label="Next">
+    <a class="sdp-next-link" href="/system-design/personal-and-instant/build-or-buy"><span>Next</span>What we build, what we buy, and what we give up →</a>
+    <a href="/system-design">All system design</a>
+  </nav>
+</SystemDesign>
+
+<script>
+  import '../../../scripts/sd-personal';
+</script>
